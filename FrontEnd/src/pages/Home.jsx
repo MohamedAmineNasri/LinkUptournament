@@ -77,7 +77,7 @@ export class Home extends Component {
             <div className="container">
               <div className="row align-items-center">
                 <div className="col-lg-5 ml-auto">
-                  <h1 className="text-white">World Cup Event</h1>
+                  <h1 className="text-white">Tournament Event</h1>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Soluta, molestias repudiandae pariatur.
@@ -275,7 +275,7 @@ export class Home extends Component {
                     </div>
 
                     <div className="text-center widget-vs-contents mb-4">
-                      <h4>World Cup League</h4>
+                      <h4>Tournament Event</h4>
                       <p className="mb-5">
                         <span className="d-block">December 20th, 2020</span>
                         <span className="d-block">9:30 AM GMT+0</span>
@@ -664,7 +664,7 @@ export class Home extends Component {
                         <a href="#">Standings</a>
                       </li>
                       <li>
-                        <a href="#">World Cup</a>
+                        <a href="#">Tournament</a>
                       </li>
                       <li>
                         <a href="#">La Lega</a>

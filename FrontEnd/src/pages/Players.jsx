@@ -355,7 +355,7 @@ export class Players extends Component {
                         <a href="#">Standings</a>
                       </li>
                       <li>
-                        <a href="#">World Cup</a>
+                        <a href="#">Tournament</a>
                       </li>
                       <li>
                         <a href="#">La Lega</a>

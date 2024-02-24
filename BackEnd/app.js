@@ -1,9 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-
+const tournementRouter = require("./Routes/tournementRouter");
+const playerRouter = require("./Routes/playerRouter");
+const teamRouter = require("./Routes/teamRouter");
 const app = express();
 
 app.use(cors());
 
+app.use(express.json());
+app.use("/tournement", tournementRouter);
+app.use("/player", playerRouter);
+app.use("/team", teamRouter);
 
 module.exports = app;

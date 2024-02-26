@@ -13,7 +13,6 @@ const handleLogin = async (req, res) => {
 
     try {
         const foundUser = await Users.findOne({ email });
-        console.log("auth"+typeof email)
         if (!foundUser) {
             return res.status(401).json({ message: "Invalid email or password." }); // Unauthorized
         }

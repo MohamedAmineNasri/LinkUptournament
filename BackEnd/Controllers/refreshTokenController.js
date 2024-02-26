@@ -33,7 +33,7 @@ const handleRefreshToken = async (req, res) => {
         foundUser.refreshToken = foundUser.refreshToken || [];
 
         const accessToken = jwt.sign(
-            { email: decoded.email, firstName: foundUser.firstName, lastName: foundUser.lastName, roles: foundUser.roles },
+            { email: decoded.email, firstName: foundUser.firstName, lastName: foundUser.lastName, roles: foundUser.roles, phoneNumber: foundUser.phoneNumber, birthday: foundUser.birthday },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '30s' }
         );

@@ -1,19 +1,81 @@
 const mongoose = require("mongoose");
 
-const teamSchema = new mongoose.Schema(
+const TeamSchema = new mongoose.Schema(
   {
-    name: { type: String },
-    winning_maches: { type: Number },
-    losing_lost: { type: Number },
-    drawn_maches: { type: Number },
-    total_matches_played: { type: Number },
-    goals_scored: { type: Number },
-    goals_conceded: { type: Number },
-    goals_difference: { type: Number },
+    TeamId: Number,
+
+    TeamName: {
+      type: String,
+      require: "AcademyName is required !!",
+    },
+    TeamLogo: {
+      type: String,
+      require: "Logo is required !!",
+    },
+    Total_MatchesWon: {
+      type: Number,
+      default: 0
+    },
+    Total_MatchesLost: {
+      type: Number,
+      default: 0
+    },
+    Total_MatchesDrawn: {
+      type: Number,
+      default: 0
+    },
+    Total_MatchesPlayed: {
+      type: Number,
+      default: 0
+    },
+    Total_Goals_scored: {
+      type: Number,
+      default: 0
+    },
+    Total_Goals_received: {
+      type: Number,
+      default: 0
+    },
+    academy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Academy',
+      // required: true
+    },
+
+    // Group stage data-------------------------------------------------------------------
+    GS_MatchesWon: {
+      type: Number,
+      default: 0
+    },
+    GS_MatchesLost: {
+      type: Number,
+      default: 0
+    },
+    GS_MatchesDrawn: {
+      type: Number,
+      default: 0
+    },
+    GS_MatchesPlayed: {
+      type: Number,
+      default: 0
+    },
+    GS_Goals_scored: {
+      type: Number,
+      default: 0
+    },
+    GS_Goals_received: {
+      type: Number,
+      default: 0
+    },
+    GS_Goals_difference: {
+      type: Number,
+      default: 0
+    },
+    GS_Points: {
+      type: Number,
+      default: 0
+    },
   },
-  { timestamps: true }
 );
 
-const Team = mongoose.model("Team", teamSchema);
-
-module.exports = Team;
+module.exports = mongoose.model("team", TeamSchema);

@@ -3,64 +3,83 @@ const Player = require("../Models/match");
 //get all 
 
 async function getAllematch(req, res) {
-    try {
-      const matchs = await match.find();
-      res.send(matchs);
-    } catch (error) {
-      res.status(500).send(error);
-    }
+  const matches = await match.find();
+  res.json(matches)
   }
 
   //get by id 
   async function getmatchById(req, res) {
-    try {
-      const match = await match.findById(req.params.id);
-      if (!match) {
-        return res.status(404).send();
-      }
-      res.send(match);
-    } catch (error) {
-      res.status(500).send(error);
-    }
+    const matchById = await match.findById(req.params.id)
+    res.json(matchById)
   }
 //create 
 async function creatematch(req, res) {
-    try {
-      const match = new match(req.body);
-      await match.save();
-      res.status(201).send(match);
-    } catch (error) {
-      res.status(400).send(error);
-    }
+  const matche = new match(req.body);
+  await matche.save()
+ 
+  res.json(matche)
   }
 
-  // Update player by ID
-async function updatematchById(req, res) {
-    try {
-      const match = await match.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
-      if (!match) {
-        return res.status(404).send();
-      }
-      res.send(match);
-    } catch (error) {
-      res.status(400).send(error);
-    }
+  // Update match by ID
+async function updatematchById(req, updateFields) {
+    
+      let matchs = await match.findById(req.params.id);
+      match.Date = updateFields.Date ? updateFields.Date : match.Date;
+        match.startingTime = updateFields.startingTime ? updateFields.startingTime : match.startingTime;
+        match.matchType = updateFields.matchType ? updateFields.matchType : match.matchType;
+        match.weatherCondition = updateFields.weatherCondition ? updateFields.weatherCondition : match.weatherCondition;
+        match.score = updateFields.score ? updateFields.score : match.score;
+        match.injuries = updateFields.injuries ? updateFields.injuries : match.injuries;
+        match.card = updateFields.card ? updateFields.card : match.card;
+        match.extraTime = updateFields.extraTime ? updateFields.extraTime : match.extraTime;
+        match.matchStatus = updateFields.matchStatus ? updateFields.matchStatus : match.matchStatus;
+
+
+
+      await matchs.save();
+      updateFields.json(matchs);
+    
   }
+
+ 
+
+
   
   // Delete match by ID
   async function deletematchById(req, res) {
-    try {
-      const match = await Player.findByIdAndDelete(req.params.id);
-      if (!match) {
-        return res.status(404).send();
-      }
-      res.send(match);
-    } catch (error) {
-      res.status(500).send(error);
-    }
+    const matchById = await match.findByIdAndDelete(req.params.id)
+    res.json(matchById)
   }
+    // Update score for team 1 
+async function updatescore2ById(req, res) {
+  const TeamMWData = await match.findById(req.params.id);
+  TeamMWData.score[0] += 1;
+  
+  await TeamMWData.save()
+  res.json("Team one  increased by 1 sucessfully");
+  }
+  async function updatescore2_ById(req, res) {
+    const TeamMWData = await match.findById(req.params.id);
+    TeamMWData.score[0] -= 1;
+    
+    await TeamMWData.save()
+    res.json("Team one  decreased by 1 sucessfully");
+    }
+     // Update score for team 2 
+async function updatescoreById(req, res) {
+  const TeamMWData = await match.findById(req.params.id);
+  TeamMWData.score[1] += 1;
+  
+  await TeamMWData.save()
+  res.json("Team two  increased by 1 sucessfully");
+  }
+  async function updatescore_ById(req, res) {
+    const TeamMWData = await match.findById(req.params.id);
+    TeamMWData.score[1] -= 1;
+    
+    await TeamMWData.save()
+    res.json("Team two  decreased by 1 sucessfully");
+    }
   
   module.exports = {
     creatematch,
@@ -68,6 +87,10 @@ async function updatematchById(req, res) {
     getmatchById,
     updatematchById,
     deletematchById,
+    updatescoreById,
+    updatescore2ById,
+    updatescore2_ById,
+    updatescore_ById
   };
 
 

@@ -21,7 +21,6 @@ const handleLogin = async (req, res) => {
         const match = await bcrypt.compare(password, foundUser.password);
 
         if (match) {
-            // Create JWTs with additional user information
             const accessToken = jwt.sign(
                 {
                     email: foundUser.email,
@@ -40,7 +39,6 @@ const handleLogin = async (req, res) => {
                 { expiresIn: '1d' }
             );
 
-            // Save refreshToken with current user
             foundUser.refreshToken = refreshToken;
             await foundUser.save();
 

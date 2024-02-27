@@ -14,20 +14,18 @@ const verifyJWT = (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if (err) {
-                return res.sendStatus(403); // Invalid token
+                return res.sendStatus(403); 
             }
-
-            // Include additional user information in req.user and req.roles
             req.user = {
                 email: decoded.email,
                 firstName: decoded.firstName,
                 lastName: decoded.lastName,
                 birthday: decoded.birthday,
                 phoneNumber: decoded.phoneNumber,
+                roles: decoded.roles
             };
 
             req.roles = decoded.roles;
-
             next();
         }
     );

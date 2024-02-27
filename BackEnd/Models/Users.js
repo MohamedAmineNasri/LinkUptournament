@@ -39,10 +39,7 @@ const usersSchema = new mongoose.Schema(
             ],
             default: "Supporter",
             },
-            refreshToken: {
-                type: [String],
-                default: [],
-            },
+            refreshToken: [String],
         },
         {
             timestamps: true,

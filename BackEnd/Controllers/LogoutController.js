@@ -12,6 +12,7 @@ const handleLogout = async (req, res) => {
 
     try {
         const foundUser = await Users.findOne({ refreshToken });
+
         if (!foundUser) {
             res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
             return res.sendStatus(204);
@@ -24,10 +25,9 @@ const handleLogout = async (req, res) => {
         res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
         res.sendStatus(204);
     } catch (error) {
-        console.error(error);
+        console.error("Error during logout:", error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
 
 module.exports = { handleLogout  };

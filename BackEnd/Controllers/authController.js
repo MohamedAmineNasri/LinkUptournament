@@ -13,6 +13,7 @@ const handleLogin = async (req, res) => {
 
     try {
         const foundUser = await Users.findOne({ email });
+
         if (!foundUser) {
             return res.status(401).json({ message: "Invalid email or password." }); // Unauthorized
         }
@@ -33,12 +34,14 @@ const handleLogin = async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '30s' }
             );
+
             const refreshToken = jwt.sign(
                 { email: foundUser.email },
                 process.env.REFRESH_TOKEN_SECRET,
                 { expiresIn: '1d' }
             );
 
+            // Save refreshToken with current user
             foundUser.refreshToken = refreshToken;
             await foundUser.save();
 

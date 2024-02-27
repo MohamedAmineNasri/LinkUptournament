@@ -65,88 +65,94 @@ export class AddAcademy extends Component {
             </div>
           </div>
         </header>
-
-        <div
-          className="hero overlay"
-          style={{ backgroundImage: "url('/assets/images/bg_3.jpg')" }}
-        >
+        <br></br>
+        <div className="site-section">
           <div className="container">
-            <div className="row align-items-center">
-              <div className="col-lg-9 mx-auto text-center">
-                <h1 className="text-white">add Academy ! </h1>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="site-section">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 order-lg-1">
-                <img
-                  src="/public/assets/images/fbAcademy.jpg"
-                  alt="Logo"
-                  class="img-fluid"
-                />
-              </div>
-              <div class="col-lg-6 order-lg-2">
-                <form action="#">
-                  <div class="row">
-                    <div class="col-md-12 form-group">
-                      <label for="Aname">Academy Name:</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="Aname"
-                        placeholder="Academy Name"
-                      />
+            <div
+              className="row-wrapper"
+              style={{
+                backgroundColor: "#222831",
+                boxShadow: "10px 10px 30px rgba(1, 0, 0, 0.5)",
+                paddingTop: "30px",
+                paddingBottom: "30px",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+                borderRadius: "40px",
+              }}
+            >
+              <div
+                className="row"
+                style={{ alignItems: "center", justifyContent: "space-evenly" }}
+              >
+                <div className="col-lg-5 order-lg-1 ">
+                  <img
+                    src="/public/assets/images/foot.jpg"
+                    alt="Logo"
+                    className="img-fluid "
+                    style={{ borderRadius: "20px" }}
+                    width="96%"
+                  />
+                </div>
+                <div className="col-lg-6 order-lg-2">
+                  <h1>Add You're Academy !</h1>
+                  <form action="#">
+                    <div className="row">
+                      <div className="col-md-12 form-group">
+                        <label for="Aname">Academy Name:</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="Aname"
+                          placeholder="Academy Name"
+                        />
+                      </div>
+                      <div className="col-md-12 form-group">
+                        <label for="location">Academy Location:</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="location"
+                          placeholder="Location"
+                        />
+                      </div>
+                      <div className="col-md-12 form-group">
+                        <label for="foundedDate">Founded Date:</label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          id="foundedDate"
+                        />
+                      </div>
+                      <div className="col-md-12 form-group">
+                        <label for="logoInput">Upload Logo:</label>
+                        <input
+                          type="file"
+                          className="form-control-file"
+                          id="logoInput"
+                          accept=".jpg,.jpeg,.png"
+                        />
+                      </div>
+                      <div className="col-md-12 form-group">
+                        <label for="fileInput">
+                          Upload Legitimacy Documents:
+                        </label>
+                        <input
+                          type="file"
+                          className="form-control-file"
+                          id="fileInput"
+                          accept=".pdf,.doc,.docx"
+                        />
+                      </div>
+                      <div className="col-md-12 form-group">
+                        <input
+                          type="submit"
+                          className="btn btn-primary py-3 px-5 btn-block"
+                          value="add academy "
+                        />
+                      </div>
                     </div>
-                    <div class="col-md-12 form-group">
-                      <label for="location">Academy Location:</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="location"
-                        placeholder="Location"
-                      />
-                    </div>
-                    <div class="col-md-12 form-group">
-                      <label for="foundedDate">Founded Date:</label>
-                      <input
-                        type="date"
-                        class="form-control"
-                        id="foundedDate"
-                      />
-                    </div>
-                    <div class="col-md-12 form-group">
-                      <label for="logoInput">Upload Logo:</label>
-                      <input
-                        type="file"
-                        class="form-control-file"
-                        id="logoInput"
-                        accept=".jpg,.jpeg,.png"
-                      />
-                    </div>
-                    <div class="col-md-12 form-group">
-                      <label for="fileInput">
-                        Upload Legitimacy Documents:
-                      </label>
-                      <input
-                        type="file"
-                        class="form-control-file"
-                        id="fileInput"
-                        accept=".pdf,.doc,.docx"
-                      />
-                    </div>
-                    <div class="col-md-12 form-group">
-                      <input
-                        type="submit"
-                        class="btn btn-primary py-3 px-5 btn-block"
-                        value="Send Message"
-                      />
-                    </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

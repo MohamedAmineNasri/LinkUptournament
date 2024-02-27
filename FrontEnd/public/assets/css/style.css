@@ -1,7 +1,7 @@
 /* Base */
 body {
   line-height: 1.7;
-  color: gray;
+  color: rgb(255, 255, 255);
   font-weight: 300;
   background-color: #222831;
   font-size: 16px; }
@@ -1117,3 +1117,15 @@ h1, h2, h3, h4, h5,
   .post-meta a {
     color: #fff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+
+
+    /* added----------------------------- */
+    .widget-vs .d-flex {
+      max-width: 100%;
+    }
+    
+    .widget-vs .d-flex > * {
+      flex: 0 0 calc(33.333% - 10px); 
+      margin: 5px; 
+    }
+    

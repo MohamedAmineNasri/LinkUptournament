@@ -8,6 +8,7 @@ import Matches from "./pages/Matches";
 import Players from "./pages/Players";
 import Single from "./pages/Single";
 import AddAcademy from "./pages/AddAcademy";
+import Academy from "./pages/Academy";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
         <Route path="/addAcademy" element={<AddAcademy />} />
+        <Route path="/Academy" element={<Academy />} />
       </Routes>
     </BrowserRouter>
   );

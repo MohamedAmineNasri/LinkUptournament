@@ -14,7 +14,7 @@ pipeline {
             }
               steps {
                 script {
-                    sh 'npm run dev'
+                    sh 'npm start'
                 }
             }
         }

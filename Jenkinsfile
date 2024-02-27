@@ -5,18 +5,12 @@ pipeline {
         stage('Clean') {  steps {
                 script {
                     sh 'cd BackEnd'
+                     sh 'npm i '
+                     sh 'npm start'
                 }
             }
-            steps {
-                script {
-                    sh 'npm i '
-                }
-            }
-              steps {
-                script {
-                    sh 'npm start'
-                }
-            }
+            
+              
         }
 
       

@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const tournementRouter = require("./Routes/tournementRouter");
 const playerRouter = require("./Routes/playerRouter");
-const teamRouter = require("./Routes/teamRouter");
+const teamRouter = require("./Routes/Team");
 const match= require("./Routes/match")
 const app = express();
 

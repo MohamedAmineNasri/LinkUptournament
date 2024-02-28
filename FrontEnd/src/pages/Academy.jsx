@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import KitchenSinkExample from "./TeamCard";
-import TeamCard from "./TeamCard";
+import KitchenSinkExample from "../components/TeamCard";
+import TeamCard from "../components/TeamCard";
+import DropDown from "../components/DropDown";
 
 export class Academy extends Component {
   render() {
@@ -95,7 +96,13 @@ export class Academy extends Component {
                 <div className="col-lg-12">
                   <div className="widget-next-match">
                     <div className="widget-title">
-                      <div className="row">
+                      <div
+                        className="row"
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
                         <div>
                           <img
                             src="/public/assets/images/logo_1.png"
@@ -106,7 +113,26 @@ export class Academy extends Component {
                           />
                         </div>
                         <div>
-                          <h3>Real Madrid FC</h3>
+                          <h3 style={{ paddingTop: "25px" }}>
+                            Academy Name : Real Madrid FC
+                          </h3>
+                          <h3 style={{ paddingTop: "5px" }}>
+                            Location : Spain, Madrid
+                          </h3>
+                          <h3 style={{ paddingTop: "5px" }}>
+                            Creating Date : 2024-12-4
+                          </h3>
+                          <h3 style={{ paddingTop: "5px" }}>
+                            Status : Verified
+                          </h3>
+                        </div>
+                        <div
+                          style={{
+                            paddingTop: "2px",
+                            paddingLeft: "25px",
+                          }}
+                        >
+                          <DropDown></DropDown>
                         </div>
                       </div>
                     </div>

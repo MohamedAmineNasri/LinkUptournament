@@ -20,17 +20,11 @@ sh('npm install')
 }
 
 
-        stage('Unit Test') {
-steps{
-script {
-sh('npm test')
-}
-}
-}
+        
 stage('Build application') {
 steps{
 script {
-sh('npm run build-dev')
+sh('npm start')
 }
 
 

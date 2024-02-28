@@ -1,19 +1,18 @@
-const Staduim = require('../Models/Stadium') ; 
+const Staduim = require("../Models/Staduim")
 
 const getAllStaduims = async (req, res, next) => {
     const staduims = await Staduim.find();
     res.json(staduims);  
 };
 
-const addStaduim =  async (req, res, next) => {
-    try {
 
-        const staduim = await Staduim.create(req.body)
-        res.status(200).json(staduim);
-        
-    } catch (error) {
-    res.status(500).json({message : error.message})
-    }
+const addStaduim =  async (req, res, next) => {
+    const { name, location } = req.body;
+    const StaduimData = new Staduim({ name ,location });
+    (await StaduimData.save());
+    res.json({
+        message : "Team sucessfully added ! "
+    });
 }
 
 const getStaduimById =  async (req,res,next)=>{
@@ -27,7 +26,7 @@ const deleteStaduimById =  async (req,res,next)=>{
 }
 const updateStaduim = async (req,res,next)=>{
     try {
-      const s = await Stadium.findByIdAndUpdate(req.params.id , req.body) ;
+      const s = await Staduim.findByIdAndUpdate(req.params.id , req.body) ;
       if(!s){
         return res.status(404).json({message : 'no stadium with ${id}'})
       } 

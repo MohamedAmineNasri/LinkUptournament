@@ -6,11 +6,11 @@ const StaduimSchema = new mongoose.Schema(
 
     name: {
       type: String,
-      required : [true , "Staduim Name is required !!"],
+      require ,
     },
     location: {
       type: String,
-      required : [true ,  "Location is required !!"],
+      require ,
     },
     
   }, {

@@ -1,11 +1,20 @@
 const express = require("express");
 const cors = require("cors");
-
+const corsOptions = require('./config/corsOptions');
+const credentials = require('./middlewares/credentials');
 const app = express();
 
 const cookieParser = require('cookie-parser')
 
-app.use(cors());
+
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
+
+// Cross Origin Resource Sharing
+app.use(cors(corsOptions));
+
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

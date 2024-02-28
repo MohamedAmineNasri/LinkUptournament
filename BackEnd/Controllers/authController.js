@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
+    
 
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required." });
@@ -32,13 +33,13 @@ const handleLogin = async (req, res) => {
                     roles: foundUser.roles,
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30s' }
+                { expiresIn: '10s' }
             );
 
             const refreshToken = jwt.sign(
                 { email: foundUser.email },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: '15s' }
             );
 
             // Save refreshToken with current user
@@ -47,6 +48,7 @@ const handleLogin = async (req, res) => {
 
             // Send tokens in response
             res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+
             res.json({ accessToken });
         } else {
             res.status(401).json({ message: "Invalid email or password." }); // Unauthorized

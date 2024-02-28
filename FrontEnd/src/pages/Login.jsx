@@ -13,8 +13,8 @@ const Login = () => {
     };
     const userRef = useRef()
     const errRef = useRef()
-    const [user, setUser] = useState('')
-    const [pwd, setPwd]= useState('')
+    const [email, setEmail] = useState('')
+    const [password, setpassword]= useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
 
@@ -30,7 +30,7 @@ const Login = () => {
         //Then we will go ahead and set the error message back to empty because we might change one of those fields 
         //And hide the error message that is showed up
         setErrMsg('')
-    },[user, pwd])
+    },[email, password])
 
     const handleSubmit = async (e) => {
         //We will receive the event and inside of that 
@@ -39,12 +39,12 @@ const Login = () => {
 
         try {
             //Inside the try block we're going to submit to the api
-            const userData = await login({ user, pwd }).unwrap()
+            const userData = await login({ email, password }).unwrap()
             //We're saving the username and we will get the access token 
-            dispatch(setCredentials({...userData, user}))
-            setUser('')
-            setPwd('')
-            navigate('/')
+            dispatch(setCredentials({...userData, email}))
+            setEmail('')
+            setpassword('')
+            navigate('/welcome')
         } catch(err) {
             if(!err?.originalStatus) {
                 setErrMsg('No Server Response')
@@ -60,8 +60,8 @@ const Login = () => {
     }
 
     //Handlers :
-    const handleUserInput = (e) => setUser(e.target.value)
-    const handlePwdInput = (e) => setPwd(e.target.value)
+    const handleUserInput = (e) => setEmail(e.target.value)
+    const handlepasswordInput = (e) => setpassword(e.target.value)
 
     
 
@@ -176,7 +176,7 @@ const Login = () => {
                         className="form-control"
                         placeholder="Email"
                         ref={userRef}
-                        value={user}
+                        value={email}
                         onChange={handleUserInput}
                         autoComplete="off"
                         required
@@ -187,8 +187,8 @@ const Login = () => {
                         type="password"
                         className="form-control"
                         placeholder="Password"
-                        value={pwd}
-                        onChange={handlePwdInput}
+                        value={password}
+                        onChange={handlepasswordInput}
                         required
                         />
                     </div>

@@ -3,11 +3,12 @@ import { setCredentials, logOut } from '../../Features/auth/authSlice'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:8000',
-    credentials: 'include',//to ensures that cookies are sent with each request
+    credentials: 'include',
+    //to ensures that cookies are sent with each request
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token//sending access token that in the current state
         if ( token ) {
-            headers.set("authorization", 'Bearer ${token}')
+            headers.set("authorization", `Bearer ${token}`)
         }
         return headers
         //Attaching the access token to the header everytime with every request
@@ -22,7 +23,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     if(result?.error?.originalStatus === 403) {
         console.log('sending refresh token')
         //Sending a refresh token to get new access token
-        const refreshResult = await baseQuery('/refresh', api, extraOptions)
+        const refreshResult = await baseQuery('/user/refresh', api, extraOptions)
         console.log(refreshResult)
         if(refreshResult?.data) {
             const user = api.getState().auth.user

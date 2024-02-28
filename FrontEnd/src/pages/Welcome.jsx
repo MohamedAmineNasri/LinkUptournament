@@ -14,7 +14,8 @@ const Welcome = () => {
         <section className="welcome">
             <h1>{welcome}</h1>
             <p>Token: {tokenAbbr}</p>
-            {/* <p><Link to="/userslist">Go to the Users List</Link></p> */}
+            <p><Link to="/userslist">Go to the Users List</Link></p>
+            <p><Link to="/">Go to Home</Link></p>
         </section>
     )
 

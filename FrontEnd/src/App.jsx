@@ -13,6 +13,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Welcome from "./pages/Welcome";
 import RequireAuth from "./pages/RequireAuth";
+import UserList from "../Features/users/UserList";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         {/* Protected Routes  */}
         <Route element={<RequireAuth />}>
           <Route path="/welcome" element={<Welcome />} />
+          <Route path="/userslist" element={<UserList />} />
         </Route>
         
       </Route>

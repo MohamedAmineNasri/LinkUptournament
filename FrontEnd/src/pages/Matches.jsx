@@ -168,7 +168,7 @@ export class Matches extends Component {
                     </div>
 
                     <div className="text-center widget-vs-contents mb-4">
-                      <h4>World Cup League</h4>
+                      <h4>Tournament</h4>
                       <p className="mb-5">
                         <span className="d-block">December 20th, 2020</span>
                         <span className="d-block">9:30 AM GMT+0</span>
@@ -214,7 +214,7 @@ export class Matches extends Component {
                     </div>
 
                     <div className="text-center widget-vs-contents mb-4">
-                      <h4>World Cup League</h4>
+                      <h4>Tournament</h4>
                       <p className="mb-5">
                         <span className="d-block">December 20th, 2020</span>
                         <span className="d-block">9:30 AM GMT+0</span>
@@ -252,7 +252,7 @@ export class Matches extends Component {
                     </div>
 
                     <div className="text-center widget-vs-contents mb-4">
-                      <h4>World Cup League</h4>
+                      <h4>Tournament</h4>
                       <p className="mb-5">
                         <span className="d-block">December 20th, 2020</span>
                         <span className="d-block">9:30 AM GMT+0</span>
@@ -291,7 +291,7 @@ export class Matches extends Component {
                     </div>
 
                     <div className="text-center widget-vs-contents mb-4">
-                      <h4>World Cup League</h4>
+                      <h4>Tournament</h4>
                       <p className="mb-5">
                         <span className="d-block">December 20th, 2020</span>
                         <span className="d-block">9:30 AM GMT+0</span>
@@ -329,7 +329,7 @@ export class Matches extends Component {
                     </div>
 
                     <div className="text-center widget-vs-contents mb-4">
-                      <h4>World Cup League</h4>
+                      <h4>Tournament</h4>
                       <p className="mb-5">
                         <span className="d-block">December 20th, 2020</span>
                         <span className="d-block">9:30 AM GMT+0</span>
@@ -610,7 +610,7 @@ export class Matches extends Component {
                         <a href="#">Standings</a>
                       </li>
                       <li>
-                        <a href="#">World Cup</a>
+                        <a href="#">Tournament</a>
                       </li>
                       <li>
                         <a href="#">La Lega</a>

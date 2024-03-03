@@ -138,10 +138,8 @@ export class Academy extends Component {
                     </div>
                     <div className="widget-body mb-3">
                       <div className="widget-vs">
-                        <div className="d-flex flex-wrap justify-content-center">
-                          {Array.from({ length: 4 }).map((_, index) => (
-                            <TeamCard key={index} />
-                          ))}
+                        <div>
+                          <TeamCard></TeamCard>
                         </div>
                       </div>
                     </div>

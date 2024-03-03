@@ -6,6 +6,8 @@ const getAllTeams = async (req, res, next) => {
         res.json(teams);  
 };
 
+
+
 const addTeam =  async (req, res, next) => {
     const { TeamName, TeamLogo  } = req.body;
     const TeamData = new Team({ TeamName,TeamLogo });
@@ -14,14 +16,22 @@ const addTeam =  async (req, res, next) => {
         message : "Team sucessfully added ! "
     });
 }
+
+
+
 const addTeamAndAssaignToAcademy =  async (req, res, next) => {
     const { TeamName, TeamLogo,academy  } = req.body;
     const TeamData = new Team({ TeamName,TeamLogo,academy });
-    (await TeamData.save());
+    await TeamData.save();
+
+     targetAcademy = await academyService.getAcademyByIdParam(academy)
+     targetAcademy.teams.push(TeamData);
+     await targetAcademy.save();
     res.json({
         message : "Team sucessfully added ! "
     });
 }
+
 
 
 const getTeamById =  async (req,res,next)=>{
@@ -29,11 +39,12 @@ const getTeamById =  async (req,res,next)=>{
     res.json(TeamData);
 }
 
+
+
 const deleteTeamById =  async (req,res,next)=>{
     const teamData = await Team.findByIdAndDelete(req.params.id);
     res.json("deleted sucessfully" + teamData);
 }
-
 
 
 
@@ -51,6 +62,8 @@ const updateTeamMatchesWon = async (req,res,next)=>{
     res.json(TeamMWData)
 }
 
+
+
 const cancelTeamMatchesWon = async (req,res,next)=>{
 
     const TeamMWData = await Team.findById(req.params.id);
@@ -67,7 +80,6 @@ const cancelTeamMatchesWon = async (req,res,next)=>{
         await TeamMWData.save()
         res.json(TeamMWData)
     }
-    
 }
 
 
@@ -86,6 +98,9 @@ const updateTeamMatchesLost = async (req,res,next)=>{
     await TeamMLData.save()
     res.json(TeamMLData)
 }
+
+
+
 const cancelTeamMatchesLost = async (req,res,next)=>{
 
     const TeamMLData = await Team.findById(req.params.id);
@@ -121,6 +136,9 @@ const updateTeamMatchesDrawn = async (req,res,next)=>{
     await TeamMDData.save()
     res.json(TeamMDData)
 }
+
+
+
 const cancelTeamMatchesDrawn = async (req,res,next)=>{
     const TeamMDData = await Team.findById(req.params.id);
     if(TeamMDData.Total_MatchesDrawn  == 0 || TeamMDData.Total_MatchesPlayed == 0 || TeamMDData.GS_MatchesPlayed ==0||TeamMDData.GS_MatchesDrawn ==0 ){
@@ -152,6 +170,9 @@ const updateGoals_scored = async (req,res, next) => {
         res.json(TeamData)
    
 };
+
+
+
 const cancelGoals_scored = async (req,res, next) => {
     
         const TeamData = await Team.findById(req.params.id);
@@ -166,9 +187,7 @@ const cancelGoals_scored = async (req,res, next) => {
         await TeamData.save();
         res.json(TeamData)
         }
-   
 };
-
 
 
 
@@ -184,6 +203,9 @@ const updateGoals_received = async (req,res, next) => {
         res.json(TeamData)
    
 };
+
+
+
 const cancelGoals_received = async (req,res, next) => {
     
         const TeamData = await Team.findById(req.params.id);
@@ -202,7 +224,6 @@ const cancelGoals_received = async (req,res, next) => {
 
 
 
-
 const resetGroupStageData = async (req,res, next) => {
     
         const TeamData = await Team.findById(req.params.id);
@@ -218,9 +239,6 @@ const resetGroupStageData = async (req,res, next) => {
         res.json(TeamData)
         
 };
-
-
-
 
 
 

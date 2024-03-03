@@ -1,10 +1,13 @@
-const academy =require('../Models/Academy')
+const academy = require('../Models/Academy')
+
 
 
 const getAllAcademies = async (req, res, next) => {
         const academies = await academy.find();
         res.json(academies);  
 };
+
+
 
 const addAcademy =  async (req, res, next) => {
     const { AcademyName, Location, Logo, FoundedYear } = req.body;
@@ -15,16 +18,28 @@ const addAcademy =  async (req, res, next) => {
     });
 }
 
+
+
 const getAcademyById =  async (req,res,next)=>{
-    const academyData = await academy.findById(req.params.id);
+    const academyData = await academy.findById(req.params.id).populate('teams');
     res.json(academyData);
 }
+
+
+
+const getAcademyByIdParam =  async (Aid)=>{
+    const academyData = await academy.findById(Aid);
+    return academyData;
+}
+
 
 
 const deleteAcademyById =  async (req,res,next)=>{
     const academyData = await academy.findByIdAndDelete(req.params.id);
     res.json("deleted sucessfully" + academyData);
 }
+
+
 
 const updateAcademy = async (req,res,next)=>{
     const academyData = await academy.findById(req.params.id);
@@ -38,4 +53,13 @@ const updateAcademy = async (req,res,next)=>{
 
 
 
-module.exports = { getAllAcademies,addAcademy, deleteAcademyById, getAcademyById,updateAcademy };
+const updateStatus = async (req,res,next)=>{
+    const academyData = await academy.findById(req.params.id);
+    academyData.Status = "Verified";
+    await academyData.save()
+    res.json("Academy's Status updated sucessfully");
+}
+
+
+
+module.exports = { getAllAcademies,addAcademy, deleteAcademyById, getAcademyById,getAcademyByIdParam,updateAcademy,updateStatus};

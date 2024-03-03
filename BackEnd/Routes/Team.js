@@ -27,6 +27,6 @@ router.post("/cancelGoalsIn/:id",teamService.cancelGoals_received);
 
 router.post("/resetGSdata/:id",teamService.resetGroupStageData);
 
-router.post("/getTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
+router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
 
 module.exports =router

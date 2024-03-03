@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 
 const AcademySchema = new mongoose.Schema(
   {
-    AcademyId: Number,
-
     AcademyName: {
       type: String,
       require: "AcademyName is required !!",
@@ -19,6 +17,10 @@ const AcademySchema = new mongoose.Schema(
     FoundedYear: {
       type: Date,
       require: "FoundedYear is required !! ",
+    },
+    Status: {
+      type: String,
+      default: "Not Verified"
     },
     teams: [{
         type: mongoose.Schema.Types.ObjectId,

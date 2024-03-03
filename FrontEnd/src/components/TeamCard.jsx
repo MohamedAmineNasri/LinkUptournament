@@ -1,42 +1,57 @@
 import Card from "react-bootstrap/Card";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTeam } from "../redux/slice/teamSlice";
 
-function TeamCard() {
+const TeamCard = () => {
+  const teamData = useSelector((state) => state.team.teamData);
+  const loading = useSelector((state) => state.team.loading);
+  const error = useSelector((state) => state.team.error);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTeam());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
-    <Card style={{ width: "20rem", backgroundColor: "#222222" }}>
-      <Card.Img
-        variant="top"
-        src="/public/assets/images/logo_1.png"
-        alt="Logo"
-      />
-      <Card.Body>
-        <Card.Title>Real Madrid U12</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Card.Subtitle>Total wins : </Card.Subtitle>
-        <Card.Subtitle style={{ marginTop: "10px" }}>
-          Total loses :{" "}
-        </Card.Subtitle>
-        <Card.Subtitle style={{ marginTop: "10px" }}>
-          Total draw :{" "}
-        </Card.Subtitle>
-        <Card.Subtitle style={{ marginTop: "10px" }}>
-          Total matches :{" "}
-        </Card.Subtitle>
-        <Card.Subtitle style={{ marginTop: "10px" }}>
-          Total Goals_scored :{" "}
-        </Card.Subtitle>
-        <Card.Subtitle style={{ marginTop: "10px" }}>
-          Total Goals_received :{" "}
-        </Card.Subtitle>
-      </Card.Body>
-      <Card.Body>
-        <Card.Link href="#">Add Players</Card.Link>
-        <Card.Link href="#">Check Players</Card.Link>
-      </Card.Body>
-    </Card>
+    <div className="row">
+      {teamData.length === 0 && !loading && !error && (
+        <div>No data available</div>
+      )}
+      {teamData.map((team, index) => (
+        <div key={index} className="col-md-4 mb-3">
+          <Card style={{ backgroundColor: "#222222" }}>
+            <Card.Body>
+              <Card.Title>{team.TeamName}</Card.Title>
+              <Card.Subtitle>Total wins: {team.Total_MatchesWon}</Card.Subtitle>
+              <Card.Subtitle style={{ marginTop: "10px" }}>
+                Total loses: {team.Total_MatchesLost}
+              </Card.Subtitle>
+              <Card.Subtitle style={{ marginTop: "10px" }}>
+                Total draw: {team.Total_MatchesDrawn}
+              </Card.Subtitle>
+              <Card.Subtitle style={{ marginTop: "10px" }}>
+                Total matches: {team.TotalMatchesPlayed}
+              </Card.Subtitle>
+              <Card.Subtitle style={{ marginTop: "10px" }}>
+                Total Goals scored: {team.Total_Goals_scored}
+              </Card.Subtitle>
+              <Card.Subtitle style={{ marginTop: "10px" }}>
+                Total Goals received: {team.Total_Goals_received}
+              </Card.Subtitle>
+            </Card.Body>
+            <Card.Body>
+              <Card.Link href="#">Add Players</Card.Link>
+              <Card.Link href="#">Check Players</Card.Link>
+            </Card.Body>
+          </Card>
+        </div>
+      ))}
+    </div>
   );
-}
+};
 
 export default TeamCard;

@@ -1117,3 +1117,34 @@ h1, h2, h3, h4, h5,
   .post-meta a {
     color: #fff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+
+
+
+
+
+
+
+/* Style for the signup form */
+/* Input and Select Styles */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #222831; /* Text color */
+}
+
+/* Button Styles */
+.btn {
+  background-color: #1976D2;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Select Options Background Color */
+.form-control option {
+  background-color: #222831;
+  color: #fff;
+}

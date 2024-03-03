@@ -1,13 +1,58 @@
-    import React, { Component } from 'react'
-    import { Link } from 'react-router-dom';
+    import React, { Component, useState } from 'react'
+    import { Link, useNavigate } from 'react-router-dom';
+import { setCredentials } from '../../Features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import { useSignupMutation } from '../../Features/auth/authApiSlice';
 
-    export class Contact extends Component {
-        
-    render() {
-        const sectionStyle = {
-            padding: '10em 0',
-        };
-        return (
+const SignUp = () => {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        accountImage: '',
+        roles: 'Supporter',
+    });
+
+    const [signup, { isLoading }] = useSignupMutation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const userData = await signup(formData).unwrap();
+            dispatch(setCredentials({ ...userData, email: formData.email }));
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNumber: '',
+                password: '',
+                accountImage: '',
+                roles: 'Supporter',
+            });
+            navigate('/login');
+        } catch (err) {
+            console.error('Signup failed:', err);
+        }
+    };
+
+    const sectionStyle = {
+        padding: '10em 0',
+    };
+
+    return (
         <div className="site-wrap">
             <div className="site-mobile-menu site-navbar-target">
             <div className="site-mobile-menu-header">
@@ -76,66 +121,108 @@
             </div>
             </header>
 
-            {/* <div
-            className="hero overlay"
-            style={{ backgroundImage: "url('/assets/images/bg_3.jpg')" }}
-            >
-            <div className="container">
-                <div className="row align-items-center">
-                <div className="col-lg-9 mx-auto text-center">
-                    <h1 className="text-white">Contact</h1>
-                </div>
-                </div>
-            </div>
-            </div> */}
-
             <div className="site-section" style={sectionStyle}>
+            
             <div className="container">
-                <div className="row">
-                    <div className="col-lg-12">
-                        <form action="#">
+            <div className="row">
+                <div className="col-lg-12">
+                    <form onSubmit={handleSubmit}>
+                        {/* Your form fields */}
                         <div className="form-group">
                             <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Name"
+                                type="text"
+                                className="form-control"
+                                placeholder="First Name"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                                required
                             />
                         </div>
                         <div className="form-group">
                             <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Email"
+                                type="text"
+                                className="form-control"
+                                placeholder="Last Name"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                                required
                             />
                         </div>
                         <div className="form-group">
                             <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Subject"
+                                type="text"
+                                className="form-control"
+                                placeholder="Email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
                             />
-                        </div>
-                        <div className="form-group">
-                            <textarea
-                            name=""
-                            className="form-control"
-                            id=""
-                            cols="30"
-                            rows="10"
-                            placeholder="Write something..."
-                            ></textarea>
                         </div>
                         <div className="form-group">
                             <input
-                            type="submit"
-                            className="btn btn-primary py-3 px-5"
-                            value="Send Message"
+                                type="text"
+                                className="form-control"
+                                placeholder="Phone Number"
+                                name="phoneNumber"
+                                value={formData.phoneNumber}
+                                onChange={handleChange}
                             />
                         </div>
-                        </form>
-                    </div>
+                        <div className="form-group">
+                            <input
+                                type="password"
+                                className="form-control"
+                                placeholder="Password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="file"
+                                className="form-control"
+                                placeholder="Account Image"
+                                name="accountImage"
+                                value={formData.accountImage}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Roles:
+                                <select
+                                    className="form-control"
+                                    name="roles"
+                                    value={formData.roles}
+                                    onChange={handleChange}
+                                >
+                                    <option value="Supporter">Supporter</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Agent">Agent</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Player">Player</option>
+                                    <option value="TournamentCoordinator">Tournament Coordinator</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="submit"
+                                className="btn btn-primary py-3 px-5"
+                                value="Sign Up"
+                                disabled={isLoading}
+                            />
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+
             </div>
 
             <footer className="footer-section">
@@ -251,6 +338,6 @@
         </div>
         );
     }
-    }
+    
 
-    export default Contact
+    export default SignUp 

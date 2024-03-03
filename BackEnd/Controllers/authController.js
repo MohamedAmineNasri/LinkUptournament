@@ -33,13 +33,13 @@ const handleLogin = async (req, res) => {
                     roles: foundUser.roles,
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '15s' }
+                { expiresIn: '1d' }//for test put it to 15s
             );
 
             const refreshToken = jwt.sign(
                 { email: foundUser.email },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '15s' }
+                { expiresIn: '2d' }
             );
 
             // Save refreshToken with current user

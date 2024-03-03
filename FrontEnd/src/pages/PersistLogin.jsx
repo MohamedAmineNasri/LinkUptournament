@@ -9,27 +9,40 @@ const PersistLogin = () => {
     const refresh = useRefreshToken();
     const { auth } = useAuth()
 
-    useEffect(()=> {
+    console.log('auuuuuuuuuth   '+auth.accessToken)
+    // useEffect(() => {
+    //     const verifyRefreshToken = async () => {
+    //         try {
+    //             await refresh();
+    //         } catch (err) {
+    //             console.error(err);
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     }
+    
+    //     !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+    // }, []);
+    // useEffect(() => {  
+    //     console.log(`isLoading: ${isLoading}`);
+    //     console.log(`authToken: ${JSON.stringify(auth?.accessToken)}`);
+    // }, [isLoading]);
+    
+    useEffect(() => {
         const verifyRefreshToken = async () => {
             try {
                 await refresh();
-            }
-            catch(err) {
-                console.error(err)
-            }
-            finally {
-                setIsLoading(false)
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLoading(false);
             }
         }
-
-        !auth?.accessToken ? verifyRefreshToken(): setIsLoading(false)
-    },[])
-
-    useEffect(() => {  
-        console.log(`isLoading: ${isLoading}`)
-        console.log(`authToken: ${JSON.stringify(auth?.accessToken)}`)
-    }, [isLoading])
-
+    
+        // Use refresh token on page load
+        verifyRefreshToken();
+    }, []);
+    
     return(
         <>
             {

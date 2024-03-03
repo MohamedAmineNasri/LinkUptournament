@@ -33,19 +33,16 @@ const Login = () => {
     },[email, password])
 
     const handleSubmit = async (e) => {
-        //We will receive the event and inside of that 
-        //We prevent Default because it's a form which could cause a reload otherwise 
-        e.preventDefault()
-
+        e.preventDefault();
+    
         try {
-            //Inside the try block we're going to submit to the api
-            const userData = await login({ email, password }).unwrap()
-            //We're saving the username and we will get the access token 
-            dispatch(setCredentials({...userData, email}))
-            setEmail('')
-            setpassword('')
-            navigate('/welcome')
-        } catch(err) {
+            const userData = await login({ email, password }).unwrap();
+            // Use the user information to dispatch the setCredentials action
+            dispatch(setCredentials({ ...userData, email }));
+            setEmail('');
+            setpassword('');
+            navigate('/welcome');
+        } catch (err) {
             if(!err?.originalStatus) {
                 setErrMsg('No Server Response')
             } else if (err.originalStatus === 400) {

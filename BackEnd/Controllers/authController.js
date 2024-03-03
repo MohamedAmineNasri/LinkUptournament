@@ -6,7 +6,6 @@ require('dotenv').config();
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
-    
 
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required." });
@@ -23,6 +22,7 @@ const handleLogin = async (req, res) => {
         const match = await bcrypt.compare(password, foundUser.password);
 
         if (match) {
+            const roles = Object.values(foundUser.roles).filter(Boolean);
             const accessToken = jwt.sign(
                 {
                     email: foundUser.email,
@@ -33,7 +33,7 @@ const handleLogin = async (req, res) => {
                     roles: foundUser.roles,
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '10s' }
+                { expiresIn: '15s' }
             );
 
             const refreshToken = jwt.sign(
@@ -44,12 +44,22 @@ const handleLogin = async (req, res) => {
 
             // Save refreshToken with current user
             foundUser.refreshToken = refreshToken;
-            await foundUser.save();
+            const result = await foundUser.save();
+            console.log(result);
+            console.log(roles);
+    
 
-            // Send tokens in response
-            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+            // Send tokens and user info in response
+            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 7 * 24 * 60 * 60 * 1000 }); // 7 days, adjust as needed
 
-            res.json({ accessToken });
+            res.json({ accessToken,roles, user: {
+                email: foundUser.email,
+                firstName: foundUser.firstName,
+                lastName: foundUser.lastName,
+                birthday: foundUser.birthday,
+                phoneNumber: foundUser.phoneNumber,
+                roles: foundUser.roles,
+            }});
         } else {
             res.status(401).json({ message: "Invalid email or password." }); // Unauthorized
         }
@@ -58,4 +68,5 @@ const handleLogin = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 module.exports = { handleLogin };

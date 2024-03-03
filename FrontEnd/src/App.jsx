@@ -13,6 +13,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Welcome from "./pages/Welcome";
 import RequireAuth from "./pages/RequireAuth";
+import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 
 function App() {
@@ -29,9 +30,13 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         {/* Protected Routes  */}
-        <Route element={<RequireAuth />}>
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/userslist" element={<UserList />} />
+        <Route element={<PersistLogin/>}>
+        {/* <Route element={<RequireAuth  />}> */}
+            <Route element={<RequireAuth allowedRoles={['Admin']} />}>
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/userslist" element={<UserList />} />
+            </Route>
+
         </Route>
         
       </Route>

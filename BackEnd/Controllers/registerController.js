@@ -32,7 +32,6 @@ const handleNewUser = async (req, res) => {
 
         const createdUser = await Users.create(newUser);
 
-        console.log(createdUser);
 
         res.status(201).json({ success: `New user ${email} created!` });
     } catch (err) {

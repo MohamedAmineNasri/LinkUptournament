@@ -21,7 +21,7 @@ const addAcademy =  async (req, res, next) => {
 
 
 const getAcademyById =  async (req,res,next)=>{
-    const academyData = await academy.findById(req.params.id).populate('teams');
+    const academyData = await academy.findById(req.params.id);
     res.json(academyData);
 }
 

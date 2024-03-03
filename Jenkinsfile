@@ -2,13 +2,17 @@ pipeline {
     agent any
 
     stages {
+
         stage('mouving to back_end') {
             steps {
                 script {
                     sh 'cd BackEnd'
                    
+
                 }
             }
+            
+              
         }
 
         stage('Install dependencies') {

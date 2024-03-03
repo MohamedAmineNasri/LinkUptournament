@@ -2,17 +2,36 @@ pipeline {
     agent any
 
     stages {
-        stage('Clean') {  steps {
+
+        stage('mouving to back_end') {
+            steps {
                 script {
                     sh 'cd BackEnd'
-                     sh 'npm i '
-                     sh 'npm start'
+                   
+
                 }
             }
             
               
         }
 
+        stage('Install dependencies') {
+steps{
+script {
+sh('npm install')
+}
+}
+}
+
+
+        
+stage('Build application') {
+steps{
+script {
+sh('npm start')
+}
+
+
       
     }
-}
+}}}

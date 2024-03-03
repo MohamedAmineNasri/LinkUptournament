@@ -2,12 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Clean') {
-            steps {
+        stage('Clean') {  steps {
                 script {
-                    sh 'npm run dev'
+                    sh 'cd BackEnd'
+                     sh 'npm i '
+                     sh 'npm start'
                 }
             }
+            
+              
         }
 
       

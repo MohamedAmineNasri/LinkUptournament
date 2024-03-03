@@ -2,14 +2,24 @@ const express = require("express");
 const cors = require("cors");
 const corsOptions = require('./config/corsOptions');
 const credentials = require('./middlewares/credentials');
+const tournementRouter = require("./Routes/tournementRouter");
+const playerRouter = require("./Routes/playerRouter");
+// const teamRouter = require("./Routes/teamRouter");
+const match= require("./Routes/match")
 const app = express();
 
 const cookieParser = require('cookie-parser')
 
+app.use(express.json());
+app.use("/tournement", tournementRouter);
+app.use("/player", playerRouter);
+// app.use("/team", teamRouter);
+app.use("/match",match)
 
-// Handle options credentials check - before CORS!
+
+// Handle options credentials check - before CORS! 
 // and fetch cookies credentials requirement
-app.use(credentials);
+app.use(credentials); 
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));

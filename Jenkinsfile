@@ -6,6 +6,7 @@ pipeline {
         stage('mouving to back_end') {
             steps {
                 script {
+                    echo "mouving to backend "
                     sh 'cd BackEnd'
                    
 
@@ -13,25 +14,10 @@ pipeline {
             }
             
               
-        }
+        }}}
 
-        stage('Install dependencies') {
-steps{
-script {
-sh('npm install')
-}
-}
-}
+       
 
 
         
-stage('Build application') {
-steps{
-script {
-sh('npm start')
-}
 
-
-      
-    }
-}}}

@@ -10,6 +10,7 @@ pipeline {
                     sh 'cd BackEnd'
                     sh "pwd"
                     sh "ls"
+                    sh " cd BackEnd"
                    
 
                 }

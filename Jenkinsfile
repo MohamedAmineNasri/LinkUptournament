@@ -8,6 +8,7 @@ pipeline {
                 script {
                     echo "mouving to backend "
                     sh 'cd BackEnd'
+                    sh "pwd"
                    
 
                 }

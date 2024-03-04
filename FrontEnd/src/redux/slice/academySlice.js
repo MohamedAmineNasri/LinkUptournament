@@ -13,6 +13,26 @@ export const fetchAcademy = createAsyncThunk(
     }
   }
 );
+export const editAcademy = createAsyncThunk(
+  'academy/editAcademy',
+  async ({ name, location, date }) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/academy/editAcademy/65d63da21ae37b6822a03dac',
+        {
+          AcademyName: name, 
+          Location: location,
+          FoundedYear: date
+        }
+      );
+      window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 
 const academySlice = createSlice({
   name: 'academy',

@@ -23,7 +23,12 @@ const TeamCard = () => {
       )}
       {teamData.map((team, index) => (
         <div key={index} className="col-md-4 mb-3">
-          <Card style={{ backgroundColor: "#222222" }}>
+          <Card style={{ backgroundColor: "#222222", borderRadius: "1.25rem" }}>
+            <Card.Img
+              variant="top"
+              src="/public/assets/images/logo_1.png"
+              style={{ alignSelf: "center" }}
+            />
             <Card.Body>
               <Card.Title>{team.TeamName}</Card.Title>
               <Card.Subtitle>Total wins: {team.Total_MatchesWon}</Card.Subtitle>

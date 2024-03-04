@@ -53,6 +53,7 @@ const updateAcademy = async (req,res,next)=>{
 
 
 
+
 const updateStatus = async (req,res,next)=>{
     const academyData = await academy.findById(req.params.id);
     academyData.Status = "Verified";

@@ -13,6 +13,26 @@ export const fetchTeam = createAsyncThunk(
   }
 );
 
+export const addTeam = createAsyncThunk(
+  'team/addTeam',
+  async ({ name, logo }) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/team/addTeamAndAssaignAcademy',
+        {
+          TeamName: name, 
+          TeamLogo: logo,
+          academy: "65d63da21ae37b6822a03dac"
+        }
+      );
+      window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 const teamSlice = createSlice({
   name: 'team',
   initialState: {

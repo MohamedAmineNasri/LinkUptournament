@@ -5,6 +5,7 @@ import DropDown from "../components/DropDown";
 
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademy } from "../redux/slice/academySlice";
+import { render } from "sass";
 
 export const Academy = () => {
   const dispatch = useDispatch();
@@ -75,55 +76,51 @@ export const Academy = () => {
 
         <div className="site-section bg-dark">
           <div className="container">
-            <div className="row mb-5">
-              <div className="col-lg-12">
-                <div className="widget-next-match">
-                  <div className="widget-title">
-                    <div
-                      className="row"
-                      style={{
-                        alignItems: "center",
-                        justifyContent: "space-evenly",
-                      }}
-                    >
-                      <div>
-                        <img
-                          src="/public/assets/images/logo_1.png"
-                          alt="Logo"
-                          className="img-fluid"
-                          style={{ borderRadius: "20px" }}
-                          width="80%"
-                        />
-                      </div>
-                      <div>
-                        <h3 style={{ paddingTop: "25px" }}>
-                          Academy Name : {academyData.AcademyName}
-                        </h3>
-                        <h3 style={{ paddingTop: "5px" }}>
-                          Location : {academyData.Location}
-                        </h3>
-                        <h3 style={{ paddingTop: "5px" }}>
-                          Creating Date :{formattedDate}
-                        </h3>
-                        <h3 style={{ paddingTop: "5px" }}>
-                          Status :{academyData.Status}
-                        </h3>
-                      </div>
-                      <div
-                        style={{
-                          paddingTop: "2px",
-                          paddingLeft: "25px",
-                        }}
-                      >
-                        <DropDown></DropDown>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="widget-body mb-3">
+            <div className="row mb-5 justify-content-center align-items-top ">
+              <div
+                className="col-md-6 col-lg-4 word-wrap-break"
+                style={{
+                  borderRadius: "20px",
+                  boxShadow: "0px 1px 8px 1px green",
+                }}
+              >
+                <div className="text-center">
+                  <img
+                    src="/public/assets/images/logo_1.png"
+                    alt="Logo"
+                    className="img-fluid rounded-circle"
+                    style={{ maxWidth: "200px" }}
+                  />
+                  <h4 className="mb-4 mt-3 mb-0  ">
+                    <strong>{academyData.AcademyName}</strong>
+                  </h4>
+                  <p className=" mb-4">
+                    Location :{" "}
+                    <span className="text-muted">{academyData.Location}</span>
+                  </p>
+                  <p className=" mb-4">
+                    Creating Date :{" "}
+                    <span className="text-muted">{formattedDate}</span>
+                  </p>
+                  <p className="mb-4">
+                    Status :{" "}
+                    <span className="text-muted">{academyData.Status}</span>
+                  </p>
+
+                  <DropDown />
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-8">
+                <div>
+                  <div
+                    className="widget-body mb-3"
+                    style={{
+                      borderRadius: "20px",
+                      boxShadow: "0px 1px 8px 1px green",
+                    }}
+                  >
                     <div className="widget-vs">
-                      <div>
-                        <TeamCard></TeamCard>
-                      </div>
+                      <TeamCard />
                     </div>
                   </div>
                 </div>

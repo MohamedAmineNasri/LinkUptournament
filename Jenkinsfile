@@ -9,6 +9,7 @@ pipeline {
                     echo "mouving to backend "
                     sh 'cd BackEnd'
                     sh "pwd"
+                    sh "ls"
                    
 
                 }

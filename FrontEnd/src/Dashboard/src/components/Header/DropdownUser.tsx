@@ -2,8 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserOne from '../../images/user/user-01.png';
-
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from "../../../../../Features/auth/authSlice.js"; 
 const DropdownUser = () => {
+
+  const user = useSelector(selectCurrentUser);
+  const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Thomas Anree';
+  const userRole = user ? `${user.roles}` : 'Role';
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -45,9 +51,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {userFullName}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{userRole}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">

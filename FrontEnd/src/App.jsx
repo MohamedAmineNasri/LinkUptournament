@@ -14,6 +14,7 @@ import Layout from "./pages/Layout";
 import Welcome from "./pages/Welcome";
 import SignIn from "./pages/Authentication Pages/SignIn";
 import Register from "./pages/Authentication Pages/SignUp";
+import Profile from "./pages/Profile Pages/Profile";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
@@ -37,6 +38,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         
+        
         <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
         {/* Protected Routes  */}
         <Route element={<PersistLogin/>}>
@@ -44,6 +46,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={['Admin']} />}>
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/userslist" element={<UserList />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
 
         </Route>

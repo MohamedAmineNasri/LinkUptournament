@@ -16,11 +16,11 @@ script {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                     dir('BackEnd') {
+                    
                      def scannerHome = tool 'scanner'
                     withSonarQubeEnv {
                     sh "${scannerHome}/bin/sonar-scanner"
-                    }
+                    
                 }
             }
         }

@@ -13,6 +13,20 @@ script {
 }
 }
 }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                     dir('BackEnd') {
+                    withSonarQubeEnv('sonarqube') {
+                        sh 'mvn test jacoco:report'
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
+        }
+        
+    
       
 
 

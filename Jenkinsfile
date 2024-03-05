@@ -16,7 +16,9 @@ script {
         stage('Unit Test') {
 steps{
 script {
+    dir('BackEnd') {
 sh('npm test')
+}
 }
 }
 }

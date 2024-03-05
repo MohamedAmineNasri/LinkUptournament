@@ -17,6 +17,7 @@ script {
 steps{
 script {
     dir('BackEnd/test') {
+        sh "pwd"
 sh('npm test')
 }
 }

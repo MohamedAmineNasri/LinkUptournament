@@ -15,10 +15,10 @@ script {
 }
         stage('Unit Test') {
 steps{
-
-script {        
+script {
+     dir('BackEnd') {
 sh('npm test')
-
+     }
 }
 }
         }

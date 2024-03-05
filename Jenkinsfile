@@ -13,7 +13,20 @@ script {
 }
 }
 }
-        stage('Unit Test') {
+      
+
+
+        stage('Build application') {
+steps{
+script {
+   dir('BackEnd') {  
+sh('npm run build-dev')
+   }   
+}
+}
+}
+
+     stage('Unit Test') {
 steps{
 script {
      dir('BackEnd') {
@@ -21,20 +34,7 @@ sh('npm test')
      }
 }
 }
-        }
-
-
-        stage('Build application') {
-steps{
-script {
-    
-sh('npm run build-dev')
-    
-}
-}
-}
-
-    
+        } 
     
     
     

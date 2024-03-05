@@ -17,9 +17,9 @@ script {
             steps {
                 script {
                      dir('BackEnd') {
-                    withSonarQubeEnv('sonarqube') {
-                        sh 'mvn test jacoco:report'
-                        sh 'mvn sonar:sonar'
+                     def scannerHome = tool 'scanner'
+                    withSonarQubeEnv {
+                    sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }

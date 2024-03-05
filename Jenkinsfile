@@ -16,8 +16,8 @@ script {
         stage('Unit Test') {
 steps{
 script {
-    dir('BackEnd/test') {
-        sh "pwd"
+    dir('test') {
+        
 sh('npm test')
 }
 }

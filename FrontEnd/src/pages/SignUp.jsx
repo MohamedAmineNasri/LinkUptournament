@@ -123,7 +123,7 @@ const SignUp = () => {
 
             <div className="site-section" style={sectionStyle}>
             
-            <div className="container">
+                <div className="container">
             <div className="row">
                 <div className="col-lg-12">
                     <form onSubmit={handleSubmit}>
@@ -188,7 +188,7 @@ const SignUp = () => {
                                 className="form-control"
                                 placeholder="Account Image"
                                 name="accountImage"
-                                value={formData.accountImage}
+                                value={formData.password}
                                 onChange={handleChange}
                             />
                         </div>
@@ -202,7 +202,6 @@ const SignUp = () => {
                                     onChange={handleChange}
                                 >
                                     <option value="Supporter">Supporter</option>
-                                    <option value="Admin">Admin</option>
                                     <option value="Agent">Agent</option>
                                     <option value="Manager">Manager</option>
                                     <option value="Player">Player</option>
@@ -221,7 +220,7 @@ const SignUp = () => {
                     </form>
                 </div>
             </div>
-        </div>
+            </div>
 
             </div>
 

@@ -33,7 +33,6 @@ const usersSchema = new mongoose.Schema(
                 "Admin",
                 "Agent",
                 "Manager",
-                "Player",
                 "TournamentCoordinator",
                 "Supporter",
             ],

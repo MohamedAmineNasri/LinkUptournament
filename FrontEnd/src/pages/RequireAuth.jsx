@@ -12,7 +12,7 @@ const RequireAuth = ({ allowedRoles }) => {
 
     // Check if the authentication state is still loading
     if (!token || !user || !user.roles || user.roles.length === 0) {
-        return <Navigate to='/login' state={{ from: location }} replace />;
+        return <Navigate to='/signin' state={{ from: location }} replace />;
     }
 
     // Check if the user has any allowed roles

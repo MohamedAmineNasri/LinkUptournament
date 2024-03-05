@@ -12,9 +12,12 @@ import Login from "./pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Welcome from "./pages/Welcome";
+import SignIn from "./pages/Authentication Pages/SignIn";
+import Register from "./pages/Authentication Pages/SignUp";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
+import AdminDashboard from "./Dashboard/AdminDashboard";
 
 function App() {
   return (
@@ -29,6 +32,12 @@ function App() {
         <Route path="/single" element={<Single />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+
+
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/register" element={<Register />} />
+        
+        <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
         {/* Protected Routes  */}
         <Route element={<PersistLogin/>}>
         {/* <Route element={<RequireAuth  />}> */}

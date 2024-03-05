@@ -16,19 +16,20 @@ script {
         stage('Unit Test') {
 steps{
 
-        
+script {        
 sh('npm test')
 
 }
 }
-}
+        }
+
 
         stage('Build application') {
 steps{
 script {
-    dir('BackEnd') {
+    
 sh('npm run build-dev')
-    }
+    
 }
 }
 }

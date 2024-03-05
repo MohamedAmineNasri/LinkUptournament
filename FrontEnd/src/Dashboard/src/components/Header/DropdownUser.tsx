@@ -1,15 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import UserOne from '../../images/user/user-01.png';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from "../../../../../Features/auth/authSlice.js"; 
+import useLogout from "../../../../hooks/useLogout.jsx";
+
 const DropdownUser = () => {
 
   const user = useSelector(selectCurrentUser);
   const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Thomas Anree';
   const userRole = user ? `${user.roles}` : 'Role';
-
+  const logout = useLogout()
+  const signout = async () => {
+      await logout()
+      Navigate('/signin');
+  }
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -159,7 +165,7 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={signout}>
           <svg
             className="fill-current"
             width="22"

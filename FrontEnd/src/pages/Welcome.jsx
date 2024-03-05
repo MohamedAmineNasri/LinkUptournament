@@ -18,7 +18,6 @@ const Welcome = () => {
         await logout()
         Navigate('/signin');
     }
-    console.log("roles baby", userRoles);
 
     const content = (
         <section className="welcome">

@@ -39,7 +39,7 @@ const SignIn: React.FC = () => {
       dispatch(setCredentials({ ...userData, email }));
       setEmail('');
       setPassword('');
-      navigate('/welcome');
+      navigate('/Profile');
     } catch (err) {
       if (!err?.originalStatus) {
         setErrMsg('No Server Response');

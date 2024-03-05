@@ -3,6 +3,8 @@
     "chai": "^5.1.0",
     "mocha": "^10.3.0",
     "nyc": "^15.1.0",
-    "supertest": "^6.3.4"
+    "supertest": "^6.3.4",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
   }
 }

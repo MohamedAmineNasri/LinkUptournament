@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import TeamCard from "../components/TeamCard";
-import DropDown from "../components/DropDown";
+import TeamCard from "./TeamCard";
+import DropDown from "./DropDown";
 
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademy } from "../redux/slice/academySlice";
-import { render } from "sass";
 
 export const Academy = () => {
   const dispatch = useDispatch();

@@ -13,6 +13,21 @@ export const fetchTeam = createAsyncThunk(
   }
 );
 
+
+export const deleteTeam = createAsyncThunk(
+  'team/deleteTeam',
+  async (teamid) => {
+    try {
+      console.log(teamid)
+      const response = await axios.delete('http://localhost:8000/team/deleteTeamByIdandFromAcademy/'+teamid);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
 export const addTeam = createAsyncThunk(
   'team/addTeam',
   async ({ name, logo }) => {

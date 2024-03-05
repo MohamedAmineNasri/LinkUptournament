@@ -14,6 +14,10 @@ const AcademySchema = new mongoose.Schema(
       type: String,
       require: "Logo is required !!",
     },
+    LegitimacyDocuments: {
+      type: String,
+      require: "Doc is required !!",
+    },
     FoundedYear: {
       type: Date,
       require: "FoundedYear is required !! ",

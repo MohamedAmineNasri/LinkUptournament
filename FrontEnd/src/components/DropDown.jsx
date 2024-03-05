@@ -8,12 +8,11 @@ function DropDown() {
       <Dropdown.Toggle variant="success" id="dropdown-basic">
         Options
       </Dropdown.Toggle>
-
       <Dropdown.Menu style={{ backgroundColor: "#8bc34a" }}>
-        <Dropdown.Item href="#/action-1">
+        <Dropdown.Item>
           <EditPopUp></EditPopUp>
         </Dropdown.Item>
-        <Dropdown.Item href="#/action-2">
+        <Dropdown.Item>
           <AddTeamPopUpWindow></AddTeamPopUpWindow>
         </Dropdown.Item>
       </Dropdown.Menu>

@@ -7,8 +7,8 @@ import Blog from "./pages/Blog";
 import Matches from "./pages/Matches";
 import Players from "./pages/Players";
 import Single from "./pages/Single";
-import AddAcademy from "./pages/AddAcademy";
-import Academy from "./pages/Academy";
+import AddAcademy from "./components/AddAcademy";
+import Academy from "./components/Academy";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {

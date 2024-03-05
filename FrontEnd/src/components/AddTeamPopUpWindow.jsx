@@ -16,7 +16,8 @@ export const AddTeamPopUpWindow = () => {
   const [Logo, setLogo] = useState("");
 
   const dispatch = useDispatch();
-  const handleSaveChanges = () => {
+  const handleSaveChanges = (e) => {
+    e.preventDefault();
     dispatch(
       addTeam({
         name: Name,

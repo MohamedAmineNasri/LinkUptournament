@@ -1,4 +1,5 @@
 const Team =require('../Models/Team')
+const Academy =require('../Models/Academy')
 const academyService = require('../Services/AcademyService')
 
 const getAllTeams = async (req, res, next) => {
@@ -44,6 +45,29 @@ const getTeamById =  async (req,res,next)=>{
 const deleteTeamById =  async (req,res,next)=>{
     const teamData = await Team.findByIdAndDelete(req.params.id);
     res.json("deleted sucessfully" + teamData);
+}
+
+
+
+const deleteTeamByIdandFromAcademy =  async (req,res,next)=>{
+    try {
+        const team = await Team.findByIdAndDelete(req.params.id);
+        if (!team) {
+          return res.status(404).send('Team not found');
+        }
+    
+        // Updating the corresponding academy's list of team IDs
+        const academy = await Academy.findOneAndUpdate(
+          { _id: team.academy },
+          { $pull: { teams: team._id } },
+          { new: true }
+        );
+    
+        res.status(200).send('Team deleted successfully');
+      } catch (error) {
+        console.error('Error deleting team:', error);
+        res.status(500).send('Internal Server Error');
+      }
 }
 
 
@@ -242,4 +266,4 @@ const resetGroupStageData = async (req,res, next) => {
 
 
 
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData };
+module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy};

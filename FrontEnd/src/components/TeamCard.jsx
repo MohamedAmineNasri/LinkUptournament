@@ -2,6 +2,8 @@ import Card from "react-bootstrap/Card";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTeam } from "../redux/slice/teamSlice";
+import Button from "react-bootstrap/esm/Button";
+import DeleteTeamPopUp from "./DeleteTeamPopUp";
 
 const TeamCard = () => {
   const teamData = useSelector((state) => state.team.teamData);
@@ -22,8 +24,12 @@ const TeamCard = () => {
         <div>No data available</div>
       )}
       {teamData.map((team, index) => (
-        <div key={index} className="col-md-4 mb-3">
-          <Card style={{ backgroundColor: "#222222", borderRadius: "1.25rem" }}>
+        <div key={team._id} className="col-md-6 mb-3">
+          <Card
+            id={team.id}
+            style={{ backgroundColor: "#222222", borderRadius: "1.25rem" }}
+          >
+            <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp>
             <Card.Img
               variant="top"
               src="/public/assets/images/logo_1.png"
@@ -49,8 +55,10 @@ const TeamCard = () => {
               </Card.Subtitle>
             </Card.Body>
             <Card.Body>
-              <Card.Link href="#">Add Players</Card.Link>
-              <Card.Link href="#">Check Players</Card.Link>
+              <div className="row justify-content-around">
+                <Button variant="success">Add Players</Button>
+                <Button variant="success">Check Players</Button>
+              </div>
             </Card.Body>
           </Card>
         </div>

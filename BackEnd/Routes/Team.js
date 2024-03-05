@@ -29,4 +29,6 @@ router.post("/resetGSdata/:id",teamService.resetGroupStageData);
 
 router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
 
+router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
+
 module.exports =router

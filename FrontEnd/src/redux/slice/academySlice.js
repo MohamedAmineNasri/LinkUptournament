@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { Alert } from 'bootstrap';
 
 //export const fetchAcademy = () => createAsyncThunk
 export const fetchAcademy = createAsyncThunk(
@@ -26,6 +27,27 @@ export const editAcademy = createAsyncThunk(
         }
       );
       window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const addnewAcademy = createAsyncThunk(
+  'academy/addnewAcademy',
+  async ({ name, location,logo,foundedYear,doc }) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/academy/addAcademy',
+        {
+          AcademyName: name, 
+          Location: location,
+          Logo: logo,
+          FoundedYear:foundedYear,
+          LegitimacyDocuments : doc
+        }
+      );
+      
       return response.data;
     } catch (error) {
       throw error;

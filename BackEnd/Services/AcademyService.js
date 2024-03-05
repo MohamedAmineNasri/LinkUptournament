@@ -10,12 +10,16 @@ const getAllAcademies = async (req, res, next) => {
 
 
 const addAcademy =  async (req, res, next) => {
-    const { AcademyName, Location, Logo, FoundedYear } = req.body;
-    const academyData = new academy({ AcademyName, Location, Logo, FoundedYear });
-    (await academyData.save());
+    const academyData = new academy()
+    academyData.AcademyName = req.body.AcademyName;
+    academyData.Location = req.body.Location;
+    academyData.Logo = req.body.Logo;
+    academyData.FoundedYear = req.body.FoundedYear;
+    academyData.LegitimacyDocuments = req.body.LegitimacyDocuments;
+    await academyData.save()
     res.json({
-        message : "Academy sucessfully added ! "
-    });
+            message : "Academy sucessfully added ! "
+        });
 }
 
 

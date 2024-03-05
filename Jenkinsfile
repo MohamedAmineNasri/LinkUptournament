@@ -3,23 +3,13 @@ pipeline {
 
     stages {
 
-        stage('mouving to back_end') {
-            steps {
-                script {
-                    echo "mouving to backend "
-                    sh 'cd BackEnd'
-                    sh "pwd"
-                    sh "ls"
-                    sh " cd BackEnd"
-                   
-
-                }
-            }
-        }
         stage('Install dependencies') {
 steps{
 script {
-sh('npm install')
+     dir('BackEnd') {
+                    sh 'npm install'
+                }
+
 }
 }
 }

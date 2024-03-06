@@ -8,6 +8,7 @@ import Matches from "./pages/Matches";
 import Players from "./pages/Players";
 import Single from "./pages/Single";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Group from "./pages/Group";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/matches" element={<Matches />} />
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
+        <Route path="/group" element={<Group />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 
 const StaduimSchema = new mongoose.Schema(
   {
-    StaduimId: Number,
 
     name: {
       type: String,
       require ,
+    },
+    capacity: {
+      type:Number,
     },
     location: {
       type: String,

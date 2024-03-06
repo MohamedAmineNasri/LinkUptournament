@@ -12,8 +12,18 @@ const GroupSchema = new mongoose.Schema(
       required: [true, "Group Name is required !!"],
     },
     teams: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Team'
+      team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Team'
+      },
+      MJ: Number,
+      G: Number,
+      N: Number,
+      P: Number,
+      BP: Number,
+      BC: Number,
+      DB: Number,
+      PTS: Number
     }]
   },
   {

@@ -7,6 +7,7 @@ const TournamentSchema = new mongoose.Schema({
   },
   type: {
     type: String,
+    enum: ['Group Stage Tournament', 'Knockout Tournament', 'Round Robin Tournament'],
     required: true
   },
   rules: {

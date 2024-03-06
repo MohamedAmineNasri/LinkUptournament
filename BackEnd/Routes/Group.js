@@ -5,7 +5,7 @@ const groupService = require('../Services/GroupService')
 
 router.get('/', groupService.getAllGroups); 
 router.post('/add', groupService.addGroup) ;
-router.post('/addGroupsTournament/:id', groupService.createGroupsRandom) ;
+router.post('/addGroupsStage/:id', groupService.createGroups) ;
 router.get('/:id', groupService.getGroupById);
 router.put('/:groupId/team/:teamId/updateMG', async (req, res, next) => {
     console.log('PUT /:groupId/team/:teamId/updateMG called');
@@ -23,5 +23,5 @@ router.put('/:groupId/team/:teamId/updateMG', async (req, res, next) => {
 router.put("/updatetri/:id", groupService.updateGrouptri)
 router.delete('/delete/:id', groupService.deleteGroupById) 
 router.put('/update/:id' , groupService.updateGroup) 
-router.put('/updateg/:id' , groupService.updateGrouptri) 
+
 module.exports = router;

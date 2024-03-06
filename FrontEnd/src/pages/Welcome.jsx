@@ -16,9 +16,8 @@ const Welcome = () => {
     const logout = useLogout()
     const signout = async () => {
         await logout()
-        Navigate("/signup")
+        Navigate('/signin');
     }
-    console.log("roles baby", userRoles);
 
     const content = (
         <section className="welcome">

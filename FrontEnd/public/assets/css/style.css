@@ -3,7 +3,7 @@ body {
   line-height: 1.7;
   color: gray;
   font-weight: 300;
-  background-color: #222831;
+  /* background-color: #222831; */
   font-size: 16px; }
 
 ::-moz-selection {
@@ -29,8 +29,8 @@ h1, h2, h3, h4, h5,
 .border-2 {
   border-width: 2px; }
 
-.text-black {
-  color: #000 !important; }
+/* .text-black {
+  color: #000 !important; } */
 
 .bg-black {
   background: #000 !important; }

@@ -21,6 +21,7 @@ function App() {
 
   return (
     <div className="w-full md:w-[700px]  lg:w-[800px] m-auto">
+      
       <NavBar />
 
       <button

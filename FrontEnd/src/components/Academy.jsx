@@ -34,65 +34,62 @@ export const Academy = () => {
           <div className="site-mobile-menu-body"></div>
         </div>
 
-        <header className="site-navbar py-4" role="banner">
-          <div className="container">
-            <div className="d-flex align-items-center">
-              <div className="site-logo">
-                <a href="index.html">
-                  <img src="/public/assets/images/logo.png" alt="Logo" />
-                </a>
-              </div>
-              <div className="ml-auto">
-                <a
-                  href="#"
-                  className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
-                >
-                  <span className="icon-menu h3 text-white"></span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </header>
-
         <div
           className="hero overlay"
-          style={{
-            backgroundImage: "url('/public/assets//images/bg_3.jpg')",
-          }}
+          style={{ backgroundImage: "url('/assets/images/academy.jpg')" }}
         >
           <div className="container">
             <div className="row align-items-center">
-              <div className="col-lg-5 mx-auto text-center">
-                <h1 className="text-white">Matches</h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Soluta, molestias repudiandae pariatur.
-                </p>
+              <div className="col-lg-12 mx-auto text-center">
+                <img
+                  src="/public/assets/images/logo_1.png"
+                  alt="Logo"
+                  className="img-fluid rounded-circle"
+                  style={{ maxWidth: "200px" }}
+                />
+                <h1 className="text-white">{academyData.AcademyName}</h1>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="site-section bg-dark">
-          <div className="container">
-            <div className="row mb-5 justify-content-center align-items-top ">
+        <div
+          className="site-section "
+          style={{ backgroundColor: "rgba(65, 141, 68, 0.24)" }}
+        >
+          <div
+            className=""
+            style={{ marginRight: "100px", marginLeft: "100px" }}
+          >
+            <div
+              className="row mb-5 justify-content-center align-items-top "
+              style={{
+                borderRadius: "10px",
+                border: "1px solid",
+                borderWidth: "thin",
+              }}
+            >
               <div
                 className="col-md-6 col-lg-4 word-wrap-break"
                 style={{
-                  borderRadius: "20px",
-                  boxShadow: "0px 1px 8px 1px green",
+                  borderRadius: "10px",
+                  border: "1px solid",
+                  borderWidth: "thin",
                 }}
               >
-                <div className="text-center">
+                <div
+                  className="text-center"
+                  style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                >
                   <img
                     src="/public/assets/images/logo_1.png"
                     alt="Logo"
                     className="img-fluid rounded-circle"
                     style={{ maxWidth: "200px" }}
                   />
-                  <h4 className="mb-4 mt-3 mb-0  ">
+                  <h3 className="mb-4 mt-3 mb-0  ">
                     <strong>{academyData.AcademyName}</strong>
-                  </h4>
+                  </h3>
                   <p className=" mb-4">
                     Location :{" "}
                     <span className="text-muted">{academyData.Location}</span>
@@ -115,7 +112,7 @@ export const Academy = () => {
                     className="widget-body mb-3"
                     style={{
                       borderRadius: "20px",
-                      boxShadow: "0px 1px 8px 1px green",
+                      //boxShadow: "0px 1px 8px 1px green",
                     }}
                   >
                     <div className="widget-vs">

@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTeam } from "../redux/slice/teamSlice";
 import Button from "react-bootstrap/esm/Button";
+import ListGroup from "react-bootstrap/ListGroup";
+
 import DeleteTeamPopUp from "./DeleteTeamPopUp";
 
 const TeamCard = () => {
@@ -19,40 +21,110 @@ const TeamCard = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="row">
+    <div className="row" style={{ justifyContent: "center" }}>
       {teamData.length === 0 && !loading && !error && (
-        <div>No data available</div>
+        <div
+          style={{
+            backgroundColor: "#1a1e25",
+            padding: "20px",
+            textAlign: "center",
+            alignItems: "center",
+            paddingTop: "150px",
+          }}
+        >
+          <h3
+            style={{ color: "white", fontSize: "24px", marginBottom: "10px" }}
+          >
+            No teams created yet
+          </h3>
+          <p style={{ color: "#666", fontSize: "18px" }}>
+            Start by creating a new team to get started!
+          </p>
+        </div>
       )}
       {teamData.map((team, index) => (
-        <div key={team._id} className="col-md-6 mb-3">
+        <div key={team._id} className="col-lg-6 col-md-12 mb-3">
           <Card
             id={team.id}
-            style={{ backgroundColor: "#222222", borderRadius: "1.25rem" }}
+            style={{
+              backgroundColor: "rgb(42 64 53)",
+              borderRadius: "5px",
+              border: " solid",
+              borderWidth: "thin",
+            }}
           >
             <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp>
             <Card.Img
               variant="top"
               src="/public/assets/images/logo_1.png"
-              style={{ alignSelf: "center" }}
+              style={{ alignSelf: "center", maxWidth: "200px" }}
             />
             <Card.Body>
-              <Card.Title>{team.TeamName}</Card.Title>
-              <Card.Subtitle>Total wins: {team.Total_MatchesWon}</Card.Subtitle>
-              <Card.Subtitle style={{ marginTop: "10px" }}>
-                Total loses: {team.Total_MatchesLost}
-              </Card.Subtitle>
-              <Card.Subtitle style={{ marginTop: "10px" }}>
-                Total draw: {team.Total_MatchesDrawn}
-              </Card.Subtitle>
-              <Card.Subtitle style={{ marginTop: "10px" }}>
-                Total matches: {team.TotalMatchesPlayed}
-              </Card.Subtitle>
-              <Card.Subtitle style={{ marginTop: "10px" }}>
-                Total Goals scored: {team.Total_Goals_scored}
-              </Card.Subtitle>
-              <Card.Subtitle style={{ marginTop: "10px" }}>
-                Total Goals received: {team.Total_Goals_received}
-              </Card.Subtitle>
+              <Card.Title style={{ fontSize: "24px" }}>
+                <strong>{team.TeamName}</strong>
+              </Card.Title>
+              <ListGroup style={{ color: "white" }}>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  Total wins : {team.Total_MatchesWon}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  Total loses : {team.Total_MatchesLost}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  Total draw : {team.Total_MatchesDrawn}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  Total matches : {team.Total_MatchesPlayed}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  Total Goals scored : {team.Total_Goals_scored}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  Total Goals received: {team.Total_Goals_received}
+                </ListGroup.Item>
+              </ListGroup>
             </Card.Body>
             <Card.Body>
               <div className="row justify-content-around">

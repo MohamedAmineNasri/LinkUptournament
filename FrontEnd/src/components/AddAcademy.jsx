@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addnewAcademy } from "../redux/slice/academySlice";
 import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
+import Form from "react-bootstrap/Form";
 
 export const AddAcademy = () => {
   const [Name, setName] = useState("");
@@ -48,7 +49,15 @@ export const AddAcademy = () => {
       )}
       <br></br>
       <div className="site-section">
-        <div className="container">
+        <div
+          className=""
+          style={{
+            margin: "100px",
+            border: "solid",
+            borderWidth: "thin",
+            borderRadius: "40px",
+          }}
+        >
           <div
             className="row-wrapper"
             style={{
@@ -63,14 +72,22 @@ export const AddAcademy = () => {
           >
             <div
               className="row"
-              style={{ alignItems: "center", justifyContent: "space-evenly" }}
+              style={{
+                alignItems: "center",
+                justifyContent: "space-evenly",
+                flexDirection: "row-reverse",
+              }}
             >
               <div className="col-lg-5 order-lg-1 ">
                 <img
-                  src="/public/assets/images/foot.jpg"
+                  src="/public/assets/images/academy1.jpg"
                   alt="Logo"
                   className="img-fluid "
-                  style={{ borderRadius: "20px" }}
+                  style={{
+                    borderRadius: "20px",
+                    border: "solid",
+                    borderWidth: "thin",
+                  }}
                   width="96%"
                 />
               </div>
@@ -78,7 +95,7 @@ export const AddAcademy = () => {
                 <h1>Add You're Academy !</h1>
                 <form action="#">
                   <div className="row">
-                    <div className="col-md-12 form-group">
+                    <div className="col-md-12 form-group pb-3 pt-3">
                       <label htmlFor="Aname">Academy Name:</label>
                       <input
                         type="text"
@@ -89,7 +106,7 @@ export const AddAcademy = () => {
                         onChange={(e) => setName(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-12 form-group">
+                    <div className="col-md-12 form-group pb-3">
                       <label htmlFor="location">Academy Location:</label>
                       <input
                         type="text"
@@ -100,7 +117,7 @@ export const AddAcademy = () => {
                         onChange={(e) => setLocation(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-12 form-group">
+                    <div className="col-md-12 form-group pb-3">
                       <label htmlFor="foundedDate">Founded Date:</label>
                       <input
                         type="date"
@@ -110,31 +127,31 @@ export const AddAcademy = () => {
                         onChange={(e) => setFoundedYear(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-12 form-group">
+                    <div className="col-md-12 form-group pb-3">
                       <label htmlFor="logoInput">Upload Logo:</label>
                       <input
                         type="file"
-                        className="form-control-file"
+                        className="form-control"
                         id="logoInput"
                         accept=".jpg,.jpeg,.png,.pdf"
                         value={Logo}
                         onChange={(e) => setLogo(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-12 form-group">
+                    <div className="col-md-12 form-group pb-3">
                       <label htmlFor="fileInput">
                         Upload Legitimacy Documents:
                       </label>
                       <input
                         type="file"
-                        className="form-control-file"
+                        className="form-control"
                         id="fileInput"
                         accept=".pdf,.doc,.docx"
                         value={Docs}
                         onChange={(e) => setDoc(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-12 form-group">
+                    <div className="col-md-12 form-group pb-3">
                       <input
                         type="submit"
                         className="btn btn-primary py-3 px-5 btn-block"

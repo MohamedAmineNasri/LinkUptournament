@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Alert } from 'bootstrap';
+
 
 //export const fetchAcademy = () => createAsyncThunk
 export const fetchAcademy = createAsyncThunk(

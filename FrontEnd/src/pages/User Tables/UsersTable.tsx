@@ -81,10 +81,6 @@
                             <FontAwesomeIcon icon={faWhatsapp} style={{color: "#63E6BE",}} />
                             <button className="text-meta-5">{user.phoneNumber}</button>
                         </ReactWhatsapp>
-                        {/* <a href="https://wa.me/550905264" target="_blank">
-click
-</a> */}
-
                 </div>
                 <div className="flex items-center justify-center p-2.5 sm:flex xl:p-5">
                 <p className="text-meta-5">{new Date (user.createdAt).toLocaleDateString()}</p>

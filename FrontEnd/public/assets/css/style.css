@@ -613,6 +613,17 @@ h1, h2, h3, h4, h5,
     left: 0;
     right: 0;
     bottom: 0; }
+    /* i added this one -------------------------------------------------*/
+  .hero.overlay2:before {
+    content: "";
+    position: absolute;
+    background: rgba(0, 0, 0, 0.24);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1100px;  }
+    /* -------------------------------------------------*/
   .hero h1 {
     font-weight: 700;
     font-size: 4rem; }
@@ -1132,5 +1143,11 @@ h1, h2, h3, h4, h5,
     .word-wrap-break {
       word-wrap: break-word;
     }
+    
+    .custom-placeholder::placeholder {
+      color: rgb(178, 175, 175); 
+    }
+    
+
     
     

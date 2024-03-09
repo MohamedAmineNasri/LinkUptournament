@@ -69,10 +69,6 @@ export class Matches extends Component {
             </div>
           </header>
 
-          <div>
-            <Academy></Academy>
-          </div>
-
           <div className="container">
             <div className="row">
               <div className="col-lg-12">

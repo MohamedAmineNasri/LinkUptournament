@@ -1,8 +1,77 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import userThree from '../images/user/user-03.png';
 import DefaultLayout from '../layout/DefaultLayout';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../../../Features/auth/authSlice.js';
+import { useGetUsersQuery,useDeleteUserByIdMutation,  useUpdateUserByIdMutation,useGetUserByIdQuery  } from "../../../../Features/users/usersApiSlice.js";
+import { useEffect, useState } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
+import { Button as MuiButton, Dialog as MuiDialog } from '@mui/material';
+import TextField from '@mui/material/TextField';
 const Settings = () => {
+
+  
+  const currentUser = useSelector(selectCurrentUser);
+  const [updateUserId, setUpdateUserId] = useState(null);
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+  const [updatedUserData, setUpdatedUserData] = useState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      // Add other fields as needed
+  });
+  const { data: userData, error } = useGetUserByIdQuery(currentUser.id);
+  useEffect(() => {
+    if (userData) {
+      console.log("User Data:", userData);
+      console.log("firstName Data:", userData.firstName);
+      // Do something with userData if needed
+    }
+
+    if (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }, [userData, error]);
+
+  const handleUpdateUser = async () => {
+    try {
+        await updateUserById({ id: currentUser.id, updatedUserData });
+        console.log("User updated: " + updateUserId);
+        setUpdateUserId(null);
+        setOpenUpdateDialog(false);
+        // You may want to refetch the users data here
+    } catch (error) {
+        console.error("Error updating user:", error);
+    }
+  };
+
+  const [updateUserById] = useUpdateUserByIdMutation();
+
+
+const handleClickOpenUpdateDialog = () => {
+  console.log("Opening dialog");
+  setUpdateUserId(currentUser.id);
+  setUpdatedUserData({
+    firstName: userData ? userData.firstName : '',
+    lastName: userData ? userData.lastName : '',
+    email: userData ? userData.email : '',
+      // Add other fields as needed
+  });
+  setOpenUpdateDialog(true);
+};
+const handleCloseUpdateDialog = () => {
+    console.log("Closing dialog");
+    setUpdateUserId(null);
+    setOpenUpdateDialog(false);
+    setUpdatedUserData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        // Reset other fields as needed
+    });
+};
+
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-270">
@@ -17,14 +86,14 @@ const Settings = () => {
                 </h3>
               </div>
               <div className="p-7">
-                <form action="#">
+                <form >
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
                         htmlFor="fullName"
                       >
-                        Full Name
+                        First Name
                       </label>
                       <div className="relative">
                         <span className="absolute left-4.5 top-4">
@@ -57,8 +126,51 @@ const Settings = () => {
                           type="text"
                           name="fullName"
                           id="fullName"
-                          placeholder="Devid Jhon"
-                          defaultValue="Devid Jhon"
+                          placeholder={userData ? userData.firstName : ''}
+                          defaultValue={userData ? userData.firstName : ''}
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="fullName"
+                      >
+                        Last Name
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-4.5 top-4">
+                          <svg
+                            className="fill-current"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g opacity="0.8">
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M3.72039 12.887C4.50179 12.1056 5.5616 11.6666 6.66667 11.6666H13.3333C14.4384 11.6666 15.4982 12.1056 16.2796 12.887C17.061 13.6684 17.5 14.7282 17.5 15.8333V17.5C17.5 17.9602 17.1269 18.3333 16.6667 18.3333C16.2064 18.3333 15.8333 17.9602 15.8333 17.5V15.8333C15.8333 15.1703 15.5699 14.5344 15.1011 14.0655C14.6323 13.5967 13.9964 13.3333 13.3333 13.3333H6.66667C6.00363 13.3333 5.36774 13.5967 4.8989 14.0655C4.43006 14.5344 4.16667 15.1703 4.16667 15.8333V17.5C4.16667 17.9602 3.79357 18.3333 3.33333 18.3333C2.8731 18.3333 2.5 17.9602 2.5 17.5V15.8333C2.5 14.7282 2.93899 13.6684 3.72039 12.887Z"
+                                fill=""
+                              />
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M9.99967 3.33329C8.61896 3.33329 7.49967 4.45258 7.49967 5.83329C7.49967 7.214 8.61896 8.33329 9.99967 8.33329C11.3804 8.33329 12.4997 7.214 12.4997 5.83329C12.4997 4.45258 11.3804 3.33329 9.99967 3.33329ZM5.83301 5.83329C5.83301 3.53211 7.69849 1.66663 9.99967 1.66663C12.3009 1.66663 14.1663 3.53211 14.1663 5.83329C14.1663 8.13448 12.3009 9.99996 9.99967 9.99996C7.69849 9.99996 5.83301 8.13448 5.83301 5.83329Z"
+                                fill=""
+                              />
+                            </g>
+                          </svg>
+                        </span>
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="text"
+                          name="fullName"
+                          id="fullName"
+                          placeholder={userData ? userData.lastName : ''}
+                          defaultValue={userData ? userData.lastName : ''}
                         />
                       </div>
                     </div>
@@ -75,8 +187,8 @@ const Settings = () => {
                         type="text"
                         name="phoneNumber"
                         id="phoneNumber"
-                        placeholder="+990 3343 7865"
-                        defaultValue="+990 3343 7865"
+                        placeholder={userData ? userData.phoneNumber : ''}
+                        defaultValue={userData ? userData.phoneNumber : ''}
                       />
                     </div>
                   </div>
@@ -119,8 +231,8 @@ const Settings = () => {
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
-                        placeholder="devidjond45@gmail.com"
-                        defaultValue="devidjond45@gmail.com"
+                        placeholder={userData ? userData.email : ''}  
+                        defaultValue={userData ? userData.email : ''}  
                       />
                     </div>
                   </div>
@@ -128,17 +240,17 @@ const Settings = () => {
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="Username"
+                      htmlFor="Birthday"
                     >
-                      Username
+                      Birthday
                     </label>
                     <input
                       className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
                       name="Username"
                       id="Username"
-                      placeholder="devidjhon24"
-                      defaultValue="devidjhon24"
+                      placeholder={new Date(userData ? userData.birthday : '').toLocaleDateString()} 
+                      defaultValue={new Date(userData ? userData.birthday : '').toLocaleDateString()} 
                     />
                   </div>
 
@@ -193,18 +305,20 @@ const Settings = () => {
                   </div>
 
                   <div className="flex justify-end gap-4.5">
-                    <button
-                      className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
+                  <button
+                        className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                        type="button" // Change to type="button"
+                        onClick={() => handleClickOpenUpdateDialog(userData._id)}
                     >
-                      Cancel
+                      Edit
                     </button>
-                    <button
+                    {/* <button
                       className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
-                      type="submit"
+                      type="button"  // Change to type="button"
+                      //onClick={() => handleClickOpenUpdateDialog(currentUser.firstName)}
                     >
                       Save
-                    </button>
+                    </button> */}
                   </div>
                 </form>
               </div>
@@ -304,6 +418,66 @@ const Settings = () => {
             </div>
           </div>
         </div>
+           {/* Update User Dialog */}
+          <MuiDialog
+                open={openUpdateDialog}
+                onClose={handleCloseUpdateDialog}
+            >
+                <DialogTitle>Update User</DialogTitle>
+                <DialogContent>
+                    {/* Form for updating user details */}
+                    <form onSubmit={(event) => {
+    event.preventDefault();
+    handleUpdateUser();
+}}>
+
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="firstName"
+                            name="firstName"
+                            label="First Name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={updatedUserData.firstName}
+                            onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
+                        />
+                        <TextField
+                            required
+                            margin="dense"
+                            id="lastName"
+                            name="lastName"
+                            label="Last Name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={updatedUserData.lastName}
+                            onChange={(e) => setUpdatedUserData({ ...updatedUserData, lastName: e.target.value })}
+                        />
+                        <TextField
+                            required
+                            margin="dense"
+                            id="email"
+                            name="email"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                            value={updatedUserData.email}
+                            onChange={(e) => setUpdatedUserData({ ...updatedUserData, email: e.target.value })}
+                        />
+                        {/* Add other fields as needed */}
+
+                        {/* Dialog Actions */}
+                        <DialogActions>
+                            <MuiButton onClick={handleCloseUpdateDialog}>Cancel</MuiButton>
+                            <MuiButton type="submit">Update</MuiButton>
+                        </DialogActions>
+                    </form>
+                </DialogContent>
+            </MuiDialog>
       </div>
     </DefaultLayout>
   );

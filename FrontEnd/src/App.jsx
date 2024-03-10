@@ -20,6 +20,7 @@ import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 import AdminDashboard from "./Dashboard/AdminDashboard";
+import Settings from "./Dashboard/src/pages/Settings";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/userstable" element={<Tables />} />
+              <Route path="/settings" element={<Settings />} />
             </Route>
 
         </Route>

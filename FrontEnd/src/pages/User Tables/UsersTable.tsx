@@ -142,7 +142,7 @@
                             key={key}
                         >
                             {/* User Data */}
-                            <div className="flex items-center gap-3 p-2.5 xl:p-5">
+                            <div className="flex items-center gap-7 p-2.5 xl:p-5">
                                 <p className="hidden text-black dark:text-white sm:block">
                                     {user.firstName} {user.lastName}
                                 </p>

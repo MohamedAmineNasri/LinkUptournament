@@ -19,6 +19,10 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: updatedUserData,
             }),
         }),
+        getUserById: builder.query({
+            query: (userId) => `/user/users/getUserById/${userId}`,
+            keepUnusedDataFor: 5,
+        }),
     }),
 });
 
@@ -26,4 +30,5 @@ export const {
     useGetUsersQuery,
     useDeleteUserByIdMutation,
     useUpdateUserByIdMutation,
+    useGetUserByIdQuery,
 } = usersApiSlice;

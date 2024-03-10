@@ -24,7 +24,7 @@ const deleteStaduimById =  async (req,res,next)=>{
     const s = await Staduim.findByIdAndDelete(req.params.id);
     res.json("deleted sucessfully" + s);
 }
-const updateStaduim = async (req,res,next)=>{
+const updateStaduim = async (req,res,next)=>{ 
     try {
       const s = await Staduim.findByIdAndUpdate(req.params.id , req.body) ;
       if(!s){

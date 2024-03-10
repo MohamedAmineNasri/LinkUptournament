@@ -12,11 +12,11 @@ const TournamentSchema = new mongoose.Schema({
   },
   rules: {
     type: String,
-    required: true
-  },
+   
+  },  
   status: {
     type: String,
-    required: true
+  
   },
   winner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -24,11 +24,11 @@ const TournamentSchema = new mongoose.Schema({
   },
   date_debut: {
     type: Date,
-    required: true
+   required: true
   },
   date_fin: {
     type: Date,
-    required: true
+   required: true
   },
   teams: [{
     type: mongoose.Schema.Types.ObjectId,

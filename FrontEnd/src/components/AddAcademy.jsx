@@ -12,17 +12,18 @@ export const AddAcademy = () => {
   const [FoundedYear, setFoundedYear] = useState(null);
   const [Docs, setDoc] = useState(null);
 
+  const dispatch = useDispatch();
+
   //Alert
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   //validator
-  const [nameError, setNameError] = useState("Academy Name is required");
+  const [nameError, setNameError] = useState("Academy Name is require");
   const [locationError, setLocationError] = useState("Location is required");
   const [foundedDateError, setFoundedDateError] = useState(
     "Founded Date is required"
   );
 
-  const dispatch = useDispatch();
   //submit logic
   const handleSaveChanges = (e) => {
     e.preventDefault(); // for refrech bug
@@ -144,7 +145,7 @@ export const AddAcademy = () => {
         style={{
           backgroundImage: "url('/assets/images/2.jpg')",
           paddingTop: "100px",
-          height: "1100px",
+          height: "1300px",
         }}
       >
         {/* sucess msg when academy created "condional" */}
@@ -153,18 +154,30 @@ export const AddAcademy = () => {
             <Alert variant="success">Academy added successfully!</Alert>
           )}
         </div>
+
+        <div className="col-lg-12">
+          <h1
+            className="col-md-12 pb-5 pt-5"
+            style={{
+              textShadow: "5px 2px 0px #1db428e6",
+              textAlign: "-webkit-center",
+              fontSize: "5rem",
+            }}
+          >
+            Add You're Academy
+          </h1>
+        </div>
         {/* form inside the hero image  */}
         <div className=" container col-lg-8 pt-5">
           <div
             style={{
-              border: "solid",
-              borderWidth: "medium",
               borderRadius: "40px",
             }}
           >
             <div
               style={{
                 boxShadow: "1px 1px 30px 10px rgba(1, 0, 0, 0.5)",
+                backgroundColor: "#2f4f4f6b",
                 paddingLeft: "10px",
                 paddingRight: "10px",
                 paddingTop: "20px",
@@ -173,7 +186,6 @@ export const AddAcademy = () => {
               }}
             >
               <div className="col-lg-12">
-                <h1 className="col-md-12 pb-2 pt-3">Add You're Academy</h1>
                 <form action="#">
                   <div className="">
                     {/* name */}
@@ -181,8 +193,6 @@ export const AddAcademy = () => {
                       <label htmlFor="Aname">Academy Name</label>
                       <input
                         style={{
-                          backgroundColor: "rgba(255, 255, 255, 0.08)",
-                          borderColor: "white",
                           height: "60px",
                         }}
                         type="text"
@@ -201,8 +211,6 @@ export const AddAcademy = () => {
                       <label htmlFor="location">Academy Location</label>
                       <input
                         style={{
-                          backgroundColor: "rgba(255, 255, 255, 0.08)",
-                          borderColor: "white",
                           height: "60px",
                         }}
                         type="text"
@@ -221,8 +229,6 @@ export const AddAcademy = () => {
                       <label htmlFor="foundedDate">Founded Date</label>
                       <input
                         style={{
-                          backgroundColor: "rgba(255, 255, 255, 0.08)",
-                          borderColor: "white",
                           height: "60px",
                         }}
                         type="date"
@@ -242,8 +248,6 @@ export const AddAcademy = () => {
                       <label htmlFor="logoInput">Upload Logo</label>
                       <input
                         style={{
-                          backgroundColor: "rgba(255, 255, 255, 0.08)",
-                          borderColor: "white",
                           height: "60px",
                         }}
                         type="file"
@@ -261,8 +265,6 @@ export const AddAcademy = () => {
                       </label>
                       <input
                         style={{
-                          backgroundColor: "rgba(255, 255, 255, 0.08)",
-                          borderColor: "white",
                           height: "60px",
                         }}
                         type="file"

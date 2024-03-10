@@ -25,18 +25,64 @@ export const Academy = () => {
   return (
     <div>
       <div className="site-wrap">
-        <div className="site-mobile-menu site-navbar-target">
-          <div className="site-mobile-menu-header">
-            <div className="site-mobile-menu-close">
-              <span className="icon-close2 js-menu-toggle"></span>
-            </div>
-          </div>
-          <div className="site-mobile-menu-body"></div>
-        </div>
+        {/* header/overlay image */}
+        <div>
+          <header className="site-navbar py-4" role="banner">
+            <div className="container">
+              <div className="d-flex align-items-center">
+                <div className="site-logo">
+                  <a href="index.html">
+                    <img src="/public/assets/images/logo.png" alt="Logo" />
+                  </a>
+                </div>
+                <div className="ml-auto">
+                  <nav
+                    className="site-navigation position-relative text-right"
+                    role="navigation"
+                  >
+                    <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                      <li>
+                        <a href="index.html" className="nav-link">
+                          Home
+                        </a>
+                      </li>
+                      <li>
+                        <a href="matches.html" className="nav-link">
+                          Matches
+                        </a>
+                      </li>
+                      <li>
+                        <a href="players.html" className="nav-link">
+                          Players
+                        </a>
+                      </li>
+                      <li className="active">
+                        <a href="blog.html" className="nav-link">
+                          Blog
+                        </a>
+                      </li>
+                      <li>
+                        <a href="contact.html" className="nav-link">
+                          Contact
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
 
+                  <a
+                    href="#"
+                    className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
+                  >
+                    <span className="icon-menu h3 text-white"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </header>
+        </div>
         <div
           className="hero overlay"
-          style={{ backgroundImage: "url('/assets/images/academy.jpg')" }}
+          style={{ backgroundImage: "url('/assets/images/1.jpg')" }}
         >
           <div className="container">
             <div className="row align-items-center">
@@ -52,71 +98,82 @@ export const Academy = () => {
             </div>
           </div>
         </div>
-
+        {/* separator */}
+        <div className="site-section">
+          <div className="container"></div>
+        </div>
+        {/* teams */}
         <div
-          className="site-section "
-          style={{ backgroundColor: "rgba(65, 141, 68, 0.24)" }}
+          className="hero "
+          style={{
+            backgroundImage: "url('/assets/images/team1.jpg')",
+            height: "1000px",
+          }}
         >
-          <div
-            className=""
-            style={{ marginRight: "100px", marginLeft: "100px" }}
-          >
-            <div
-              className="row mb-5 justify-content-center align-items-top "
-              style={{
-                borderRadius: "10px",
-                border: "1px solid",
-                borderWidth: "thin",
-              }}
-            >
+          <div className="site-section ">
+            <div style={{ marginRight: "100px", marginLeft: "100px" }}>
               <div
-                className="col-md-6 col-lg-4 word-wrap-break"
+                className="row mb-5 justify-content-center align-items-top "
                 style={{
-                  borderRadius: "10px",
-                  border: "1px solid",
-                  borderWidth: "thin",
+                  borderRadius: "20px",
+                  boxShadow: "1px 1px 30px 10px rgba(1, 0, 0, 0.5)",
+                  backgroundColor: "#2f4f4f6b",
                 }}
               >
-                <div
-                  className="text-center"
-                  style={{ paddingTop: "20px", paddingBottom: "20px" }}
-                >
-                  <img
-                    src="/public/assets/images/logo_1.png"
-                    alt="Logo"
-                    className="img-fluid rounded-circle"
-                    style={{ maxWidth: "200px" }}
-                  />
-                  <h3 className="mb-4 mt-3 mb-0  ">
-                    <strong>{academyData.AcademyName}</strong>
-                  </h3>
-                  <p className=" mb-4">
-                    Location :{" "}
-                    <span className="text-muted">{academyData.Location}</span>
-                  </p>
-                  <p className=" mb-4">
-                    Creating Date :{" "}
-                    <span className="text-muted">{formattedDate}</span>
-                  </p>
-                  <p className="mb-4">
-                    Status :{" "}
-                    <span className="text-muted">{academyData.Status}</span>
-                  </p>
-
-                  <DropDown />
-                </div>
-              </div>
-              <div className="col-md-6 col-lg-8">
-                <div>
+                <div className="col-md-5 col-lg-4 word-wrap-break">
                   <div
-                    className="widget-body mb-3"
-                    style={{
-                      borderRadius: "20px",
-                      //boxShadow: "0px 1px 8px 1px green",
-                    }}
+                    className="text-center"
+                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
                   >
-                    <div className="widget-vs">
-                      <TeamCard />
+                    <img
+                      src="/public/assets/images/logo_1.png"
+                      alt="Logo"
+                      className="img-fluid rounded-circle"
+                      style={{ maxWidth: "200px" }}
+                    />
+                    <h3 className="mb-4 mt-3 mb-0  ">
+                      <strong>{academyData.AcademyName}</strong>
+                    </h3>
+                    <p className=" mb-4">
+                      Location :{" "}
+                      <span className="text-muted">{academyData.Location}</span>
+                    </p>
+                    <p className=" mb-4">
+                      Creating Date :{" "}
+                      <span className="text-muted">{formattedDate}</span>
+                    </p>
+                    <p className="mb-4">
+                      Status :{" "}
+                      <span className="text-muted">{academyData.Status}</span>
+                    </p>
+
+                    <DropDown />
+                  </div>
+                </div>
+                <div className="col-md-7 col-lg-8">
+                  <div>
+                    <div
+                      className="widget-body mb-3"
+                      style={{
+                        borderRadius: "20px",
+                        height: "650px",
+                        overflowY: "auto",
+                        scrollbarWidth: "none", // Hide the scrollbar for Firefox
+                        msOverflowStyle: "none", // Hide the scrollbar for Internet Explorer/Edge
+                        WebkitScrollbarWidth: "none", // Hide the scrollbar for WebKit browsers (Chro
+                      }}
+                    >
+                      <div
+                        className="widget-vs"
+                        style={{
+                          border: "solid",
+                          borderWidth: "thin",
+                          borderRadius: "20px",
+                          padding: "30px",
+                        }}
+                      >
+                        <TeamCard />
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -21,15 +21,15 @@ const TeamCard = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="row" style={{ justifyContent: "center" }}>
+    <div className="row">
       {teamData.length === 0 && !loading && !error && (
         <div
           style={{
-            backgroundColor: "#1a1e25",
             padding: "20px",
             textAlign: "center",
             alignItems: "center",
-            paddingTop: "150px",
+            paddingTop: "250px",
+            paddingBottom: "220px",
           }}
         >
           <h3
@@ -43,7 +43,7 @@ const TeamCard = () => {
         </div>
       )}
       {teamData.map((team, index) => (
-        <div key={team._id} className="col-lg-6 col-md-12 mb-3">
+        <div key={team._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
           <Card
             id={team.id}
             style={{

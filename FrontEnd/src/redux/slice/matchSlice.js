@@ -13,6 +13,42 @@ export const fetchMatch = createAsyncThunk(
   }
 );
 
+export const fetchMatchById = createAsyncThunk(
+  'match/fetchMatch',
+  async (matchid) => {
+    try {
+      const response = await axios.get('http://localhost:8000/match'+matchid);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const editMatch = createAsyncThunk(
+  'match/editMatch',
+  async ({ matchid,date, time,type ,score ,injuries,card,team1,team2}) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/match/'+matchid,
+        {
+          Date: date, 
+          startingTime: time,
+          matchType:type,
+          score: score,
+          injuries:injuries,
+          card:card,
+          team1:team1,
+          team2:team2
+        }
+      );
+      window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 
 export const deleteMatch = createAsyncThunk(
   'match/deleteMatch',
@@ -30,14 +66,21 @@ export const deleteMatch = createAsyncThunk(
 
 export const addMatch = createAsyncThunk(
   'match/addMatch',
-  async ({ name, logo }) => {
+  async ({ date, time,type ,score ,injuries,card,team1,team2}) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/match/',
         {
-          TeamName: name, 
-          TeamLogo: logo,
-          academy: "65d63da21ae37b6822a03dac"
+          Date: date, 
+          startingTime: time,
+          matchType:type,
+          score: score,
+          injuries:injuries,
+          card:card,
+          team1:team1,
+          team2:team2
+
+          
         }
       );
       window.location.reload();
@@ -48,29 +91,30 @@ export const addMatch = createAsyncThunk(
   }
 );
 
+
 const matchSlice = createSlice({
   name: 'match',
   initialState: {
-    teamData: [],
+    matchData: [],
     loading: false,
     error: null
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTeam.pending, (state) => {
+      .addCase(fetchMatch.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchTeam.fulfilled, (state, action) => {
+      .addCase(fetchMatch.fulfilled, (state, action) => {
         state.loading = false;
         state.teamData = action.payload;
       })
-      .addCase(fetchTeam.rejected, (state, action) => {
+      .addCase(fetchMatch.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
   }
 });
 
-export default teamSlice.reducer;
+export default matchSlice.reducer;

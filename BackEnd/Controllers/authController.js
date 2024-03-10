@@ -25,6 +25,7 @@ const handleLogin = async (req, res) => {
             const roles = Object.values(foundUser.roles).filter(Boolean);
             const accessToken = jwt.sign(
                 {
+                    id: foundUser._id,
                     email: foundUser.email,
                     firstName: foundUser.firstName,
                     lastName: foundUser.lastName,
@@ -50,6 +51,7 @@ const handleLogin = async (req, res) => {
             res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 7 * 24 * 60 * 60 * 1000 }); // 7 days, adjust as needed
 
             res.json({ accessToken,roles, user: {
+                id: foundUser._id,
                 email: foundUser.email,
                 firstName: foundUser.firstName,
                 lastName: foundUser.lastName,

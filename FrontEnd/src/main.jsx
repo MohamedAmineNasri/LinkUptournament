@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter} from "react-router-dom";
 import { AuthProvider } from './context/AuthProvider.jsx'
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -17,7 +18,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <BrowserRouter>
             {/* <Route path="/*" element={<App />}/> */}
-            <App />
+            <GoogleOAuthProvider clientId="416699013224-bv2njuiqbe3c0aend2g57j0thdvnkelu.apps.googleusercontent.com">
+              <App />
+            </GoogleOAuthProvider>
+
         </BrowserRouter>
       </AuthProvider>
       {/* </Routes> */}

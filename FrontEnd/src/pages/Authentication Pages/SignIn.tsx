@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../Features/auth/authSlice'
 import { useLoginMutation } from '../../../Features/auth/authApiSlice'
+import { GoogleLogin } from '@react-oauth/google';
 
 
 const SignIn: React.FC = () => {
@@ -285,7 +286,7 @@ const SignIn: React.FC = () => {
         />
       </div>
 
-      <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                {/* <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                       width="20"
@@ -320,7 +321,15 @@ const SignIn: React.FC = () => {
                     </svg>
                   </span>
                   Sign in with Google
-                </button>
+                </button> */}
+                <GoogleLogin
+              onSuccess={credentialResponse => {
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />;
 
       <div className="mt-6 text-center">
         <p>

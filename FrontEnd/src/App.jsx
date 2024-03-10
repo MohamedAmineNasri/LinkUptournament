@@ -32,7 +32,7 @@ function App() {
       </button>
 
       {fixtures.length == 0 ? (
-        <div className="h-screen bg-white w-full text-center p-10">
+        <div className="h-screen bg-white w-full text-center p-10 ">
           <Box>
             <CircularProgress />
           </Box>

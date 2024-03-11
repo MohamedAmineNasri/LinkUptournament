@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTeamOfAcademy } from "../redux/slice/teamSlice";
 import Button from "react-bootstrap/esm/Button";
-import ListGroup from "react-bootstrap/ListGroup";
 import DeleteTeamPopUp from "./DeleteTeamPopUp";
 import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const TeamCard = () => {
   const { teamData, loading, error } = useSelector((state) => state.team);
@@ -50,6 +50,29 @@ const TeamCard = () => {
               borderWidth: "thin",
             }}
           >
+            {/* settingicon that display a drop down for various option */}
+            {/* <button
+              style={{
+                marginTop: "1rem",
+                marginRight: "2rem",
+                border: "none",
+                backgroundColor: "transparent",
+                alignSelf: "self-end",
+                width: "3rem",
+                outline: "none",
+                cursor: "pointer",
+              }}
+              onClick={"handleClick"}
+            >
+              <SettingsIcon
+                style={{
+                  alignSelf: "self-end",
+                  fontSize: "3rem",
+                  color: "white",
+                }}
+              />
+            </button> */}
+
             <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp>
             <Card.Img
               variant="top"

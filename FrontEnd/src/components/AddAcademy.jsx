@@ -17,45 +17,56 @@ export const AddAcademy = () => {
   //Alert
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  //validator
+  //validator states
   const [nameError, setNameError] = useState("Academy Name is require");
   const [locationError, setLocationError] = useState("Location is required");
   const [foundedDateError, setFoundedDateError] = useState(
     "Founded Date is required"
   );
+  //fields colors states
+  const [namefieldColor, setnamefieldColor] = useState("red");
+  const [locationfieldColor, setlocationfieldColor] = useState("red");
+  const [datefieldColor, setdatefieldColor] = useState("red");
 
   //submit logic
   const handleSaveChanges = (e) => {
     e.preventDefault(); // for refrech bug
-
     //Validators
     // Validation for name
     if (Name != null) {
       // it won't work if Name is null and we do trim()
       if (!Name.trim()) {
         setNameError("Academy Name is required");
+        setnamefieldColor("red");
       } else if (!/^[a-zA-Z\s]+$/.test(Name)) {
         setNameError("Academy Name should contain only alphabetic characters");
+        setnamefieldColor("red");
       } else if (Name.trim().length <= 8) {
         setNameError("Academy Name should be at least 8 characters long");
+        setnamefieldColor("red");
       } else {
         setNameError(null);
+        setnamefieldColor("green");
       }
     }
     // Validation for Location
     if (Location != null) {
       if (!Location.trim()) {
         setLocationError("Location is required");
+        setlocationfieldColor("red");
       } else {
         setLocationError(null);
+        setlocationfieldColor("green");
       }
     }
 
     // Validation for Founded Date
     if (!FoundedYear) {
       setFoundedDateError("Founded Date is required");
+      setdatefieldColor("red");
     } else {
       setFoundedDateError(null);
+      setdatefieldColor("green");
     }
     if (
       nameError == null &&
@@ -74,7 +85,7 @@ export const AddAcademy = () => {
           doc: Docs,
         })
       );
-      //Alert
+      //Alert ----------------------
       setSubmitSuccess(true);
       setTimeout(() => {
         setSubmitSuccess(false);
@@ -139,7 +150,7 @@ export const AddAcademy = () => {
         </header>
       </div>
 
-      {/* Hero image */}
+      {/* Hero image ------------------------- */}
       <div
         className="hero overlay2 "
         style={{
@@ -167,7 +178,7 @@ export const AddAcademy = () => {
             Add You're Academy
           </h1>
         </div>
-        {/* form inside the hero image  */}
+        {/* form inside the hero image ------------------------  */}
         <div className=" container col-lg-8 pt-5">
           <div
             style={{
@@ -188,12 +199,14 @@ export const AddAcademy = () => {
               <div className="col-lg-12">
                 <form action="#">
                   <div className="">
-                    {/* name */}
+                    {/* name ----------------------------------------- */}
                     <div className="col-md-12 form-group pb-2 pt-3">
                       <label htmlFor="Aname">Academy Name</label>
                       <input
                         style={{
                           height: "60px",
+                          borderColor: namefieldColor,
+                          borderWidth: "1px",
                         }}
                         type="text"
                         className="form-control custom-placeholder"
@@ -206,12 +219,14 @@ export const AddAcademy = () => {
                         <medium className="text-danger">{nameError}</medium>
                       )}
                     </div>
-                    {/* location */}
+                    {/* location---------------------------------------------- */}
                     <div className="col-md-12 form-group pb-2">
                       <label htmlFor="location">Academy Location</label>
                       <input
                         style={{
                           height: "60px",
+                          borderColor: locationfieldColor,
+                          borderWidth: "1px",
                         }}
                         type="text"
                         className="form-control custom-placeholder"
@@ -224,12 +239,14 @@ export const AddAcademy = () => {
                         <medium className="text-danger">{locationError}</medium>
                       )}
                     </div>
-                    {/* date */}
+                    {/* date-------------------------------------------------- */}
                     <div className="col-md-12 form-group pb-2">
                       <label htmlFor="foundedDate">Founded Date</label>
                       <input
                         style={{
                           height: "60px",
+                          borderColor: datefieldColor,
+                          borderWidth: "1px",
                         }}
                         type="date"
                         className="form-control custom-placeholder"

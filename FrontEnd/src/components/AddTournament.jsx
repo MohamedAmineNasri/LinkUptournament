@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addTournament } from "../redux/slice/tournamentSlice";
 import Alert from "react-bootstrap/Alert";
+import {fetchteams } from "../redux/slice/teamSlice"; 
 
 export const AddTournament = () => {
   const [name, setName] = useState("");
@@ -11,14 +12,33 @@ export const AddTournament = () => {
   const [winner, setWinner] = useState(null);
   const [dateDebut, setDateDebut] = useState("");
   const [dateFin, setDateFin] = useState("");
-  const [teams, setTeams] = useState([]);
+  
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [nameError, setNameError] = useState("Tournament Name is required");
   const [typeError, setTypeError] = useState("Type is required");
   const [dateDebutError, setDateDebutError] = useState("Start Date is required");
   const [dateFinError, setDateFinError] = useState("End Date is required");
+  const [selectedTeams, setSelectedTeams] = useState([]);
 
   const dispatch = useDispatch();
+  const teams = useSelector((state) => state.team.teams); // Adjusted selector
+
+  useEffect(() => {
+    async function fetchTeams() {
+      try {
+        await dispatch(fetchteams());
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+      }
+    }
+    fetchTeams();
+  }, [dispatch]) ;
+  
+
+  const handleTeamSelection = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+    setSelectedTeams(selectedOptions);
+  };
 
   const validateName = (value) => {
     if (!value.trim()) {
@@ -79,7 +99,7 @@ export const AddTournament = () => {
             winner,
             date_debut: dateDebut,
             date_fin: dateFin,
-            teams
+            teams : selectedTeams
           })
         );
 
@@ -92,7 +112,7 @@ export const AddTournament = () => {
           setWinner("");
           setDateDebut("");
           setDateFin("");
-          setTeams([]);
+          setSelectedTeams([]);
         }
       } catch (error) {
         console.error("Error adding tournament:", error);
@@ -220,6 +240,25 @@ export const AddTournament = () => {
                       />
                       {dateFinError && <p className="text-danger">{dateFinError}</p>}
                     </div>
+                    <div className="col-md-12 form-group pb-2">
+        <label htmlFor="tournamentTeams">Select Teams</label>
+        <select
+  style={{ height: "120px" }}
+  multiple={true}
+  className="form-control custom-placeholder"
+  id="tournamentTeams"
+  value={selectedTeams}
+  onChange={handleTeamSelection}
+>
+  {/* Map over teams to display options */}
+  {teams &&
+    teams.map((team) => (
+      <option key={team.id} value={team.id}>
+        {team.TeamName}
+      </option>
+    ))}
+</select>
+      </div>
 
                     {/* Bouton de soumission */}
                     <div className="col-md-12 form-group ">

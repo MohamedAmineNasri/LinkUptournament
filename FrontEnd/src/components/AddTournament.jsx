@@ -37,8 +37,10 @@ export const AddTournament = () => {
 
   const handleTeamSelection = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+    console.log("Selected options:", selectedOptions); // Log selected options
     setSelectedTeams(selectedOptions);
   };
+  
 
   const validateName = (value) => {
     if (!value.trim()) {
@@ -82,14 +84,20 @@ export const AddTournament = () => {
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
-
+  
     validateName(name);
     validateType(type);
     validateDateDebut(dateDebut);
     validateDateFin(dateFin);
-
+  
     if (!nameError && !typeError && !dateDebutError && !dateFinError) {
       try {
+        // Map selected team names to their corresponding IDs
+        const selectedTeamIds = selectedTeams.map(teamName => {
+          const selectedTeam = teams.find(team => team.TeamName === teamName);
+          return selectedTeam._id;
+        });
+  
         const response = await dispatch(
           addTournament({
             name,
@@ -99,10 +107,10 @@ export const AddTournament = () => {
             winner,
             date_debut: dateDebut,
             date_fin: dateFin,
-            teams : selectedTeams
+            teams: selectedTeamIds // Pass array of team IDs
           })
         );
-
+  
         if (response.payload && response.payload.message) {
           setSubmitSuccess(true);
           setName("");
@@ -119,7 +127,6 @@ export const AddTournament = () => {
       }
     }
   };
-
   return (
     <div>
       <div className="hero overlay2" style={{backgroundImage: "url('/assets/images/2.jpg')", paddingTop: "100px", height: "1300px"}}>
@@ -244,20 +251,19 @@ export const AddTournament = () => {
         <label htmlFor="tournamentTeams">Select Teams</label>
         <select
   style={{ height: "120px" }}
-  multiple={true}
+  multiple={true} // or simply multiple
   className="form-control custom-placeholder"
   id="tournamentTeams"
   value={selectedTeams}
   onChange={handleTeamSelection}
 >
-  {/* Map over teams to display options */}
-  {teams &&
-    teams.map((team) => (
-      <option key={team.id} value={team.id}>
-        {team.TeamName}
-      </option>
-    ))}
-</select>
+          {teams &&
+            teams.map((team) => (
+              <option key={team.id} value={team.id}>
+                {team.TeamName}
+              </option>
+            ))}
+        </select>
       </div>
 
                     {/* Bouton de soumission */}

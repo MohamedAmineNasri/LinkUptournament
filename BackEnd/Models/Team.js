@@ -15,7 +15,7 @@ const TeamSchema = new mongoose.Schema(
       default: 0
     },
     Total_MatchesLost: {
-      type: Number,
+      type: Number, 
       default: 0
     },
     Total_MatchesDrawn: {

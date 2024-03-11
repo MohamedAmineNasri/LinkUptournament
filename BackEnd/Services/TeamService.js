@@ -3,7 +3,7 @@ const Team =require('../Models/Team')
 const getAllTeams = async (req, res, next) => {
         const teams = await Team.find();
         res.json(teams);  
-        console.log(teams);
+        console.log(teams); 
 };
 
 

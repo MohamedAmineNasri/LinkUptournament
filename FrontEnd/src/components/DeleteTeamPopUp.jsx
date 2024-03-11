@@ -20,8 +20,18 @@ export const DeleteTeamPopUp = (props) => {
 
   return (
     <>
-      <Button variant="danger" onClick={handleShow}>
-        Delete
+      <Button
+        variant="danger"
+        style={{
+          width: "-webkit-fill-available",
+          textAlignLast: "center",
+          border: "none",
+          color: "black",
+          background: "white",
+        }}
+        onClick={handleShow}
+      >
+        Delete Team
       </Button>
 
       <Modal show={show} onHide={handleClose}>

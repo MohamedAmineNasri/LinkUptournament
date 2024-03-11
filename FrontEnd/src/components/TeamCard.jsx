@@ -6,6 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 import DeleteTeamPopUp from "./DeleteTeamPopUp";
 import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
 import SettingsIcon from "@mui/icons-material/Settings";
+import DropDownTeamSettings from "./DropDownTeamSettings";
 
 const TeamCard = () => {
   const { teamData, loading, error } = useSelector((state) => state.team);
@@ -51,29 +52,9 @@ const TeamCard = () => {
             }}
           >
             {/* settingicon that display a drop down for various option */}
-            {/* <button
-              style={{
-                marginTop: "1rem",
-                marginRight: "2rem",
-                border: "none",
-                backgroundColor: "transparent",
-                alignSelf: "self-end",
-                width: "3rem",
-                outline: "none",
-                cursor: "pointer",
-              }}
-              onClick={"handleClick"}
-            >
-              <SettingsIcon
-                style={{
-                  alignSelf: "self-end",
-                  fontSize: "3rem",
-                  color: "white",
-                }}
-              />
-            </button> */}
+            <DropDownTeamSettings idTeam={team._id}></DropDownTeamSettings>
 
-            <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp>
+            {/* <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp> */}
             <Card.Img
               variant="top"
               src="/public/assets/images/logo_1.png"

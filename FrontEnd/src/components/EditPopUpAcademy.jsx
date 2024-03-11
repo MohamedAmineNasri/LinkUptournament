@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademyById, editAcademy } from "../redux/slice/academySlice";
 
-export const EditPopUp = (props) => {
+export const EditPopUpAcademy = (props) => {
   // pop up logic --------------
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -142,4 +142,4 @@ export const EditPopUp = (props) => {
   );
 };
 
-export default EditPopUp;
+export default EditPopUpAcademy;

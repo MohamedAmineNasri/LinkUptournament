@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import TeamCard from "./TeamCard";
-import DropDown from "./DropDown";
+import DropDownAcademy from "./DropDownAcademy";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademy } from "../redux/slice/academySlice";
 
@@ -147,7 +147,7 @@ export const Academy = () => {
                       <span className="text-muted">{academyData.Status}</span>
                     </p>
 
-                    <DropDown id={academyData._id} />
+                    <DropDownAcademy id={academyData._id} />
                   </div>
                 </div>
                 {/* Academy teams */}

@@ -1,8 +1,8 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import EditPopUp from "./EditPopUp";
+import EditPopUpAcademy from "./EditPopUpAcademy";
 import AddTeamPopUpWindow from "./AddTeamPopUpWindow";
 
-function DropDown(props) {
+function DropDownAcademy(props) {
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -10,7 +10,7 @@ function DropDown(props) {
       </Dropdown.Toggle>
       <Dropdown.Menu style={{ backgroundColor: "#8bc34a" }}>
         <Dropdown.Item>
-          <EditPopUp id={props.id}></EditPopUp>
+          <EditPopUpAcademy id={props.id}></EditPopUpAcademy>
         </Dropdown.Item>
         <Dropdown.Item>
           <AddTeamPopUpWindow id={props.id}></AddTeamPopUpWindow>
@@ -20,4 +20,4 @@ function DropDown(props) {
   );
 }
 
-export default DropDown;
+export default DropDownAcademy;

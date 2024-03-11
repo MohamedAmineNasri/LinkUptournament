@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { addTeam } from "../redux/slice/teamSlice";
 import { useDispatch } from "react-redux";
 
-export const AddTeamPopUpWindow = () => {
+export const AddTeamPopUpWindow = (props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -20,6 +20,7 @@ export const AddTeamPopUpWindow = () => {
     e.preventDefault();
     dispatch(
       addTeam({
+        idAcademy: props.id,
         name: Name,
         logo: Logo,
       })

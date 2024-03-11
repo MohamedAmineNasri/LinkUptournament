@@ -4,43 +4,74 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAcademy, editAcademy } from "../redux/slice/academySlice";
+import { fetchAcademyById, editAcademy } from "../redux/slice/academySlice";
 
-export const EditPopUp = () => {
+export const EditPopUp = (props) => {
   // pop up logic --------------
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // fetch academy -------------
   const dispatch = useDispatch();
-  const { academyData, loading, error } = useSelector((state) => state.academy);
 
+  // fetch academyById -------------
+  const {
+    academyDataById,
+    loading: academyByIdLoading,
+    error: academyByIdError,
+  } = useSelector((state) => state.academy);
   useEffect(() => {
-    dispatch(fetchAcademy());
+    dispatch(fetchAcademyById(props.id));
   }, [dispatch]);
+
   //date correct format
-  const date = new Date(academyData.FoundedYear);
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-    .toString()
-    .padStart(2, "0")}`;
+  let formattedDate = "";
+  if (academyDataById.FoundedYear) {
+    const date = new Date(academyDataById.FoundedYear);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
+      .toString()
+      .padStart(2, "0")}`;
+  }
 
-  //edit academy states -------------
-  const [editedName, setEditedName] = useState(academyData.AcademyName);
-  const [editedLocation, setEditedLocation] = useState(academyData.Location);
-  const [editedDate, setEditedDate] = useState(formattedDate);
+  // Initialize state for edited values
+  const [editedName, setEditedName] = useState("");
+  const [editedLocation, setEditedLocation] = useState("");
+  const [editedDate, setEditedDate] = useState("");
 
+  // Initialize flag to track changes
+  const [isChanged, setIsChanged] = useState(false);
+
+  // Update edited values only if the input fields are changed
+  const handleNameChange = (e) => {
+    setEditedName(e.target.value);
+    setIsChanged(true);
+  };
+
+  const handleLocationChange = (e) => {
+    setEditedLocation(e.target.value);
+    setIsChanged(true);
+  };
+
+  const handleDateChange = (e) => {
+    setEditedDate(e.target.value);
+    setIsChanged(true);
+  };
+
+  // Handle save changes
   const handleSaveChanges = () => {
-    dispatch(
-      editAcademy({
-        name: editedName,
-        location: editedLocation,
-        date: editedDate,
-      })
-    );
+    if (isChanged) {
+      dispatch(
+        editAcademy({
+          id: props.id,
+          name: editedName || academyDataById.AcademyName,
+          location: editedLocation || academyDataById.Location,
+          date: editedDate || academyDataById.FoundedYear,
+        })
+      );
+    }
     handleClose();
   };
 
@@ -64,8 +95,8 @@ export const EditPopUp = () => {
                 type="text"
                 placeholder="change Academy Name"
                 autoFocus
-                value={editedName || academyData.AcademyName}
-                onChange={(e) => setEditedName(e.target.value)}
+                value={editedName || academyDataById.AcademyName}
+                onChange={handleNameChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="locationInput">
@@ -76,8 +107,8 @@ export const EditPopUp = () => {
                 type="text"
                 placeholder="change Academy Location"
                 autoFocus
-                value={editedLocation || academyData.Location}
-                onChange={(e) => setEditedLocation(e.target.value)}
+                value={editedLocation || academyDataById.Location}
+                onChange={handleLocationChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -89,7 +120,7 @@ export const EditPopUp = () => {
                 placeholder="change date "
                 autoFocus
                 value={editedDate || formattedDate}
-                onChange={(e) => setEditedDate(e.target.value)}
+                onChange={handleDateChange}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

@@ -41,6 +41,25 @@ const getTeamById =  async (req,res,next)=>{
 }
 
 
+const getTeamByAcademyId = async (req, res, next) => {
+    
+        const targetAcademy = await academyService.getAcademyByIdParam(req.params.id);
+        const teamData = []; 
+
+        for (const teamId of targetAcademy.teams) {
+           
+            const team = await Team.findById(teamId); 
+            teamData.push(team);
+        }
+
+        res.json(teamData);
+    
+}
+
+
+
+
+
 
 const deleteTeamById =  async (req,res,next)=>{
     const teamData = await Team.findByIdAndDelete(req.params.id);
@@ -266,4 +285,4 @@ const resetGroupStageData = async (req,res, next) => {
 
 
 
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy};
+module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId};

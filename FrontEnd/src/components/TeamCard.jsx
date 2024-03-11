@@ -1,20 +1,16 @@
 import Card from "react-bootstrap/Card";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTeam } from "../redux/slice/teamSlice";
+import { fetchTeamOfAcademy } from "../redux/slice/teamSlice";
 import Button from "react-bootstrap/esm/Button";
 import ListGroup from "react-bootstrap/ListGroup";
-
 import DeleteTeamPopUp from "./DeleteTeamPopUp";
 
 const TeamCard = () => {
-  const teamData = useSelector((state) => state.team.teamData);
-  const loading = useSelector((state) => state.team.loading);
-  const error = useSelector((state) => state.team.error);
+  const { teamData, loading, error } = useSelector((state) => state.team);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(fetchTeam());
+    dispatch(fetchTeamOfAcademy());
   }, [dispatch]);
 
   if (loading) return <div>Loading...</div>;
@@ -23,6 +19,7 @@ const TeamCard = () => {
   return (
     <div className="row">
       {teamData.length === 0 && !loading && !error && (
+        // when no team exists
         <div
           style={{
             padding: "20px",
@@ -42,10 +39,9 @@ const TeamCard = () => {
           </p>
         </div>
       )}
-      {teamData.map((team, index) => (
+      {teamData.map((team) => (
         <div key={team._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
           <Card
-            id={team.id}
             style={{
               backgroundColor: "rgb(42 64 53)",
               borderRadius: "5px",

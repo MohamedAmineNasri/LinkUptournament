@@ -18,6 +18,7 @@ const addAcademy =  async (req, res, next) => {
     academyData.LegitimacyDocuments = req.body.LegitimacyDocuments;
     await academyData.save()
     res.json({
+            id:academyData._id,
             message : "Academy sucessfully added ! "
         });
 }

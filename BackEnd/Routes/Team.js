@@ -7,6 +7,7 @@ router.get("/" , teamService.getAllTeams);
 router.post("/addTeam",teamService.addTeam);
 
 router.get("/getTeam/:id" ,teamService.getTeamById);
+router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
 
 router.delete("/deleteTeam/:id" ,teamService.deleteTeamById);
 

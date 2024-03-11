@@ -7,19 +7,33 @@ export const fetchAcademy = createAsyncThunk(
   'academy/fetchAcademy',
   async () => {
     try {
-      const response = await axios.get('http://localhost:8000/academy/getAcademy/65d63da21ae37b6822a03dac');
+      const response = await axios.get('http://localhost:8000/academy/getAcademy/65d63d731ae37b6822a03daa');
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 );
+
+export const fetchAcademyById = createAsyncThunk(
+  'academy/fetchAcademyByid',
+  async (Academyid) => {
+    try {
+      const response = await axios.get('http://localhost:8000/academy/getAcademy/'+Academyid);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
 export const editAcademy = createAsyncThunk(
   'academy/editAcademy',
-  async ({ name, location, date }) => {
+  async ({ id, name, location, date }) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/academy/editAcademy/65d63da21ae37b6822a03dac',
+        'http://localhost:8000/academy/editAcademy/'+id,
         {
           AcademyName: name, 
           Location: location,
@@ -33,6 +47,8 @@ export const editAcademy = createAsyncThunk(
     }
   }
 );
+
+
 export const addnewAcademy = createAsyncThunk(
   'academy/addnewAcademy',
   async ({ name, location,logo,foundedYear,doc }) => {
@@ -47,7 +63,6 @@ export const addnewAcademy = createAsyncThunk(
           LegitimacyDocuments : doc
         }
       );
-      
       return response.data;
     } catch (error) {
       throw error;
@@ -60,6 +75,7 @@ const academySlice = createSlice({
   name: 'academy',
   initialState: {
     academyData: [],
+    academyDataById: [],
     loading: false,
     error: null
   },
@@ -75,6 +91,18 @@ const academySlice = createSlice({
         state.academyData = action.payload;
       })
       .addCase(fetchAcademy.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchAcademyById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAcademyById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.academyDataById = action.payload;
+      })
+      .addCase(fetchAcademyById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

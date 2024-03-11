@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchTeam = createAsyncThunk(
+export const fetchTeamOfAcademy = createAsyncThunk(
   'team/fetchTeam',
   async () => {
     try {
-      const response = await axios.get('http://localhost:8000/Team');
+      const response = await axios.get('http://localhost:8000/Team/getTeambyAcademyId/65d63d731ae37b6822a03daa');
       return response.data;
     } catch (error) {
       throw error;
@@ -30,14 +30,14 @@ export const deleteTeam = createAsyncThunk(
 
 export const addTeam = createAsyncThunk(
   'team/addTeam',
-  async ({ name, logo }) => {
+  async ({idAcademy, name, logo }) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/team/addTeamAndAssaignAcademy',
         {
           TeamName: name, 
           TeamLogo: logo,
-          academy: "65d63da21ae37b6822a03dac"
+          academy: idAcademy
         }
       );
       window.location.reload();
@@ -58,15 +58,15 @@ const teamSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTeam.pending, (state) => {
+      .addCase(fetchTeamOfAcademy.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchTeam.fulfilled, (state, action) => {
+      .addCase(fetchTeamOfAcademy.fulfilled, (state, action) => {
         state.loading = false;
         state.teamData = action.payload;
       })
-      .addCase(fetchTeam.rejected, (state, action) => {
+      .addCase(fetchTeamOfAcademy.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

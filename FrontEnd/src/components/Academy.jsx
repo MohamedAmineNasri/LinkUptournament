@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import TeamCard from "./TeamCard";
 import DropDown from "./DropDown";
-
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademy } from "../redux/slice/academySlice";
 
 export const Academy = () => {
   const dispatch = useDispatch();
-  const { academyData, loading, error } = useSelector((state) => state.academy);
 
+  const { academyData, loading, error } = useSelector((state) => state.academy);
   useEffect(() => {
     dispatch(fetchAcademy());
   }, [dispatch]);
@@ -22,6 +20,7 @@ export const Academy = () => {
   const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
     .toString()
     .padStart(2, "0")}`;
+
   return (
     <div>
       <div className="site-wrap">
@@ -147,7 +146,7 @@ export const Academy = () => {
                       <span className="text-muted">{academyData.Status}</span>
                     </p>
 
-                    <DropDown />
+                    <DropDown id={academyData._id} />
                   </div>
                 </div>
                 <div className="col-md-7 col-lg-8">

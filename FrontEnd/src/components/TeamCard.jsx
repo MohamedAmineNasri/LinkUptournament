@@ -5,6 +5,7 @@ import { fetchTeamOfAcademy } from "../redux/slice/teamSlice";
 import Button from "react-bootstrap/esm/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import DeleteTeamPopUp from "./DeleteTeamPopUp";
+import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
 
 const TeamCard = () => {
   const { teamData, loading, error } = useSelector((state) => state.team);
@@ -43,7 +44,7 @@ const TeamCard = () => {
         <div key={team._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
           <Card
             style={{
-              backgroundColor: "rgb(42 64 53)",
+              backgroundColor: "#212529c4",
               borderRadius: "5px",
               border: " solid",
               borderWidth: "thin",
@@ -53,74 +54,72 @@ const TeamCard = () => {
             <Card.Img
               variant="top"
               src="/public/assets/images/logo_1.png"
-              style={{ alignSelf: "center", maxWidth: "200px" }}
+              style={{ alignSelf: "center", maxWidth: "150px" }}
             />
-            <Card.Body>
-              <Card.Title style={{ fontSize: "24px" }}>
+            <Card.Body className="pt-0">
+              <Card.Title className="pb-3" style={{ fontSize: "24px" }}>
                 <strong>{team.TeamName}</strong>
               </Card.Title>
-              <ListGroup style={{ color: "white" }}>
-                <ListGroup.Item
-                  style={{
-                    backgroundColor: "rgb(42 64 53)",
-                    fontSize: "20px",
-                    padding: "0px",
-                    letterSpacing: "2px",
-                  }}
-                >
-                  Total wins : {team.Total_MatchesWon}
-                </ListGroup.Item>
-                <ListGroup.Item
-                  style={{
-                    backgroundColor: "rgb(42 64 53)",
-                    fontSize: "20px",
-                    padding: "0px",
-                    letterSpacing: "2px",
-                  }}
-                >
-                  Total loses : {team.Total_MatchesLost}
-                </ListGroup.Item>
-                <ListGroup.Item
-                  style={{
-                    backgroundColor: "rgb(42 64 53)",
-                    fontSize: "20px",
-                    padding: "0px",
-                    letterSpacing: "2px",
-                  }}
-                >
-                  Total draw : {team.Total_MatchesDrawn}
-                </ListGroup.Item>
-                <ListGroup.Item
-                  style={{
-                    backgroundColor: "rgb(42 64 53)",
-                    fontSize: "20px",
-                    padding: "0px",
-                    letterSpacing: "2px",
-                  }}
-                >
-                  Total matches : {team.Total_MatchesPlayed}
-                </ListGroup.Item>
-                <ListGroup.Item
-                  style={{
-                    backgroundColor: "rgb(42 64 53)",
-                    fontSize: "20px",
-                    padding: "0px",
-                    letterSpacing: "2px",
-                  }}
-                >
-                  Total Goals scored : {team.Total_Goals_scored}
-                </ListGroup.Item>
-                <ListGroup.Item
-                  style={{
-                    backgroundColor: "rgb(42 64 53)",
-                    fontSize: "20px",
-                    padding: "0px",
-                    letterSpacing: "2px",
-                  }}
-                >
-                  Total Goals received: {team.Total_Goals_received}
-                </ListGroup.Item>
-              </ListGroup>
+
+              <CardSubtitle
+                className="pb-3"
+                style={{
+                  fontSize: "16px",
+                  padding: "0px",
+                  letterSpacing: "2px",
+                }}
+              >
+                Total wins : {team.Total_MatchesWon}
+              </CardSubtitle>
+              <CardSubtitle
+                className="pb-3"
+                style={{
+                  fontSize: "16px",
+                  padding: "0px",
+                  letterSpacing: "2px",
+                }}
+              >
+                Total loses : {team.Total_MatchesLost}
+              </CardSubtitle>
+              <CardSubtitle
+                className="pb-3"
+                style={{
+                  fontSize: "16px",
+                  padding: "0px",
+                  letterSpacing: "2px",
+                }}
+              >
+                Total draw : {team.Total_MatchesDrawn}
+              </CardSubtitle>
+              <CardSubtitle
+                className="pb-3"
+                style={{
+                  fontSize: "16px",
+                  padding: "0px",
+                  letterSpacing: "2px",
+                }}
+              >
+                Total matches : {team.Total_MatchesPlayed}
+              </CardSubtitle>
+              <CardSubtitle
+                className="pb-3"
+                style={{
+                  fontSize: "16px",
+                  padding: "0px",
+                  letterSpacing: "2px",
+                }}
+              >
+                Total Goals scored : {team.Total_Goals_scored}
+              </CardSubtitle>
+              <CardSubtitle
+                style={{
+                  fontSize: "16px",
+                  padding: "0px",
+                  letterSpacing: "2px",
+                }}
+              >
+                Total Goals received: {team.Total_Goals_received}
+              </CardSubtitle>
             </Card.Body>
             <Card.Body>
               <div className="row justify-content-around">

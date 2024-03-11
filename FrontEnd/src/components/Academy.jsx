@@ -101,7 +101,7 @@ export const Academy = () => {
         <div className="site-section">
           <div className="container"></div>
         </div>
-        {/* teams */}
+        {/* Academy */}
         <div
           className="hero "
           style={{
@@ -112,10 +112,11 @@ export const Academy = () => {
           <div className="site-section ">
             <div style={{ marginRight: "100px", marginLeft: "100px" }}>
               <div
-                className="row mb-5 justify-content-center align-items-top "
+                className="row  justify-content-center align-items-top "
                 style={{
+                  marginTop: "80px",
                   borderRadius: "20px",
-                  boxShadow: "1px 1px 30px 10px rgba(1, 0, 0, 0.5)",
+                  boxShadow: "1px 1px 7px 3px rgba(1, 0, 0, 0.5)",
                   backgroundColor: "#2f4f4f6b",
                 }}
               >
@@ -149,6 +150,7 @@ export const Academy = () => {
                     <DropDown id={academyData._id} />
                   </div>
                 </div>
+                {/* Academy teams */}
                 <div className="col-md-7 col-lg-8">
                   <div>
                     <div

@@ -9,7 +9,7 @@ import useLogout from "../../../../hooks/useLogout.jsx";
 const DropdownUser = () => {
 
   const user = useSelector(selectCurrentUser);
-  const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Thomas Anree';
+  const userFullName = user ? `${user.firstName} ${user.lastName}` : 'Thomas Anree';
   const userRole = user ? `${user.roles}` : 'Role';
   const logout = useLogout()
   const signout = async () => {
@@ -141,7 +141,7 @@ const DropdownUser = () => {
           </li>
           <li>
             <Link
-              to="/pages/settings"
+              to="/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg

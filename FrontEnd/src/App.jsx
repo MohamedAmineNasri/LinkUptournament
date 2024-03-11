@@ -8,6 +8,9 @@ import Matches from "./pages/Matches";
 import Players from "./pages/Players";
 import Single from "./pages/Single";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Tournament from "./pages/Tournament";
+import LineupBuilder from "./pages/LineupBuilder";
+import AddPlayerForm from "./pages/AddPlayerForm";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
         <Route path="/matches" element={<Matches />} />
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
+        <Route path="/tournament" element={<Tournament />} />
+        <Route path="/player" element={<AddPlayerForm />} />
+        <Route path="/lineup-builder" element={<LineupBuilder />} />
       </Routes>
     </BrowserRouter>
   );

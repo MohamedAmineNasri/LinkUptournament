@@ -11,10 +11,19 @@ import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../Features/auth/authSlice'
 import { useLoginMutation } from '../../../Features/auth/authApiSlice'
 import { GoogleLogin } from '@react-oauth/google';
-
+import ReCAPTCHA from "react-google-recaptcha";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const SignIn: React.FC = () => {
-   const userRef = useRef();
+
+  const onChange = (response) => {
+    // Update state to indicate that captcha is completed
+    setIsCaptchaCompleted(true);
+  };
+  
+
+  const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +43,13 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    if (!isCaptchaCompleted) {
+      // If captcha is not completed, prevent sign-in and show error message
+      setErrMsg('Please complete the captcha.');
+      return;
+    }
+  
     try {
       const userData = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...userData, email }));
@@ -54,9 +69,13 @@ const SignIn: React.FC = () => {
       errRef.current.focus();
     }
   };
+  
 
   const handleUserInput = (e) => setEmail(e.target.value);
   const handlePasswordInput = (e) => setPassword(e.target.value);
+
+  const [isCaptchaCompleted, setIsCaptchaCompleted] = useState(false);
+  
   return (
     <AuthLayout>
       <Breadcrumb pageName="" />
@@ -208,6 +227,11 @@ const SignIn: React.FC = () => {
               </h2>
 
               <form onSubmit={handleSubmit}>
+              {errMsg && (
+            <Stack sx={{ width: '100%' }} spacing={2}>
+              <Alert severity="error">{errMsg}</Alert>
+            </Stack>
+          )}
       <div className="mb-4">
         <label className="mb-2.5 block font-medium text-black dark:text-white">Email</label>
         <div className="relative">
@@ -329,7 +353,12 @@ const SignIn: React.FC = () => {
               onError={() => {
                 console.log('Login Failed');
               }}
-            />;
+            />
+            <ReCAPTCHA
+    sitekey="6LdeXpQpAAAAAJAmPdKOpxjaoYoearOopW0IHhLH"
+    onChange={onChange}
+  />
+
 
       <div className="mt-6 text-center">
         <p>

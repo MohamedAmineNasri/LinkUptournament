@@ -17,7 +17,7 @@ export const fetchMatchById = createAsyncThunk(
   'match/fetchMatch',
   async (matchid) => {
     try {
-      const response = await axios.get('http://localhost:8000/match'+matchid);
+      const response = await axios.get(`http://localhost:8000/match/${matchid}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -26,7 +26,7 @@ export const fetchMatchById = createAsyncThunk(
 );
 export const editMatch = createAsyncThunk(
   'match/editMatch',
-  async ({ matchid,date, time,type ,score ,injuries,card,team1,team2}) => {
+  async ({ matchid,date, time,type}) => {
     try {
       const response = await axios.put(
         'http://localhost:8000/match/'+matchid,
@@ -34,11 +34,7 @@ export const editMatch = createAsyncThunk(
           Date: date, 
           startingTime: time,
           matchType:type,
-          score: score,
-          injuries:injuries,
-          card:card,
-          team1:team1,
-          team2:team2
+          
         }
       );
       window.location.reload();
@@ -64,21 +60,17 @@ export const deleteMatch = createAsyncThunk(
 );
 
 
-export const addMatch = createAsyncThunk(
+export const addnewMatch = createAsyncThunk(
   'match/addMatch',
-  async ({ date, time,type ,score ,injuries,card,team1,team2}) => {
+  async ({  time,type}) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/match/',
         {
-          Date: date, 
+          
           startingTime: time,
           matchType:type,
-          score: score,
-          injuries:injuries,
-          card:card,
-          team1:team1,
-          team2:team2
+          
 
           
         }
@@ -108,7 +100,7 @@ const matchSlice = createSlice({
       })
       .addCase(fetchMatch.fulfilled, (state, action) => {
         state.loading = false;
-        state.teamData = action.payload;
+        state.matchData = action.payload;
       })
       .addCase(fetchMatch.rejected, (state, action) => {
         state.loading = false;

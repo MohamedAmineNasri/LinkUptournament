@@ -1,144 +1,132 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import BALLIMG from "../assets/fu.png";
+import Card from "react-bootstrap/Card";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMatch } from "../redux/slice/matchSlice";
+import Button from "react-bootstrap/esm/Button";
+import ListGroup from "react-bootstrap/ListGroup";
+import DeleateMatchPopUp from "./DeleateMatchPopUp";
 
-import { data } from "./dummy-data";
+const MatchCard = () => {
+  const matchData = useSelector((state) => state.match.matchData);
+  const loading = useSelector((state) => state.match.loading);
+  const error = useSelector((state) => state.match.error);
+  const dispatch = useDispatch();
 
-export default function Fixture() {
- // const [fixture, setFixture] = useState([]);
+  useEffect(() => {
+    dispatch(fetchMatch());
+  }, [dispatch]);
 
-  const params = useParams();
-  const matchID = params.matchID;
-
-  const results = data.response.filter((match) => {
-    console.log(match);
-    return match.fixture.id == matchID;
-  });
-
-  const fixture = results[0];
-
-  // const fetchInfo = async () => {
-  //   const data = await fetchFixtures();
-
-  //   const results = data.response.filter((match) => {
-  //     console.log(match);
-  //     return match.fixture.id == matchID;
-  //   });
-
-  //   setFixture(results[0]);
-  // };
-
-  // useEffect(() => {
-  //   fetchInfo();
-  // }, []);
-
-  // if (!fixture) return <>loading</>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="pb-10 bg-white">
-      <div key={fixture.fixture.id} className="bg-white py-2">
-        <div align="center">
-          <img src={fixture.league.logo} width={25} alt="logo" />
-          {fixture.league.name}
+    <div className="row">
+      {matchData.length === 0 && !loading && !error && (
+        <div
+          style={{
+            padding: "20px",
+            textAlign: "center",
+            alignItems: "center",
+            paddingTop: "250px",
+            paddingBottom: "220px",
+          }}
+        >
+          <h3
+            style={{ color: "white", fontSize: "24px", marginBottom: "10px" }}
+          >
+            No match created yet
+          </h3>
+          <p style={{ color: "#666", fontSize: "18px" }}>
+            Start by creating a new match to get started!
+          </p>
         </div>
-
-        <div className="w-full flex p-1">
-          <div className="w-[10%]" align="center">
-            <img src={fixture.teams.home.logo} width={30} />
-          </div>
-
-          <div className="w-[32%] text-right">{fixture.teams.home.name}</div>
-
-          <div className="w-[16%] text-center">
-            {fixture.goals.home} : {fixture.goals.away}
-          </div>
-
-          <div className="w-[32%] text-left flex">
-            {fixture.teams.away.name}
-          </div>
-
-          <div className="w-[10%]" align="center">
-            <img src={fixture.teams.away.logo} width={30} />
-          </div>
-        </div>
-
-        <div className="text-center text-green-600">
-          {fixture.fixture.status.elapsed}`
-        </div>
-      </div>
-
-      <div align="center" className="grid grid-cols-1 divide-y">
-        <h1 className=" bg-gray-700 p-1 text-gray-300 text-xl">Events</h1>
-
-        {!fixture.events
-          ? null
-          : fixture.events.map((event) => (
-              <div className="p-5" key={event.team.id}>
-                {event.type === "Goal" ? (
-                  <div>
-                    <img src={BALLIMG} width={100} />
-                  </div>
-                ) : (
-                  <div className="badge badge-secondary">{event.type}</div>
-                )}{" "}
-                {event.player.name}{" "}
-                <img src={event.team.logo} width={20} />
-                <br />
-                <div className="text-green-700">{event.time.elapsed}</div>
+      )}
+      {matchData.map((match, index) => (
+        <div key={match._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
+          <Card
+            id={match.id}
+            style={{
+              backgroundColor: "rgb(42 64 53)",
+              borderRadius: "5px",
+              border: " solid",
+              borderWidth: "thin",
+            }}
+          >
+            <DeleateMatchPopUp matchid={match._id}></DeleateMatchPopUp>
+            <Card.Img
+              variant="top"
+              src="/public/assets/images/bg_2.jpg"
+              style={{ alignSelf: "center", maxWidth: "200px" }}
+            />
+            <Card.Body>
+              <Card.Title style={{ fontSize: "24px" }}>
+                <strong>{match.Date}</strong>
+              </Card.Title>
+              <ListGroup style={{ color: "white" }}>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  starting Time : {match.startingTime}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  match Type : {match.matchType}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  score : {match.score[0]} : {match.score[1]}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  team1 : {match.team1}
+                </ListGroup.Item>
+                <ListGroup.Item
+                  style={{
+                    backgroundColor: "rgb(42 64 53)",
+                    fontSize: "20px",
+                    padding: "0px",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  team2 : {match.team2}
+                </ListGroup.Item>
+                
+              </ListGroup>
+            </Card.Body>
+            <Card.Body>
+              <div className="row justify-content-around">
+                <Button variant="success">Add match</Button>
+                <Button variant="success">Check match</Button>
               </div>
-            ))}
-      </div>
-
-      <div align="center" className="grid grid-cols-1 divide-y">
-        <h1 className=" bg-gray-700 p-1 text-gray-300 text-xl">Score</h1>
-
-        <div className="p-2">
-          First Half
-          <br />
-          {fixture.score.halftime.home} : {fixture.score.halftime.away}
+            </Card.Body>
+          </Card>
         </div>
-
-        {fixture.score.fulltime.home ? (
-          <div className="p-2">
-            Full Time
-            <br />
-            {fixture.score.fulltime.home} : {fixture.score.fulltime.away}
-          </div>
-        ) : null}
-
-        {fixture.score.extratime.home ? (
-          <div className="p-2">
-            Extra Time
-            <br />
-            {fixture.score.extratime.home} : {fixture.score.extratime.away}
-          </div>
-        ) : null}
-
-        {fixture.score.penalty.home ? (
-          <div className="p-2">
-            Extra Time
-            <br />
-            {fixture.score.penalty.home} : {fixture.score.penalty.away}
-          </div>
-        ) : null}
-      </div>
-
-      <div align="center" className="grid grid-cols-1 divide-y">
-        <h1 className=" bg-gray-700 p-1 text-gray-300 text-xl">
-          Match Details
-        </h1>
-
-        <div className="p-2">Stadium - {fixture.fixture.venue.name}</div>
-
-        <div className="p-2">Referee - {fixture.fixture.referee}</div>
-        <div className="p-2">Country - {fixture.league.country}</div>
-        <div className="p-2">{fixture.league.round}</div>
-        <div className="p-2">{fixture.league.season}</div>
-      </div>
-
-      <div className="text-center">
-        <button className="btn btn-wide">Pay for Live Odds</button>
-      </div>
+      ))}
     </div>
   );
-}
+};
+
+export default MatchCard;

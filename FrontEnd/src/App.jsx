@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import NavBar from "./components/navbar";
-import { data } from "./components/dummy-data";
-import Table from "./components/Matches";
+import { data } from "./components/TestWitheDummyData/dummy-data";
+import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Fixture from "./components/match";
+import Fixture from "./components/TestWitheDummyData/matchhhh";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import CachedIcon from "@mui/icons-material/Cached";
 import Footer from "./components/foter";
+import AddMatchPopUpWindow from "./components/AddMatchPopUpWindow";
+import DeleteMatchPopUp from "./components/DeleateMatchPopUp";
+import MatchCard from "./components/match";
+import AddMatch from "./components/anotherAddMatch";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -45,6 +49,11 @@ function App() {
               path="/fixture/:matchID"
               element={<Fixture data={fixtures} />}
             ></Route>
+              
+              <Route path="/test" element={<MatchCard/>} />
+              <Route path="/testtt" element={<AddMatchPopUpWindow/>} />
+              <Route path="/testt" element={<AddMatch/>} />
+
           </Routes>
         </BrowserRouter>
       )}

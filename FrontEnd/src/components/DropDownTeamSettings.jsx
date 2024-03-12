@@ -6,7 +6,7 @@ import EditPopUpSelectedTeam from "./EditPopUpSelectedTeam";
 
 function DropDownTeamSettings(props) {
   return (
-    <div className="m-3" style={{ textAlignLast: "right" }}>
+    <div className="m-3 textAlignRight">
       <DropdownButton
         as={ButtonGroup}
         variant="success"
@@ -14,29 +14,11 @@ function DropDownTeamSettings(props) {
         title="Settings"
       >
         {/* add players ----------------------------------------------------- */}
-        <Button
-          variant="danger"
-          style={{
-            width: "-webkit-fill-available",
-            textAlignLast: "center",
-            border: "none",
-            color: "black",
-            background: "white",
-          }}
-        >
+        <Button className="popUpButton" variant="success">
           Add Players
         </Button>
         {/* check players ----------------------------------------------------- */}
-        <Button
-          variant="danger"
-          style={{
-            width: "-webkit-fill-available",
-            textAlignLast: "center",
-            border: "none",
-            color: "black",
-            background: "white",
-          }}
-        >
+        <Button className="popUpButton" variant="success">
           Check Players
         </Button>
         <EditPopUpSelectedTeam

@@ -87,10 +87,9 @@ export const Academy = () => {
             <div className="row align-items-center">
               <div className="col-lg-12 mx-auto text-center">
                 <img
-                  src="/public/assets/images/rmLogo.png"
+                  src="/public/assets/images/rmLogo.png" // academyData.Logo
                   alt="Logo"
-                  className="img-fluid"
-                  style={{ width: "300px" }}
+                  className="img-fluid academyLogosizeInHero"
                 />
                 <h1 className="text-white">{academyData.AcademyName}</h1>
               </div>
@@ -101,33 +100,20 @@ export const Academy = () => {
 
         {/* Academy */}
         <div
-          className="hero "
+          className="hero backImgAcademyandTeam"
           style={{
             backgroundImage: "url('/assets/images/team1.jpg')",
-            height: "1000px",
           }}
         >
           <div className="site-section ">
-            <div style={{ marginRight: "100px", marginLeft: "100px" }}>
-              <div
-                className="row  justify-content-center align-items-top "
-                style={{
-                  marginTop: "80px",
-                  borderRadius: "20px",
-                  boxShadow: "1px 1px 7px 3px rgba(1, 0, 0, 0.5)",
-                  backgroundColor: "#2f4f4f6b",
-                }}
-              >
+            <div className="AcademyandTeamsLRmargin">
+              <div className="row  justify-content-center align-items-top AcademyandTeamsBox ">
                 <div className="col-md-5 col-lg-4 word-wrap-break">
-                  <div
-                    className="text-center"
-                    style={{ paddingTop: "50px", paddingBottom: "20px" }}
-                  >
+                  <div className="text-center academyBox">
                     <img
                       src="/public/assets/images/rmLogo.png"
                       alt="Logo"
-                      className="img-fluid " //rounded-circle
-                      style={{ maxWidth: "200px" }}
+                      className="img-fluid academyLogoMwidth " //rounded-circle
                     />
                     <h3 className="mb-4 mt-3 mb-0  ">
                       <strong>{academyData.AcademyName}</strong>
@@ -150,25 +136,8 @@ export const Academy = () => {
                 </div>
                 {/* Academy teams */}
                 <div className="col-md-7 col-lg-8">
-                  <div
-                    className="widget-body mb-3"
-                    style={{
-                      borderRadius: "20px",
-                      height: "650px",
-                      overflowY: "auto",
-                      scrollbarWidth: "none", // Hide the scrollbar for Firefox
-                      msOverflowStyle: "none", // Hide the scrollbar for Internet Explorer/Edge
-                      WebkitScrollbarWidth: "none", // Hide the scrollbar for WebKit browsers (Chro
-                    }}
-                  >
-                    <div
-                      style={{
-                        border: "solid",
-                        borderWidth: "thin",
-                        borderRadius: "20px",
-                        padding: "30px",
-                      }}
-                    >
+                  <div className="widget-body mb-3 teamsBorderBox ">
+                    <div className="teamsBordersolid">
                       <TeamCard />
                     </div>
                   </div>

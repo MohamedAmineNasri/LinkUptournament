@@ -1130,7 +1130,7 @@ h1, h2, h3, h4, h5,
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
 
 
-    /* added----------------------------- */
+    /* added by MI----------------------------- */
     .widget-vs .d-flex {
       max-width: 100%;
     }
@@ -1147,6 +1147,115 @@ h1, h2, h3, h4, h5,
     .custom-placeholder::placeholder {
       color: rgb(178, 175, 175); 
     }
+
+    .academyCreateInput {
+        height: 60px;
+        border-width: 1px;
+    }
+    .teamCard {
+      background-color: #212529c4;
+      border-radius: 30px;
+      border: solid thin;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+    .teamCardImg {
+      align-self: center;
+      max-width: 150px;
+    }
+    .teamCardTitle {
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+    
+    .teamCardData {
+      font-size: 16px;
+      padding: 0px;
+      letter-spacing: 2px;
+    }
+    .popUpButton {
+      width: -webkit-fill-available;
+      -moz-width: -moz-available; 
+      text-align-last: center;
+      border: none;
+      color: black;
+      background: white;
+    }
+    .popUpWindowBlackColor {
+      background-color: #222831;
+    }
+    .popUpWindowLabelColor {
+      color: white;
+    }
+    .textAlignRight {
+      text-align: right;
+    }
+    .HeroImageAddAcademy {
+      background-image: url('/assets/images/2.jpg');
+      background-repeat: no-repeat;
+      background-size: cover; 
+      padding-top: 100px;
+      height: 1300px;
+    }
+    .TitleAddAcademy {
+      text-shadow: 5px 2px 0px #1db428e6;
+      text-align: -webkit-center; /* For webkit browsers */
+           
+    }
+    .addAcademyFormBorder {
+      box-shadow: 1px 1px 30px 10px rgba(1, 0, 0, 0.5);
+      background-color: #2f4f4f6b;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-radius: 40px;
+    }
+    .academyLogosizeInHero {
+      width: 300px;
+    }
+    .backImgAcademyandTeam {
+      height: 1000px;
+    }
+    .AcademyandTeamsLRmargin{
+      margin-left: 100px;
+      margin-right: 100px;
+    }
+    .AcademyandTeamsBox {
+      margin-top: 80px;
+      border-radius: 20px;
+      box-shadow: 1px 1px 7px 3px rgba(1, 0, 0, 0.5);
+      background-color: #2f4f4f6b;
+    }
+    .academyBox {
+      padding-top: 50px;
+      padding-bottom: 20px;
+    }
+    .academyLogoMwidth {
+      max-width: 200px;
+    }
+    .teamsBorderBox {
+      border-radius: 20px;
+      height: 650px;
+      overflow-y: auto;
+      scrollbar-width: none; /* Hide the scrollbar for Firefox */
+      -ms-overflow-style: none; /* Hide the scrollbar for Internet Explorer/Edge */
+      -webkit-scrollbar-width: none; /* Hide the scrollbar for WebKit browsers (Chrome, Safari) */      
+      
+    }
+    .teamsBordersolid {
+      border: solid thin;
+      border-radius: 20px;
+      padding: 30px;
+      }
+      
+    
+    
+    
+    
+    
+    
+    /* -------------------------------------------- */
     
 
     

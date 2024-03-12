@@ -82,13 +82,13 @@ export const EditPopUpAcademy = (props) => {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header style={{ backgroundColor: "#222831" }} closeButton>
+        <Modal.Header className="popUpWindowBlackColor" closeButton>
           <Modal.Title>Edit Academy</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "#222831" }}>
-          <Form style={{ color: "black" }}>
+        <Modal.Body className="popUpWindowBlackColor">
+          <Form className="popUpWindowBlackColor">
             <Form.Group className="mb-3" controlId="nameInput">
-              <Form.Label style={{ color: "white" }}>
+              <Form.Label className="popUpWindowLabelColor">
                 Academy Name :{" "}
               </Form.Label>
               <Form.Control
@@ -100,7 +100,7 @@ export const EditPopUpAcademy = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="locationInput">
-              <Form.Label style={{ color: "white" }}>
+              <Form.Label className="popUpWindowLabelColor">
                 Academy Location :
               </Form.Label>
               <Form.Control
@@ -112,7 +112,7 @@ export const EditPopUpAcademy = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label style={{ color: "white" }}>
+              <Form.Label className="popUpWindowLabelColor">
                 Creation Date :
               </Form.Label>
               <Form.Control
@@ -124,16 +124,16 @@ export const EditPopUpAcademy = (props) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label style={{ color: "white" }}>Logo :</Form.Label>
+              <Form.Label className="popUpWindowLabelColor">Logo :</Form.Label>
               <Form.Control type="file" placeholder="Academy Logo" autoFocus />
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "#222831" }}>
+        <Modal.Footer className="popUpWindowBlackColor">
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button variant="success" onClick={handleSaveChanges}>
             Save Changes
           </Button>
         </Modal.Footer>

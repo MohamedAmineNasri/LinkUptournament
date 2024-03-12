@@ -40,16 +40,7 @@ const TeamCard = () => {
       )}
       {teamData.map((team) => (
         <div key={team._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
-          <Card
-            style={{
-              backgroundColor: "#212529c4",
-              borderRadius: "30px",
-              border: " solid",
-              borderWidth: "thin",
-              paddingBottom: "10px",
-              marginBottom: "25px",
-            }}
-          >
+          <Card className="teamCard">
             {/* setting buttonthat display a drop down for various option */}
             <DropDownTeamSettings
               idTeam={team._id}
@@ -59,72 +50,30 @@ const TeamCard = () => {
 
             {/* <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp> */}
             <Card.Img
+              className="teamCardImg"
               variant="top"
               src="/public/assets/images/rmLogo.png"
-              style={{ alignSelf: "center", maxWidth: "150px" }}
             />
-            <Card.Body className="pt-0">
-              <Card.Title className="pb-3" style={{ fontSize: "24px" }}>
+            <Card.Body>
+              <Card.Title className="pb-3 teamCardTitle">
                 <strong>{team.TeamName}</strong>
               </Card.Title>
-
-              <CardSubtitle
-                className="pb-3"
-                style={{
-                  fontSize: "16px",
-                  padding: "0px",
-                  letterSpacing: "2px",
-                }}
-              >
+              <CardSubtitle className="pb-3 teamCardData">
                 Total wins : {team.Total_MatchesWon}
               </CardSubtitle>
-              <CardSubtitle
-                className="pb-3"
-                style={{
-                  fontSize: "16px",
-                  padding: "0px",
-                  letterSpacing: "2px",
-                }}
-              >
+              <CardSubtitle className="pb-3 teamCardData">
                 Total loses : {team.Total_MatchesLost}
               </CardSubtitle>
-              <CardSubtitle
-                className="pb-3"
-                style={{
-                  fontSize: "16px",
-                  padding: "0px",
-                  letterSpacing: "2px",
-                }}
-              >
+              <CardSubtitle className="pb-3 teamCardData">
                 Total draw : {team.Total_MatchesDrawn}
               </CardSubtitle>
-              <CardSubtitle
-                className="pb-3"
-                style={{
-                  fontSize: "16px",
-                  padding: "0px",
-                  letterSpacing: "2px",
-                }}
-              >
+              <CardSubtitle className="pb-3 teamCardData">
                 Total matches : {team.Total_MatchesPlayed}
               </CardSubtitle>
-              <CardSubtitle
-                className="pb-3"
-                style={{
-                  fontSize: "16px",
-                  padding: "0px",
-                  letterSpacing: "2px",
-                }}
-              >
+              <CardSubtitle className="pb-3 teamCardData">
                 Total Goals scored : {team.Total_Goals_scored}
               </CardSubtitle>
-              <CardSubtitle
-                style={{
-                  fontSize: "16px",
-                  padding: "0px",
-                  letterSpacing: "2px",
-                }}
-              >
+              <CardSubtitle className="teamCardData">
                 Total Goals received: {team.Total_Goals_received}
               </CardSubtitle>
             </Card.Body>

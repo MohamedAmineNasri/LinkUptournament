@@ -151,14 +151,7 @@ export const AddAcademy = () => {
       </div>
 
       {/* Hero image ------------------------- */}
-      <div
-        className="hero overlay2 "
-        style={{
-          backgroundImage: "url('/assets/images/2.jpg')",
-          paddingTop: "100px",
-          height: "1300px",
-        }}
-      >
+      <div className="hero overlay2 HeroImageAddAcademy">
         {/* sucess msg when academy created "condional" */}
         <div>
           {submitSuccess && (
@@ -167,143 +160,108 @@ export const AddAcademy = () => {
         </div>
 
         <div className="col-lg-12">
-          <h1
-            className="col-md-12 pb-5 pt-5"
-            style={{
-              textShadow: "5px 2px 0px #1db428e6",
-              textAlign: "-webkit-center",
-              fontSize: "5rem",
-            }}
-          >
+          <h1 className="col-md-12 pb-5 pt-5 TitleAddAcademy">
             Add You're Academy
           </h1>
         </div>
         {/* form inside the hero image ------------------------  */}
         <div className=" container col-lg-8 pt-5">
-          <div
-            style={{
-              borderRadius: "40px",
-            }}
-          >
-            <div
-              style={{
-                boxShadow: "1px 1px 30px 10px rgba(1, 0, 0, 0.5)",
-                backgroundColor: "#2f4f4f6b",
-                paddingLeft: "10px",
-                paddingRight: "10px",
-                paddingTop: "20px",
-                paddingBottom: "20px",
-                borderRadius: "40px",
-              }}
-            >
-              <div className="col-lg-12">
-                <form action="#">
-                  <div className="">
-                    {/* name ----------------------------------------- */}
-                    <div className="col-md-12 form-group pb-2 pt-3">
-                      <label htmlFor="Aname">Academy Name</label>
-                      <input
-                        style={{
-                          height: "60px",
-                          borderColor: namefieldColor,
-                          borderWidth: "1px",
-                        }}
-                        type="text"
-                        className="form-control custom-placeholder"
-                        id="Aname"
-                        placeholder="Enter the name of the academy"
-                        value={Name}
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                      {nameError && (
-                        <medium className="text-danger">{nameError}</medium>
-                      )}
-                    </div>
-                    {/* location---------------------------------------------- */}
-                    <div className="col-md-12 form-group pb-2">
-                      <label htmlFor="location">Academy Location</label>
-                      <input
-                        style={{
-                          height: "60px",
-                          borderColor: locationfieldColor,
-                          borderWidth: "1px",
-                        }}
-                        type="text"
-                        className="form-control custom-placeholder"
-                        id="location"
-                        placeholder="Enter the Location of the academy"
-                        value={Location}
-                        onChange={(e) => setLocation(e.target.value)}
-                      />
-                      {locationError && (
-                        <medium className="text-danger">{locationError}</medium>
-                      )}
-                    </div>
-                    {/* date-------------------------------------------------- */}
-                    <div className="col-md-12 form-group pb-2">
-                      <label htmlFor="foundedDate">Founded Date</label>
-                      <input
-                        style={{
-                          height: "60px",
-                          borderColor: datefieldColor,
-                          borderWidth: "1px",
-                        }}
-                        type="date"
-                        className="form-control custom-placeholder"
-                        id="foundedDate"
-                        value={FoundedYear}
-                        onChange={(e) => setFoundedYear(e.target.value)}
-                      />
-                      {foundedDateError && (
-                        <medium className="text-danger">
-                          {foundedDateError}
-                        </medium>
-                      )}
-                    </div>
-                    {/* logo */}
-                    <div className="col-md-12 form-group pb-2">
-                      <label htmlFor="logoInput">Upload Logo</label>
-                      <input
-                        style={{
-                          height: "60px",
-                        }}
-                        type="file"
-                        className="form-control custom-placeholder"
-                        id="logoInput"
-                        accept=".jpg,.jpeg,.png"
-                        value={Logo}
-                        onChange={(e) => setLogo(e.target.value)}
-                      />
-                    </div>
-                    {/* L documents */}
-                    <div className="col-md-12 form-group pb-2">
-                      <label htmlFor="fileInput">
-                        Upload Legitimacy Documents
-                      </label>
-                      <input
-                        style={{
-                          height: "60px",
-                        }}
-                        type="file"
-                        className="form-control custom-placeholder"
-                        id="fileInput"
-                        accept=".pdf,.doc,.docx"
-                        value={Docs}
-                        onChange={(e) => setDoc(e.target.value)}
-                      />
-                    </div>
-                    {/* submit  */}
-                    <div className="col-md-12 form-group ">
-                      <input
-                        type="submit"
-                        className="btn btn-success py-3 px-5 btn-block"
-                        value="add academy "
-                        onClick={handleSaveChanges}
-                      />
-                    </div>
+          <div className="addAcademyFormBorder">
+            <div className="col-lg-12">
+              <form action="#">
+                <div>
+                  {/* name ----------------------------------------- */}
+                  <div className="col-md-12 form-group pb-2 pt-3 ">
+                    <label htmlFor="Aname">Academy Name</label>
+                    <input
+                      className="form-control custom-placeholder academyCreateInput"
+                      type="text"
+                      id="Aname"
+                      placeholder="Enter the name of the academy"
+                      value={Name}
+                      onChange={(e) => setName(e.target.value)}
+                      style={{
+                        borderColor: namefieldColor,
+                      }}
+                    />
+                    {nameError && (
+                      <medium className="text-danger">{nameError}</medium>
+                    )}
                   </div>
-                </form>
-              </div>
+                  {/* location---------------------------------------------- */}
+                  <div className="col-md-12 form-group pb-2">
+                    <label htmlFor="location">Academy Location</label>
+                    <input
+                      className="form-control custom-placeholder academyCreateInput"
+                      type="text"
+                      id="location"
+                      placeholder="Enter the Location of the academy"
+                      value={Location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      style={{
+                        borderColor: locationfieldColor,
+                      }}
+                    />
+                    {locationError && (
+                      <medium className="text-danger">{locationError}</medium>
+                    )}
+                  </div>
+                  {/* date-------------------------------------------------- */}
+                  <div className="col-md-12 form-group pb-2">
+                    <label htmlFor="foundedDate">Founded Date</label>
+                    <input
+                      className="form-control custom-placeholder academyCreateInput"
+                      type="date"
+                      id="foundedDate"
+                      value={FoundedYear}
+                      onChange={(e) => setFoundedYear(e.target.value)}
+                      style={{
+                        borderColor: datefieldColor,
+                      }}
+                    />
+                    {foundedDateError && (
+                      <medium className="text-danger">
+                        {foundedDateError}
+                      </medium>
+                    )}
+                  </div>
+                  {/* logo */}
+                  <div className="col-md-12 form-group pb-2">
+                    <label htmlFor="logoInput">Upload Logo</label>
+                    <input
+                      className="form-control custom-placeholder academyCreateInput"
+                      type="file"
+                      id="logoInput"
+                      accept=".jpg,.jpeg,.png"
+                      value={Logo}
+                      onChange={(e) => setLogo(e.target.value)}
+                    />
+                  </div>
+                  {/* L documents */}
+                  <div className="col-md-12 form-group pb-2">
+                    <label htmlFor="fileInput">
+                      Upload Legitimacy Documents
+                    </label>
+                    <input
+                      className="form-control custom-placeholder academyCreateInput "
+                      type="file"
+                      id="fileInput"
+                      accept=".pdf,.doc,.docx"
+                      value={Docs}
+                      onChange={(e) => setDoc(e.target.value)}
+                    />
+                  </div>
+                  {/* submit  */}
+                  <div className="col-md-12 form-group ">
+                    <input
+                      type="submit"
+                      className="btn btn-success py-3 px-5 btn-block"
+                      value="add academy "
+                      onClick={handleSaveChanges}
+                    />
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>

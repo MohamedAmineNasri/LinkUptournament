@@ -18,6 +18,15 @@ const addTeam =  async (req, res, next) => {
     });
 }
 
+const updateTeam = async (req,res,next)=>{
+    const TeamData = await Team.findById(req.params.id);
+    TeamData.TeamName = req.body.TeamName;
+    TeamData.TeamLogo = req.body.TeamLogo;
+    await TeamData.save()
+    res.json("Team updated sucessfully");
+}
+
+
 
 
 const addTeamAndAssaignToAcademy =  async (req, res, next) => {
@@ -285,4 +294,4 @@ const resetGroupStageData = async (req,res, next) => {
 
 
 
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId};
+module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam};

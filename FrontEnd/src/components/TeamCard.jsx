@@ -2,10 +2,7 @@ import Card from "react-bootstrap/Card";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTeamOfAcademy } from "../redux/slice/teamSlice";
-import Button from "react-bootstrap/esm/Button";
-import DeleteTeamPopUp from "./DeleteTeamPopUp";
 import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
-import SettingsIcon from "@mui/icons-material/Settings";
 import DropDownTeamSettings from "./DropDownTeamSettings";
 
 const TeamCard = () => {
@@ -46,18 +43,24 @@ const TeamCard = () => {
           <Card
             style={{
               backgroundColor: "#212529c4",
-              borderRadius: "5px",
+              borderRadius: "30px",
               border: " solid",
               borderWidth: "thin",
+              paddingBottom: "10px",
+              marginBottom: "25px",
             }}
           >
-            {/* settingicon that display a drop down for various option */}
-            <DropDownTeamSettings idTeam={team._id}></DropDownTeamSettings>
+            {/* setting buttonthat display a drop down for various option */}
+            <DropDownTeamSettings
+              idTeam={team._id}
+              teamname={team.TeamName}
+              teamlogo={team.TeamLogo}
+            ></DropDownTeamSettings>
 
             {/* <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp> */}
             <Card.Img
               variant="top"
-              src="/public/assets/images/logo_1.png"
+              src="/public/assets/images/rmLogo.png"
               style={{ alignSelf: "center", maxWidth: "150px" }}
             />
             <Card.Body className="pt-0">
@@ -124,12 +127,6 @@ const TeamCard = () => {
               >
                 Total Goals received: {team.Total_Goals_received}
               </CardSubtitle>
-            </Card.Body>
-            <Card.Body>
-              <div className="row justify-content-around">
-                <Button variant="success">Add Players</Button>
-                <Button variant="success">Check Players</Button>
-              </div>
             </Card.Body>
           </Card>
         </div>

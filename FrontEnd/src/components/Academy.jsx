@@ -87,10 +87,10 @@ export const Academy = () => {
             <div className="row align-items-center">
               <div className="col-lg-12 mx-auto text-center">
                 <img
-                  src="/public/assets/images/logo_1.png"
+                  src="/public/assets/images/rmLogo.png"
                   alt="Logo"
-                  className="img-fluid rounded-circle"
-                  style={{ maxWidth: "200px" }}
+                  className="img-fluid"
+                  style={{ width: "300px" }}
                 />
                 <h1 className="text-white">{academyData.AcademyName}</h1>
               </div>
@@ -98,9 +98,7 @@ export const Academy = () => {
           </div>
         </div>
         {/* separator */}
-        <div className="site-section">
-          <div className="container"></div>
-        </div>
+
         {/* Academy */}
         <div
           className="hero "
@@ -123,12 +121,12 @@ export const Academy = () => {
                 <div className="col-md-5 col-lg-4 word-wrap-break">
                   <div
                     className="text-center"
-                    style={{ paddingTop: "20px", paddingBottom: "20px" }}
+                    style={{ paddingTop: "50px", paddingBottom: "20px" }}
                   >
                     <img
-                      src="/public/assets/images/logo_1.png"
+                      src="/public/assets/images/rmLogo.png"
                       alt="Logo"
-                      className="img-fluid rounded-circle"
+                      className="img-fluid " //rounded-circle
                       style={{ maxWidth: "200px" }}
                     />
                     <h3 className="mb-4 mt-3 mb-0  ">
@@ -152,29 +150,26 @@ export const Academy = () => {
                 </div>
                 {/* Academy teams */}
                 <div className="col-md-7 col-lg-8">
-                  <div>
+                  <div
+                    className="widget-body mb-3"
+                    style={{
+                      borderRadius: "20px",
+                      height: "650px",
+                      overflowY: "auto",
+                      scrollbarWidth: "none", // Hide the scrollbar for Firefox
+                      msOverflowStyle: "none", // Hide the scrollbar for Internet Explorer/Edge
+                      WebkitScrollbarWidth: "none", // Hide the scrollbar for WebKit browsers (Chro
+                    }}
+                  >
                     <div
-                      className="widget-body mb-3"
                       style={{
+                        border: "solid",
+                        borderWidth: "thin",
                         borderRadius: "20px",
-                        height: "650px",
-                        overflowY: "auto",
-                        scrollbarWidth: "none", // Hide the scrollbar for Firefox
-                        msOverflowStyle: "none", // Hide the scrollbar for Internet Explorer/Edge
-                        WebkitScrollbarWidth: "none", // Hide the scrollbar for WebKit browsers (Chro
+                        padding: "30px",
                       }}
                     >
-                      <div
-                        className="widget-vs"
-                        style={{
-                          border: "solid",
-                          borderWidth: "thin",
-                          borderRadius: "20px",
-                          padding: "30px",
-                        }}
-                      >
-                        <TeamCard />
-                      </div>
+                      <TeamCard />
                     </div>
                   </div>
                 </div>

@@ -48,6 +48,25 @@ export const addTeam = createAsyncThunk(
   }
 );
 
+export const editTeam = createAsyncThunk(
+  'team/editTeam',
+  async ({ teamid, name, logo}) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/team/updateTeam/'+teamid,
+        {
+          TeamName: name, 
+          // TeamLogo: logo,
+        }
+      );
+      window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 const teamSlice = createSlice({
   name: 'team',
   initialState: {

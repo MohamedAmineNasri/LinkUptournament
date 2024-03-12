@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Header from "../components/Header";
 import "./PlayerForm.css";
 import Swal from "sweetalert2";
 
 const Tournament = () => {
+  const [nbPhase, setNbPhase] = useState(0);
   const [nbTeams, setNbTeams] = useState(0);
-  useEffect(() => {
-    console.log("Selected tournament:", nbTeams);
-  }, [nbTeams]);
+  const [nbGroups, setNbGroups] = useState(0);
+
   const handleEliminationPhaseClick = () => {
     Swal.fire({
       title: "Elimination phase",
@@ -29,7 +29,7 @@ const Tournament = () => {
       focusConfirm: false,
       preConfirm: () => {
         const selectedValue = document.getElementById("tournamentSelect").value;
-        setNbTeams(selectedValue);
+        setNbPhase(selectedValue);
       },
     });
   };
@@ -39,9 +39,9 @@ const Tournament = () => {
       html: `
           <div>
               <p>How many groups do you want to create?</p>
-              <input type="number" class="swal2-input" value="4"/>
+              <input type="number" class="swal2-input" value="4" id="groups"/>
               <p>How many teams are there in each group?</p>
-              <input type="number" class="swal2-input" value="4"/>
+              <input type="number" class="swal2-input" value="4" id="teams"/>
               <p>How many teams do you want to start the elimination phase with?</p>
               <select id="tournamentSelect" class="swal2-select">
                 <option value="2">2</option>
@@ -57,7 +57,11 @@ const Tournament = () => {
       focusConfirm: false,
       preConfirm: () => {
         const selectedValue = document.getElementById("tournamentSelect").value;
-        setNbTeams(selectedValue);
+        const groupsValue = document.getElementById("groups").value;
+        const teamsValue = document.getElementById("teams").value;
+        setNbGroups(groupsValue);
+        setNbTeams(teamsValue);
+        setNbPhase(selectedValue);
       },
     });
   };
@@ -67,16 +71,18 @@ const Tournament = () => {
       html: `
           <div>
               <p>How many groups do you want to create?</p>
-              <input type="number" class="swal2-input" value="4"/>
+              <input type="number" class="swal2-input" value="4" id="groups"/>
               <p>How many teams are there in each group?</p>
-              <input type="number" class="swal2-input" value="4"/>
+              <input type="number" class="swal2-input" value="4" id="teams"/>
           </div>  `,
       confirmButtonText: "Submit",
       showCancelButton: true,
       focusConfirm: false,
       preConfirm: () => {
-        const selectedValue = document.getElementById("tournamentSelect").value;
-        setNbTeams(selectedValue);
+        const groupsValue = document.getElementById("groups").value;
+        const teamsValue = document.getElementById("teams").value;
+        setNbGroups(groupsValue);
+        setNbTeams(teamsValue);
       },
     });
   };
@@ -95,7 +101,7 @@ const Tournament = () => {
               <div className="col">
                 <h5>Group stages</h5>
                 <img
-                  src="./public/assets/images/groupe.png"
+                  src="/assets/images/groupe.png"
                   alt=""
                   style={{ width: "300px", cursor: "pointer" }}
                   onClick={handleGroupClick}
@@ -104,7 +110,7 @@ const Tournament = () => {
               <div className="col">
                 <h5>Group stages and elimination phase</h5>
                 <img
-                  src="./public/assets/images/poule_eliminatoire.png"
+                  src="/assets/images/poule_eliminatoire.png"
                   alt=""
                   style={{ width: "300px", cursor: "pointer" }}
                   onClick={handleGroupEliminationClick}
@@ -114,7 +120,7 @@ const Tournament = () => {
                 <h5>Elimination phase</h5>
 
                 <img
-                  src="./public/assets/images/eliminatoire.png"
+                  src="/assets/images/eliminatoire.png"
                   alt=""
                   style={{ width: "300px", cursor: "pointer" }}
                   onClick={handleEliminationPhaseClick}

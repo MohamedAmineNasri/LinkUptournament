@@ -155,7 +155,9 @@ export const AddAcademy = () => {
         {/* sucess msg when academy created "condional" */}
         <div>
           {submitSuccess && (
-            <Alert variant="success">Academy added successfully!</Alert>
+            <Alert className="alertModified" variant="success">
+              Academy added successfully!
+            </Alert>
           )}
         </div>
 

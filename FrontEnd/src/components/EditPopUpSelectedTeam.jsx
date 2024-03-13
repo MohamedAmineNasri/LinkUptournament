@@ -3,8 +3,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
-
 import { editTeam } from "../redux/slice/teamSlice";
+import { convertToBase64 } from "../utilities/convertFileBase64";
 
 export const EditPopUpSelectedTeam = (props) => {
   // pop up logic --------------
@@ -15,29 +15,59 @@ export const EditPopUpSelectedTeam = (props) => {
   const dispatch = useDispatch();
 
   // Initialize state for edited values
-  const [editedName, setEditedName] = useState("");
-
-  // Initialize flag to track changes
-  const [isChanged, setIsChanged] = useState(false);
+  const [teamName, setteamName] = useState("");
+  const [editedLogo, setEditedLogo] = useState(null);
+  //validator states
+  const [nameError, setNameError] = useState("");
+  //validator color
+  const [namefieldColor, setnamefieldColor] = useState("green");
 
   // Update edited values only if the input fields are changed
   const handleNameChange = (e) => {
-    setEditedName(e.target.value);
-    setIsChanged(true);
+    setteamName(e.target.value);
+    if (e.target.value !== "") {
+      if (!e.target.value.trim()) {
+        setNameError("Academy Name is required");
+        setnamefieldColor("red");
+      } else if (!/^[a-zA-Z0-9\s]+$/.test(e.target.value)) {
+        setNameError("Academy Name should contain only alphabetic characters");
+        setnamefieldColor("red");
+      } else if (e.target.value.trim().length <= 3) {
+        setNameError("Academy Name should be at least 4 characters long");
+        setnamefieldColor("red");
+      } else {
+        setNameError(null);
+        setnamefieldColor("green");
+      }
+    } else {
+      setNameError("Academy Name is required");
+      setnamefieldColor("red");
+    }
+  };
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const base64 = await convertToBase64(file);
+      setEditedLogo(base64);
+      console.log(editedLogo);
+    }
   };
 
   // Handle save changes
-  const handleSaveChanges = () => {
-    if (isChanged) {
+  const handleSaveChanges = (e) => {
+    e.preventDefault();
+    if (!nameError) {
       dispatch(
         editTeam({
           teamid: props.Tid,
-          name: editedName || props.Tname,
-          //   TeamLogo: props.Tlogo ,
+          name: teamName || props.Tname,
+          logo: editedLogo || props.Tlogo,
         })
       );
+      // console.log(editedLogo);
+      // console.log(props.Tlogo);
+      handleClose();
     }
-    handleClose();
   };
 
   return (
@@ -64,13 +94,22 @@ export const EditPopUpSelectedTeam = (props) => {
                 type="text"
                 placeholder="change Academy Name"
                 autoFocus
-                value={editedName || props.Tname}
-                onChange={handleNameChange}
+                value={teamName || props.Tname}
+                onChange={(e) => handleNameChange(e)}
+                style={{ borderColor: namefieldColor }}
               />
+              {nameError && (
+                <strong className="text-danger">{nameError}</strong>
+              )}
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label className="popUpWindowLabelColor">Logo :</Form.Label>
-              <Form.Control type="file" placeholder="Team Logo" autoFocus />
+              <Form.Control
+                type="file"
+                placeholder="Team Logo"
+                autoFocus
+                onChange={(e) => handleLogoUpload(e)}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>

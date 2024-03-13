@@ -52,7 +52,7 @@ const TeamCard = (props) => {
             <Card.Img
               className="teamCardImg"
               variant="top"
-              src={props.academyLogo} // props.academyLogo OR the file Uploaded ||team.logo
+              src={team.TeamLogo || props.academyLogo} // props.academyLogo OR the file Uploaded ||team.logo
             />
             <Card.Body>
               <Card.Title className="pb-3 teamCardTitle">

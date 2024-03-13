@@ -42,10 +42,10 @@ export const AddAcademy = () => {
       if (!e.target.value.trim()) {
         setNameError("Academy Name is required");
         setnamefieldColor("red");
-      } else if (!/^[a-zA-Z\s]+$/.test(e.target.value)) {
+      } else if (!/^[a-zA-Z0-9\s]+$/.test(e.target.value)) {
         setNameError("Academy Name should contain only alphabetic characters");
         setnamefieldColor("red");
-      } else if (e.target.value.trim().length <= 8) {
+      } else if (e.target.value.trim().length <= 7) {
         setNameError("Academy Name should be at least 8 characters long");
         setnamefieldColor("red");
       } else {
@@ -131,7 +131,6 @@ export const AddAcademy = () => {
   //submit logic
   const handleSaveChanges = (e) => {
     e.preventDefault(); // for refrech bug
-
     if (
       nameError == null &&
       Name.trim() != null &&

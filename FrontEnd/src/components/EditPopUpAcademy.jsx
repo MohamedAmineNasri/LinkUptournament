@@ -12,6 +12,16 @@ export const EditPopUpAcademy = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //validator states
+  const [nameError, setNameError] = useState("");
+  const [locationError, setLocationError] = useState("");
+  const [foundedDateError, setFoundedDateError] = useState("");
+
+  //fields colors states
+  const [namefieldColor, setnamefieldColor] = useState("green");
+  const [locationfieldColor, setlocationfieldColor] = useState("green");
+  const [datefieldColor, setdatefieldColor] = useState("green");
+
   const dispatch = useDispatch();
 
   // Fetch academyById -------------
@@ -20,9 +30,7 @@ export const EditPopUpAcademy = (props) => {
   }, [dispatch, props.id]);
 
   // Redux state
-  const { academyDataById, loading: academyByIdLoading } = useSelector(
-    (state) => state.academy
-  );
+  const { academyDataById } = useSelector((state) => state.academy);
 
   //date correct format
   let formattedDate = "";
@@ -47,17 +55,68 @@ export const EditPopUpAcademy = (props) => {
   // Update edited values only if the input fields are changed
   const handleNameChange = (e) => {
     setEditedName(e.target.value);
-    setIsChanged(true);
+    if (e.target.value !== "") {
+      if (!e.target.value.trim()) {
+        setNameError("Academy Name is required");
+        setnamefieldColor("red");
+      } else if (!/^[a-zA-Z0-9\s]+$/.test(e.target.value)) {
+        setNameError("Academy Name should contain only alphabetic characters");
+        setnamefieldColor("red");
+      } else if (e.target.value.trim().length <= 7) {
+        setNameError("Academy Name should be at least 8 characters long");
+        setnamefieldColor("red");
+      } else {
+        setNameError(null);
+        setnamefieldColor("green");
+        setIsChanged(true);
+      }
+    } else {
+      setNameError("Academy Name is required");
+      setnamefieldColor("red");
+    }
   };
 
   const handleLocationChange = (e) => {
     setEditedLocation(e.target.value);
-    setIsChanged(true);
+    if (e.target.value !== "") {
+      if (!e.target.value.trim()) {
+        setLocationError("Location is required");
+        setlocationfieldColor("red");
+      } else if (e.target.value.trim().length <= 5) {
+        setLocationError(
+          "Academy Location should be at least 6 characters long"
+        );
+        setlocationfieldColor("red");
+      } else {
+        setLocationError(null);
+        setlocationfieldColor("green");
+        setIsChanged(true);
+      }
+    } else {
+      setLocationError("Location is required");
+      setlocationfieldColor("red");
+    }
   };
 
   const handleDateChange = (e) => {
-    setEditedDate(e.target.value);
-    setIsChanged(true);
+    const enteredDate = e.target.value;
+    if (!enteredDate) {
+      setFoundedDateError("Founded Date is required");
+      setdatefieldColor("red");
+    } else {
+      const parsedDate = new Date(enteredDate);
+      // Check if the date is in the future
+      const currentDate = new Date();
+      if (parsedDate > currentDate) {
+        setFoundedDateError("Founded Date cannot be in the future");
+        setdatefieldColor("red");
+      } else {
+        setFoundedDateError(null);
+        setdatefieldColor("green");
+        setEditedDate(enteredDate);
+        setIsChanged(true);
+      }
+    }
   };
 
   const handleLogoUpload = async (e) => {
@@ -71,8 +130,10 @@ export const EditPopUpAcademy = (props) => {
   };
 
   // Handle save changes
-  const handleSaveChanges = () => {
-    if (isChanged) {
+  const handleSaveChanges = (e) => {
+    e.preventDefault();
+
+    if (isChanged && !nameError && !locationError && !foundedDateError) {
       dispatch(
         editAcademy({
           id: props.id,
@@ -82,8 +143,8 @@ export const EditPopUpAcademy = (props) => {
           logo: editedLogo || academyDataById.Logo, // Use the edited logo if provided, else use the existing logo
         })
       );
+      handleClose();
     }
-    handleClose();
   };
 
   return (
@@ -111,8 +172,14 @@ export const EditPopUpAcademy = (props) => {
                 placeholder="Change Academy Name"
                 autoFocus
                 value={editedName || academyDataById.AcademyName}
-                onChange={handleNameChange}
+                onChange={(e) => handleNameChange(e)}
+                style={{
+                  borderColor: namefieldColor,
+                }}
               />
+              {nameError && (
+                <strong className="text-danger">{nameError}</strong>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label className="popUpWindowLabelColor">
@@ -123,8 +190,14 @@ export const EditPopUpAcademy = (props) => {
                 placeholder="Change Academy Location"
                 autoFocus
                 value={editedLocation || academyDataById.Location}
-                onChange={handleLocationChange}
+                onChange={(e) => handleLocationChange(e)}
+                style={{
+                  borderColor: locationfieldColor,
+                }}
               />
+              {locationError && (
+                <strong className="text-danger">{locationError}</strong>
+              )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="dateInput">
               <Form.Label className="popUpWindowLabelColor">
@@ -135,8 +208,14 @@ export const EditPopUpAcademy = (props) => {
                 placeholder="Change date"
                 autoFocus
                 value={editedDate || formattedDate}
-                onChange={handleDateChange}
+                style={{
+                  borderColor: datefieldColor,
+                }}
+                onChange={(e) => handleDateChange(e)}
               />
+              {foundedDateError && (
+                <strong className="text-danger">{foundedDateError}</strong>
+              )}
             </Form.Group>
 
             <Form.Label className="popUpWindowLabelColor">Logo :</Form.Label>

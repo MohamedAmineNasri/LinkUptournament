@@ -56,7 +56,7 @@ export const editTeam = createAsyncThunk(
         'http://localhost:8000/team/updateTeam/'+teamid,
         {
           TeamName: name, 
-          // TeamLogo: logo,
+          TeamLogo: logo,
         }
       );
       window.location.reload();

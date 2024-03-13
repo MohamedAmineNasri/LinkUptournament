@@ -1191,7 +1191,6 @@ h1, h2, h3, h4, h5,
       text-align: right;
     }
     .HeroImageAddAcademy {
-      background-image: url('/assets/images/2.jpg');
       background-repeat: no-repeat;
       background-size: cover; 
       padding-top: 100px;

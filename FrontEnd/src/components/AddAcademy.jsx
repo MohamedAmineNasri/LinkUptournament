@@ -3,19 +3,22 @@ import { useDispatch } from "react-redux";
 import { addnewAcademy } from "../redux/slice/academySlice";
 import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
+import { convertToBase64 } from "../utilities/convertFileBase64";
+import addformstadiumImage from "../assets/Mi-imgs/2.jpg";
 
 export const AddAcademy = () => {
   //fields state
-  const [Name, setName] = useState(null);
-  const [Location, setLocation] = useState(null);
-  const [Logo, setLogo] = useState(null);
+  const [Name, setName] = useState("");
+  const [Location, setLocation] = useState("");
   const [FoundedYear, setFoundedYear] = useState(null);
+  const [Logo, setLogo] = useState({ myLogo: "" });
   const [Docs, setDoc] = useState(null);
 
   const dispatch = useDispatch();
 
-  //Alert
+  //Alerts
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitFailure, setsubmitFailure] = useState(false);
 
   //validator states
   const [nameError, setNameError] = useState("Academy Name is require");
@@ -23,64 +26,127 @@ export const AddAcademy = () => {
   const [foundedDateError, setFoundedDateError] = useState(
     "Founded Date is required"
   );
+  const [logoError, setlogoError] = useState("Logo is required");
+  // const [docsError, setdocsError] = useState("Legitemacy docs are required");
+
   //fields colors states
   const [namefieldColor, setnamefieldColor] = useState("red");
   const [locationfieldColor, setlocationfieldColor] = useState("red");
   const [datefieldColor, setdatefieldColor] = useState("red");
+  const [logofieldColor, setlogofieldColor] = useState("red");
 
-  //submit logic
-  const handleSaveChanges = (e) => {
-    e.preventDefault(); // for refrech bug
-    //Validators
-    // Validation for name
-    if (Name != null) {
-      // it won't work if Name is null and we do trim()
-      if (!Name.trim()) {
+  //handleName
+  const handleName = async (e) => {
+    setName(e.target.value);
+    if (e.target.value !== "") {
+      if (!e.target.value.trim()) {
         setNameError("Academy Name is required");
         setnamefieldColor("red");
-      } else if (!/^[a-zA-Z\s]+$/.test(Name)) {
+      } else if (!/^[a-zA-Z\s]+$/.test(e.target.value)) {
         setNameError("Academy Name should contain only alphabetic characters");
         setnamefieldColor("red");
-      } else if (Name.trim().length <= 8) {
+      } else if (e.target.value.trim().length <= 8) {
         setNameError("Academy Name should be at least 8 characters long");
         setnamefieldColor("red");
       } else {
         setNameError(null);
         setnamefieldColor("green");
       }
+    } else {
+      setNameError("Academy Name is required");
+      setnamefieldColor("red");
     }
-    // Validation for Location
-    if (Location != null) {
-      if (!Location.trim()) {
+  };
+
+  //handleLocation
+  const handleLocation = async (e) => {
+    setLocation(e.target.value);
+    if (e.target.value !== "") {
+      if (!e.target.value.trim()) {
         setLocationError("Location is required");
+        setlocationfieldColor("red");
+      } else if (e.target.value.trim().length <= 6) {
+        setLocationError(
+          "Academy Location should be at least 6 characters long"
+        );
         setlocationfieldColor("red");
       } else {
         setLocationError(null);
         setlocationfieldColor("green");
       }
+    } else {
+      setLocationError("Location is required");
+      setlocationfieldColor("red");
     }
+  };
 
-    // Validation for Founded Date
-    if (!FoundedYear) {
+  //handleDate
+  const handleDate = async (e) => {
+    const enteredDate = e.target.value;
+    if (!enteredDate) {
       setFoundedDateError("Founded Date is required");
       setdatefieldColor("red");
     } else {
-      setFoundedDateError(null);
-      setdatefieldColor("green");
+      const parsedDate = new Date(enteredDate);
+      // Check if the date is in the future
+      const currentDate = new Date();
+      if (parsedDate > currentDate) {
+        setFoundedDateError("Founded Date cannot be in the future");
+        setdatefieldColor("red");
+      } else {
+        // Check if the date is before the year 1700
+        const earliestAllowedDate = new Date("1700-01-01");
+        if (parsedDate < earliestAllowedDate) {
+          setFoundedDateError(
+            "Founded Date cannot be earlier than the year 1700"
+          );
+          setdatefieldColor("red");
+        } else {
+          setFoundedDateError(null);
+          setdatefieldColor("green");
+          setFoundedYear(enteredDate);
+        }
+      }
     }
+  };
+
+  //handle Logo
+  const handleLogo = async (e) => {
+    if (!e.target.files[0]) {
+      setlogoError("Logo is required");
+      setlogofieldColor("red");
+    } else {
+      setlogoError(null);
+      setlogofieldColor("green");
+    }
+  };
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const base64 = await convertToBase64(file);
+    console.log(base64);
+    setLogo({ ...Logo, myLogo: base64 });
+  };
+
+  //submit logic
+  const handleSaveChanges = (e) => {
+    e.preventDefault(); // for refrech bug
+
     if (
       nameError == null &&
       Name.trim() != null &&
       locationError == null &&
       Location.trim() != null &&
       foundedDateError == null &&
-      FoundedYear != null
+      FoundedYear != null &&
+      Logo.myLogo != "" &&
+      logoError == null
     ) {
       dispatch(
         addnewAcademy({
           name: Name,
           location: Location,
-          logo: Logo,
+          logo: Logo.myLogo,
           foundedYear: FoundedYear,
           doc: Docs,
         })
@@ -89,7 +155,12 @@ export const AddAcademy = () => {
       setSubmitSuccess(true);
       setTimeout(() => {
         setSubmitSuccess(false);
-        window.location.href = "http://127.0.0.1:5173/Academy";
+        window.location.href = "http://127.0.0.1:5173/Academy"; //i will send the id of acdemy created to this url so i can displayed in it
+      }, 3000);
+    } else {
+      setsubmitFailure(true);
+      setTimeout(() => {
+        setsubmitFailure(false);
       }, 3000);
     }
   };
@@ -151,14 +222,22 @@ export const AddAcademy = () => {
       </div>
 
       {/* Hero image ------------------------- */}
-      <div className="hero overlay2 HeroImageAddAcademy">
-        {/* sucess msg when academy created "condional" */}
+      <div
+        className="hero overlay2 HeroImageAddAcademy"
+        style={{ backgroundImage: `url(${addformstadiumImage})` }}
+      >
+        {/* sucess msg when academy created "condional or Failure in iput" */}
         <div>
-          {submitSuccess && (
+          {(submitSuccess && (
             <Alert className="alertModified" variant="success">
               Academy added successfully!
             </Alert>
-          )}
+          )) ||
+            (submitFailure && (
+              <Alert className="alertModified" variant="success">
+                You Must Enter Valid Data!
+              </Alert>
+            ))}
         </div>
 
         <div className="col-lg-12">
@@ -181,13 +260,13 @@ export const AddAcademy = () => {
                       id="Aname"
                       placeholder="Enter the name of the academy"
                       value={Name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => handleName(e)}
                       style={{
                         borderColor: namefieldColor,
                       }}
                     />
                     {nameError && (
-                      <medium className="text-danger">{nameError}</medium>
+                      <strong className="text-danger">{nameError}</strong>
                     )}
                   </div>
                   {/* location---------------------------------------------- */}
@@ -199,13 +278,13 @@ export const AddAcademy = () => {
                       id="location"
                       placeholder="Enter the Location of the academy"
                       value={Location}
-                      onChange={(e) => setLocation(e.target.value)}
+                      onChange={(e) => handleLocation(e)}
                       style={{
                         borderColor: locationfieldColor,
                       }}
                     />
                     {locationError && (
-                      <medium className="text-danger">{locationError}</medium>
+                      <strong className="text-danger">{locationError}</strong>
                     )}
                   </div>
                   {/* date-------------------------------------------------- */}
@@ -216,30 +295,44 @@ export const AddAcademy = () => {
                       type="date"
                       id="foundedDate"
                       value={FoundedYear}
-                      onChange={(e) => setFoundedYear(e.target.value)}
+                      onChange={(e) => handleDate(e)}
                       style={{
                         borderColor: datefieldColor,
                       }}
                     />
                     {foundedDateError && (
-                      <medium className="text-danger">
+                      <strong className="text-danger">
                         {foundedDateError}
-                      </medium>
+                      </strong>
                     )}
                   </div>
-                  {/* logo */}
-                  <div className="col-md-12 form-group pb-2">
-                    <label htmlFor="logoInput">Upload Logo</label>
-                    <input
-                      className="form-control custom-placeholder academyCreateInput"
-                      type="file"
-                      id="logoInput"
-                      accept=".jpg,.jpeg,.png"
-                      value={Logo}
-                      onChange={(e) => setLogo(e.target.value)}
-                    />
+                  {/* logo ---------------------------------------- */}
+                  <div className="row" style={{ margin: "0px" }}>
+                    <div className="col-md-11 form-group pb-2">
+                      <label htmlFor="logoInput">Upload Logo</label>
+                      <input
+                        className="form-control custom-placeholder academyCreateInput"
+                        name="myLogo"
+                        type="file"
+                        id="logoInput"
+                        accept=".png"
+                        onChange={(e) => {
+                          handleLogoUpload(e);
+                          handleLogo(e);
+                        }}
+                        style={{
+                          borderColor: logofieldColor,
+                        }}
+                      />
+                      {logoError && (
+                        <strong className="text-danger">{logoError}</strong>
+                      )}
+                    </div>
+                    <div className="col-md-1 align-self-center">
+                      <img src={Logo.myLogo} style={{ maxWidth: "60px" }} />
+                    </div>
                   </div>
-                  {/* L documents */}
+                  {/* L documents --------------------------------------*/}
                   <div className="col-md-12 form-group pb-2">
                     <label htmlFor="fileInput">
                       Upload Legitimacy Documents
@@ -253,7 +346,7 @@ export const AddAcademy = () => {
                       onChange={(e) => setDoc(e.target.value)}
                     />
                   </div>
-                  {/* submit  */}
+                  {/* submit ------------------------------------------- */}
                   <div className="col-md-12 form-group ">
                     <input
                       type="submit"

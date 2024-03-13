@@ -3,6 +3,8 @@ import TeamCard from "./TeamCard";
 import DropDownAcademy from "./DropDownAcademy";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademy } from "../redux/slice/academySlice";
+import academyImagespectators from "../assets/Mi-imgs/1.jpg";
+import academyImageteam from "../assets/Mi-imgs/team1.jpg";
 
 export const Academy = () => {
   const dispatch = useDispatch();
@@ -81,13 +83,13 @@ export const Academy = () => {
         </div>
         <div
           className="hero overlay"
-          style={{ backgroundImage: "url('/assets/images/1.jpg')" }}
+          style={{ backgroundImage: `url(${academyImagespectators})` }}
         >
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg-12 mx-auto text-center">
                 <img
-                  src="/public/assets/images/rmLogo.png" // academyData.Logo
+                  src={academyData.Logo}
                   alt="Logo"
                   className="img-fluid academyLogosizeInHero"
                 />
@@ -102,7 +104,7 @@ export const Academy = () => {
         <div
           className="hero backImgAcademyandTeam"
           style={{
-            backgroundImage: "url('/assets/images/team1.jpg')",
+            backgroundImage: `url(${academyImageteam})`,
           }}
         >
           <div className="site-section ">
@@ -111,7 +113,7 @@ export const Academy = () => {
                 <div className="col-md-5 col-lg-4 word-wrap-break">
                   <div className="text-center academyBox">
                     <img
-                      src="/public/assets/images/rmLogo.png"
+                      src={academyData.Logo}
                       alt="Logo"
                       className="img-fluid academyLogoMwidth " //rounded-circle
                     />
@@ -138,7 +140,7 @@ export const Academy = () => {
                 <div className="col-md-7 col-lg-8">
                   <div className="widget-body mb-3 teamsBorderBox ">
                     <div className="teamsBordersolid">
-                      <TeamCard />
+                      <TeamCard academyLogo={academyData.Logo} />
                     </div>
                   </div>
                 </div>

@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTournament } from "../redux/slice/tournamentSlice";
 import Alert from "react-bootstrap/Alert";
-import {fetchteams } from "../redux/slice/teamSlice"; 
+import { fetchteams } from "../redux/slice/teamSlice"; import { createGroupsThunk } from "../redux/slice/groupSlice" ; 
+import axios from "axios";
+// import Group from "./Group";
 
 export const AddTournament = () => {
+  
   const [name, setName] = useState("");
+  const [logo, setLogo] = useState(null);
   const [type, setType] = useState("");
   const [rules, setRules] = useState("");
   const [status, setStatus] = useState("");
@@ -37,9 +41,69 @@ export const AddTournament = () => {
 
   const handleTeamSelection = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
-    console.log("Selected options:", selectedOptions); // Log selected options
     setSelectedTeams(selectedOptions);
   };
+  
+  const handleLogoChange = (e) => {
+    setLogo(e.target.files[0]); // Store the selected file
+  };
+
+  const handleSaveChanges = async (e) => {
+    e.preventDefault();
+  
+    validateName(name);
+    validateType(type);
+    validateDateDebut(dateDebut);
+    validateDateFin(dateFin);
+  
+    if (!nameError && !typeError && !dateDebutError && !dateFinError) {
+      try {
+        const formData = new FormData();
+        formData.append("logo", logo);
+  
+        const response = await axios.post("http://localhost:8000/tournament/upload", formData);
+  
+        const selectedTeamIds = selectedTeams.map((teamName) => {
+          const selectedTeam = teams.find((team) => team.TeamName === teamName);
+          return selectedTeam._id;
+        });
+  
+        const tournamentData = {
+          name,
+          logo: response.data.filePath,
+          type,
+          rules,
+          status,
+          winner,
+          date_debut: dateDebut,
+          date_fin: dateFin,
+          teams: selectedTeamIds,
+        };
+  
+        const addTournamentResponse = await dispatch(addTournament(tournamentData));
+  
+        if (addTournamentResponse.payload) {
+          setSubmitSuccess(true);
+          setName("");
+          setLogo(null);
+          setType("");
+          setRules("");
+          setStatus("");
+          setWinner("");
+          setDateDebut("");
+          setDateFin("");
+          setSelectedTeams([]);
+  
+          await dispatch(createGroupsThunk(addTournamentResponse.payload._id)); // Pass the tournament ID here
+        }
+      } catch (error) {
+        console.error("Error adding tournament:", error);
+      }
+      
+    }
+  };
+  
+  
   
 
   const validateName = (value) => {
@@ -82,51 +146,6 @@ export const AddTournament = () => {
     }
   };
 
-  const handleSaveChanges = async (e) => {
-    e.preventDefault();
-  
-    validateName(name);
-    validateType(type);
-    validateDateDebut(dateDebut);
-    validateDateFin(dateFin);
-  
-    if (!nameError && !typeError && !dateDebutError && !dateFinError) {
-      try {
-        // Map selected team names to their corresponding IDs
-        const selectedTeamIds = selectedTeams.map(teamName => {
-          const selectedTeam = teams.find(team => team.TeamName === teamName);
-          return selectedTeam._id;
-        });
-  
-        const response = await dispatch(
-          addTournament({
-            name,
-            type,
-            rules,
-            status,
-            winner,
-            date_debut: dateDebut,
-            date_fin: dateFin,
-            teams: selectedTeamIds // Pass array of team IDs
-          })
-        );
-  
-        if (response.payload && response.payload.message) {
-          setSubmitSuccess(true);
-          setName("");
-          setType("");
-          setRules("");
-          setStatus("");
-          setWinner("");
-          setDateDebut("");
-          setDateFin("");
-          setSelectedTeams([]);
-        }
-      } catch (error) {
-        console.error("Error adding tournament:", error);
-      }
-    }
-  };
   return (
     <div>
       <div className="hero overlay2" style={{backgroundImage: "url('/assets/images/2.jpg')", paddingTop: "100px", height: "1300px"}}>
@@ -146,7 +165,7 @@ export const AddTournament = () => {
           <div style={{borderRadius: "40px"}}>
             <div style={{boxShadow: "1px 1px 30px 10px rgba(1, 0, 0, 0.5)", backgroundColor: "#2f4f4f6b", paddingLeft: "10px", paddingRight: "10px", paddingTop: "20px", paddingBottom: "20px", borderRadius: "40px"}}>
               <div className="col-lg-12">
-                <form action="#">
+                <form onSubmit={handleSaveChanges}>
                   <div className="">
                     <div className="col-md-12 form-group pb-2 pt-3">
                       <label htmlFor="tournamentName">Tournament Name</label>
@@ -163,6 +182,17 @@ export const AddTournament = () => {
                         }}
                       />
                       {nameError && <p className="text-danger">{nameError}</p>}
+                    </div>
+                     
+                    {/* File Upload */}
+                    <div className="col-md-12 form-group pb-2">
+                      <label htmlFor="tournamentLogo">Tournament Logo</label>
+                      <input
+                        type="file"
+                        className="form-control-file"
+                        id="tournamentLogo"
+                        onChange={handleLogoChange}
+                      />
                     </div>
 
                     <div className="col-md-12 form-group pb-2">
@@ -248,26 +278,26 @@ export const AddTournament = () => {
                       {dateFinError && <p className="text-danger">{dateFinError}</p>}
                     </div>
                     <div className="col-md-12 form-group pb-2">
-        <label htmlFor="tournamentTeams">Select Teams</label>
-        <select
-  style={{ height: "120px" }}
-  multiple={true} // or simply multiple
-  className="form-control custom-placeholder"
-  id="tournamentTeams"
-  value={selectedTeams}
-  onChange={handleTeamSelection}
->
-          {teams &&
-            teams.map((team) => (
-              <option key={team.id} value={team.id}>
-                {team.TeamName}
-              </option>
-            ))}
-        </select>
-      </div>
+                      <label htmlFor="tournamentTeams">Select Teams</label>
+                      <select
+                        style={{ height: "120px" }}
+                        multiple={true} // or simply multiple
+                        className="form-control custom-placeholder"
+                        id="tournamentTeams"
+                        value={selectedTeams}
+                        onChange={handleTeamSelection}
+                      >
+                        {teams &&
+                          teams.map((team) => (
+                            <option key={team.id} value={team.id}>
+                              {team.TeamName}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
 
-                    {/* Bouton de soumission */}
-                    <div className="col-md-12 form-group ">
+      {/* Bouton de soumission */}
+      <div className="col-md-12 form-group ">
                       <input
                         type="submit"
                         className="btn btn-success py-3 px-5 btn-block"
@@ -277,6 +307,7 @@ export const AddTournament = () => {
                     </div>
                   </div>
                 </form>
+                {/* <Group groupId="665f1a76800f7ca93c7e7b514" /> */}
               </div>
             </div>
           </div>

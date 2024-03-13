@@ -4,6 +4,7 @@ const groupService = require('../Services/GroupService')
 
 
 router.get('/', groupService.getAllGroups); 
+router.get('/tournament/:id', groupService.getGroupsByTournamentId); 
 router.post('/add', groupService.addGroup) ;
 router.post('/addGroupsStage/:id', groupService.createGroups) ;
 router.get('/:id', groupService.getGroupById);

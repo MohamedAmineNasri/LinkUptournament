@@ -3,12 +3,19 @@ import axios from 'axios';
 
 
 export const addTournament = createAsyncThunk(
-    'tournament/addTournament',
-    async (tournamentData) => {
+  'tournament/addTournament',
+  async (tournamentData) => {
+    try {
       const response = await axios.post('http://localhost:8000/tournament/add', tournamentData);
-      return response.data;
+      console.log("Server Response:", response); // Log the server response
+      return response.data.tournament // Return the entire data from the response
+    } catch (error) {
+      throw Error(error.response.data);
     }
-  );
+  }
+);
+
+
 
 export const deleteTournament = createAsyncThunk(
     'tournament/deleteTournament',
@@ -46,18 +53,30 @@ export const fetchTournaments = createAsyncThunk(
     reducers: {},
     extraReducers: (builder) => {
       builder
-        .addCase(fetchTournaments.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(fetchTournaments.fulfilled, (state, action) => {
-          state.loading = false;
-          state.teamData = action.payload;
-        })
-        .addCase(fetchTournaments.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.error.message;
-        });
-    },
+      .addCase(fetchTournaments.pending, (state) => {
+        state.status = 'loading'; // Update status to loading
+        state.error = null;
+      })
+      .addCase(fetchTournaments.fulfilled, (state, action) => {
+        state.status = 'succeeded'; // Update status to succeeded
+        state.tournaments = action.payload; // Update tournaments data
+      })
+      .addCase(fetchTournaments.rejected, (state, action) => {
+        state.status = 'failed'; // Update status to failed
+        state.error = action.error.message;
+      }) .addCase(addTournament.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(addTournament.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.tournaments.push(action.payload);
+        console.log("Add Tournament Payload:", action.payload); // Add the new tournament to the state
+      })
+      .addCase(addTournament.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
   });
   export default tournamentSlice.reducer;

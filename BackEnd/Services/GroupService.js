@@ -7,6 +7,16 @@ const getAllGroups = async (req, res, next) => {
     res.json(groups);  
 };
 
+const getGroupsByTournamentId = async (req, res, next) => {
+  try {
+    const tournamentId = req.params.id;
+    const groups = await Group.find({ tournament: tournamentId });
+    res.json(groups);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const addGroup =  async (req, res, next) => {
     const { tournament , name, teams } = req.body;
     const GroupData = new Group({ tournament , name ,teams });
@@ -182,4 +192,4 @@ const updateMG = async (groupId, teamId, newpts, req, res, next) => {
 
 
 
-module.exports = {addGroup,deleteGroupById,getAllGroups , getGroupById , updateGroup , createGroups  , updateGrouptri , updateMG};
+module.exports = {addGroup,deleteGroupById,getAllGroups , getGroupById , updateGroup , createGroups  , updateGrouptri , updateMG , getGroupsByTournamentId};

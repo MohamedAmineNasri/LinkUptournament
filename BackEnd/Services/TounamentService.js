@@ -2,14 +2,15 @@
 const Tournament = require('../Models/Tournament') ; 
 
 const addTournament = async (req, res, next) => {
-    const { name, type, rules, status, winner, date_debut, date_fin, teams } = req.body;
-    const td = new Tournament({ name, type, rules, status, winner, date_debut, date_fin, teams });
-    console.log(td);
-    await td.save();
-    res.json({
-        message : "Tournament successfully added!"
-    });
-};
+  const { name, logo ,  type, rules, status, winner, date_debut, date_fin, teams } = req.body;
+  const td = new Tournament({ name,logo , type, rules, status, winner, date_debut, date_fin, teams });
+  console.log(td);
+  const savedTournament = await td.save();
+  res.json({
+      message : "Tournament successfully added!",
+      tournament: savedTournament // Return the newly created tournament data
+  });
+}; 
 
 // Update a tournament
 const updateTournament = async (req, res, next) => {

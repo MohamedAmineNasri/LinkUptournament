@@ -65,10 +65,11 @@ const TeamSchema = new mongoose.Schema(
       default: 0
     },
     GS_Points: {
-      type: Number,
+      type: Number, 
       default: 0
     },
   },
 );
 
 module.exports = mongoose.model("team", TeamSchema);
+        

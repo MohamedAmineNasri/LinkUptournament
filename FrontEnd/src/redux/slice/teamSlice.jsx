@@ -13,6 +13,11 @@ export const fetchteams = createAsyncThunk(
   }
 );
 
+export const fetchTeamById = async (id) => {
+  const response = await axios.get(`http://localhost:8000/team/getTeam/${id}`);
+  return response.data;
+};
+
 const teamSlice = createSlice({
   name: 'team',
   initialState: {

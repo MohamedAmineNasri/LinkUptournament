@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../Features/auth/authSlice'
 import { useLoginMutation } from '../../../Features/auth/authApiSlice'
-import { GoogleLogin } from '@react-oauth/google';
 import ReCAPTCHA from "react-google-recaptcha";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignIn: React.FC = () => {
 
@@ -346,14 +346,15 @@ const SignIn: React.FC = () => {
                   </span>
                   Sign in with Google
                 </button> */}
-                <GoogleLogin
-              onSuccess={credentialResponse => {
-                console.log(credentialResponse);
-              }}
-              onError={() => {
-                console.log('Login Failed');
-              }}
-            />
+            <GoogleLogin
+        onSuccess={(credentialResponse) => {
+          console.log(credentialResponse);
+        }}
+        onError={() => {
+          console.error("Failed Login..");
+        }}
+        useOneTap
+      />
             <ReCAPTCHA
     sitekey="6LdeXpQpAAAAAJAmPdKOpxjaoYoearOopW0IHhLH"
     onChange={onChange}

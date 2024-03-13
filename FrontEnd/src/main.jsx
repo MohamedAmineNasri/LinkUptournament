@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <BrowserRouter>
             {/* <Route path="/*" element={<App />}/> */}
-            <GoogleOAuthProvider clientId="416699013224-tu4jfgr86qonamkdcln6khbtt2h125j8.apps.googleusercontent.com">
+            <GoogleOAuthProvider clientId="715046754186-6g6u5s25tsrkmqa229lgdb9tvecmtecd.apps.googleusercontent.com">
               <App />
             </GoogleOAuthProvider>
 

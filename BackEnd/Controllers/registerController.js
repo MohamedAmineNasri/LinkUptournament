@@ -2,7 +2,7 @@ const Users = require("../Models/Users");
 const bcrypt = require("bcrypt");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 
-const apiKey = '';
+// const apiKey = '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';
 
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKeyAuth = defaultClient.authentications['api-key'];

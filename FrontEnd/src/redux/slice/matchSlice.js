@@ -29,7 +29,7 @@ export const editMatch = createAsyncThunk(
   async ({ matchid,date, time,type}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/match/'+matchid,
+        'http://localhost:8000/match/65f0d356a8f4ca5c1c9d31ec',
         {
           Date: date, 
           startingTime: time,
@@ -62,7 +62,7 @@ export const deleteMatch = createAsyncThunk(
 
 export const addnewMatch = createAsyncThunk(
   'match/addMatch',
-  async ({  time,type}) => {
+  async ({  time,type,location}) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/match/',
@@ -70,6 +70,7 @@ export const addnewMatch = createAsyncThunk(
           
           startingTime: time,
           matchType:type,
+          location:location
           
 
           

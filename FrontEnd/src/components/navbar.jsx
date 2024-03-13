@@ -1,8 +1,9 @@
 import React from "react";
+import AddMatchPopUpWindow from "./AddMatchPopUpWindow";
 
 export default function NavBar() {
   return (
-    <div className="navbar bg-base-100 sticky top-0" data-theme="dark">
+    <div className="navbar bg-base-100  top-0" data-theme="dark">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -55,6 +56,7 @@ export default function NavBar() {
       </div>
       <div className="navbar-end">
         <a className="btn">LOGIN</a>
+        <AddMatchPopUpWindow></AddMatchPopUpWindow>
       </div>
     </div>
   );

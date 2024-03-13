@@ -5,12 +5,17 @@ import { fetchMatch } from "../redux/slice/matchSlice";
 import Button from "react-bootstrap/esm/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
+import AddMatchPopUpWindow from "./AddMatchPopUpWindow";
+import NavBar from "./navbar";
+import Footer from "./foter";
+import EditPopUpAcademy from "./EditPopUpMatch";
 
 const MatchCard = () => {
   const matchData = useSelector((state) => state.match.matchData);
   const loading = useSelector((state) => state.match.loading);
   const error = useSelector((state) => state.match.error);
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     dispatch(fetchMatch());
@@ -21,6 +26,8 @@ const MatchCard = () => {
 
   return (
     <div className="row">
+      <NavBar></NavBar>
+      
       {matchData.length === 0 && !loading && !error && (
         <div
           style={{
@@ -41,7 +48,7 @@ const MatchCard = () => {
           </p>
         </div>
       )}
-      {matchData.map((match, index) => (
+      {matchData.slice().reverse().map((match, index) => (
         <div key={match._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
           <Card
             id={match.id}
@@ -52,7 +59,8 @@ const MatchCard = () => {
               borderWidth: "thin",
             }}
           >
-            <DeleateMatchPopUp matchid={match._id}></DeleateMatchPopUp>
+            <DeleateMatchPopUp matchid={match._id} 
+></DeleateMatchPopUp>
             <Card.Img
               variant="top"
               src="/public/assets/images/bg_2.jpg"
@@ -91,7 +99,7 @@ const MatchCard = () => {
                     letterSpacing: "2px",
                   }}
                 >
-                  score : {match.score[0]} : {match.score[1]}
+                  location : {match.location}
                 </ListGroup.Item>
                 <ListGroup.Item
                   style={{
@@ -118,13 +126,18 @@ const MatchCard = () => {
             </Card.Body>
             <Card.Body>
               <div className="row justify-content-around">
+             
                 <Button variant="success">Add match</Button>
                 <Button variant="success">Check match</Button>
+                
               </div>
             </Card.Body>
           </Card>
+          
         </div>
       ))}
+       <Footer></Footer>
+      
     </div>
   );
 };

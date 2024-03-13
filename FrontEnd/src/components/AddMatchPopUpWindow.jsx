@@ -12,8 +12,9 @@ export const AddMatchPopUpWindow = () => {
   const handleShow = () => setShow(true);
 
   //add logic
-  const [Time, setTime] = useState("");
-  const [Type, setType] = useState("");
+  const [Time, setTime] = useState(null);
+  const [Type, setType] = useState(null);
+  const [Location, setLocation ] = useState(null);
 
 
   const dispatch = useDispatch();
@@ -22,8 +23,9 @@ export const AddMatchPopUpWindow = () => {
     dispatch(
         addnewMatch({
          
-        startingTime: Time,
-        matchType:Type,
+            time: Time,
+            type:Type,
+            location:Location
        
       })
     );
@@ -46,7 +48,7 @@ export const AddMatchPopUpWindow = () => {
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label style={{ color: "white" }}>starting Time :</Form.Label>
               <Form.Control
-                type="text"
+                type="time"
                 placeholder="starting Time"
                 autoFocus
                 value={Time}
@@ -61,6 +63,16 @@ export const AddMatchPopUpWindow = () => {
                 autoFocus
                 value={Type}
                 onChange={(e) => setType(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="locationInput">
+              <Form.Label style={{ color: "white" }}>match location :</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="match location"
+                autoFocus
+                value={Location}
+                onChange={(e) => setLocation(e.target.value)}
               />
             </Form.Group>
           </Form>

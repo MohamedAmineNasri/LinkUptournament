@@ -13,6 +13,7 @@ import AddMatchPopUpWindow from "./components/AddMatchPopUpWindow";
 import DeleteMatchPopUp from "./components/DeleateMatchPopUp";
 import MatchCard from "./components/match";
 import AddMatch from "./components/anotherAddMatch";
+import EditPopUpmatch from "./components/EditPopUpMatch";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -24,9 +25,10 @@ function App() {
   const refresh = () => window.location.reload(true);
 
   return (
+   
     <div className="w-full md:w-[700px]  lg:w-[800px] m-auto">
       
-      <NavBar />
+     
 
       <button
         onClick={refresh}
@@ -49,16 +51,18 @@ function App() {
               path="/fixture/:matchID"
               element={<Fixture data={fixtures} />}
             ></Route>
-              
+               <Route path="/t" element={<EditPopUpmatch/>} />
               <Route path="/test" element={<MatchCard/>} />
+              
               <Route path="/testtt" element={<AddMatchPopUpWindow/>} />
               <Route path="/testt" element={<AddMatch/>} />
 
           </Routes>
         </BrowserRouter>
       )}
-      <Footer/>
+     
     </div>
+    
   );
 }
 

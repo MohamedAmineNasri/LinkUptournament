@@ -9,6 +9,7 @@ var match = new Schema({
     card:{playername:String,playernumber:Number,red:Number,yellow:Number},
     extraTime:Number,
     matchStatus:String,
+    location:String
    
 });
 module.exports = mongoose.model('match', match)

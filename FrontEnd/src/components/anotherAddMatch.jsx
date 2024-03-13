@@ -4,23 +4,25 @@ import { addnewMatch } from "../redux/slice/matchSlice";
 import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 
+
 export const AddMatch = () => {
   //fields state
   const [Time, setTime] = useState(null);
   const [Type, setType] = useState(null);
 
 
-  const dispatch = useDispatch();
+  
 
   //Alert
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   //validator
-  const [TimeError, setNameError] = useState("Time Name is require");
-  const [TypeError, setLocationError] = useState("Type is required");
+  const [TimeError, setNameError] = useState("");
+  const [TypeError, setLocationError] = useState("");
   
 
   //submit logic
+  const dispatch = useDispatch();
   const handleSaveChanges = (e) => {
     e.preventDefault(); // for refrech bug
 
@@ -50,70 +52,18 @@ export const AddMatch = () => {
   };
   return (
     <div>
-      <div>
-        <header className="site-navbar py-4" role="banner">
-          <div className="container">
-            <div className="d-flex align-items-center">
-              <div className="site-logo">
-                <a href="index.html">
-                  <img src="/public/assets/images/logo.png" alt="Logo" />
-                </a>
-              </div>
-              <div className="ml-auto">
-                <nav
-                  className="site-navigation position-relative text-right"
-                  role="navigation"
-                >
-                  <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                    <li>
-                      <a href="index.html" className="nav-link">
-                        Home
-                      </a>
-                    </li>
-                    <li>
-                      <a href="matches.html" className="nav-link">
-                        Matches
-                      </a>
-                    </li>
-                    <li>
-                      <a href="players.html" className="nav-link">
-                        Players
-                      </a>
-                    </li>
-                    <li className="active">
-                      <a href="blog.html" className="nav-link">
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a href="contact.html" className="nav-link">
-                        Contact
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-
-                <a
-                  href="#"
-                  className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
-                >
-                  <span className="icon-menu h3 text-white"></span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </header>
-      </div>
+      
 
       {/* Hero image */}
       <div
         className="hero overlay2 "
         style={{
-          backgroundImage: "url('/assets/images/2.jpg')",
+          backgroundImage: "url('/assets/images/bg_2.jpg')",
           paddingTop: "100px",
           height: "1300px",
         }}
       >
+      
         {/* sucess msg when academy created "condional" */}
         <div>
           {submitSuccess && (
@@ -130,7 +80,7 @@ export const AddMatch = () => {
               fontSize: "5rem",
             }}
           >
-            Add You're match
+            
           </h1>
         </div>
         {/* form inside the hero image  */}

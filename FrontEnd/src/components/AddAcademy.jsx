@@ -5,14 +5,22 @@ import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import { convertToBase64 } from "../utilities/convertFileBase64";
 import addformstadiumImage from "../assets/Mi-imgs/2.jpg";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 export const AddAcademy = () => {
+  //modal logic
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   //fields state
   const [Name, setName] = useState("");
   const [Location, setLocation] = useState("");
   const [FoundedYear, setFoundedYear] = useState(null);
   const [Logo, setLogo] = useState({ myLogo: "" });
-  const [Docs, setDoc] = useState(null);
+  const [Doc, setDoc] = useState({ myDoc: "" });
 
   const dispatch = useDispatch();
 
@@ -27,13 +35,14 @@ export const AddAcademy = () => {
     "Founded Date is required"
   );
   const [logoError, setlogoError] = useState("Logo is required");
-  // const [docsError, setdocsError] = useState("Legitemacy docs are required");
+  const [docsError, setdocsError] = useState("Legitemacy docs are required");
 
   //fields colors states
   const [namefieldColor, setnamefieldColor] = useState("red");
   const [locationfieldColor, setlocationfieldColor] = useState("red");
   const [datefieldColor, setdatefieldColor] = useState("red");
   const [logofieldColor, setlogofieldColor] = useState("red");
+  const [docsfieldColor, setdocsfieldColor] = useState("red");
 
   //handleName
   const handleName = async (e) => {
@@ -127,6 +136,23 @@ export const AddAcademy = () => {
     console.log(base64);
     setLogo({ ...Logo, myLogo: base64 });
   };
+  //handle Docs
+  const handleDocs = async (e) => {
+    if (!e.target.files[0]) {
+      setdocsError("Legetimcy documents are required");
+      setdocsfieldColor("red");
+    } else {
+      setdocsError(null);
+      setdocsfieldColor("green");
+    }
+  };
+  const handleDocsUpload = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const base64 = await convertToBase64(file);
+    console.log(base64);
+    setDoc({ ...Logo, myDoc: base64 });
+  };
 
   //submit logic
   const handleSaveChanges = (e) => {
@@ -139,7 +165,8 @@ export const AddAcademy = () => {
       foundedDateError == null &&
       FoundedYear != null &&
       Logo.myLogo != "" &&
-      logoError == null
+      logoError == null &&
+      Doc.myDoc != ""
     ) {
       dispatch(
         addnewAcademy({
@@ -147,7 +174,7 @@ export const AddAcademy = () => {
           location: Location,
           logo: Logo.myLogo,
           foundedYear: FoundedYear,
-          doc: Docs,
+          doc: Doc.myDoc,
         })
       );
       //Alert ----------------------
@@ -332,19 +359,46 @@ export const AddAcademy = () => {
                     </div>
                   </div>
                   {/* L documents --------------------------------------*/}
-                  <div className="col-md-12 form-group pb-2">
-                    <label htmlFor="fileInput">
-                      Upload Legitimacy Documents
-                    </label>
-                    <input
-                      className="form-control custom-placeholder academyCreateInput "
-                      type="file"
-                      id="fileInput"
-                      accept=".pdf,.doc,.docx"
-                      value={Docs}
-                      onChange={(e) => setDoc(e.target.value)}
-                    />
+                  <div className="row" style={{ margin: "0px" }}>
+                    <div className="col-md-11 form-group pb-2">
+                      <label htmlFor="fileInput">
+                        Upload Legitimacy Documents
+                      </label>
+                      <input
+                        className="form-control custom-placeholder academyCreateInput "
+                        type="file"
+                        id="fileInput"
+                        accept=".pdf,.doc,.docx"
+                        onChange={(e) => {
+                          handleDocsUpload(e);
+                          handleDocs(e);
+                        }}
+                        style={{ borderColor: docsfieldColor }}
+                      />
+                      {docsError && (
+                        <strong className="text-danger">{docsError}</strong>
+                      )}
+                    </div>
+                    <div className="col-md-1 align-self-center">
+                      <Button variant="success" size="lg" onClick={handleShow}>
+                        Show
+                      </Button>
+                      <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Document</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <embed
+                            src={Doc.myDoc}
+                            type="application/pdf"
+                            width="100%"
+                            height="600px"
+                          />
+                        </Modal.Body>
+                      </Modal>
+                    </div>
                   </div>
+
                   {/* submit ------------------------------------------- */}
                   <div className="col-md-12 form-group ">
                     <input

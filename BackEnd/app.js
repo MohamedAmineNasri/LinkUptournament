@@ -12,9 +12,10 @@ const match= require("./Routes/match")
 const app = express();
 
 
-app.use(express.json());
 app.use(cors());
-
+// i added the {limit: '50mb'} so i can upolad files larger than 100kb
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 
 app.use("/tournement", tournementRouter);
 app.use("/player", playerRouter);

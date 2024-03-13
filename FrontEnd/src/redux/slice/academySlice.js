@@ -30,14 +30,15 @@ export const fetchAcademyById = createAsyncThunk(
 
 export const editAcademy = createAsyncThunk(
   'academy/editAcademy',
-  async ({ id, name, location, date }) => {
+  async ({ id, name, location, date ,logo}) => {
     try {
       const response = await axios.put(
         'http://localhost:8000/academy/editAcademy/'+id,
         {
           AcademyName: name, 
           Location: location,
-          FoundedYear: date
+          FoundedYear: date,
+          Logo :logo
         }
       );
       window.location.reload();

@@ -1,34 +1,34 @@
-import DropdownButton from "react-bootstrap/DropdownButton";
 import DeleteTeamPopUp from "./DeleteTeamPopUp";
 import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import EditPopUpSelectedTeam from "./EditPopUpSelectedTeam";
+import Dropdown from "react-bootstrap/Dropdown";
 
 function DropDownTeamSettings(props) {
   return (
     <div className="m-3 textAlignRight">
-      <DropdownButton
-        as={ButtonGroup}
-        variant="success"
-        size="lg"
-        title="Settings"
-      >
-        {/* add players ----------------------------------------------------- */}
-        <Button className="popUpButton" variant="success">
-          Add Players
-        </Button>
-        {/* check players ----------------------------------------------------- */}
-        <Button className="popUpButton" variant="success">
-          Check Players
-        </Button>
-        <EditPopUpSelectedTeam
-          Tid={props.idTeam}
-          Tname={props.teamname}
-          Tlogo={props.teamlogo}
-        ></EditPopUpSelectedTeam>
-        {/* Delete Team ----------------------------------------------------- */}
-        <DeleteTeamPopUp teamid={props.idTeam}></DeleteTeamPopUp>
-      </DropdownButton>
+      <Dropdown>
+        <Dropdown.Toggle variant="success">Settings</Dropdown.Toggle>
+        <Dropdown.Menu
+          style={{ backgroundColor: "#8bc34a", containerType: "inline-size" }}
+        >
+          {/* add players ----------------------------------------------------- */}
+          <Button variant="success" style={{ width: "-webkit-fill-available" }}>
+            Add Players
+          </Button>
+          {/* check players ----------------------------------------------------- */}
+          <Button variant="success" style={{ width: "-webkit-fill-available" }}>
+            Check Players
+          </Button>
+          {/* Edit Team ----------------------------------------------------- */}
+          <EditPopUpSelectedTeam
+            Tid={props.idTeam}
+            Tname={props.teamname}
+            Tlogo={props.teamlogo}
+          ></EditPopUpSelectedTeam>
+          {/* Delete Team ----------------------------------------------------- */}
+          <DeleteTeamPopUp teamid={props.idTeam}></DeleteTeamPopUp>
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   );
 }

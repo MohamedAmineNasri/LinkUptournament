@@ -132,7 +132,6 @@ export const Academy = () => {
                       Status :{" "}
                       <span className="text-muted">{academyData.Status}</span>
                     </p>
-
                     <DropDownAcademy id={academyData._id} />
                   </div>
                 </div>

@@ -30,7 +30,11 @@ export const AddTeamPopUpWindow = (props) => {
 
   return (
     <>
-      <Button variant="success" onClick={handleShow}>
+      <Button
+        variant="success"
+        onClick={handleShow}
+        style={{ width: "-webkit-fill-available" }}
+      >
         Add Team
       </Button>
 

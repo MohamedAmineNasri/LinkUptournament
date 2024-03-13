@@ -42,7 +42,11 @@ export const EditPopUpSelectedTeam = (props) => {
 
   return (
     <>
-      <Button className="popUpButton" variant="success" onClick={handleShow}>
+      <Button
+        variant="success"
+        onClick={handleShow}
+        style={{ width: "-webkit-fill-available" }}
+      >
         Edit Team
       </Button>
 

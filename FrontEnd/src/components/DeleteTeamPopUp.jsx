@@ -20,7 +20,11 @@ export const DeleteTeamPopUp = (props) => {
 
   return (
     <>
-      <Button className="popUpButton" variant="success" onClick={handleShow}>
+      <Button
+        variant="success"
+        onClick={handleShow}
+        style={{ width: "-webkit-fill-available" }}
+      >
         Delete Team
       </Button>
 

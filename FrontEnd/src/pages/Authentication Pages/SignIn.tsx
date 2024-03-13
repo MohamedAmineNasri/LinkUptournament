@@ -43,13 +43,13 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!isCaptchaCompleted) {
       // If captcha is not completed, prevent sign-in and show error message
       setErrMsg('Please complete the captcha.');
       return;
     }
-  
+
     try {
       const userData = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...userData, email }));
@@ -66,9 +66,13 @@ const SignIn: React.FC = () => {
       } else {
         setErrMsg('Login Failed');
       }
-      errRef.current.focus();
+      
+      if (errRef.current) { // Check if errRef is defined before accessing its current property
+        errRef.current.focus();
+      }
     }
   };
+
   
 
   const handleUserInput = (e) => setEmail(e.target.value);

@@ -21,23 +21,10 @@ async function creatematch(req, res) {
   }
 
   // Update match by ID
-async function updatematchById(req, updateFields) {
+async function updatematchById(req, res) {
     
-      let matchs = await match.findById(req.params.id);
-      match.Date = updateFields.Date ? updateFields.Date : match.Date;
-        match.startingTime = updateFields.startingTime ? updateFields.startingTime : match.startingTime;
-        match.matchType = updateFields.matchType ? updateFields.matchType : match.matchType;
-        match.weatherCondition = updateFields.weatherCondition ? updateFields.weatherCondition : match.weatherCondition;
-        match.score = updateFields.score ? updateFields.score : match.score;
-        match.injuries = updateFields.injuries ? updateFields.injuries : match.injuries;
-        match.card = updateFields.card ? updateFields.card : match.card;
-        match.extraTime = updateFields.extraTime ? updateFields.extraTime : match.extraTime;
-        match.matchStatus = updateFields.matchStatus ? updateFields.matchStatus : match.matchStatus;
-
-
-
-      await matchs.save();
-      updateFields.json(matchs);
+      let matchs = await match.findByIdAndUpdate(req.params.id,req.body);
+      
     
   }
 

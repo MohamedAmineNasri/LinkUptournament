@@ -1,0 +1,7 @@
+.addMarg {
+  margin-top: 100px !important;
+}
+td,
+th {
+  font-size: smaller;
+}

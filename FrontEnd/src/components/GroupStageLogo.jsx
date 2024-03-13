@@ -37,7 +37,7 @@ export const Lose = () => {
       className="d-flex"
       style={{ ...logoStyle, backgroundColor: "#dc0000" }}
     >
-      W
+      L
     </div>
   );
 };

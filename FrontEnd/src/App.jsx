@@ -8,6 +8,9 @@ import Matches from "./pages/Matches";
 import Players from "./pages/Players";
 import Single from "./pages/Single";
 import AddAcademy from "./components/AddAcademy";
+import AddMatchPopUpWindow from "./components/hamhoum/AddMatchPopUpWindow";
+import AddMatch from "./components/hamhoum/anotherAddMatch";
+import EditPopUpmatch from "./components/hamhoum/EditPopUpMatch";
 import Academy from "./components/Academy";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -23,8 +26,20 @@ import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 import AdminDashboard from "./Dashboard/AdminDashboard";
 import Settings from "./Dashboard/src/pages/Settings";
+import MatchCard from "./components/hamhoum/match";
+import Fixture from "./components/TestWitheDummyData/matchhhh";
+import Table from "./components/TestWitheDummyData/Matchhhhes";
+import { data } from "./components/TestWitheDummyData/dummy-data";
+
 
 function App() {
+  const [fixtures, setFixtures] = useState(data);
+
+  
+
+  console.log(fixtures);
+
+  const refresh = () => window.location.reload(true);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -37,6 +52,16 @@ function App() {
         <Route path="/single" element={<Single />} />
         <Route path="/addAcademy" element={<AddAcademy />} />
         <Route path="/Academy" element={<Academy />} />
+        <Route path="/t" element={<EditPopUpmatch/>} />
+        <Route path="/test" element={<MatchCard/>} />
+        <Route path="/a" element={<Table data={fixtures}  />}></Route>
+            <Route
+              path="/fixture/:matchID"
+              element={<Fixture data={fixtures}  />}
+            ></Route>
+              
+        <Route path="/testtt" element={<AddMatchPopUpWindow/>} />
+              <Route path="/testt" element={<AddMatch/>} />
 
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
@@ -54,6 +79,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/userstable" element={<Tables />} />
             <Route path="/settings" element={<Settings />} />
+            
           </Route>
         </Route>
       </Route>

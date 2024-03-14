@@ -29,17 +29,15 @@ app.use("/tournement", tournementRouter);
 app.use("/player", playerRouter);
 // app.use("/team", teamRouter);
 app.use("/match",match)
-
-//-
 app.use('/academy', AcademyRouter);
 app.use('/team', TeamRouter);
 
 // Handle options credentials check - before CORS! 
 // and fetch cookies credentials requirement
 app.use(credentials); 
-
-// Cross Origin Resource Sharing
 app.use(cors(corsOptions));
+// Cross Origin Resource Sharing
+
 
 // app.use(cors());
 app.use(express.json());

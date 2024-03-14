@@ -1,80 +1,79 @@
 const mongoose = require("mongoose");
 
-const TeamSchema = new mongoose.Schema({
-  TeamId: Number,
+const TeamSchema = new mongoose.Schema(
+  {
+    TeamName: {
+      type: String,
+      require: "AcademyName is required !!",
+    },
+    TeamLogo: {
+      type: String,
+      require: "Logo is required !!",
+    },
+    Total_MatchesWon: {
+      type: Number,
+      default: 0
+    },
+    Total_MatchesLost: {
+      type: Number,
+      default: 0
+    },
+    Total_MatchesDrawn: {
+      type: Number,
+      default: 0
+    },
+    Total_MatchesPlayed: {
+      type: Number,
+      default: 0
+    },
+    Total_Goals_scored: {
+      type: Number,
+      default: 0
+    },
+    Total_Goals_received: {
+      type: Number,
+      default: 0
+    },
+    academy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Academy',
+      // required: true
+    },
 
-  TeamName: {
-    type: String,
-    require: "AcademyName is required !!",
+    // Group stage data-------------------------------------------------------------------
+    GS_MatchesWon: {
+      type: Number,
+      default: 0
+    },
+    GS_MatchesLost: {
+      type: Number,
+      default: 0
+    },
+    GS_MatchesDrawn: {
+      type: Number,
+      default: 0
+    },
+    GS_MatchesPlayed: {
+      type: Number,
+      default: 0
+    },
+    GS_Goals_scored: {
+      type: Number,
+      default: 0
+    },
+    GS_Goals_received: {
+      type: Number,
+      default: 0
+    },
+    GS_Goals_difference: {
+      type: Number,
+      default: 0
+    },
+    GS_Points: {
+      type: Number,
+      default: 0
+    },
   },
-  TeamLogo: {
-    type: String,
-    require: "Logo is required !!",
-  },
-  Total_MatchesWon: {
-    type: Number,
-    default: 0,
-  },
-  Total_MatchesLost: {
-    type: Number,
-    default: 0,
-  },
-  Total_MatchesDrawn: {
-    type: Number,
-    default: 0,
-  },
-  Total_MatchesPlayed: {
-    type: Number,
-    default: 0,
-  },
-  Total_Goals_scored: {
-    type: Number,
-    default: 0,
-  },
-  Total_Goals_received: {
-    type: Number,
-    default: 0,
-  },
-  academy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Academy",
-    // required: true
-  },
+);
 
-  // Group stage data-------------------------------------------------------------------
-  GS_MatchesWon: {
-    type: Number,
-    default: 0,
-  },
-  GS_MatchesLost: {
-    type: Number,
-    default: 0,
-  },
-  GS_MatchesDrawn: {
-    type: Number,
-    default: 0,
-  },
-  GS_MatchesPlayed: {
-    type: Number,
-    default: 0,
-  },
-  GS_Goals_scored: {
-    type: Number,
-    default: 0,
-  },
-  GS_Goals_received: {
-    type: Number,
-    default: 0,
-  },
-  GS_Goals_difference: {
-    type: Number,
-    default: 0,
-  },
-  GS_Points: {
-    type: Number,
-    default: 0,
-  },
-  Players: [{ type: mongoose.Schema.Types.ObjectId, ref: "Player" }],
-});
-
-module.exports = mongoose.model("Team", TeamSchema);
+module.exports = mongoose.model("team", TeamSchema);

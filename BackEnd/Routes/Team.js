@@ -10,6 +10,7 @@ router.post(
   teamService.addTeamAndAssaignToAcademy
 );
 
+<<<<<<< HEAD
 router.get("/getTeam/:id", teamService.getTeamById);
 
 router.delete("/deleteTeam/:id", teamService.deleteTeamById);
@@ -23,5 +24,33 @@ router.post(
   "/assignPlayerToTeam/:teamId/:playerId",
   teamService.assignPlayerToTeam
 );
+=======
+router.get("/getTeam/:id" ,teamService.getTeamById);
+router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
+
+router.delete("/deleteTeam/:id" ,teamService.deleteTeamById);
+router.put("/updateTeam/:id",teamService.updateTeam);
+
+router.post("/updateMW/:id",teamService.updateTeamMatchesWon);
+router.post("/cancelMW/:id",teamService.cancelTeamMatchesWon);
+
+router.post("/updateML/:id",teamService.updateTeamMatchesLost);
+router.post("/cancelML/:id",teamService.cancelTeamMatchesLost);
+
+router.post("/updateMD/:id",teamService.updateTeamMatchesDrawn);
+router.post("/cancelMD/:id",teamService.cancelTeamMatchesDrawn);
+
+router.post("/updateGoals/:id",teamService.updateGoals_scored);
+router.post("/cancelGoals/:id",teamService.cancelGoals_scored);
+
+router.post("/updateGoalsIn/:id",teamService.updateGoals_received);
+router.post("/cancelGoalsIn/:id",teamService.cancelGoals_received);
+
+router.post("/resetGSdata/:id",teamService.resetGroupStageData);
+
+router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
+
+router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
+>>>>>>> 71eb1f5b5d2e260ebbfb9f0d9db2b223eb6bde7a
 
 module.exports = router;

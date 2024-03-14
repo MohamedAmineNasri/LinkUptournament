@@ -54,6 +54,11 @@ export class Single extends Component {
                           Contact
                         </Link>
                       </li>
+                      <li>
+                        <Link to="/contact" className="nav-link">
+                          SignUp
+                        </Link>
+                      </li>
                     </ul>
                   </nav>
 

@@ -158,7 +158,7 @@ export class Players extends Component {
                     />
                     <a
                       href="https://vimeo.com/139714818"
-                      class="d-flex play-button align-items-center"
+                      className="d-flex play-button align-items-center"
                       data-fancybox
                     >
                       <span className="icon mr-3">

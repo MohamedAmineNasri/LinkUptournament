@@ -3,7 +3,7 @@ body {
   line-height: 1.7;
   color: rgb(255, 255, 255);
   font-weight: 300;
-  background-color: #222831;
+  /* background-color: #222831; */
   font-size: 16px; }
 
 ::-moz-selection {
@@ -29,8 +29,8 @@ h1, h2, h3, h4, h5,
 .border-2 {
   border-width: 2px; }
 
-.text-black {
-  color: #000 !important; }
+/* .text-black {
+  color: #000 !important; } */
 
 .bg-black {
   background: #000 !important; }
@@ -1130,6 +1130,7 @@ h1, h2, h3, h4, h5,
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
 
 
+<<<<<<< HEAD
     /* added by MI----------------------------- */
     .widget-vs .d-flex {
       max-width: 100%;
@@ -1258,3 +1259,34 @@ h1, h2, h3, h4, h5,
 
     
     
+=======
+
+
+
+
+
+/* Style for the signup form */
+/* Input and Select Styles */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #222831; /* Text color */
+}
+
+/* Button Styles */
+.btn {
+  background-color: #1976D2;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Select Options Background Color */
+.form-control option {
+  background-color: #222831;
+  color: #fff;
+}
+>>>>>>> ee6edd1077311b46c19fc873f0e321e7dc5b70a9

@@ -1,8 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { Provider } from "react-redux";
+import store from "../src/redux/store.js";
 
+<<<<<<< HEAD
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+=======
 import { store } from '../app/store.js' 
 import { Provider } from 'react-redux' 
 import { BrowserRouter} from "react-router-dom";
@@ -29,3 +40,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     
   </React.StrictMode>,
 )
+>>>>>>> ee6edd1077311b46c19fc873f0e321e7dc5b70a9

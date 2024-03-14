@@ -56,18 +56,25 @@ const createGroups = async (req, res , next) => {
     case 'Group Stage Tournament':
       const numGroups = Math.ceil(tournament.teams.length/ 4);
       for (let i = 0; i < tournament.teams.length; i += 4) {
-        teamsChunks.push(tournament.teams.slice(i, i + 4).map(team => ({
-          team: team,
-          MJ: 0,
-          G: 0,
-          N: 0,
-          P: 0,
-          BP: 0,
-          BC: 0,
-          DB: 0,
-          PTS: 0
-        })));
+        let teamsChunk = [];
+        for (const teamId of tournament.teams.slice(i, i + 4)) {
+          const teamDoc = await Team.findById(teamId);
+          teamsChunk.push({
+            team: teamId,
+            TeamName : teamDoc.TeamName,
+            MJ: 0,
+            G: 0,
+            N: 0,
+            P: 0,
+            BP: 0,
+            BC: 0,
+            DB: 0,
+            PTS: 0
+          });
+        }
+        teamsChunks.push(teamsChunk);
       }
+      
       for (let j = 0; j < numGroups; j++) {
             const groupName = 'Group ' + String.fromCharCode(65 + j);
             const group = new Group({
@@ -78,24 +85,31 @@ const createGroups = async (req, res , next) => {
             await group.save();
            }
       break;
-    case 'Round Robin Tournament':
-      const group = new Group({
-        name: 'Group A',
-        tournament: tournament,
-        teams: tournament.teams.map(team => ({
-          team: team,
-          MJ: 0,
-          G: 0,
-          N: 0,
-          P: 0,
-          BP: 0,
-          BC: 0,
-          DB: 0,
-          PTS: 0
-        }))
-      });
-      await group.save();
-      break;
+      case 'Round Robin Tournament':
+        let teams = [];
+        for (const teamId of tournament.teams) {
+          const teamDoc = await Team.findById(teamId);
+          teams.push({
+            team: teamId,
+            TeamName : teamDoc.TeamName,
+            MJ: 0,
+            G: 0,
+            N: 0,
+            P: 0,
+            BP: 0,
+            BC: 0,
+            DB: 0,
+            PTS: 0
+          });
+        }
+        const group = new Group({
+          name: 'Group A',
+          tournament: tournament,
+          teams: teams
+        });
+        await group.save();
+        break;
+      
     default:
       res.status(400).json({ message: 'Invalid tournament type' });
       return;

@@ -55,7 +55,8 @@ const groupSlice = createSlice({
     })
     .addCase(fetchGroupByIdThunk.fulfilled, (state, action) => {
       state.status = 'succeeded';
-      state.group = action.payload; // Assuming the response contains the group data
+      state.group = action.payload; 
+      console.log("Add groups Payload:", action.payload);// Assuming the response contains the group data
     })
     .addCase(fetchGroupByIdThunk.rejected, (state, action) => {
       state.status = 'failed';

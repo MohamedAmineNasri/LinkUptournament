@@ -89,7 +89,7 @@ export const AddTournament = () => {
           setType("");
           setRules("");
           setStatus("");
-          setWinner("");
+          setWinner(null);
           setDateDebut("");
           setDateFin("");
           setSelectedTeams([]);
@@ -307,7 +307,7 @@ export const AddTournament = () => {
                     </div>
                   </div>
                 </form>
-                {/* <Group groupId="665f1a76800f7ca93c7e7b514" /> */}
+                {/* <Group groupId="65f251975fbe47bf1675a5e1" /> */}
               </div>
             </div>
           </div>

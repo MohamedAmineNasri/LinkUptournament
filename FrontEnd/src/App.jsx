@@ -9,6 +9,7 @@ import Single from "./pages/Single";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Group from "./components/Group"
 import AddTournament from "./components/AddTournament";
+import Tournament from "./components/Tournament";
 // import TournamentBracket  from "./components/TournamentBracket";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/single" element={<Single />} />
         <Route path="/group" element={<Group />} />
         <Route path="/addTournament" element={<AddTournament />} />
+        <Route path="/Tournament/:tournamentId" element={<Tournament />} />
         {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
       </Routes>
     </BrowserRouter>

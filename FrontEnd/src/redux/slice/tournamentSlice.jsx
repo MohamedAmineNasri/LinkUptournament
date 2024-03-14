@@ -15,6 +15,18 @@ export const addTournament = createAsyncThunk(
   }
 );
 
+export const fetchtournamentByIdThunk = createAsyncThunk(
+  'tournament/',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/tournament/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 
 
 export const deleteTournament = createAsyncThunk(
@@ -76,6 +88,18 @@ export const fetchTournaments = createAsyncThunk(
       .addCase(addTournament.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(fetchtournamentByIdThunk.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchtournamentByIdThunk.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.tournament = action.payload; 
+        console.log("tournament Payload:", action.payload);// Assuming the response contains the tournament data
+      })
+      .addCase(fetchtournamentByIdThunk.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload ? action.payload.message : action.error.message;
       });
   },
   });

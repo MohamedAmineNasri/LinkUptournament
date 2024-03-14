@@ -18,6 +18,7 @@ export const Group = ({ groupId }) => { // Accept a groupId prop
     return <div>Loading...</div>;
   }
 
+
   return (
     <div className="col-lg-6">
       <div className="widget-next-match">

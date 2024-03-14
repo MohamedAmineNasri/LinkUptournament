@@ -45,6 +45,7 @@ const updateTournament = async (req, res, next) => {
   const getTournamentById = async (req, res, next) => {
     const { id } = req.params;
     const tournament = await Tournament.findById(id);
+    console.log(tournament) ; 
     res.json({
       message: "Successfully retrieved the tournament!",
       tournament: tournament

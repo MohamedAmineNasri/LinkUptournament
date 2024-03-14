@@ -12,6 +12,7 @@ import Tournament from "./pages/Tournament";
 import LineupBuilder from "./pages/LineupBuilder";
 import AddPlayerForm from "./pages/AddPlayerForm";
 import TournamentRoundRobin from "./pages/TournamentRoundRobin";
+import TournamentBracket from "./pages/TournamentBracket";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/single" element={<Single />} />
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
+        <Route path="/test" element={<TournamentBracket />} />
         
         
         <Route path="/player" element={<AddPlayerForm />} />

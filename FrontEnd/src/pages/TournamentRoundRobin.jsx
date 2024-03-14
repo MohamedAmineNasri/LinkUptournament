@@ -11,7 +11,7 @@ const TournamentRoundRobin = () => {
       W: 0,
       D: 0,
       L: 0,
-      G: 0,
+      G: "0:0",
       GD: 0,
       PTS: 0,
     },
@@ -21,7 +21,7 @@ const TournamentRoundRobin = () => {
       W: 0,
       D: 0,
       L: 0,
-      G: 0,
+      G: "0:0",
       GD: 0,
       PTS: 0,
     },
@@ -32,7 +32,7 @@ const TournamentRoundRobin = () => {
       W: 0,
       D: 0,
       L: 0,
-      G: 0,
+      G: "0:0",
       GD: 0,
       PTS: 0,
     },
@@ -42,7 +42,7 @@ const TournamentRoundRobin = () => {
       W: 0,
       D: 0,
       L: 0,
-      G: 0,
+      G: "0:0",
       GD: 0,
       PTS: 0,
     },
@@ -68,7 +68,11 @@ const TournamentRoundRobin = () => {
                     <th scope="col" style={{ width: "5%" }}>
                       #
                     </th>
-                    <th scope="col" colSpan="12" style={{ width: "45%",textAlign: "justify" }}>
+                    <th
+                      scope="col"
+                      colSpan="12"
+                      style={{ width: "45%", textAlign: "justify" }}
+                    >
                       GROUP {getAlphabetLetter(index)}
                     </th>
                     <th scope="col" style={{ width: "5%" }}>
@@ -106,7 +110,11 @@ const TournamentRoundRobin = () => {
                           <img
                             src="/public/assets/images/TeamLogo.svg"
                             alt="team_logo"
-                            style={{ width: "24px", paddingBottom: "8px",marginRight : "8px" }}
+                            style={{
+                              width: "24px",
+                              paddingBottom: "8px",
+                              marginRight: "8px",
+                            }}
                           />
 
                           {team.Team}
@@ -120,7 +128,7 @@ const TournamentRoundRobin = () => {
                         <td>{team.PTS}</td>
                         <td
                           colSpan="4"
-                          className="d-flex justify-content-end pr-4"
+                          className="d-flex justify-content-start pl-4"
                         >
                           <Win />
                           <div style={{ margin: "0 2px" }}></div>

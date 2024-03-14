@@ -13,6 +13,15 @@ script {
 }
 }
 }
+        stage('Unit Test') {
+steps{
+script {
+     dir('BackEnd') {
+sh('npm test')
+     }
+}
+}
+        } 
         stage('SonarQube Analysis') {
             steps {
                 script {
@@ -40,15 +49,7 @@ sh('npm run build-dev')
 }
 }
 
-     stage('Unit Test') {
-steps{
-script {
-     dir('BackEnd') {
-sh('npm test')
-     }
-}
-}
-        } 
+     
     
     
     

@@ -5,7 +5,7 @@ const expect = chai.expect;
 const should = chai.should();
 const chaiHttp = require('chai-http');
 const server = require('../server');
-const Product = require('../product');
+const Product = require('../Models/match');
 
 const mongoose = require('mongoose');
 
@@ -25,11 +25,11 @@ it('should POST a valid product', (done) => {
         
     let product = {
         name: "Test Product",
-        price: 100,
-        quantity: 20
+        startingtime: "10h",
+        type: "idk"
     }
     chai.request(server)
-    .post('/api/products')
+    .post('/match')
     .send(product)
     .end((err, res) => {
         res.should.have.status(201);

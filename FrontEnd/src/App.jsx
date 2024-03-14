@@ -7,13 +7,10 @@ import Blog from "./pages/Blog";
 import Matches from "./pages/Matches";
 import Players from "./pages/Players";
 import Single from "./pages/Single";
-<<<<<<< HEAD
 import AddAcademy from "./components/AddAcademy";
 import Academy from "./components/Academy";
-=======
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
->>>>>>> ee6edd1077311b46c19fc873f0e321e7dc5b70a9
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Welcome from "./pages/Welcome";
@@ -29,6 +26,7 @@ import Settings from "./Dashboard/src/pages/Settings";
 
 function App() {
   return (
+    <BrowserRouter>
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
@@ -38,12 +36,10 @@ function App() {
         <Route path="/matches" element={<Matches />} />
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
-<<<<<<< HEAD
         <Route path="/addAcademy" element={<AddAcademy />} />
         <Route path="/Academy" element={<Academy />} />
-      </Routes>
-    </BrowserRouter>
-=======
+      
+    
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
 
@@ -63,12 +59,11 @@ function App() {
               <Route path="/userstable" element={<Tables />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
-
         </Route>
-        
       </Route>
+      
     </Routes>
->>>>>>> ee6edd1077311b46c19fc873f0e321e7dc5b70a9
+    </BrowserRouter>
   );
 }
 

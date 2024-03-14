@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const Group = ({ groupId }) => { // Accept a groupId prop
+export const Group = ({ groupId }) => { 
+  
   const [group, setGroup] = useState(null);
 
   useEffect(() => {

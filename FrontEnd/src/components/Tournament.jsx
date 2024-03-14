@@ -19,13 +19,13 @@ export const Tournament = () => {
             
             setTournament(response.data.tournament);
           };
-      
-          fetchTournament();
-          const fetchGroups = async () => {
+       const fetchGroups = async () => {
             const response = await axios.get(`http://localhost:8000/group/tournament/${tournamentId}`);
             
             setGroups(response.data);
           };
+
+          fetchTournament();
       
           fetchGroups();
       
@@ -34,9 +34,9 @@ export const Tournament = () => {
         return <div>Loading tournament...</div>;
       }
 
-    //   if (!groups) {
-    //     return <div>Loading groups ...</div>;
-    //   }
+      if (!groups) {
+        return <div>Loading groups ...</div>;
+      }
     // render your tournament and groups data
     // replace with your actual rendering logic
     return (

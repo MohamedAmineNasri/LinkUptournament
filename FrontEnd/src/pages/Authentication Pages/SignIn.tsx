@@ -350,7 +350,7 @@ const SignIn: React.FC = () => {
                   </span>
                   Sign in with Google
                 </button> */}
-            <GoogleLogin
+            {/* <GoogleLogin
         onSuccess={(credentialResponse) => {
           console.log(credentialResponse);
         }}
@@ -358,7 +358,7 @@ const SignIn: React.FC = () => {
           console.error("Failed Login..");
         }}
         useOneTap
-      />
+      /> */}
             <ReCAPTCHA
     sitekey="6LdeXpQpAAAAAJAmPdKOpxjaoYoearOopW0IHhLH"
     onChange={onChange}

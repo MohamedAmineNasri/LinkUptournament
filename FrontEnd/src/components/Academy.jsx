@@ -29,7 +29,7 @@ export const Academy = () => {
         {/* header/overlay image */}
         <div>
           <header className="site-navbar py-4" role="banner">
-            <div className="container">
+            <div className="container-fluid">
               <div className="d-flex align-items-center">
                 <div className="site-logo">
                   <a href="index.html">
@@ -87,7 +87,10 @@ export const Academy = () => {
         >
           <div className="container">
             <div className="row align-items-center">
-              <div className="col-lg-12 mx-auto text-center">
+              <div
+                className="col-lg-12 mx-auto "
+                style={{ textAlign: "-webkit-center" }}
+              >
                 <img
                   src={academyData.Logo}
                   alt="Logo"
@@ -110,14 +113,20 @@ export const Academy = () => {
           <div className="site-section ">
             <div className="AcademyandTeamsLRmargin">
               <div className="row  justify-content-center align-items-top AcademyandTeamsBox ">
-                <div className="col-md-5 col-lg-4 word-wrap-break">
-                  <div className="text-center academyBox">
+                <div
+                  className="col-md-5 col-lg-4 word-wrap-break"
+                  style={{ textAlign: "-webkit-center" }}
+                >
+                  <div className="academyBox">
                     <img
                       src={academyData.Logo}
                       alt="Logo"
                       className="img-fluid academyLogoMwidth " //rounded-circle
                     />
-                    <h3 className="mb-4 mt-3 mb-0  ">
+                    <h3
+                      className="mb-4 mt-3 "
+                      style={{ fontWeight: "bold", fontSize: "40px" }}
+                    >
                       <strong>{academyData.AcademyName}</strong>
                     </h3>
                     <p className=" mb-4">

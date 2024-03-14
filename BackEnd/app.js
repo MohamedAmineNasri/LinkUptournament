@@ -1,10 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 
-//-
-var AcademyRouter = require('./Routes/Academy');
-var TeamRouter = require('./Routes/Team');
-
 
 
 
@@ -12,10 +8,18 @@ const match= require("./Routes/match")
 const app = express();
 
 const corsOptions = require('./config/corsOptions');
+
+// Cross Origin Resource Sharing
+app.use(cors(corsOptions));
+app.use(cors());
 const credentials = require('./middlewares/credentials');
 const tournementRouter = require("./Routes/tournementRouter");
 const playerRouter = require("./Routes/playerRouter");
-// const teamRouter = require("./Routes/teamRouter");
+
+//-
+var AcademyRouter = require('./Routes/Academy');
+var TeamRouter = require('./Routes/Team');
+
 
 
 const cookieParser = require('cookie-parser')
@@ -38,10 +42,7 @@ app.use('/team', TeamRouter);
 // and fetch cookies credentials requirement
 app.use(credentials); 
 
-// Cross Origin Resource Sharing
-app.use(cors(corsOptions));
 
-// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

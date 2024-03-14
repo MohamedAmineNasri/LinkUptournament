@@ -46,10 +46,10 @@ function App() {
       ) : (
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Table data={fixtures} />}></Route>
+            <Route path="/" element={<Table data={fixtures}  />}></Route>
             <Route
               path="/fixture/:matchID"
-              element={<Fixture data={fixtures} />}
+              element={<Fixture data={fixtures}  />}
             ></Route>
                <Route path="/t" element={<EditPopUpmatch/>} />
               <Route path="/test" element={<MatchCard/>} />

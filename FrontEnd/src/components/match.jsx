@@ -9,8 +9,10 @@ import AddMatchPopUpWindow from "./AddMatchPopUpWindow";
 import NavBar from "./navbar";
 import Footer from "./foter";
 import EditPopUpAcademy from "./EditPopUpMatch";
+import EditPopUpmatch from "./EditPopUpMatch";
+import EditPopUpSelectedMatch from "./update";
 
-const MatchCard = () => {
+const MatchCard = (props) => {
   const matchData = useSelector((state) => state.match.matchData);
   const loading = useSelector((state) => state.match.loading);
   const error = useSelector((state) => state.match.error);
@@ -126,10 +128,13 @@ const MatchCard = () => {
             </Card.Body>
             <Card.Body>
               <div className="row justify-content-around">
-             
-                <Button variant="success">Add match</Button>
-                <Button variant="success">Check match</Button>
+            
                 
+                <Button variant="success">Check match</Button>
+                <EditPopUpSelectedMatch
+                matchid = {props.matchid}
+                time = {props.time} 
+                ></EditPopUpSelectedMatch>
               </div>
             </Card.Body>
           </Card>

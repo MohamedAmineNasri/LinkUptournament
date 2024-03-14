@@ -35,7 +35,8 @@ export default function Fixture() {
   // if (!fixture) return <>loading</>;
 
   return (
-    <div className="pb-10 bg-white">
+    <div  className="pb-10 bg-white ">
+      
       <div key={fixture.fixture.id} className="bg-white py-2">
         <div align="center">
           <img src={fixture.league.logo} width={25} alt="logo" />
@@ -76,7 +77,7 @@ export default function Fixture() {
               <div className="p-5" key={event.team.id}>
                 {event.type === "Goal" ? (
                   <div>
-                    <img src={BALLIMG} width={100} />
+                    
                   </div>
                 ) : (
                   <div className="badge badge-secondary">{event.type}</div>

@@ -53,8 +53,8 @@ export const EditPopUpmatch = (props) => {
       dispatch(
         editMatch({
           id: props.id,
-          time: editedTime || 'matchDataById.time',
-          type: editedType || 'matchDataById.type',
+          time: editedTime || props.time,
+          type: editedType || props.type,
           
         })
       );
@@ -82,7 +82,7 @@ export const EditPopUpmatch = (props) => {
                 type="text"
                 placeholder="change match time"
                 autoFocus
-                value={editedTime ||' matchDataById.time'}
+                value={editedTime ||matchDataById.time}
                 onChange={handleTimeChange}
               />
             </Form.Group>

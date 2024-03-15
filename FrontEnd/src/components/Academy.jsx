@@ -123,6 +123,7 @@ export const Academy = () => {
                       alt="Logo"
                       className="img-fluid academyLogoMwidth " //rounded-circle
                     />
+
                     <h3
                       className="mb-4 mt-3 "
                       style={{ fontWeight: "bold", fontSize: "40px" }}

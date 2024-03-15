@@ -8,7 +8,6 @@ import { store } from "../app/store.js";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider.jsx";
-
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

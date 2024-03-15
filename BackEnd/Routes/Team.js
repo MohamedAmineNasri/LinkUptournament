@@ -1,10 +1,17 @@
-var express = require('express')
+var express = require("express");
 var router = express.Router();
-const teamService = require('../Services/TeamService')
+const teamService = require("../Services/TeamService");
 
-router.get("/" , teamService.getAllTeams);
+router.get("/", teamService.getAllTeams);
 
-router.post("/addTeam",teamService.addTeam);
+router.post("/addTeam", teamService.addTeam);
+router.post(
+  "/getTeamAndAssaignAcademy",
+  teamService.addTeamAndAssaignToAcademy
+);
+router.post(
+  "/assignPlayerToTeam/:teamId/:playerId",
+  teamService.assignPlayerToTeam)
 
 router.get("/getTeam/:id" ,teamService.getTeamById);
 router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
@@ -33,4 +40,5 @@ router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
 
 router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
 
-module.exports =router
+
+module.exports = router;

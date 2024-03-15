@@ -1,10 +1,13 @@
+
+const Player = require("../Models/Player");
+
 const Team =require('../Models/Team')
 const Academy =require('../Models/Academy')
 const academyService = require('../Services/AcademyService')
 
 const getAllTeams = async (req, res, next) => {
-        const teams = await Team.find();
-        res.json(teams);  
+  const teams = await Team.find().populate("Players");
+  res.json(teams);
 };
 
 
@@ -63,16 +66,6 @@ const getTeamByAcademyId = async (req, res, next) => {
 
         res.json(teamData);
     
-}
-
-
-
-
-
-
-const deleteTeamById =  async (req,res,next)=>{
-    const teamData = await Team.findByIdAndDelete(req.params.id);
-    res.json("deleted sucessfully" + teamData);
 }
 
 
@@ -256,6 +249,11 @@ const updateGoals_received = async (req,res, next) => {
    
 };
 
+const deleteTeamById = async (req, res, next) => {
+  const teamData = await Team.findByIdAndDelete(req.params.id);
+  res.json("deleted sucessfully" + teamData);
+};
+
 
 
 const cancelGoals_received = async (req,res, next) => {
@@ -274,24 +272,58 @@ const cancelGoals_received = async (req,res, next) => {
         }
 };
 
-
-
 const resetGroupStageData = async (req,res, next) => {
     
-        const TeamData = await Team.findById(req.params.id);
-        TeamData.GS_MatchesWon = 0;
-        TeamData.GS_MatchesLost = 0;
-        TeamData.GS_MatchesDrawn = 0;
-        TeamData.GS_MatchesPlayed = 0;
-        TeamData.GS_Goals_scored = 0;
-        TeamData.GS_Goals_difference = 0;
-        TeamData.GS_Goals_received = 0;
-        TeamData.GS_Points = 0;  
-        await TeamData.save();
-        res.json(TeamData)
-        
+  const TeamData = await Team.findById(req.params.id);
+  TeamData.GS_MatchesWon = 0;
+  TeamData.GS_MatchesLost = 0;
+  TeamData.GS_MatchesDrawn = 0;
+  TeamData.GS_MatchesPlayed = 0;
+  TeamData.GS_Goals_scored = 0;
+  TeamData.GS_Goals_difference = 0;
+  TeamData.GS_Goals_received = 0;
+  TeamData.GS_Points = 0;  
+  await TeamData.save();
+  res.json(TeamData)
+  
 };
 
 
 
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam};
+const assignPlayerToTeam = async (req, res) => {
+  const playerId = req.params.playerId;
+  const teamId = req.params.teamId;
+  try {
+    // Find the player by ID
+    const player = await Player.findById(playerId);
+    if (!player) {
+      return res.status(404).json({ message: "Player not found" });
+    }
+
+    // Find the team by ID
+    const team = await Team.findById(teamId);
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    // Assign the player to the team
+    player.team = teamId;
+    team.Players = [...team.Players, playerId];
+    await player.save();
+    await team.save();
+
+    return res
+      .status(200)
+      .json({ message: "Player assigned to team successfully" });
+  } catch (error) {
+    console.error("Error assigning player to team:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
+
+
+module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam};

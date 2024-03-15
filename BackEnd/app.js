@@ -28,19 +28,19 @@ const cookieParser = require('cookie-parser')
 // i added the {limit: '50mb'} so i can upolad files larger than 100kb
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
-
+app.use(cors(corsOptions));
 app.use("/tournement", tournementRouter);
 app.use("/player", playerRouter);
 // app.use("/team", teamRouter);
 app.use("/match",match)
-
-//-
 app.use('/academy', AcademyRouter);
 app.use('/team', TeamRouter);
 
 // Handle options credentials check - before CORS! 
 // and fetch cookies credentials requirement
 app.use(credentials); 
+
+// Cross Origin Resource Sharing
 
 
 app.use(express.json());

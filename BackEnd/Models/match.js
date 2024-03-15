@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var match = new Schema({
@@ -6,9 +7,10 @@ var match = new Schema({
     matchType: String,
     weatherCondition: String,
     score: [Number],    
-    injuries:[{playername:String,playernumber:Number}],
     card:{playername:String,playernumber:Number,red:Number,yellow:Number},
     extraTime:Number,
-    matchStatus:String
+    matchStatus:String,
+    location:String
+   
 });
 module.exports = mongoose.model('match', match)

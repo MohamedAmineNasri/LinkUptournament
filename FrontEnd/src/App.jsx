@@ -45,7 +45,7 @@ function App() {
         {/* Protected Routes  */}
         <Route element={<PersistLogin/>}>
         {/* <Route element={<RequireAuth  />}> */}
-            <Route element={<RequireAuth allowedRoles={['Admin']} />}>
+            <Route element={<RequireAuth allowedRoles={['Admin','Supporter']} />}>
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />

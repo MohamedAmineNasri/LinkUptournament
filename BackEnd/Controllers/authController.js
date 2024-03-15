@@ -32,6 +32,7 @@ const handleLogin = async (req, res) => {
                     birthday: foundUser.birthday,
                     phoneNumber: foundUser.phoneNumber,
                     roles: foundUser.roles,
+                    bio : foundUser.bio
                 },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '10s' }//for test put it to 15s
@@ -58,6 +59,7 @@ const handleLogin = async (req, res) => {
                 birthday: foundUser.birthday,
                 phoneNumber: foundUser.phoneNumber,
                 roles: foundUser.roles,
+                bio : foundUser.bio
             }});
         } else {
             res.status(401).json({ message: "Invalid email or password." }); // Unauthorized

@@ -9,22 +9,10 @@ router.post(
   "/getTeamAndAssaignAcademy",
   teamService.addTeamAndAssaignToAcademy
 );
-
-<<<<<<< HEAD
-router.get("/getTeam/:id", teamService.getTeamById);
-
-router.delete("/deleteTeam/:id", teamService.deleteTeamById);
-
-router.post("/updateMW/:id", teamService.updateTeamMatchesWon);
-router.post("/updateML/:id", teamService.updateTeamMatchesLost);
-router.post("/updateMD/:id", teamService.updateTeamMatchesDrawn);
-router.post("/updateGoals/:id", teamService.updateGoals_scored);
-router.post("/updateGoalsIn/:id", teamService.updateGoals_received);
 router.post(
   "/assignPlayerToTeam/:teamId/:playerId",
-  teamService.assignPlayerToTeam
-);
-=======
+  teamService.assignPlayerToTeam)
+
 router.get("/getTeam/:id" ,teamService.getTeamById);
 router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
 
@@ -51,6 +39,6 @@ router.post("/resetGSdata/:id",teamService.resetGroupStageData);
 router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
 
 router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
->>>>>>> 71eb1f5b5d2e260ebbfb9f0d9db2b223eb6bde7a
+
 
 module.exports = router;

@@ -12,18 +12,31 @@ export const EditPopUpSelectedMatch = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  
-
   // Initialize state for edited values
   const [editedTime, setEditedTime] = useState("");
+  const [editedDate, setEditedDate] = useState("");
+  const [editedType, setEditedType] = useState("");
+  const [editedLoc, setEditedLoc] = useState("");
 
   // Initialize flag to track changes
   const [isChanged, setIsChanged] = useState(false);
 
   // Update edited values only if the input fields are changed
   const dispatch = useDispatch();
-  const handleNameChange = (e) => {
+  const handleTimeChange = (e) => {
     setEditedTime(e.target.value);
+    setIsChanged(true);
+  };
+  const handleDateChange = (e) => {
+    setEditedDate(e.target.value);
+    setIsChanged(true);
+  };
+  const handleTypeChange = (e) => {
+    setEditedType(e.target.value);
+    setIsChanged(true);
+  };
+  const handleLocChange = (e) => {
+    setEditedLoc(e.target.value);
     setIsChanged(true);
   };
 
@@ -33,11 +46,14 @@ export const EditPopUpSelectedMatch = (props) => {
       dispatch(
         editMatch({
           matchid: props.matchid,
-          time: editedTime || props.Mname,
-          //   TeamLogo: props.Tlogo ,
+          time: editedTime || props.time,
+          date: editedDate || props.date,
+          type: editedType || props.type,
+          location: editedLoc || props.location,
         })
       );
     }
+    window.location.reload();
     handleClose();
   };
 
@@ -55,17 +71,37 @@ export const EditPopUpSelectedMatch = (props) => {
           <Form className="popUpWindowBlackColor">
             <Form.Group className="mb-3">
               <Form.Label className="popUpWindowLabelColor">
-                Team Name :{" "}
+                match time :{" "}
               </Form.Label>
               <Form.Control
-                type="text"
+                type="time"
                 placeholder="change Academy Name"
                 autoFocus
-                value={editedTime || props.Mname}
-                onChange={handleNameChange}
+                value={editedTime || props.time}
+                onChange={(e) => handleTimeChange(e)}
+              />
+              <Form.Control
+                type="date"
+                placeholder="change Academy Name"
+                autoFocus
+                value={editedDate || props.date}
+                onChange={(e) => handleDateChange(e)}
+              />
+              <Form.Control
+                type="type"
+                placeholder="change Academy Name"
+                autoFocus
+                value={editedType || props.type}
+                onChange={(e) => handleTypeChange(e)}
+              />
+              <Form.Control
+                type="type"
+                placeholder="change Academy Name"
+                autoFocus
+                value={editedLoc || props.location}
+                onChange={(e) => handleLocChange(e)}
               />
             </Form.Group>
-            
           </Form>
         </Modal.Body>
         <Modal.Footer className="popUpWindowBlackColor">

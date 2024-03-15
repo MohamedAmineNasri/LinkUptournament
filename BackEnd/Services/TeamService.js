@@ -1,40 +1,15 @@
-<<<<<<< HEAD
-const Team = require("../Models/Team");
+
 const Player = require("../Models/Player");
-const academyService = require("../Services/AcademyService");
-=======
+
 const Team =require('../Models/Team')
 const Academy =require('../Models/Academy')
 const academyService = require('../Services/AcademyService')
->>>>>>> 71eb1f5b5d2e260ebbfb9f0d9db2b223eb6bde7a
 
 const getAllTeams = async (req, res, next) => {
   const teams = await Team.find().populate("Players");
   res.json(teams);
 };
 
-<<<<<<< HEAD
-const addTeam = async (req, res, next) => {
-  const { TeamName, TeamLogo } = req.body;
-  const TeamData = new Team({ TeamName, TeamLogo });
-  await TeamData.save();
-  res.json({
-    message: "Team sucessfully added ! ",
-  });
-};
-const addTeamAndAssaignToAcademy = async (req, res, next) => {
-  const { TeamName, TeamLogo, academy } = req.body;
-  const TeamData = new Team({ TeamName, TeamLogo, academy });
-  await TeamData.save();
-  res.json({
-    message: "Team sucessfully added ! ",
-  });
-};
-
-const getTeamById = async (req, res, next) => {
-  const TeamData = await Team.findById(req.params.id);
-  res.json(TeamData);
-=======
 
 
 const addTeam =  async (req, res, next) => {
@@ -91,16 +66,6 @@ const getTeamByAcademyId = async (req, res, next) => {
 
         res.json(teamData);
     
-}
-
-
-
-
-
-
-const deleteTeamById =  async (req,res,next)=>{
-    const teamData = await Team.findByIdAndDelete(req.params.id);
-    res.json("deleted sucessfully" + teamData);
 }
 
 
@@ -282,7 +247,6 @@ const updateGoals_received = async (req,res, next) => {
         await TeamData.save();
         res.json(TeamData)
    
->>>>>>> 71eb1f5b5d2e260ebbfb9f0d9db2b223eb6bde7a
 };
 
 const deleteTeamById = async (req, res, next) => {
@@ -290,22 +254,8 @@ const deleteTeamById = async (req, res, next) => {
   res.json("deleted sucessfully" + teamData);
 };
 
-const updateTeamMatchesWon = async (req, res, next) => {
-  const TeamMWData = await Team.findById(req.params.id);
-  TeamMWData.Total_MatchesWon = TeamMWData.Total_MatchesWon + 1;
-  TeamMWData.Total_MatchesPlayed = TeamMWData.Total_MatchesPlayed + 1;
-  await TeamMWData.save();
-  res.json("Team victory increased by 1 sucessfully");
-};
 
-<<<<<<< HEAD
-const updateTeamMatchesLost = async (req, res, next) => {
-  const TeamMLData = await Team.findById(req.params.id);
-  TeamMLData.Total_MatchesLost = TeamMLData.Total_MatchesLost + 1;
-  TeamMLData.Total_MatchesPlayed = TeamMLData.Total_MatchesPlayed + 1;
-  await TeamMLData.save();
-  res.json("Team Lost increased by 1 sucessfully");
-=======
+
 const cancelGoals_received = async (req,res, next) => {
     
         const TeamData = await Team.findById(req.params.id);
@@ -320,31 +270,25 @@ const cancelGoals_received = async (req,res, next) => {
         await TeamData.save();
         res.json(TeamData)
         }
->>>>>>> 71eb1f5b5d2e260ebbfb9f0d9db2b223eb6bde7a
 };
 
-const updateTeamMatchesDrawn = async (req, res, next) => {
-  const TeamMDData = await Team.findById(req.params.id);
-  TeamMDData.Total_MatchesDrawn = TeamMDData.Total_MatchesDrawn + 1;
-  TeamMDData.Total_MatchesPlayed = TeamMDData.Total_MatchesPlayed + 1;
-  await TeamMDData.save();
-  res.json("Team draw increased by 1 sucessfully");
-};
-
-const updateGoals_scored = async (req, res, next) => {
+const resetGroupStageData = async (req,res, next) => {
+    
   const TeamData = await Team.findById(req.params.id);
-  TeamData.Total_Goals_scored += 2; // test
+  TeamData.GS_MatchesWon = 0;
+  TeamData.GS_MatchesLost = 0;
+  TeamData.GS_MatchesDrawn = 0;
+  TeamData.GS_MatchesPlayed = 0;
+  TeamData.GS_Goals_scored = 0;
+  TeamData.GS_Goals_difference = 0;
+  TeamData.GS_Goals_received = 0;
+  TeamData.GS_Points = 0;  
   await TeamData.save();
-  res.json("Goals numbers increased sucessfully");
+  res.json(TeamData)
+  
 };
 
-<<<<<<< HEAD
-const updateGoals_received = async (req, res, next) => {
-  const TeamData = await Team.findById(req.params.id);
-  TeamData.Total_Goals_received += 2;
-  await TeamData.save();
-  res.json("Goals received  numbers increased sucessfully");
-};
+
 
 const assignPlayerToTeam = async (req, res) => {
   const playerId = req.params.playerId;
@@ -377,37 +321,9 @@ const assignPlayerToTeam = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAllTeams,
-  addTeam,
-  deleteTeamById,
-  getTeamById,
-  updateTeamMatchesWon,
-  updateTeamMatchesLost,
-  updateTeamMatchesDrawn,
-  updateGoals_scored,
-  updateGoals_received,
-  addTeamAndAssaignToAcademy,
-  assignPlayerToTeam,
-};
-=======
-const resetGroupStageData = async (req,res, next) => {
-    
-        const TeamData = await Team.findById(req.params.id);
-        TeamData.GS_MatchesWon = 0;
-        TeamData.GS_MatchesLost = 0;
-        TeamData.GS_MatchesDrawn = 0;
-        TeamData.GS_MatchesPlayed = 0;
-        TeamData.GS_Goals_scored = 0;
-        TeamData.GS_Goals_difference = 0;
-        TeamData.GS_Goals_received = 0;
-        TeamData.GS_Points = 0;  
-        await TeamData.save();
-        res.json(TeamData)
-        
-};
 
 
 
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam};
->>>>>>> 71eb1f5b5d2e260ebbfb9f0d9db2b223eb6bde7a
+
+
+module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam};

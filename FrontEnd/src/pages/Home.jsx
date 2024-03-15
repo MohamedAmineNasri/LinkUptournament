@@ -152,7 +152,7 @@ export class Home extends Component {
             </div>
           </div>
 
-          <div className="latest-news">
+          {/* <div className="latest-news">
             <div className="container">
               <div className="row">
                 <div className="col-12 title-section">
@@ -248,7 +248,7 @@ export class Home extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="site-section bg-dark">
             <div className="container">
@@ -406,7 +406,7 @@ export class Home extends Component {
             </div>
           </div>
 
-          <div className="site-section">
+          {/* <div className="site-section">
             <div className="container">
               <div className="row">
                 <div className="col-6 title-section">
@@ -559,9 +559,9 @@ export class Home extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="container site-section">
+          {/* <div className="container site-section">
             <div className="row">
               <div className="col-6 title-section">
                 <h2 className="heading">Our Blog</h2>
@@ -617,7 +617,7 @@ export class Home extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <footer className="footer-section">
             <div className="container">

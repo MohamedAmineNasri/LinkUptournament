@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 // Set your SendinBlue API key
-const apiKey = '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';
+const apiKey = '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';
 
 // Configure API key authorization: api-key
 const defaultClient = SibApiV3Sdk.ApiClient.instance;

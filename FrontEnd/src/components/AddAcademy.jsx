@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { addnewAcademy } from "../redux/slice/academySlice";
 import { useState } from "react";
@@ -268,7 +267,7 @@ export const AddAcademy = () => {
 
         <div className="col-lg-12">
           <h1 className="col-md-12 pb-5 pt-5 TitleAddAcademy">
-            Add You're Academy
+            Add You re Academy
           </h1>
         </div>
         {/* form inside the hero image ------------------------  */}

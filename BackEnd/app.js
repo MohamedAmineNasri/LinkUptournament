@@ -4,18 +4,32 @@ const cors = require("cors");
 //-
 var AcademyRouter = require('./Routes/Academy');
 var TeamRouter = require('./Routes/Team');
-
-
-
-
+const groupRoutes = require('./Routes/Group');
+const staduimRoutes = require('./Routes/Staduim');
+const tournamentRoutes = require('./Routes/Tournament');
 const match= require("./Routes/match")
+
+
+
 const app = express();
 
 const corsOptions = require('./config/corsOptions');
 const credentials = require('./middlewares/credentials');
-const tournementRouter = require("./Routes/tournementRouter");
+// const tournementRouter = require("./Routes/tournementRouter");
 const playerRouter = require("./Routes/playerRouter");
 // const teamRouter = require("./Routes/teamRouter");
+
+
+
+
+
+
+app.use(cors());
+app.use(express.json());
+
+
+
+ 
 
 
 const cookieParser = require('cookie-parser')
@@ -25,15 +39,17 @@ const cookieParser = require('cookie-parser')
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
 
-app.use("/tournement", tournementRouter);
-app.use("/player", playerRouter);
-// app.use("/team", teamRouter);
-app.use("/match",match)
+// app.use("/tournement", tournementRouter);
 
-//-
+
+app.use('/group', groupRoutes);
+app.use('/staduim', staduimRoutes);
+app.use('/tournament', tournamentRoutes);
+app.use("/player", playerRouter);
+app.use("/match",match);
 app.use('/academy', AcademyRouter);
 app.use('/team', TeamRouter);
-
+app.use("/user", require("./Routes/user"));
 // Handle options credentials check - before CORS! 
 // and fetch cookies credentials requirement
 app.use(credentials); 
@@ -52,6 +68,6 @@ app.use(cookieParser())
 require("./Models/Users");
 
 // Bring in the routes
-app.use("/user", require("./Routes/user"));
+
 
 module.exports = app;

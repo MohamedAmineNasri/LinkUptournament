@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 import "./App.css";
 import Home from "./pages/Home";
@@ -23,6 +22,10 @@ import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 import AdminDashboard from "./Dashboard/AdminDashboard";
 import Settings from "./Dashboard/src/pages/Settings";
+import Group from "./components/Group"
+import AddTournament from "./components/AddTournament";
+import Tournament from "./components/Tournament";
+// import TournamentBracket  from "./components/TournamentBracket";
 
 function App() {
   return (
@@ -57,7 +60,13 @@ function App() {
           </Route>
         </Route>
       </Route>
-    </Routes>
+   
+        <Route path="/group" element={<Group />} />
+        <Route path="/addTournament" element={<AddTournament />} />
+        <Route path="/Tournament/:tournamentId" element={<Tournament />} />
+        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+      </Routes>
+    
   );
 }
 

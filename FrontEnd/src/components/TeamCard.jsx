@@ -6,7 +6,7 @@ import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
 import DropDownTeamSettings from "./DropDownTeamSettings";
 
 const TeamCard = (props) => {
-  const { teamData, loading, error } = useSelector((state) => state.team);
+  const { teamData, loading, error } = useSelector((state) => state.root.team);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchTeamOfAcademy());

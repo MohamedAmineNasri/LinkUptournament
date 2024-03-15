@@ -5,6 +5,7 @@ const academyService = require('../Services/AcademyService')
 const getAllTeams = async (req, res, next) => {
         const teams = await Team.find();
         res.json(teams);  
+        console.log(teams); 
 };
 
 

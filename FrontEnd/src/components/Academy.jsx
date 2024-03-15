@@ -9,7 +9,7 @@ import academyImageteam from "../assets/Mi-imgs/team1.jpg";
 export const Academy = () => {
   const dispatch = useDispatch();
 
-  const { academyData, loading, error } = useSelector((state) => state.academy);
+  const { academyData, loading, error } = useSelector((state) => state.root.academy);
   useEffect(() => {
     dispatch(fetchAcademy());
   }, [dispatch]);

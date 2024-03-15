@@ -30,7 +30,7 @@ export const EditPopUpAcademy = (props) => {
   }, [dispatch, props.id]);
 
   // Redux state
-  const { academyDataById } = useSelector((state) => state.academy);
+  const { academyDataById } = useSelector((state) => state.root.academy);
 
   //date correct format
   let formattedDate = "";

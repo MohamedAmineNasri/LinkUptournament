@@ -9,19 +9,31 @@ import academyImageteam from "../assets/Mi-imgs/team1.jpg";
 export const Academy = () => {
   const dispatch = useDispatch();
 
-  const { academyData, loading, error } = useSelector((state) => state.academy);
+  const { academyData, loading, error } = useSelector((state) => state.root.academy);
   useEffect(() => {
     dispatch(fetchAcademy());
   }, [dispatch]);
 
   //date correct format
-  const date = new Date(academyData.FoundedYear);
+  // const date = new Date(academyData.FoundedYear);
+  const date = academyData ? new Date(academyData.FoundedYear) : null;
+
+  // const year = date.getFullYear();
+  // const month = date.getMonth() + 1;
+  // const day = date.getDate();
+  // const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
+  //   .toString()
+  //   .padStart(2, "0")}`;
+let formattedDate = '';
+if (date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-    .toString()
-    .padStart(2, "0")}`;
+  formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+} else {
+  // Handle the case when date is null
+  formattedDate = 'N/A';
+}
 
   return (
     <div>

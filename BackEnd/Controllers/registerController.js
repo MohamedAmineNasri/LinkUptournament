@@ -14,7 +14,7 @@ apiKeyAuth.apiKey = apiKey;
 const sendinblueApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
 const handleNewUser = async (req, res) => {
-    const { firstName, lastName, birthday, phoneNumber, email, password, accountImage, roles } = req.body;
+    const { firstName, lastName, birthday, phoneNumber, email, password, accountImage, roles, bio  } = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required." });
@@ -40,6 +40,7 @@ const handleNewUser = async (req, res) => {
             password: hashedPwd,
             accountImage,
             roles,
+            bio,
         };
 
         const createdUser = await Users.create(newUser);

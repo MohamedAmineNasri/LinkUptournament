@@ -18,7 +18,6 @@ import { GoogleLogin } from "@react-oauth/google";
 const SignIn: React.FC = () => {
 
   const onChange = (response) => {
-    // Update state to indicate that captcha is completed
     setIsCaptchaCompleted(true);
   };
   

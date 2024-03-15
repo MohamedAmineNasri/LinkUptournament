@@ -75,15 +75,16 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
         {/* Protected Routes  */}
-        <Route element={<PersistLogin />}>
-          {/* <Route element={<RequireAuth  />}> */}
-          <Route element={<RequireAuth allowedRoles={["Admin"]} />}>
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/userslist" element={<UserList />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/userstable" element={<Tables />} />
-            <Route path="/settings" element={<Settings />} />
-          </Route>
+        <Route element={<PersistLogin/>}>
+        {/* <Route element={<RequireAuth  />}> */}
+            <Route element={<RequireAuth allowedRoles={['Admin','Supporter']} />}>
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/userslist" element={<UserList />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/userstable" element={<Tables />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+
         </Route>
       </Route>
     </Routes>

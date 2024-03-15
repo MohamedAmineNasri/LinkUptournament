@@ -194,7 +194,7 @@ export const AddAcademy = () => {
     <div>
       <div>
         <header className="site-navbar py-4" role="banner">
-          <div className="container">
+          <div className="container-fluid">
             <div className="d-flex align-items-center">
               <div className="site-logo">
                 <a href="index.html">
@@ -272,7 +272,8 @@ export const AddAcademy = () => {
           </h1>
         </div>
         {/* form inside the hero image ------------------------  */}
-        <div className=" container col-lg-8 pt-5">
+         {/* container --------> container-fluid  */}
+        <div className=" container-fluid col-lg-9 pt-5">
           <div className="addAcademyFormBorder">
             <div className="col-lg-12">
               <form action="#">

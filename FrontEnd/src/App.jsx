@@ -53,7 +53,11 @@ function App() {
         <Route path="/matches" element={<Matches />} />
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
+
+        <Route element={<RequireAuth allowedRoles={['Manager']} />}>
         <Route path="/addAcademy" element={<AddAcademy />} />
+        </Route>
+
         <Route path="/Academy" element={<Academy />} />
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
@@ -65,8 +69,7 @@ function App() {
         <Route path="/a" element={<Table data={fixtures} />}></Route>
         <Route
           path="/fixture/:matchID"
-          element={<Fixture data={fixtures} />}
-        ></Route>
+          element={<Fixture data={fixtures} />}   
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
         <Route path="/signup" element={<SignUp />} />
@@ -77,7 +80,7 @@ function App() {
         {/* Protected Routes  */}
         <Route element={<PersistLogin/>}>
         {/* <Route element={<RequireAuth  />}> */}
-            <Route element={<RequireAuth allowedRoles={['Admin','Supporter']} />}>
+            <Route element={<RequireAuth allowedRoles={['Admin','Supporter','Agent','Manager','TournamentCoordinator']} />}>
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />

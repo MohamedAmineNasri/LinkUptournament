@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademy } from "../redux/slice/academySlice";
 import academyImagespectators from "../assets/Mi-imgs/1.jpg";
 import academyImageteam from "../assets/Mi-imgs/team1.jpg";
+import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 
 export const Academy = () => {
   const dispatch = useDispatch();
@@ -55,29 +56,39 @@ if (date) {
                   >
                     <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                       <li>
-                        <a href="index.html" className="nav-link">
+                        <Link to="/" className="nav-link">
                           Home
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href="matches.html" className="nav-link">
-                          Matches
-                        </a>
+                        <Link to="/tests" className="nav-link">
+                          Match Cards
+                        </Link>
                       </li>
                       <li>
-                        <a href="players.html" className="nav-link">
-                          Players
-                        </a>
+                        <Link to="/a" className="nav-link">
+                          Match Time
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/addAcademy" className="nav-link">
+                          Academy Creation 
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/Academy" className="nav-link">
+                          Academies
+                        </Link>
                       </li>
                       <li className="active">
-                        <a href="blog.html" className="nav-link">
-                          Blog
-                        </a>
+                        <Link to="/signin" className="nav-link">
+                          Signup
+                        </Link>
                       </li>
                       <li>
-                        <a href="contact.html" className="nav-link">
-                          Contact
-                        </a>
+                        <Link to="/profile" className="nav-link">
+                          Profile
+                        </Link>
                       </li>
                     </ul>
                   </nav>

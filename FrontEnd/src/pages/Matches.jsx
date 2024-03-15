@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Academy from "../components/Academy";
 
 export class Matches extends Component {
   render() {
@@ -67,25 +68,6 @@ export class Matches extends Component {
               </div>
             </div>
           </header>
-
-          <div
-            className="hero overlay"
-            style={{
-              backgroundImage: "url('/public/assets//images/bg_3.jpg')",
-            }}
-          >
-            <div className="container">
-              <div className="row align-items-center">
-                <div className="col-lg-5 mx-auto text-center">
-                  <h1 className="text-white">Matches</h1>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Soluta, molestias repudiandae pariatur.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <div className="container">
             <div className="row">

@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 
 const TeamSchema = new mongoose.Schema(
   {
-    TeamId: Number,
-
     TeamName: {
       type: String,
       require: "AcademyName is required !!",

@@ -1,20 +1,44 @@
-var express = require('express')
+var express = require("express");
 var router = express.Router();
-const teamService = require('../Services/TeamService')
+const teamService = require("../Services/TeamService");
 
-router.get("/" , teamService.getAllTeams);
+router.get("/", teamService.getAllTeams);
 
-router.post("/addTeam",teamService.addTeam);
+router.post("/addTeam", teamService.addTeam);
+router.post(
+  "/getTeamAndAssaignAcademy",
+  teamService.addTeamAndAssaignToAcademy
+);
+router.post(
+  "/assignPlayerToTeam/:teamId/:playerId",
+  teamService.assignPlayerToTeam)
 
 router.get("/getTeam/:id" ,teamService.getTeamById);
+router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
 
 router.delete("/deleteTeam/:id" ,teamService.deleteTeamById);
+router.put("/updateTeam/:id",teamService.updateTeam);
 
 router.post("/updateMW/:id",teamService.updateTeamMatchesWon);
-router.post("/updateML/:id",teamService.updateTeamMatchesLost);
-router.post("/updateMD/:id",teamService.updateTeamMatchesDrawn);
-router.post("/updateGoals/:id",teamService.updateGoals_scored);
-router.post("/updateGoalsIn/:id",teamService.updateGoals_received);
-router.post("/getTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
+router.post("/cancelMW/:id",teamService.cancelTeamMatchesWon);
 
-module.exports =router
+router.post("/updateML/:id",teamService.updateTeamMatchesLost);
+router.post("/cancelML/:id",teamService.cancelTeamMatchesLost);
+
+router.post("/updateMD/:id",teamService.updateTeamMatchesDrawn);
+router.post("/cancelMD/:id",teamService.cancelTeamMatchesDrawn);
+
+router.post("/updateGoals/:id",teamService.updateGoals_scored);
+router.post("/cancelGoals/:id",teamService.cancelGoals_scored);
+
+router.post("/updateGoalsIn/:id",teamService.updateGoals_received);
+router.post("/cancelGoalsIn/:id",teamService.cancelGoals_received);
+
+router.post("/resetGSdata/:id",teamService.resetGroupStageData);
+
+router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
+
+router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
+
+
+module.exports = router;

@@ -1,4 +1,8 @@
 {
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "react-bootstrap": "^2.10.1",
+    "sweetalert2": "^11.10.6"},
   "devDependencies": {
     "chai": "^5.1.0",
     "mocha": "^10.3.0",

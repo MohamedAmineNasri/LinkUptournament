@@ -35,23 +35,33 @@ export class Home extends Component {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/matches" className="nav-link">
-                          Matches
+                        <Link to="/tests" className="nav-link">
+                          Match Cards
                         </Link>
                       </li>
                       <li>
-                        <Link to="/players" className="nav-link">
-                          Players
+                        <Link to="/a" className="nav-link">
+                          Match Time
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/addAcademy" className="nav-link">
+                          Academy Creation 
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/Academy" className="nav-link">
+                          Academies
                         </Link>
                       </li>
                       <li className="active">
-                        <Link to="/blog" className="nav-link">
-                          Blog
+                        <Link to="/signin" className="nav-link">
+                          Signup
                         </Link>
                       </li>
                       <li>
-                        <Link to="/contact" className="nav-link">
-                          Contact
+                        <Link to="/profile" className="nav-link">
+                          Profile
                         </Link>
                       </li>
                     </ul>

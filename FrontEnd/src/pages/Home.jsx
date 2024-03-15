@@ -22,7 +22,7 @@ export class Home extends Component {
                   <a href="index.html">
                     <img src="./public/assets/images/logo.png" alt="Logo" />
                   </a>
-                </div>
+                </div> 
                 <div className="ml-auto">
                   <nav
                     className="site-navigation position-relative text-right"

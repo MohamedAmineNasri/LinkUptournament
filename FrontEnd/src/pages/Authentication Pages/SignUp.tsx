@@ -21,6 +21,8 @@
                 password: '',
                 accountImage: '',
                 roles: 'Supporter',
+                birthday: '',
+                bio: ''
             });
             
             const [signup, { isLoading }] = useSignupMutation();
@@ -47,6 +49,8 @@
                         password: '',
                         accountImage: '',
                         roles: 'Supporter',
+                        birthday: '',
+                        bio: ''
                     });
                     navigate('/signin');
                 } catch (err) {
@@ -273,6 +277,31 @@
                     onChange={handleChange}
                 />
             </div>
+            <div className="form-group">
+                <label>Birthday:</label>
+                <input
+                    type="date"
+                    className="form-control"
+                    placeholder="Birthday"
+                    name="birthday"
+                    value={formData.birthday}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+            <label>Bio:</label>
+            <input
+                type="text"
+                className="form-control"
+                placeholder="Bio"
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                required
+            />
+            </div>
+
             <div className="form-group">
                 <label>Roles:</label>
                 <select

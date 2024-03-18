@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import "./App.css";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
@@ -15,7 +13,7 @@ import Academy from "./components/Academy";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Tournament from "./pages/Tournament";
+
 import LineupBuilder from "./pages/LineupBuilder";
 import AddPlayerForm from "./pages/AddPlayerForm";
 import TournamentRoundRobin from "./pages/TournamentRoundRobin";
@@ -32,10 +30,15 @@ import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 import AdminDashboard from "./Dashboard/AdminDashboard";
 import Settings from "./Dashboard/src/pages/Settings";
+import Group from "./components/Group";
+import AddTournament from "./components/AddTournament";
+import Tournament from "./components/Tournament";
+// import TournamentBracket  from "./components/TournamentBracket";
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
+import { useEffect, useState } from "react";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -53,6 +56,10 @@ function App() {
         <Route path="/matches" element={<Matches />} />
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
+
+        <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
+          {/* <Route path="/addAcademy" element={<AddAcademy />} /> */}
+        </Route>
         <Route path="/addAcademy" element={<AddAcademy />} />
         <Route path="/Academy" element={<Academy />} />
         <Route path="/tournament" element={<Tournament />} />
@@ -63,10 +70,7 @@ function App() {
         <Route path="/t" element={<EditPopUpmatch />} />
         <Route path="/tests" element={<MatchCard />} />
         <Route path="/a" element={<Table data={fixtures} />}></Route>
-        <Route
-          path="/fixture/:matchID"
-          element={<Fixture data={fixtures} />}
-        ></Route>
+        <Route path="/fixture/:matchID" element={<Fixture data={fixtures} />} />
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
         <Route path="/signup" element={<SignUp />} />
@@ -77,7 +81,19 @@ function App() {
         {/* Protected Routes  */}
         <Route element={<PersistLogin />}>
           {/* <Route element={<RequireAuth  />}> */}
-          <Route element={<RequireAuth allowedRoles={["Admin"]} />}>
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[
+                  "Admin",
+                  "Supporter",
+                  "Agent",
+                  "Manager",
+                  "TournamentCoordinator",
+                ]}
+              />
+            }
+          >
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/userslist" element={<UserList />} />
             <Route path="/profile" element={<Profile />} />
@@ -86,6 +102,11 @@ function App() {
           </Route>
         </Route>
       </Route>
+
+      <Route path="/group" element={<Group />} />
+      <Route path="/addTournament" element={<AddTournament />} />
+      <Route path="/Tournament/:tournamentId" element={<Tournament />} />
+      {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
     </Routes>
   );
 }

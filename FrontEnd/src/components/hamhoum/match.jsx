@@ -13,9 +13,9 @@ import EditPopUpmatch from "./EditPopUpMatch";
 import EditPopUpSelectedMatch from "./update";
 
 const MatchCard = (props) => {
-  const matchData = useSelector((state) => state.match.matchData);
-  const loading = useSelector((state) => state.match.loading);
-  const error = useSelector((state) => state.match.error);
+  const matchData = useSelector((state) => state.root.match.matchData);
+  const loading = useSelector((state) => state.root.match.loading);
+  const error = useSelector((state) => state.root.match.error);
   const dispatch = useDispatch();
 
   useEffect(() => {

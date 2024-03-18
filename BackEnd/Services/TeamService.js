@@ -6,14 +6,15 @@ const Academy =require('../Models/Academy')
 const academyService = require('../Services/AcademyService')
 
 const getAllTeams = async (req, res, next) => {
-  const teams = await Team.find().populate("Players");
-  res.json(teams);
+        const teams = await Team.find();
+        res.json(teams);  
+        console.log(teams); 
 };
 
 
 
 const addTeam =  async (req, res, next) => {
-    const { TeamName, TeamLogo  } = req.body;
+    const { TeamName, TeamLogo  } = req.body; 
     const TeamData = new Team({ TeamName,TeamLogo });
     (await TeamData.save());
     res.json({
@@ -53,19 +54,37 @@ const getTeamById =  async (req,res,next)=>{
 }
 
 
-const getTeamByAcademyId = async (req, res, next) => {
+// const getTeamByAcademyId = async (req, res, next) => {
     
+//         const targetAcademy = await academyService.getAcademyByIdParam(req.params.id);
+//         const teamData = []; 
+
+//         for (const teamId of targetAcademy.teams) {
+           
+//             const team = await Team.findById(teamId); 
+//             teamData.push(team);
+//         }
+
+//         res.json(teamData);
+    
+// }
+const getTeamByAcademyId = async (req, res, next) => {
+    try {
         const targetAcademy = await academyService.getAcademyByIdParam(req.params.id);
+        console.log('Target Academy:', targetAcademy);
+
         const teamData = []; 
 
         for (const teamId of targetAcademy.teams) {
-           
             const team = await Team.findById(teamId); 
             teamData.push(team);
         }
 
+        console.log('Team Data:', teamData);
         res.json(teamData);
-    
+    } catch (error) {
+        next(error);
+    }
 }
 
 

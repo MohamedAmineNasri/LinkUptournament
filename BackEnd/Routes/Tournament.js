@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
   // Initialize upload
   const upload = multer({
     storage: storage,
-    limits: { fileSize: 3000000 }, // Limit file size to 1MB
+    limits: { fileSize: 8000000 }, // Limit file size to 1MB
   }).single('logo'); // 'logo' should match the name attribute in your form input field
   
   // POST route to handle file upload

@@ -22,7 +22,7 @@ export class Home extends Component {
                   <a href="index.html">
                     <img src="./public/assets/images/logo.png" alt="Logo" />
                   </a>
-                </div>
+                </div> 
                 <div className="ml-auto">
                   <nav
                     className="site-navigation position-relative text-right"
@@ -35,23 +35,33 @@ export class Home extends Component {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/matches" className="nav-link">
-                          Matches
+                        <Link to="/tests" className="nav-link">
+                          Match Cards
                         </Link>
                       </li>
                       <li>
-                        <Link to="/players" className="nav-link">
-                          Players
+                        <Link to="/a" className="nav-link">
+                          Match Time
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/addAcademy" className="nav-link">
+                          Academy Creation 
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/Academy" className="nav-link">
+                          Academies
                         </Link>
                       </li>
                       <li className="active">
-                        <Link to="/blog" className="nav-link">
-                          Blog
+                        <Link to="/signin" className="nav-link">
+                          Signup
                         </Link>
                       </li>
                       <li>
-                        <Link to="/contact" className="nav-link">
-                          Contact
+                        <Link to="/profile" className="nav-link">
+                          Profile
                         </Link>
                       </li>
                     </ul>
@@ -142,7 +152,7 @@ export class Home extends Component {
             </div>
           </div>
 
-          <div className="latest-news">
+          {/* <div className="latest-news">
             <div className="container">
               <div className="row">
                 <div className="col-12 title-section">
@@ -238,7 +248,7 @@ export class Home extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="site-section bg-dark">
             <div className="container">
@@ -396,7 +406,7 @@ export class Home extends Component {
             </div>
           </div>
 
-          <div className="site-section">
+          {/* <div className="site-section">
             <div className="container">
               <div className="row">
                 <div className="col-6 title-section">
@@ -549,9 +559,9 @@ export class Home extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="container site-section">
+          {/* <div className="container site-section">
             <div className="row">
               <div className="col-6 title-section">
                 <h2 className="heading">Our Blog</h2>
@@ -607,7 +617,7 @@ export class Home extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <footer className="footer-section">
             <div className="container">

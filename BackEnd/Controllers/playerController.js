@@ -14,10 +14,16 @@ async function createPlayer(req, res) {
 // Get all players
 async function getAllPlayers(req, res) {
   try {
-    const players = await Player.find();
-    res.send(players);
+    // Find all players and populate their team
+    const players = await Player.find().populate({
+      path: "team",
+      select: "TeamName",
+    });
+
+    return res.status(200).json(players);
   } catch (error) {
-    res.status(500).send(error);
+    console.error("Error fetching players with team:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 

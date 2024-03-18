@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademy } from "../redux/slice/academySlice";
 import academyImagespectators from "../assets/Mi-imgs/1.jpg";
 import academyImageteam from "../assets/Mi-imgs/team1.jpg";
+import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 
 export const Academy = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,25 @@ export const Academy = () => {
   }, [dispatch]);
 
   //date correct format
-  const date = new Date(academyData.FoundedYear);
+  // const date = new Date(academyData.FoundedYear);
+  const date = academyData ? new Date(academyData.FoundedYear) : null;
+
+  // const year = date.getFullYear();
+  // const month = date.getMonth() + 1;
+  // const day = date.getDate();
+  // const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
+  //   .toString()
+  //   .padStart(2, "0")}`;
+let formattedDate = '';
+if (date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-    .toString()
-    .padStart(2, "0")}`;
+  formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+} else {
+  // Handle the case when date is null
+  formattedDate = 'N/A';
+}
 
   return (
     <div>
@@ -29,7 +42,7 @@ export const Academy = () => {
         {/* header/overlay image */}
         <div>
           <header className="site-navbar py-4" role="banner">
-            <div className="container">
+            <div className="container-fluid">
               <div className="d-flex align-items-center">
                 <div className="site-logo">
                   <a href="index.html">
@@ -43,29 +56,39 @@ export const Academy = () => {
                   >
                     <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                       <li>
-                        <a href="index.html" className="nav-link">
+                        <Link to="/" className="nav-link">
                           Home
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href="matches.html" className="nav-link">
-                          Matches
-                        </a>
+                        <Link to="/tests" className="nav-link">
+                          Match Cards
+                        </Link>
                       </li>
                       <li>
-                        <a href="players.html" className="nav-link">
-                          Players
-                        </a>
+                        <Link to="/a" className="nav-link">
+                          Match Time
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/addAcademy" className="nav-link">
+                          Academy Creation 
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/Academy" className="nav-link">
+                          Academies
+                        </Link>
                       </li>
                       <li className="active">
-                        <a href="blog.html" className="nav-link">
-                          Blog
-                        </a>
+                        <Link to="/signin" className="nav-link">
+                          Signup
+                        </Link>
                       </li>
                       <li>
-                        <a href="contact.html" className="nav-link">
-                          Contact
-                        </a>
+                        <Link to="/profile" className="nav-link">
+                          Profile
+                        </Link>
                       </li>
                     </ul>
                   </nav>
@@ -87,7 +110,10 @@ export const Academy = () => {
         >
           <div className="container">
             <div className="row align-items-center">
-              <div className="col-lg-12 mx-auto text-center">
+               <div
+                className="col-lg-12 mx-auto "
+                style={{ textAlign: "-webkit-center" }}
+              >
                 <img
                   src={academyData.Logo}
                   alt="Logo"
@@ -110,14 +136,20 @@ export const Academy = () => {
           <div className="site-section ">
             <div className="AcademyandTeamsLRmargin">
               <div className="row  justify-content-center align-items-top AcademyandTeamsBox ">
-                <div className="col-md-5 col-lg-4 word-wrap-break">
-                  <div className="text-center academyBox">
+                 <div
+                  className="col-md-5 col-lg-4 word-wrap-break"
+                  style={{ textAlign: "-webkit-center" }}
+                >
+                  <div className="academyBox">
                     <img
                       src={academyData.Logo}
                       alt="Logo"
                       className="img-fluid academyLogoMwidth " //rounded-circle
                     />
-                    <h3 className="mb-4 mt-3 mb-0  ">
+                    <h3
+                      className="mb-4 mt-3 "
+                      style={{ fontWeight: "bold", fontSize: "40px" }}
+                    >
                       <strong>{academyData.AcademyName}</strong>
                     </h3>
                     <p className=" mb-4">

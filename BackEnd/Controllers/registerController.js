@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 // Set your SendinBlue API key
-const apiKey = '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';
+const apiKey = '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';
 
 // Configure API key authorization: api-key
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
@@ -14,7 +14,7 @@ apiKeyAuth.apiKey = apiKey;
 const sendinblueApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
 const handleNewUser = async (req, res) => {
-    const { firstName, lastName, birthday, phoneNumber, email, password, accountImage, roles } = req.body;
+    const { firstName, lastName, birthday, phoneNumber, email, password, accountImage, roles, bio  } = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required." });
@@ -40,6 +40,7 @@ const handleNewUser = async (req, res) => {
             password: hashedPwd,
             accountImage,
             roles,
+            bio,
         };
 
         const createdUser = await Users.create(newUser);

@@ -42,6 +42,7 @@ export const editAcademy = createAsyncThunk(
           LegitimacyDocuments : doc
         }
       );
+      
       window.location.reload();
       return response.data;
     } catch (error) {

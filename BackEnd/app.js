@@ -17,14 +17,16 @@ const corsOptions = require('./config/corsOptions');
 const credentials = require('./middlewares/credentials');
 // const tournementRouter = require("./Routes/tournementRouter");
 const playerRouter = require("./Routes/playerRouter");
-// const teamRouter = require("./Routes/teamRouter");
 
 
 
 
 
 
-app.use(cors());
+
+
+
+// app.use(cors());
 app.use(express.json());
 
 
@@ -45,17 +47,21 @@ app.use(express.urlencoded({limit: '50mb'}));
 app.use('/group', groupRoutes);
 app.use('/staduim', staduimRoutes);
 app.use('/tournament', tournamentRoutes);
-app.use("/player", playerRouter);
-app.use("/match",match);
-app.use('/academy', AcademyRouter);
-app.use('/team', TeamRouter);
-app.use("/user", require("./Routes/user"));
-// Handle options credentials check - before CORS! 
-// and fetch cookies credentials requirement
+
+
+
+
 app.use(credentials); 
 
 // Cross Origin Resource Sharing
-app.use(cors(corsOptions));
+ app.use(cors(corsOptions));
+ app.use("/user", require("./Routes/user"));
+// app.use("/tournement", tournementRouter);
+app.use("/player", playerRouter);
+// app.use("/team", teamRouter);
+app.use("/match",match)
+app.use('/academy', AcademyRouter);
+app.use('/team', TeamRouter);
 
 // app.use(cors());
 app.use(express.json());

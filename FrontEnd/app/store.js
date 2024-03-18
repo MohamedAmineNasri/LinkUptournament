@@ -7,12 +7,12 @@ export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
         auth: authReducer,
-        root: rootReducer // Include the rootReducer here
+        root: rootReducer // Combine all reducers under the "root" key
     },
-    middleware: getDefaultMiddleware =>
+    middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),
     devTools: true
-    // in production it will be turned into false
 });
+
 
 export default store;

@@ -38,6 +38,9 @@ const usersSchema = new mongoose.Schema(
             ],
             default: "Supporter",
             },
+            bio: {
+                type: String, 
+            },
             refreshToken: [String],
         },
         {

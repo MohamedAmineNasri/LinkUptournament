@@ -7,6 +7,7 @@ const playerSchema = new mongoose.Schema(
     academic_membership: { type: String },
     position: { type: String },
     skills: [{ type: String }],
+    team: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
   },
   {
     timestamps: true,

@@ -9,6 +9,7 @@
         const user = useSelector(selectCurrentUser);
         const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
         const userRole = user ? `Role : ${user.roles}` : 'Welcome';
+        const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
     return (
         <DefaultLayout>
         <Breadcrumb pageName="Profile" />
@@ -122,11 +123,7 @@
                     About Me
                 </h4>
                 <p className="mt-4.5">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Pellentesque posuere fermentum urna, eu condimentum mauris
-                    tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus
-                    ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
-                    pharetra ligula sed, aliquam lacus.
+                    {userBio}
                 </p>
                 </div>
 

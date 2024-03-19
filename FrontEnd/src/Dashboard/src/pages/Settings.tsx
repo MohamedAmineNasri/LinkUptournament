@@ -40,7 +40,7 @@ const Settings = () => {
         console.log("User updated: " + updateUserId);
         setUpdateUserId(null);
         setOpenUpdateDialog(false);
-        // You may want to refetch the users data here
+        window.location.reload();
     } catch (error) {
         console.error("Error updating user:", error);
     }

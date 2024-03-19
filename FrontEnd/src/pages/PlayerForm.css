@@ -1,0 +1,23 @@
+.player-form .form-control {
+  border: none;
+  border-bottom: solid 1px;
+  border-radius: 0;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  color: #6c757d !important;
+}
+.player-form .gap {
+  gap: 3rem;
+}
+.player-form select {
+  overflow-y: hidden !important;
+}
+select option {
+  padding: 30px !important;
+}
+.player-bg{
+  background-image: url("../../public/assets/images/player_unsplash.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

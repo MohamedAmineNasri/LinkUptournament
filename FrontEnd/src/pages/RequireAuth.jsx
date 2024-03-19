@@ -20,7 +20,7 @@ const RequireAuth = ({ allowedRoles }) => {
 
     // Redirect to /players if the user doesn't have the allowed role
     if (!hasAllowedRole) {
-        return <Navigate to='/players' replace />;
+        return <Navigate to='/' replace />;
     }
 
     return <Outlet />;

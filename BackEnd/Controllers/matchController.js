@@ -1,10 +1,16 @@
 const match = require("../Models/match");
 const Player = require("../Models/match");
+const tournament = require("../Models/Tournement")
 //get all 
 
 async function getAllematch(req, res) {
   const matches = await match.find();
   res.json(matches)
+  }
+  async function getmatchByTouernement(req, res) {
+    const { id } = req.params; 
+    const matchet = await match.find({tournementId:id})
+     res.json(matchet)
   }
 
   //get by id 
@@ -15,6 +21,12 @@ async function getAllematch(req, res) {
 //create 
 async function creatematch(req, res) {
   const matche = new match(req.body);
+  const tournament_name = await tournament.findById(req.body.tournementId)
+  if (!req.body.tournementId) {
+    matche.tournamentName = null;
+}
+else
+  matche.tournamentName= tournament_name.name 
   await matche.save()
  
   res.json(matche)
@@ -77,7 +89,8 @@ async function updatescoreById(req, res) {
     updatescoreById,
     updatescore2ById,
     updatescore2_ById,
-    updatescore_ById
+    updatescore_ById,
+    getmatchByTouernement
   };
 
 

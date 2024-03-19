@@ -8,6 +8,7 @@ const matchController = require("../Controllers/matchController");
 router.post("/", matchController.creatematch);
 router.get("/", matchController.getAllematch);
 router.get("/:id", matchController.getmatchById);
+router.get("/tournement/:id", matchController.getmatchByTouernement);
 router.put("/:id", matchController.updatematchById);
 router.delete("/:id", matchController.deletematchById);
 router.put(":id/score1/", matchController.updatescoreById);

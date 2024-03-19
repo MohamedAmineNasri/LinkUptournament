@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const playerSchema = new mongoose.Schema(
-  {
+  { name:String,
     legal_guardian: { type: String },
     academic_membership: { type: String },
     position: { type: String },

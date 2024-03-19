@@ -2,9 +2,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
-import { addTeam } from "../redux/slice/teamSlice";
+import { addTeam } from "../../redux/slice/teamSlice";
 import { useDispatch } from "react-redux";
-import { convertToBase64 } from "../utilities/convertFileBase64";
+import { convertToBase64 } from "../../utilities/convertFileBase64";
 
 export const AddTeamPopUpWindow = (props) => {
   const [show, setShow] = useState(false);

@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTeamOfAcademy } from "../redux/slice/teamSlice";
+import { fetchTeamOfAcademy } from "../../redux/slice/teamSlice";
 import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
 import DropDownTeamSettings from "./DropDownTeamSettings";
 

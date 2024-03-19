@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
-import { deleteTeam } from "../redux/slice/teamSlice";
+import { deleteTeam } from "../../redux/slice/teamSlice";
 
 //i called this component in team card , propos is  the team id fetched from db as TeamCard compoenet
 export const DeleteTeamPopUp = (props) => {

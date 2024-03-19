@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import { addnewAcademy } from "../redux/slice/academySlice";
+import { addnewAcademy } from "../../redux/slice/academySlice";
 import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
-import { convertToBase64 } from "../utilities/convertFileBase64";
-import addformstadiumImage from "../assets/Mi-imgs/2.jpg";
+import { convertToBase64 } from "../../utilities/convertFileBase64";
+import addformstadiumImage from "../../assets/Mi-imgs/2.jpg";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
@@ -202,56 +202,56 @@ export const AddAcademy = () => {
                 </a>
               </div>
               <div className="ml-auto">
-                  <nav
-                    className="site-navigation position-relative text-right"
-                    role="navigation"
-                  >
-                    <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                      <li>
-                        <Link to="/" className="nav-link">
-                          Home
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/tests" className="nav-link">
-                          Match Cards
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/a" className="nav-link">
-                          Match Time
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/addAcademy" className="nav-link">
-                          Academy Creation 
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/Academy" className="nav-link">
-                          Academies
-                        </Link>
-                      </li>
-                      <li className="active">
-                        <Link to="/signin" className="nav-link">
-                          Signup
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/profile" className="nav-link">
-                          Profile
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
+                <nav
+                  className="site-navigation position-relative text-right"
+                  role="navigation"
+                >
+                  <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                    <li>
+                      <Link to="/" className="nav-link">
+                        Home
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/tests" className="nav-link">
+                        Match Cards
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/a" className="nav-link">
+                        Match Time
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/addAcademy" className="nav-link">
+                        Academy Creation
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/Academy" className="nav-link">
+                        Academies
+                      </Link>
+                    </li>
+                    <li className="active">
+                      <Link to="/signin" className="nav-link">
+                        Signup
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/profile" className="nav-link">
+                        Profile
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
 
-                  <a
-                    href="#"
-                    className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
-                  >
-                    <span className="icon-menu h3 text-white"></span>
-                  </a>
-                </div>
+                <a
+                  href="#"
+                  className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
+                >
+                  <span className="icon-menu h3 text-white"></span>
+                </a>
+              </div>
             </div>
           </div>
         </header>

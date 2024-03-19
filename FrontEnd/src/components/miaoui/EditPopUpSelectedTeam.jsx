@@ -3,8 +3,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
-import { editTeam } from "../redux/slice/teamSlice";
-import { convertToBase64 } from "../utilities/convertFileBase64";
+import { editTeam } from "../../redux/slice/teamSlice";
+import { convertToBase64 } from "../../utilities/convertFileBase64";
 
 export const EditPopUpSelectedTeam = (props) => {
   // pop up logic --------------

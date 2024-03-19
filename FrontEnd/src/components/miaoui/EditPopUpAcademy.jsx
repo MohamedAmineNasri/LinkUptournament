@@ -3,8 +3,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAcademyById, editAcademy } from "../redux/slice/academySlice";
-import { convertToBase64 } from "../utilities/convertFileBase64";
+import { fetchAcademyById, editAcademy } from "../../redux/slice/academySlice";
+import { convertToBase64 } from "../../utilities/convertFileBase64";
 
 export const EditPopUpAcademy = (props) => {
   // Pop up logic --------------

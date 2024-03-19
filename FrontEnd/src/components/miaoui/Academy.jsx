@@ -2,15 +2,17 @@ import React, { useEffect } from "react";
 import TeamCard from "./TeamCard";
 import DropDownAcademy from "./DropDownAcademy";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAcademy } from "../redux/slice/academySlice";
-import academyImagespectators from "../assets/Mi-imgs/1.jpg";
-import academyImageteam from "../assets/Mi-imgs/team1.jpg";
+import { fetchAcademy } from "../../redux/slice/academySlice";
+import academyImagespectators from "../../assets/Mi-imgs/1.jpg";
+import academyImageteam from "../../assets/Mi-imgs/team1.jpg";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 
 export const Academy = () => {
   const dispatch = useDispatch();
 
-  const { academyData, loading, error } = useSelector((state) => state.root.academy);
+  const { academyData, loading, error } = useSelector(
+    (state) => state.root.academy
+  );
   useEffect(() => {
     dispatch(fetchAcademy());
   }, [dispatch]);
@@ -25,16 +27,16 @@ export const Academy = () => {
   // const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
   //   .toString()
   //   .padStart(2, "0")}`;
-let formattedDate = '';
-if (date) {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
-} else {
-  // Handle the case when date is null
-  formattedDate = 'N/A';
-}
+  let formattedDate = "";
+  if (date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+  } else {
+    // Handle the case when date is null
+    formattedDate = "N/A";
+  }
 
   return (
     <div>
@@ -72,7 +74,7 @@ if (date) {
                       </li>
                       <li>
                         <Link to="/addAcademy" className="nav-link">
-                          Academy Creation 
+                          Academy Creation
                         </Link>
                       </li>
                       <li>

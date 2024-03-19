@@ -53,7 +53,7 @@ function App() {
         <Route path="/addAcademy" element={<AddAcademy />} />
         <Route path="/Academy" element={<Academy />} />
         <Route path="/t" element={<EditPopUpmatch/>} />
-        <Route path="/test" element={<MatchCard/>} />
+        <Route path="/match" element={<MatchCard/>} />
         <Route path="/a" element={<Table data={fixtures}  />}></Route>
             <Route
               path="/fixture/:matchID"

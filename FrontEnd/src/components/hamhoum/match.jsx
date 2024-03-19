@@ -26,9 +26,10 @@ const MatchCard = (props) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  return (
-    <div className="row">
-      <NavBar></NavBar>
+  return (<>
+  <NavBar></NavBar>
+    <div className="row" style={{backgroundColor:"rgb(35, 79, 30)"}}>
+      
       
       {matchData.length === 0 && !loading && !error && (
         <div
@@ -144,6 +145,7 @@ const MatchCard = (props) => {
        <Footer></Footer>
       
     </div>
+    </>
   );
 };
 

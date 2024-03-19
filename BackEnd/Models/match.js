@@ -7,8 +7,7 @@ var match = new Schema({
     startingTime: String,   
         
     card:[{player: {type: mongoose.Schema.Types.ObjectId, ref: 'Player'},name:String,number:Number,yellow:Number,red:Number}],
-    extraTime:Number,
-    
+    extraTime:Number,    
     matchStatus:String,
     location:String,
     matchType: String,
@@ -16,7 +15,7 @@ var match = new Schema({
     team1:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
     team2:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
     team1Gols:Number,
-    team1Gols:Number,
+    team2Gols:Number,
     tournementId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournement'},
    
 });

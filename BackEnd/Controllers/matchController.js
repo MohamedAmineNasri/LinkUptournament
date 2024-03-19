@@ -21,27 +21,44 @@ async function getAllematch(req, res) {
   }
 //create 
 async function creatematch(req, res) {
-  const matche = new match(req.body);
-  const Player_id = await player.aggregate([{ $match: { 'card.player': req.body.card.player } }])
-  const player_name = await player.findById(Player_id)
+  try{
+    const { card, ...matchData } = req.body;
+    const matche = new match(matchData);
+  //const matche = new match({team1,team2,date,referee,startingTime,extraTime,matchStatus,location,matchType,weatherCondition,tournementId,team1Gols,team2Gols});
+ 
+  
   const tournament_name = await tournament.findById(req.body.tournementId)
   if (!req.body.tournementId) {
     matche.tournamentName = null;
 }
 else
-  matche.tournamentName= tournament_name.name 
-  matche.card.name = player_name.name
-  matche.card.forEach(match => {
-    match.name=player_name.name
-    match.number=player_name.number
+  {matche.tournamentName= tournament_name.name }
+
+  for (let i = 0; i < req.body.card.length; i++) {
+    const card = req.body.card[i];
+    
+    // Fetch player information using the card.player ID
+    const playerInfo = await player.findById(card.player);
+    
+    // Populate the card name with player's name
+    card.name = playerInfo.name;
+    card.number=playerInfo.number
+    
+    // Push the modified card into the newMatch card array
+   
+    matche.card.push(card);
     
     
-   })
+   }
   
   await matche.save()
  
   res.json(matche)
-  }
+  }catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+}}
 
   // Update match by ID
 async function updatematchById(req, res) {

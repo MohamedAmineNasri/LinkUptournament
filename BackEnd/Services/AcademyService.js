@@ -31,6 +31,48 @@ const getAcademyById =  async (req,res,next)=>{
 }
 
 
+// const getApprovedAcademies =  async (req,res,next)=>{
+//     const approvedAcademies = []
+//     var i =0
+//     const academyData = await academy.find()
+//     academyData.forEach(academy => {
+//         if(academy.Status =="Approved"){
+//             approvedAcademies.push(academy)
+//             i++
+//         }
+//     });
+//     res.json(i);
+// }
+
+
+// const getRejectedAcademies =  async (req,res,next)=>{
+//     const rejectedAcademies = []
+//     var i =0
+//     const academyData = await academy.find()
+//     academyData.forEach(academy => {
+//         if(academy.Status =="Rejected"){
+//             rejectedAcademies.push(academy)
+//             i++
+//         }
+//     });
+//     res.json(i);
+// }
+
+
+// const getPendingAcademies =  async (req,res,next)=>{
+//     const PendingAcademies = []
+//     var i =0
+//     const academyData = await academy.find()
+//     academyData.forEach(academy => {
+//         if(academy.Status =="Pending"){
+//             PendingAcademies.push(academy)
+//             i++
+//         }
+//     });
+//     res.json(i);
+// }
+
+
 
 const getAcademyByIdParam =  async (Aid)=>{
     const academyData = await academy.findById(Aid);

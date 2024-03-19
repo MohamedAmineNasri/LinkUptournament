@@ -39,6 +39,44 @@ export const fetchAcademyById = createAsyncThunk(
   }
 );
 
+// export const fetchApprovedAcademies = createAsyncThunk(
+//   'academy/fetchApprovedAcademies',
+//   async () => {
+//     try {
+//       const response = await axios.get('http://localhost:8000/academy/getApprovedAcademies');
+//       return response.data;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
+
+
+// export const fetchRejectedAcademies = createAsyncThunk(
+//   'academy/fetchRejectedAcademies',
+//   async () => {
+//     try {
+//       const response = await axios.get('http://localhost:8000/academy/getRejectedAcademies');
+//       return response.data;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
+
+
+// export const fetchPendingAcademies = createAsyncThunk(
+//   'academy/fetchPendingAcademies',
+//   async () => {
+//     try {
+//       const response = await axios.get('http://localhost:8000/academy/getPendingAcademies');
+//       return response.data;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
+
 
 export const editAcademy = createAsyncThunk(
   'academy/editAcademy',

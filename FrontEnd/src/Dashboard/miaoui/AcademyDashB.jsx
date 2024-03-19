@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { editAcademyStatusToApproved } from "../../redux/slice/academySlice";
 import { editAcademyStatusToRejected } from "../../redux/slice/academySlice";
+import DropDownStautsFilter from "./DropDownStautsFilter";
 
 const AcademyDashB = () => {
   const openPdfWindow = (url) => {
@@ -28,7 +29,6 @@ const AcademyDashB = () => {
   const { allacademies, loading, error } = useSelector(
     (state) => state.root.academy
   );
-
   useEffect(() => {
     dispatch(fetchAllAcademy());
   }, [dispatch]);
@@ -62,6 +62,15 @@ const AcademyDashB = () => {
     });
   };
 
+  //Filter By status
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const filteredAcademies = selectedStatus
+    ? allacademies.filter((academy) => academy.Status === selectedStatus)
+    : allacademies;
+  const handleStatusSelect = (status) => {
+    setSelectedStatus(status);
+  };
+
   return (
     <DefaultLayout>
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -79,15 +88,21 @@ const AcademyDashB = () => {
                   Location
                 </th>
                 <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                  Status
+                  <div className="row ">
+                    <div className="px-2 ">Status</div>
+                    <DropDownStautsFilter
+                      onSelect={handleStatusSelect}
+                    ></DropDownStautsFilter>
+                  </div>
                 </th>
+
                 <th className="py-4 px-4 font-medium text-black dark:text-white">
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody>
-              {allacademies.map((academy) => (
+              {filteredAcademies.map((academy) => (
                 <tr>
                   <td className="border-b border-[#eee] py-5 px-4 pl-5 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">

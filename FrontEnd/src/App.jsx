@@ -60,7 +60,6 @@ function App() {
 
         <Route element={<RequireAuth allowedRoles={['Manager']} />}>
         <Route path="/addAcademy" element={<AddAcademy />} />
-        </Route>
 
         <Route path="/Academy" element={<Academy />} />
         <Route path="/tournament" element={<Tournament />} />
@@ -69,7 +68,7 @@ function App() {
         <Route path="/player" element={<AddPlayerForm />} />
         <Route path="/lineup-builder" element={<LineupBuilder />} />
         <Route path="/t" element={<EditPopUpmatch />} />
-        <Route path="/tests" element={<MatchCard />} />
+        <Route path="/match" element={<MatchCard />} />
         <Route path="/a" element={<Table data={fixtures} />}></Route>
         <Route
           path="/fixture/:matchID"

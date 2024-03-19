@@ -63,6 +63,15 @@ app.use("/match",match)
 app.use('/academy', AcademyRouter);
 app.use('/team', TeamRouter);
 
+
+// Handle options credentials check - before CORS! 
+// and fetch cookies credentials requirement
+app.use(credentials); 
+app.use(cors(corsOptions));3
+// Cross Origin Resource Sharing
+
+
+
 // app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -12,7 +12,8 @@ router.delete("/deleteAcademy/:id" ,academyService.deleteAcademyById);
 
 router.put("/editAcademy/:id" ,academyService.updateAcademy );
 
-router.put("/editStatus/:id" ,academyService.updateStatus );
+router.put("/updateStatustoApproved/:id" ,academyService.updateStatustoApproved );
+router.put("/updateStatustoRejected/:id" ,academyService.updateStatustoRejected );
 
 
 module.exports =router;

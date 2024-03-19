@@ -11,9 +11,12 @@ const TeamCard = (props) => {
   useEffect(() => {
     dispatch(fetchTeamOfAcademy());
   }, [dispatch]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  // useEffect(() => {
+  //   if (loading === false && error === null) {
+  //     // Data fetching successful, update UI or perform other actions
+  //     dispatch(fetchTeamOfAcademy());
+  //   }
+  // }, [loading, error, dispatch]);
 
   return (
     <div className="row">

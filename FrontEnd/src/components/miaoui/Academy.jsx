@@ -13,20 +13,17 @@ export const Academy = () => {
   const { academyData, loading, error } = useSelector(
     (state) => state.root.academy
   );
-  useEffect(() => {
-    dispatch(fetchAcademy());
-  }, [dispatch]);
 
+  // fetch and refresh when academy updated
+  useEffect(() => {
+    if (loading === false && error === null) {
+      dispatch(fetchAcademy());
+    }
+  }, [loading, error, dispatch]);
   //date correct format
   // const date = new Date(academyData.FoundedYear);
   const date = academyData ? new Date(academyData.FoundedYear) : null;
 
-  // const year = date.getFullYear();
-  // const month = date.getMonth() + 1;
-  // const day = date.getDate();
-  // const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-  //   .toString()
-  //   .padStart(2, "0")}`;
   let formattedDate = "";
   if (date) {
     const year = date.getFullYear();
@@ -34,9 +31,20 @@ export const Academy = () => {
     const day = date.getDate();
     formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
   } else {
-    // Handle the case when date is null
     formattedDate = "N/A";
   }
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Pending":
+        return "text-warning";
+      case "Rejected":
+        return "text-danger";
+      case "Approved":
+        return "text-success";
+      default:
+        return "text-muted";
+    }
+  };
 
   return (
     <div>
@@ -163,10 +171,29 @@ export const Academy = () => {
                       Creating Date :{" "}
                       <span className="text-muted">{formattedDate}</span>
                     </p>
-                    <p className="mb-4">
+                    <p className="mb-2">
                       Status :{" "}
-                      <span className="text-muted">{academyData.Status}</span>
+                      <span className={getStatusColor(academyData.Status)}>
+                        {academyData.Status}
+                      </span>
                     </p>
+                    {academyData.Status === "Approved" && (
+                      <p className="text-success mb-4">
+                        This academy is approved, You can particpate in
+                        tournements.
+                      </p>
+                    )}
+                    {academyData.Status === "Pending" && (
+                      <p className="text-warning mb-4">
+                        This academy is still pending approval.
+                      </p>
+                    )}
+                    {academyData.Status === "Rejected" && (
+                      <p className="text-danger mb-4">
+                        This academy has been rejected, You must provide
+                        convencing Documents!
+                      </p>
+                    )}
                     <DropDownAcademy id={academyData._id} />
                   </div>
                 </div>

@@ -59,13 +59,19 @@ const updateAcademy = async (req,res,next)=>{
 
 
 
-const updateStatus = async (req,res,next)=>{
+const updateStatustoApproved = async (req,res,next)=>{
     const academyData = await academy.findById(req.params.id);
-    academyData.Status = "Verified";
+    academyData.Status = "Approved";
+    await academyData.save()
+    res.json("Academy's Status updated sucessfully");
+}
+const updateStatustoRejected = async (req,res,next)=>{
+    const academyData = await academy.findById(req.params.id);
+    academyData.Status = "Rejected";
     await academyData.save()
     res.json("Academy's Status updated sucessfully");
 }
 
 
 
-module.exports = { getAllAcademies,addAcademy, deleteAcademyById, getAcademyById,getAcademyByIdParam,updateAcademy,updateStatus};
+module.exports = { getAllAcademies,addAcademy, deleteAcademyById, getAcademyById,getAcademyByIdParam,updateAcademy,updateStatustoApproved,updateStatustoRejected};

@@ -64,8 +64,6 @@ export const EditPopUpSelectedTeam = (props) => {
           logo: editedLogo || props.Tlogo,
         })
       );
-      // console.log(editedLogo);
-      // console.log(props.Tlogo);
       handleClose();
     }
   };

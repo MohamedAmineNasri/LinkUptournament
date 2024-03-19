@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
-import Loader from '../Dashboard/src/common/Loader';
-import PageTitle from '../Dashboard/src/components/PageTitle';
-import SignIn from '../Dashboard/src/pages/Authentication/SignIn';
-import SignUp from '../Dashboard/src/pages/Authentication/SignUp';
-import Calendar from '../Dashboard/src/pages/Calendar';
-import Chart from '../Dashboard/src/pages/Chart';
-import ECommerce from '../Dashboard/src/pages/Dashboard/ECommerce';
-import FormElements from '../Dashboard/src/pages/Form/FormElements';
-import FormLayout from '../Dashboard/src/pages/Form/FormLayout';
-import Profile from '../Dashboard/src/pages/Profile';
-import Settings from '../Dashboard/src/pages/Settings';
-import Tables from '../Dashboard/src/pages/Tables';
-import Alerts from '../Dashboard/src/pages/UiElements/Alerts';
-import Buttons from '../Dashboard/src/pages/UiElements/Buttons'
-import './src/css/style.css';
-import './src/css/satoshi.css';
+import Loader from "../Dashboard/src/common/Loader";
+import PageTitle from "../Dashboard/src/components/PageTitle";
+import SignIn from "../Dashboard/src/pages/Authentication/SignIn";
+import SignUp from "../Dashboard/src/pages/Authentication/SignUp";
+import Calendar from "../Dashboard/src/pages/Calendar";
+import Chart from "../Dashboard/src/pages/Chart";
+import ECommerce from "../Dashboard/src/pages/Dashboard/ECommerce";
+import FormElements from "../Dashboard/src/pages/Form/FormElements";
+import FormLayout from "../Dashboard/src/pages/Form/FormLayout";
+import Profile from "../Dashboard/src/pages/Profile";
+import Settings from "../Dashboard/src/pages/Settings";
+import Tables from "../Dashboard/src/pages/Tables";
+import Alerts from "../Dashboard/src/pages/UiElements/Alerts";
+import Buttons from "../Dashboard/src/pages/UiElements/Buttons";
+import AcademyDashB from "./miaoui/AcademyDashB";
+
+import "./src/css/style.css";
+import "./src/css/satoshi.css";
 // import 'jsvectormap/dist/css/jsvectormap.css';
-import 'flatpickr/dist/flatpickr.min.css';
+import "flatpickr/dist/flatpickr.min.css";
 
 const AdminDashboard = () => {
   // const [loading, setLoading] = useState<boolean>(true);
@@ -32,9 +34,9 @@ const AdminDashboard = () => {
     // setTimeout(() => setLoading(false), 1000);
   }, []);
   // return loading ? (
-  return  (
+  return (
     // <Loader />
-  // ) : (
+    // ) : (
     <>
       <Routes>
         <Route
@@ -109,6 +111,17 @@ const AdminDashboard = () => {
             </>
           }
         />
+        {/* academy dashboard----------------------------------- */}
+        <Route
+          path="/academyDS"
+          element={
+            <>
+              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <AcademyDashB></AcademyDashB>
+            </>
+          }
+        />
+        {/* ----------------------------------- */}
         <Route
           path="/ui/alerts"
           element={
@@ -148,7 +161,6 @@ const AdminDashboard = () => {
       </Routes>
     </>
   );
-}
-
+};
 
 export default AdminDashboard;

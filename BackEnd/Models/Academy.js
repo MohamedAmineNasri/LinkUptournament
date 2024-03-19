@@ -24,7 +24,7 @@ const AcademySchema = new mongoose.Schema(
     },
     Status: {
       type: String,
-      default: "Not Verified"
+      default: "Pending" //Approved //Rejected
     },
     teams: [{
         type: mongoose.Schema.Types.ObjectId,

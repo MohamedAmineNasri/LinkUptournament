@@ -3,6 +3,18 @@ import axios from 'axios';
 
 
 //export const fetchAcademy = () => createAsyncThunk
+export const fetchAllAcademy = createAsyncThunk(
+  'academy/fetchAllAcademy',
+  async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/academy');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+//export const fetchAcademy = () => createAsyncThunk
 export const fetchAcademy = createAsyncThunk(
   'academy/fetchAcademy',
   async () => {
@@ -43,7 +55,39 @@ export const editAcademy = createAsyncThunk(
         }
       );
       
-      window.location.reload();
+      // window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+// editAcademyStatus for admin
+export const editAcademyStatusToApproved = createAsyncThunk(
+  'academy/editAcademyApproved',
+  async ({ id}) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/academy/updateStatustoApproved/'+id,
+       
+      );
+      
+      // window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const editAcademyStatusToRejected = createAsyncThunk(
+  'academy/editAcademyRejected',
+  async ({ id}) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/academy/updateStatustoRejected/'+id,
+      );
+      
+      // window.location.reload();
       return response.data;
     } catch (error) {
       throw error;
@@ -79,6 +123,7 @@ const academySlice = createSlice({
   initialState: {
     academyData: [],
     academyDataById: [],
+    allacademies: [],
     loading: false,
     error: null
   },
@@ -106,6 +151,18 @@ const academySlice = createSlice({
         state.academyDataById = action.payload;
       })
       .addCase(fetchAcademyById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchAllAcademy.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllAcademy.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allacademies = action.payload;
+      })
+      .addCase(fetchAllAcademy.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

@@ -151,7 +151,7 @@ export const AddAcademy = () => {
     console.log(file);
     const base64 = await convertToBase64(file);
     console.log(base64);
-    setDoc({ ...Logo, myDoc: base64 });
+    setDoc({ ...Doc, myDoc: base64 });
   };
 
   //submit logic

@@ -91,7 +91,7 @@ const AcademyDashB = () => {
                   <div className="row ">
                     <div className="px-2 ">Status</div>
                     <DropDownStautsFilter
-                      onSelect={handleStatusSelect}
+                      statusSelected={handleStatusSelect}
                     ></DropDownStautsFilter>
                   </div>
                 </th>

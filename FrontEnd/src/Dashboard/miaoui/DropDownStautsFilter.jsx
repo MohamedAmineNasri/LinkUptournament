@@ -8,7 +8,7 @@ import {
   faSpinner,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-const DropDownStautsFilter = ({ onSelect }) => {
+const DropDownStautsFilter = ({ statusSelected }) => {
   //drop down logic
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef(null);
@@ -47,27 +47,31 @@ const DropDownStautsFilter = ({ onSelect }) => {
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
+        {/* onSelect the option ALL --------> onSelect = null => all academies */}
         <button
           className="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
-          onClick={() => onSelect(null)}
+          onClick={() => statusSelected(null)}
         >
           <FontAwesomeIcon icon={faHashtag} /> All
         </button>
+        {/* onSelect the option Approved --------> onSelect = Approved => Approved academies */}
         <button
           className="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
-          onClick={() => onSelect("Approved")}
+          onClick={() => statusSelected("Approved")}
         >
           <FontAwesomeIcon icon={faCheck} /> Approved
         </button>
+        {/* onSelect the option Rejected --------> onSelect = Rejected => Rejected academies */}
         <button
           className="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
-          onClick={() => onSelect("Rejected")}
+          onClick={() => statusSelected("Rejected")}
         >
           <FontAwesomeIcon icon={faXmark} /> Rejected
         </button>
+        {/* onSelect the option Pending --------> onSelect = Pending => Pending academies */}
         <button
           className="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
-          onClick={() => onSelect("Pending")}
+          onClick={() => statusSelected("Pending")}
         >
           <FontAwesomeIcon icon={faSpinner} /> Pending
         </button>

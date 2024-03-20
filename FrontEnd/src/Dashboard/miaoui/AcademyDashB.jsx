@@ -12,6 +12,9 @@ import {
 import { editAcademyStatusToApproved } from "../../redux/slice/academySlice";
 import { editAcademyStatusToRejected } from "../../redux/slice/academySlice";
 import DropDownStautsFilter from "./DropDownStautsFilter";
+import DropDownNameFilter from "./DropDownNameFilter";
+import DropDownDateFilter from "./DropDownDateFilter";
+import DropDownLocationFilter from "./DropDownLocationFilter";
 
 const AcademyDashB = () => {
   const openPdfWindow = (url) => {
@@ -21,6 +24,18 @@ const AcademyDashB = () => {
         url +
         '" type="application/pdf"></embed></body></html>'
     );
+  };
+
+  const dateFormating = (date) => {
+    let formattedDate = date ? new Date(date) : null;
+    if (formattedDate) {
+      const year = formattedDate.getFullYear();
+      const month = formattedDate.getMonth() + 1;
+      const day = formattedDate.getDate();
+      return (formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`);
+    } else {
+      return (formattedDate = "N/A");
+    }
   };
 
   //fetch
@@ -62,13 +77,64 @@ const AcademyDashB = () => {
     });
   };
 
-  //Filter By status
+  //status filter states
   const [selectedStatus, setSelectedStatus] = useState(null);
-  const filteredAcademies = selectedStatus
-    ? allacademies.filter((academy) => academy.Status === selectedStatus)
-    : allacademies;
   const handleStatusSelect = (status) => {
     setSelectedStatus(status);
+  };
+  // academy name filter states
+  const [selectedOrder, setSelectedOrder] = useState("asc");
+  const handleOrderSelect = (order) => {
+    setSelectedOrder(order);
+  };
+  // academy location filter states
+  const [selectedLocOrder, setSelectedLocOrder] = useState("asc");
+  const handleLocOrderSelect = (orderLoc) => {
+    setSelectedLocOrder(orderLoc);
+  };
+  // date filter states
+  const [selectedDateOrder, setSelectedDateOrder] = useState("new");
+  const handledateSelect = (date) => {
+    setSelectedDateOrder(date);
+  };
+
+  // Filter function
+  const filterAcademies = () => {
+    let filteredAcademies = [...allacademies];
+
+    // Filter by status
+    if (selectedStatus) {
+      filteredAcademies = filteredAcademies.filter(
+        (academy) => academy.Status === selectedStatus
+      );
+    }
+
+    // Sort by location
+    filteredAcademies.sort((a, b) => {
+      if (selectedLocOrder === "asc") {
+        return a.Location.localeCompare(b.Location);
+      } else {
+        return b.Location.localeCompare(a.Location);
+      }
+    });
+
+    // Sort by name
+    filteredAcademies.sort((a, b) => {
+      if (selectedOrder === "asc") {
+        return a.AcademyName.localeCompare(b.AcademyName);
+      } else {
+        return b.AcademyName.localeCompare(a.AcademyName);
+      }
+    });
+
+    // Sort by date
+    if (selectedDateOrder === "old") {
+      filteredAcademies.sort(
+        (a, b) => new Date(a.FoundedYear) - new Date(b.FoundedYear)
+      );
+    }
+
+    return filteredAcademies;
   };
 
   return (
@@ -82,10 +148,28 @@ const AcademyDashB = () => {
                   Academy Logo
                 </th>
                 <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                  Academy Name
+                  <div className="row ">
+                    <div className="px-2 ">Academy Name</div>
+                    <DropDownNameFilter
+                      orderSelected={handleOrderSelect}
+                    ></DropDownNameFilter>
+                  </div>
                 </th>
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Location
+                  <div className="row ">
+                    <div className="px-2 ">Date</div>
+                    <DropDownDateFilter
+                      dateSelected={handledateSelect}
+                    ></DropDownDateFilter>
+                  </div>
+                </th>
+                <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  <div className="row ">
+                    <div className="px-2 ">Location</div>
+                    <DropDownLocationFilter
+                      locationSelected={handleLocOrderSelect}
+                    ></DropDownLocationFilter>
+                  </div>
                 </th>
                 <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                   <div className="row ">
@@ -102,7 +186,7 @@ const AcademyDashB = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredAcademies.map((academy) => (
+              {filterAcademies().map((academy) => (
                 <tr>
                   <td className="border-b border-[#eee] py-5 px-4 pl-5 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
@@ -118,6 +202,11 @@ const AcademyDashB = () => {
                       {academy.AcademyName}
                     </h5>
                     {/* <p className="text-sm">${packageItem.price}</p> */}
+                  </td>
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <p className="text-black dark:text-white">
+                      {dateFormating(academy.FoundedYear)}
+                    </p>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">

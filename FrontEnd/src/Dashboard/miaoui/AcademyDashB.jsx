@@ -15,8 +15,10 @@ import DropDownStautsFilter from "./DropDownStautsFilter";
 import DropDownNameFilter from "./DropDownNameFilter";
 import DropDownDateFilter from "./DropDownDateFilter";
 import DropDownLocationFilter from "./DropDownLocationFilter";
+import Pagination from "react-bootstrap/Pagination";
 
 const AcademyDashB = () => {
+  // documents open window
   const openPdfWindow = (url) => {
     const pdfWindow = window.open("", "_blank");
     pdfWindow.document.write(
@@ -97,19 +99,48 @@ const AcademyDashB = () => {
   const handledateSelect = (date) => {
     setSelectedDateOrder(date);
   };
+  //name search filter state
+  const [search, setSearch] = useState("");
+  console.log(search);
+  // Pagination  states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+  // Calculate pagination indexes for slicing data
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // Total number of pages
+  const totalPages = Math.ceil(allacademies.length / itemsPerPage);
+  // handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   // Filter function
   const filterAcademies = () => {
+    // we include a copy of allacademies in filteredAcademies
     let filteredAcademies = [...allacademies];
 
-    // Filter by status
+    // Filter by status -------------------------------------------
     if (selectedStatus) {
       filteredAcademies = filteredAcademies.filter(
         (academy) => academy.Status === selectedStatus
       );
     }
 
-    // Sort by location
+    //filter by name input (on change)------------------------------
+    if (search) {
+      filteredAcademies = filteredAcademies.filter((academy) =>
+        academy.AcademyName.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    //pagination ----------------------------------------------------
+    filteredAcademies = filteredAcademies.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+
+    // Sort by location ---------------------------------------------
     filteredAcademies.sort((a, b) => {
       if (selectedLocOrder === "asc") {
         return a.Location.localeCompare(b.Location);
@@ -118,7 +149,7 @@ const AcademyDashB = () => {
       }
     });
 
-    // Sort by name
+    // Sort by name --------------------------------------------------
     filteredAcademies.sort((a, b) => {
       if (selectedOrder === "asc") {
         return a.AcademyName.localeCompare(b.AcademyName);
@@ -127,7 +158,7 @@ const AcademyDashB = () => {
       }
     });
 
-    // Sort by date
+    // Sort by date ----------------------------------------------------
     if (selectedDateOrder === "old") {
       filteredAcademies.sort(
         (a, b) => new Date(a.FoundedYear) - new Date(b.FoundedYear)
@@ -139,6 +170,19 @@ const AcademyDashB = () => {
 
   return (
     <DefaultLayout>
+      {/* search name  input  */}
+      <div className="w-full xl:w-1/2 py-3">
+        <label className="mb-2.5 block text-black dark:text-white">
+          Search
+        </label>
+        <input
+          onChange={(e) => setSearch(e.target.value)}
+          type="text"
+          placeholder="Search By Academy Name"
+          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        />
+      </div>
+      {/* Table */}
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
@@ -263,6 +307,35 @@ const AcademyDashB = () => {
           </table>
         </div>
       </div>
+      <Pagination className="mt-4 justify-end">
+        <Pagination.First onClick={() => handlePageChange(1)} />
+        <Pagination.Prev
+          onClick={() =>
+            handlePageChange(currentPage > 1 ? currentPage - 1 : 1)
+          }
+        />
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <Pagination.Item
+            key={index}
+            active={index + 1 === currentPage}
+            style={{
+              color: "white",
+              backgroundColor: "black",
+            }}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() =>
+            handlePageChange(
+              currentPage < totalPages ? currentPage + 1 : totalPages
+            )
+          }
+        />
+        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+      </Pagination>
     </DefaultLayout>
   );
 };

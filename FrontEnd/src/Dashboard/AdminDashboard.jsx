@@ -15,12 +15,13 @@ import Settings from "../Dashboard/src/pages/Settings";
 import Tables from "../Dashboard/src/pages/Tables";
 import Alerts from "../Dashboard/src/pages/UiElements/Alerts";
 import Buttons from "../Dashboard/src/pages/UiElements/Buttons";
-import AcademyDashB from "./miaoui/AcademyDashB";
+import AcademyDashB from "./miaoui/academyDsPanel/AcademyDashB";
 
 import "./src/css/style.css";
 import "./src/css/satoshi.css";
 // import 'jsvectormap/dist/css/jsvectormap.css';
 import "flatpickr/dist/flatpickr.min.css";
+import TeamDashB from "./miaoui/teamDsPanel/TeamDashB";
 
 const AdminDashboard = () => {
   // const [loading, setLoading] = useState<boolean>(true);
@@ -118,6 +119,17 @@ const AdminDashboard = () => {
             <>
               <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <AcademyDashB></AcademyDashB>
+            </>
+          }
+        />
+        {/* ----------------------------------- */}
+        {/* academy dashboard----------------------------------- */}
+        <Route
+          path="/teamDS"
+          element={
+            <>
+              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <TeamDashB></TeamDashB>
             </>
           }
         />

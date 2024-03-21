@@ -83,6 +83,7 @@ const teamSlice = createSlice({
   name: 'team',
   initialState: {
     teamData: [],
+    allteamData: [],
     loading: false,
     error: null
   },
@@ -107,7 +108,7 @@ const teamSlice = createSlice({
       })
       .addCase(fetchteams.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.teams = action.payload;
+        state.allteamData = action.payload;
       })
       .addCase(fetchteams.rejected, (state, action) => {
         state.status = 'failed';

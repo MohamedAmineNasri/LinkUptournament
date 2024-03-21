@@ -1,7 +1,7 @@
-import DefaultLayout from "../src/layout/DefaultLayout";
+import DefaultLayout from "../../src/layout/DefaultLayout";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { fetchAllAcademy } from "../../redux/slice/academySlice";
+import { fetchAllAcademy } from "../../../redux/slice/academySlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -9,8 +9,8 @@ import {
   faTrash,
   faFolderOpen,
 } from "@fortawesome/free-solid-svg-icons";
-import { editAcademyStatusToApproved } from "../../redux/slice/academySlice";
-import { editAcademyStatusToRejected } from "../../redux/slice/academySlice";
+import { editAcademyStatusToApproved } from "../../../redux/slice/academySlice";
+import { editAcademyStatusToRejected } from "../../../redux/slice/academySlice";
 import DropDownStautsFilter from "./DropDownStautsFilter";
 import DropDownNameFilter from "./DropDownNameFilter";
 import DropDownDateFilter from "./DropDownDateFilter";

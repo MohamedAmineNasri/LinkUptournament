@@ -27,7 +27,7 @@ export const EditPopUpAcademy = (props) => {
   // Fetch academyById -------------
   useEffect(() => {
     dispatch(fetchAcademyById(props.id));
-  }, [dispatch, props.id]);
+  }, [dispatch]);
 
   // Redux state
   const { academyDataById } = useSelector((state) => state.root.academy);

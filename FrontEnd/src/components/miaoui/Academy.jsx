@@ -194,14 +194,17 @@ export const Academy = () => {
                         convencing Documents!
                       </p>
                     )}
-                    <DropDownAcademy id={academyData._id} />
+                    <DropDownAcademy
+                      id={academyData._id}
+                      academyLogo={academyData.Logo}
+                    />
                   </div>
                 </div>
                 {/* Academy teams */}
                 <div className="col-md-7 col-lg-8">
                   <div className="widget-body mb-3 teamsBorderBox ">
                     <div className="teamsBordersolid">
-                      <TeamCard academyLogo={academyData.Logo} />
+                      <TeamCard />
                     </div>
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
-import { addTeam } from "../../redux/slice/teamSlice";
+import { addTeamAndAssaignToAcademy } from "../../redux/slice/teamSlice";
 import { useDispatch } from "react-redux";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 
@@ -16,7 +16,7 @@ export const AddTeamPopUpWindow = (props) => {
 
   //add logic
   const [Name, setName] = useState("");
-  const [Logo, setLogo] = useState("");
+  const [Logo, setLogo] = useState(null);
 
   const [nameError, setNameError] = useState("Academy Name is require");
   const [logoError, setlogoError] = useState(
@@ -54,7 +54,6 @@ export const AddTeamPopUpWindow = (props) => {
     if (file) {
       const base64 = await convertToBase64(file);
       setLogo(base64);
-      console.log(editedLogo);
     }
   };
 
@@ -62,10 +61,10 @@ export const AddTeamPopUpWindow = (props) => {
     e.preventDefault();
     if (!nameError) {
       dispatch(
-        addTeam({
+        addTeamAndAssaignToAcademy({
           idAcademy: props.id,
           name: Name,
-          logo: Logo,
+          logo: Logo || props.aLogo, // selected team logo or academy logo if no logo selected when creating the team
         })
       );
       handleClose();

@@ -11,7 +11,10 @@ function DropDownAcademy(props) {
           <div>
             <EditPopUpAcademy id={props.id}></EditPopUpAcademy>
           </div>
-          <AddTeamPopUpWindow id={props.id}></AddTeamPopUpWindow>
+          <AddTeamPopUpWindow
+            id={props.id}
+            aLogo={props.academyLogo}
+          ></AddTeamPopUpWindow>
         </Dropdown.Menu>
       </Dropdown>
     </div>

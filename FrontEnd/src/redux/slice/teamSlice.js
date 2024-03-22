@@ -40,7 +40,7 @@ export const deleteTeam = createAsyncThunk(
 );
 
 
-export const addTeam = createAsyncThunk(
+export const addTeamAndAssaignToAcademy = createAsyncThunk(
   'team/addTeam',
   async ({idAcademy, name, logo }) => {
     try {

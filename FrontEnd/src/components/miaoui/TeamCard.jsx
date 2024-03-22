@@ -5,7 +5,7 @@ import { fetchTeamOfAcademy } from "../../redux/slice/teamSlice";
 import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
 import DropDownTeamSettings from "./DropDownTeamSettings";
 
-const TeamCard = (props) => {
+const TeamCard = () => {
   const { teamData, loading, error } = useSelector((state) => state.root.team);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -55,7 +55,7 @@ const TeamCard = (props) => {
             <Card.Img
               className="teamCardImg"
               variant="top"
-              src={team.TeamLogo || props.academyLogo} // props.academyLogo OR the file Uploaded ||team.logo
+              src={team.TeamLogo}
             />
             <Card.Body>
               <Card.Title className="pb-3 teamCardTitle">

@@ -1,3 +1,10 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #0d0f12;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -11,10 +18,10 @@
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 20px;
   border-radius: 20px;
-  background: #212529
+  background: #212529;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background-color: #363636;
+  border-radius: 8px;
+  background-color: #363636;
 }

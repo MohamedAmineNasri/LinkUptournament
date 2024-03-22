@@ -78,7 +78,7 @@
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
-.score {
+.score-custom {
   font-size: 11px;
   text-transform: uppercase;
   float: right;
@@ -92,8 +92,9 @@
   height: 100%;
   transform: skew(-20deg);
 }
-.score-text{
-    transform: skew(20deg);
+.score-text-custom {
+  transform: skew(20deg);
+  color: black;
 }
 .team {
   padding: 0 5px;
@@ -103,6 +104,8 @@
   white-space: nowrap;
   overflow: hidden;
   position: relative;
+  color: #000;
+  font-weight: 600;
 }
 .round-two .matchup {
   margin: 0;
@@ -112,7 +115,7 @@
 .round-three .matchup {
   margin: 0;
   height: 60px;
-  padding: 130px 0;
+  padding: 100px 0;
 }
 .round-details {
   /*font-family: "Roboto Condensed", sans-serif;*/
@@ -298,4 +301,21 @@
     margin: 5px 0 10px;
     font-size: 18px;
   }
+}
+
+.team-avatar {
+  display: inline;
+}
+
+.split,
+.champion {
+  padding-top: 50px;
+}
+.h1 {
+  font-size: 35px;
+  font-weight: 600;
+  padding-bottom: 40px;
+}
+.h5 {
+  margin-bottom: -5px;
 }

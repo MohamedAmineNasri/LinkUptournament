@@ -36,6 +36,7 @@ import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -48,6 +49,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
         <Route index element={<Home />} />
+        <Route path="/page" element={<LandingPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/matches" element={<Matches />} />
@@ -57,7 +59,7 @@ function App() {
         <Route path="/Academy" element={<Academy />} />
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
-        <Route path="/test" element={<TournamentBracket />} />
+        <Route path="/bracket" element={<TournamentBracket />} />
         <Route path="/player" element={<AddPlayerForm />} />
         <Route path="/lineup-builder" element={<LineupBuilder />} />
         <Route path="/t" element={<EditPopUpmatch />} />

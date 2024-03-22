@@ -13,10 +13,10 @@ const Header = () => {
       </div>
 
       <header className="site-navbar py-4" role="banner">
-        <div className="container">
+        <div className="container-fluid">
           <div className="d-flex align-items-center">
             <div className="site-logo">
-              <a href="index.html">
+              <a to="/">
                 <img src="/public/assets/images/logo.png" alt="Logo" />
               </a>
             </div>
@@ -27,7 +27,7 @@ const Header = () => {
               >
                 <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                   <li>
-                    <a href="index.html" className="nav-link">
+                    <a to="/" className="nav-link">
                       Home
                     </a>
                   </li>

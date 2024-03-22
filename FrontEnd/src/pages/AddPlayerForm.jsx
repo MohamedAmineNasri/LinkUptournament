@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { addPlayer } from "../../store/playerReducers/addPlayerSlice";
 import { soccerPositions } from "../data/playersPositions";
 import Header from "../components/Header";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./PlayerForm.css";
 
 const AddPlayerForm = () => {
@@ -47,7 +49,8 @@ const AddPlayerForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    dispatch(addPlayer(formData));
+    //dispatch(addPlayer(formData));
+    toast.success("Player added successfully 👌");
   };
 
   return (
@@ -122,6 +125,7 @@ const AddPlayerForm = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

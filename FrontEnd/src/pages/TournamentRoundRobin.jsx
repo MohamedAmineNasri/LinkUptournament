@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import { Win, Draw, Lose } from "../components/GroupStageLogo";
-import { Button } from "react-bootstrap";
-import { Tooltip } from "react-tooltip";
+import { useLocation } from "react-router-dom";
+
 const TournamentRoundRobin = () => {
+  const location = useLocation();
+
+  console.log(location.state);
   const TeamsData = [
     {
       Team: "Napoli",
@@ -110,6 +113,7 @@ const TournamentRoundRobin = () => {
                           <img
                             src="/public/assets/images/TeamLogo.svg"
                             alt="team_logo"
+                            className="team-avatar"
                             style={{
                               width: "24px",
                               paddingBottom: "8px",

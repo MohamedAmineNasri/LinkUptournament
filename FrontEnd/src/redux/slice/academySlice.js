@@ -14,7 +14,7 @@ export const fetchAllAcademy = createAsyncThunk(
     }
   }
 );
-//export const fetchAcademy = () => createAsyncThunk
+//next ----> get academy by user id  : http://localhost:8000/academy/getAcademy/USERID
 export const fetchAcademy = createAsyncThunk(
   'academy/fetchAcademy',
   async () => {
@@ -26,7 +26,7 @@ export const fetchAcademy = createAsyncThunk(
     }
   }
 );
-
+//im using it for edit academy pop up to display data in feilds before editing it
 export const fetchAcademyById = createAsyncThunk(
   'academy/fetchAcademyByid',
   async (Academyid) => {

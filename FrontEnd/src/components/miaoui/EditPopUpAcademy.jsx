@@ -47,7 +47,10 @@ export const EditPopUpAcademy = (props) => {
   const [editedName, setEditedName] = useState("");
   const [editedLocation, setEditedLocation] = useState("");
   const [editedDate, setEditedDate] = useState("");
-  const [editedLogo, setEditedLogo] = useState(null); // Updated to null for better handling
+  const [editedLogo, setEditedLogo] = useState(null);
+  const [editedDoc, seteditedDoc] = useState(null);
+
+  const [docChanged, setdocChanged] = useState("false");
 
   // Initialize flag to track changes
   const [isChanged, setIsChanged] = useState(false);
@@ -124,26 +127,61 @@ export const EditPopUpAcademy = (props) => {
     if (file) {
       const base64 = await convertToBase64(file);
       setEditedLogo(base64);
-      console.log(editedLogo);
       setIsChanged(true);
     }
+  };
+
+  const handleDocsUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+    seteditedDoc(base64);
+    setdocChanged("true");
+    setIsChanged(true);
   };
 
   // Handle save changes
   const handleSaveChanges = (e) => {
     e.preventDefault();
 
-    if (isChanged && !nameError && !locationError && !foundedDateError) {
+    if (
+      isChanged &&
+      !nameError &&
+      !locationError &&
+      !foundedDateError &&
+      academyDataById.Status == "Rejected" &&
+      docChanged == "true"
+    ) {
       dispatch(
         editAcademy({
           id: props.id,
           name: editedName || academyDataById.AcademyName,
           location: editedLocation || academyDataById.Location,
           date: editedDate || academyDataById.FoundedYear,
-          logo: editedLogo || academyDataById.Logo, // Use the edited logo if provided, else use the existing logo
+          logo: editedLogo || academyDataById.Logo,
+          doc: editedDoc, // || academyDataById.LegitimacyDocuments,
+          status: "Pending",
+        })
+      );
+      setdocChanged("false");
+      handleClose();
+      window.location.reload();
+    } else {
+      console.log("else");
+      console.log(academyDataById.Status);
+      console.log(docChanged);
+      dispatch(
+        editAcademy({
+          id: props.id,
+          name: editedName || academyDataById.AcademyName,
+          location: editedLocation || academyDataById.Location,
+          date: editedDate || academyDataById.FoundedYear,
+          logo: editedLogo || academyDataById.Logo,
+          doc: editedDoc || academyDataById.LegitimacyDocuments,
+          status: academyDataById.Status,
         })
       );
       handleClose();
+      window.location.reload(); // to prevent laggy teams card
     }
   };
 
@@ -217,13 +255,24 @@ export const EditPopUpAcademy = (props) => {
                 <strong className="text-danger">{foundedDateError}</strong>
               )}
             </Form.Group>
-
             <Form.Label className="popUpWindowLabelColor">Logo :</Form.Label>
             <Form.Control
               type="file"
               accept=".png"
               onChange={(e) => handleLogoUpload(e)}
             />
+            {academyDataById.Status == "Rejected" && (
+              <>
+                <Form.Label className="popUpWindowLabelColor">
+                  Legitimacy document :
+                </Form.Label>
+                <Form.Control
+                  type="file"
+                  accept=".pdf"
+                  onChange={(e) => handleDocsUpload(e)}
+                />
+              </>
+            )}
           </Form>
         </Modal.Body>
         <Modal.Footer className="popUpWindowBlackColor">

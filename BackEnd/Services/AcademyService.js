@@ -94,6 +94,8 @@ const updateAcademy = async (req,res,next)=>{
     academyData.Location = req.body.Location;
     academyData.Logo = req.body.Logo;
     academyData.FoundedYear = req.body.FoundedYear;
+    academyData.LegitimacyDocuments = req.body.LegitimacyDocuments;
+    academyData.Status = req.body.Status;
     await academyData.save()
     res.json("Academy updated sucessfully");
 }

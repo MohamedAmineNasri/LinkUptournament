@@ -30,48 +30,20 @@ const getAcademyById =  async (req,res,next)=>{
     res.json(academyData);
 }
 
-
-// const getApprovedAcademies =  async (req,res,next)=>{
-//     const approvedAcademies = []
-//     var i =0
-//     const academyData = await academy.find()
-//     academyData.forEach(academy => {
-//         if(academy.Status =="Approved"){
-//             approvedAcademies.push(academy)
-//             i++
-//         }
-//     });
-//     res.json(i);
-// }
-
-
-// const getRejectedAcademies =  async (req,res,next)=>{
-//     const rejectedAcademies = []
-//     var i =0
-//     const academyData = await academy.find()
-//     academyData.forEach(academy => {
-//         if(academy.Status =="Rejected"){
-//             rejectedAcademies.push(academy)
-//             i++
-//         }
-//     });
-//     res.json(i);
-// }
-
-
-// const getPendingAcademies =  async (req,res,next)=>{
-//     const PendingAcademies = []
-//     var i =0
-//     const academyData = await academy.find()
-//     academyData.forEach(academy => {
-//         if(academy.Status =="Pending"){
-//             PendingAcademies.push(academy)
-//             i++
-//         }
-//     });
-//     res.json(i);
-// }
-
+//-----------------------
+const academyBynameExists = async (req, res, next) => {
+    try {
+        const existingAcademy = await academy.findOne({ AcademyName: req.params.name });
+        if (!existingAcademy) {
+            res.json(false); 
+        } else {
+            res.json(existingAcademy);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' }); // Send error response
+    }
+}
 
 
 const getAcademyByIdParam =  async (Aid)=>{
@@ -102,7 +74,7 @@ const updateAcademy = async (req,res,next)=>{
 
 
 
-
+// admin ---------------------------------------------
 const updateStatustoApproved = async (req,res,next)=>{
     const academyData = await academy.findById(req.params.id);
     academyData.Status = "Approved";
@@ -115,7 +87,8 @@ const updateStatustoRejected = async (req,res,next)=>{
     await academyData.save()
     res.json("Academy's Status updated sucessfully");
 }
+//---------------------------------------------
 
 
 
-module.exports = { getAllAcademies,addAcademy, deleteAcademyById, getAcademyById,getAcademyByIdParam,updateAcademy,updateStatustoApproved,updateStatustoRejected};
+module.exports = { getAllAcademies,addAcademy, deleteAcademyById, getAcademyById,getAcademyByIdParam,updateAcademy,updateStatustoApproved,updateStatustoRejected,academyBynameExists};

@@ -7,9 +7,8 @@ router.get("/" , academyService.getAllAcademies);
 router.post("/addAcademy",academyService.addAcademy);
 
 router.get("/getAcademy/:id" ,academyService.getAcademyById);
-// router.get("/getApprovedAcademies" ,academyService.getApprovedAcademies);
-// router.get("/getRejectedAcademies" ,academyService.getRejectedAcademies);
-// router.get("/getPendingAcademies" ,academyService.getPendingAcademies);
+router.get("/academyBynameExists/:name" ,academyService.academyBynameExists);
+
 
 router.delete("/deleteAcademy/:id" ,academyService.deleteAcademyById);
 

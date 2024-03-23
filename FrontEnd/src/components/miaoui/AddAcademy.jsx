@@ -1,12 +1,16 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addnewAcademy } from "../../redux/slice/academySlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 import addformstadiumImage from "../../assets/Mi-imgs/2.jpg";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
+import {
+  Link,
+  Navigate,
+} from "react-router-dom/dist/umd/react-router-dom.development";
+import { academybyNameexists } from "../../redux/slice/academySlice";
 
 export const AddAcademy = () => {
   //modal logic
@@ -21,8 +25,6 @@ export const AddAcademy = () => {
   const [FoundedYear, setFoundedYear] = useState(null);
   const [Logo, setLogo] = useState({ myLogo: "" });
   const [Doc, setDoc] = useState({ myDoc: "" });
-
-  const dispatch = useDispatch();
 
   //Alerts
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -60,6 +62,7 @@ export const AddAcademy = () => {
       } else {
         setNameError(null);
         setnamefieldColor("green");
+        // dispatch(academybyNameexists({ name: Name }));
       }
     } else {
       setNameError("Academy Name is required");
@@ -154,8 +157,17 @@ export const AddAcademy = () => {
     setDoc({ ...Doc, myDoc: base64 });
   };
 
+  // Redux get academy by name
+  const dispatch = useDispatch();
+  const { academyNameexists, loading, error } = useSelector(
+    (state) => state.root.academy
+  );
+  useEffect(() => {
+    dispatch(academybyNameexists({ name: Name }));
+  }, [dispatch, Name]);
+
   //submit logic
-  const handleSaveChanges = (e) => {
+  const handleSaveChanges = async (e) => {
     e.preventDefault(); // for refrech bug
     if (
       nameError == null &&
@@ -166,7 +178,8 @@ export const AddAcademy = () => {
       FoundedYear != null &&
       Logo.myLogo != "" &&
       logoError == null &&
-      Doc.myDoc != ""
+      Doc.myDoc != "" &&
+      academyNameexists == false //redux : academy (Name) must not exist in db
     ) {
       dispatch(
         addnewAcademy({
@@ -185,6 +198,11 @@ export const AddAcademy = () => {
       }, 3000);
     } else {
       setsubmitFailure(true);
+      if (academyNameexists) {
+        //only when name exists we show this error msg
+        setNameError("this name is already used.");
+        setnamefieldColor("red");
+      }
       setTimeout(() => {
         setsubmitFailure(false);
       }, 3000);

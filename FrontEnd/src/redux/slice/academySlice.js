@@ -39,43 +39,6 @@ export const fetchAcademyById = createAsyncThunk(
   }
 );
 
-// export const fetchApprovedAcademies = createAsyncThunk(
-//   'academy/fetchApprovedAcademies',
-//   async () => {
-//     try {
-//       const response = await axios.get('http://localhost:8000/academy/getApprovedAcademies');
-//       return response.data;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
-
-
-// export const fetchRejectedAcademies = createAsyncThunk(
-//   'academy/fetchRejectedAcademies',
-//   async () => {
-//     try {
-//       const response = await axios.get('http://localhost:8000/academy/getRejectedAcademies');
-//       return response.data;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
-
-
-// export const fetchPendingAcademies = createAsyncThunk(
-//   'academy/fetchPendingAcademies',
-//   async () => {
-//     try {
-//       const response = await axios.get('http://localhost:8000/academy/getPendingAcademies');
-//       return response.data;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
 
 
 export const editAcademy = createAsyncThunk(
@@ -101,7 +64,8 @@ export const editAcademy = createAsyncThunk(
     }
   }
 );
-// editAcademyStatus for admin
+
+// editAcademyStatus for admin -------------------
 export const editAcademyStatusToApproved = createAsyncThunk(
   'academy/editAcademyApproved',
   async ({ id}) => {
@@ -134,6 +98,24 @@ export const editAcademyStatusToRejected = createAsyncThunk(
   }
 );
 
+// --------------------------------------------------------------
+
+export const academybyNameexists = createAsyncThunk(
+  'academy/academybyNameexists',
+  async ({name}) => {
+    console.log(name)
+    try {
+      const response = await axios.get(
+        'http://localhost:8000/academy/academyBynameExists/'+name,
+      );
+      console.log( response.data)
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 
 export const addnewAcademy = createAsyncThunk(
   'academy/addnewAcademy',
@@ -153,7 +135,7 @@ export const addnewAcademy = createAsyncThunk(
     } catch (error) {
       throw error;
     }
-  }
+}
 );
 
 
@@ -163,12 +145,14 @@ const academySlice = createSlice({
     academyData: [],
     academyDataById: [],
     allacademies: [],
+    academyNameexists : [],
     loading: false,
     error: null
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
+    // fetchAcademy
       .addCase(fetchAcademy.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -181,6 +165,7 @@ const academySlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      // fetchAcademyById
       .addCase(fetchAcademyById.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -193,6 +178,7 @@ const academySlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      //fetchAllAcademy
       .addCase(fetchAllAcademy.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -202,6 +188,19 @@ const academySlice = createSlice({
         state.allacademies = action.payload;
       })
       .addCase(fetchAllAcademy.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //get by name
+      .addCase(academybyNameexists.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(academybyNameexists.fulfilled, (state, action) => {
+        state.loading = false;
+        state.academyNameexists = action.payload;
+      })
+      .addCase(academybyNameexists.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademyById, editAcademy } from "../../redux/slice/academySlice";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
+import { academybyNameexists } from "../../redux/slice/academySlice";
 
 export const EditPopUpAcademy = (props) => {
   // Pop up logic --------------
@@ -24,13 +25,11 @@ export const EditPopUpAcademy = (props) => {
 
   const dispatch = useDispatch();
 
-  // Fetch academyById -------------
-  useEffect(() => {
-    dispatch(fetchAcademyById(props.id));
-  }, [dispatch]);
-
   // Redux state
-  const { academyDataById } = useSelector((state) => state.root.academy);
+  const { academyDataById, academyNameexists } = useSelector(
+    (state) => state.root.academy
+  );
+  // Fetch academyById -------------
 
   //date correct format
   let formattedDate = "";
@@ -54,6 +53,10 @@ export const EditPopUpAcademy = (props) => {
 
   // Initialize flag to track changes
   const [isChanged, setIsChanged] = useState(false);
+
+  // useEffect(() => {
+  //   dispatch(fetchAcademyById(props.id));
+  // }, [dispatch]);
 
   // Update edited values only if the input fields are changed
   const handleNameChange = (e) => {
@@ -139,49 +142,95 @@ export const EditPopUpAcademy = (props) => {
     setIsChanged(true);
   };
 
+  //redux
+  useEffect(() => {
+    dispatch(fetchAcademyById(props.id));
+    dispatch(
+      academybyNameexists({ name: editedName || academyDataById.AcademyName })
+    );
+  }, [dispatch, editedName, academyDataById.AcademyName]);
+
   // Handle save changes
   const handleSaveChanges = (e) => {
     e.preventDefault();
 
-    if (
-      isChanged &&
-      !nameError &&
-      !locationError &&
-      !foundedDateError &&
-      academyDataById.Status == "Rejected" &&
-      docChanged == "true"
-    ) {
-      dispatch(
-        editAcademy({
-          id: props.id,
-          name: editedName || academyDataById.AcademyName,
-          location: editedLocation || academyDataById.Location,
-          date: editedDate || academyDataById.FoundedYear,
-          logo: editedLogo || academyDataById.Logo,
-          doc: editedDoc, // || academyDataById.LegitimacyDocuments,
-          status: "Pending",
-        })
-      );
-      setdocChanged("false");
-      handleClose();
-      window.location.reload();
-    } else {
-      console.log("else");
-      console.log(academyDataById.Status);
-      console.log(docChanged);
-      dispatch(
-        editAcademy({
-          id: props.id,
-          name: editedName || academyDataById.AcademyName,
-          location: editedLocation || academyDataById.Location,
-          date: editedDate || academyDataById.FoundedYear,
-          logo: editedLogo || academyDataById.Logo,
-          doc: editedDoc || academyDataById.LegitimacyDocuments,
-          status: academyDataById.Status,
-        })
-      );
-      handleClose();
-      window.location.reload(); // to prevent laggy teams card
+    //---1
+    if (!nameError && !locationError && !foundedDateError) {
+      //---2 doc modified
+      if (academyDataById.Status === "Rejected" && docChanged === "true") {
+        if (
+          academyNameexists.AcademyName === academyDataById.AcademyName ||
+          academyNameexists === false
+        ) {
+          dispatch(
+            editAcademy({
+              id: props.id,
+              name: editedName || academyDataById.AcademyName,
+              location: editedLocation || academyDataById.Location,
+              date: editedDate || academyDataById.FoundedYear,
+              logo: editedLogo || academyDataById.Logo,
+              doc: editedDoc,
+              status: "Pending",
+            })
+          );
+          handleClose();
+          window.location.reload();
+        } else {
+          setNameError("This name is already used.");
+          setnamefieldColor("red");
+        }
+      }
+      //---2 doc not modified
+      if (academyDataById.Status === "Rejected" && docChanged !== "true") {
+        if (
+          academyNameexists.AcademyName === academyDataById.AcademyName ||
+          academyNameexists === false
+        ) {
+          dispatch(
+            editAcademy({
+              id: props.id,
+              name: editedName || academyDataById.AcademyName,
+              location: editedLocation || academyDataById.Location,
+              date: editedDate || academyDataById.FoundedYear,
+              logo: editedLogo || academyDataById.Logo,
+              doc: editedDoc,
+              status: "Rejected",
+            })
+          );
+          handleClose();
+          window.location.reload();
+        } else {
+          setNameError("This name is already used.");
+          setnamefieldColor("red");
+        }
+      }
+      //---2
+      else if (
+        academyDataById.Status === "Pending" ||
+        academyDataById.Status === "Approved"
+      ) {
+        if (
+          academyNameexists.AcademyName === academyDataById.AcademyName ||
+          academyNameexists === false
+        ) {
+          dispatch(
+            editAcademy({
+              id: props.id,
+              name: editedName || academyDataById.AcademyName,
+              location: editedLocation || academyDataById.Location,
+              date: editedDate || academyDataById.FoundedYear,
+              logo: editedLogo || academyDataById.Logo,
+              doc: editedDoc || academyDataById.LegitimacyDocuments,
+              status: academyDataById.Status,
+            })
+          );
+          handleClose();
+          window.location.reload();
+        } else {
+          setNameError("This name is already used.");
+          setnamefieldColor("red");
+        }
+      }
     }
   };
 

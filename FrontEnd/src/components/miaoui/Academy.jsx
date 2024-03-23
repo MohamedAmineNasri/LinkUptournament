@@ -20,10 +20,9 @@ export const Academy = () => {
       dispatch(fetchAcademy());
     }
   }, [loading, error, dispatch]);
-  //date correct format
-  // const date = new Date(academyData.FoundedYear);
-  const date = academyData ? new Date(academyData.FoundedYear) : null;
 
+  //date correct format
+  const date = academyData ? new Date(academyData.FoundedYear) : null;
   let formattedDate = "";
   if (date) {
     const year = date.getFullYear();

@@ -69,7 +69,8 @@ function App() {
         <Route path="/a" element={<Table data={fixtures} />}></Route>
         <Route
           path="/fixture/:matchID"
-          element={<Fixture data={fixtures} />}   
+          element={<Fixture data={fixtures} />}
+        ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
         <Route path="/signup" element={<SignUp />} />

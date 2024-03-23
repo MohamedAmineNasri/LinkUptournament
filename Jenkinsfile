@@ -3,6 +3,7 @@ pipeline {
 
     stages {
 
+<<<<<<< HEAD
         stage('Install dependencies') {
 steps{
 script {
@@ -56,3 +57,23 @@ sh('npm run build-dev')
     
     }}
 
+=======
+        stage('mouving to back_end') {
+            steps {
+                script {
+                    echo "mouving to backend "
+                    sh 'cd BackEnd'
+                   
+
+                }
+            }
+            
+              
+        }
+
+        
+
+      
+    }
+}
+>>>>>>> safa

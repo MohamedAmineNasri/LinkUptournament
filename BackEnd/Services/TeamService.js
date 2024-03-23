@@ -6,8 +6,9 @@ const Academy =require('../Models/Academy')
 const academyService = require('../Services/AcademyService')
 
 const getAllTeams = async (req, res, next) => {
-  const teams = await Team.find().populate("Players");
-  res.json(teams);
+        const teams = await Team.find();
+        res.json(teams);  
+        console.log(teams); 
 };
 
 

@@ -145,7 +145,7 @@ const MatchCard = (props) => {
         ))}
       <Footer></Footer>
     </div>
-    </>
+    
   );
 };
 

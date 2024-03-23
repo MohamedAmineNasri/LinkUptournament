@@ -46,7 +46,7 @@ function App() {
 
   console.log(fixtures);
 
-  const refresh = () => window.location.reload(true);
+  // const refresh = () => window.location.reload(true);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -58,10 +58,12 @@ function App() {
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
 
+        {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
         <Route element={<RequireAuth allowedRoles={['Manager']} />}>
-        <Route path="/addAcademy" element={<AddAcademy />} />
+  <Route path="/addAcademy" element={<AddAcademy />} />
+  <Route path="/Academy" element={<Academy />} />
+</Route>
 
-        <Route path="/Academy" element={<Academy />} />
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />
@@ -72,7 +74,8 @@ function App() {
         <Route path="/a" element={<Table data={fixtures} />}></Route>
         <Route
           path="/fixture/:matchID"
-          element={<Fixture data={fixtures} />} />   
+          element={<Fixture data={fixtures} />}
+        ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
         <Route path="/signup" element={<SignUp />} />
@@ -98,6 +101,8 @@ function App() {
         <Route path="/addTournament" element={<AddTournament />} />
         <Route path="/Tournament/:tournamentId" element={<Tournament />} />
         {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+
+        {/* </Route> */}
       </Routes>
     
   );

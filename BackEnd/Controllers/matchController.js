@@ -1,6 +1,6 @@
 const match = require("../Models/match");
 const player = require("../Models/Player");
-const tournament = require("../Models/Tournement")
+const tournament = require("../Models/Tournament")
 
 //get all 
 

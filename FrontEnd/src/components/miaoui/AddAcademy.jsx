@@ -6,13 +6,10 @@ import { convertToBase64 } from "../../utilities/convertFileBase64";
 import addformstadiumImage from "../../assets/Mi-imgs/2.jpg";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import {
-  Link,
-  Navigate,
-} from "react-router-dom/dist/umd/react-router-dom.development";
-import { academybyNameexists } from "../../redux/slice/academySlice";
+import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 
 export const AddAcademy = () => {
+  const dispatch = useDispatch();
   //modal logic
   const [show, setShow] = useState(false);
 
@@ -156,16 +153,6 @@ export const AddAcademy = () => {
     console.log(base64);
     setDoc({ ...Doc, myDoc: base64 });
   };
-
-  // Redux get academy by name
-  const dispatch = useDispatch();
-  const { academyNameexists, loading, error } = useSelector(
-    (state) => state.root.academy
-  );
-  useEffect(() => {
-    dispatch(academybyNameexists({ name: Name }));
-  }, [dispatch, Name]);
-
   //submit logic
   const handleSaveChanges = async (e) => {
     e.preventDefault(); // for refrech bug
@@ -178,34 +165,34 @@ export const AddAcademy = () => {
       FoundedYear != null &&
       Logo.myLogo != "" &&
       logoError == null &&
-      Doc.myDoc != "" &&
-      academyNameexists == false //redux : academy (Name) must not exist in db
+      Doc.myDoc != ""
     ) {
       dispatch(
         addnewAcademy({
-          name: Name,
+          name: Name.trim(),
           location: Location,
           logo: Logo.myLogo,
           foundedYear: FoundedYear,
           doc: Doc.myDoc,
         })
-      );
-      //Alert ----------------------
-      setSubmitSuccess(true);
-      setTimeout(() => {
-        setSubmitSuccess(false);
-        window.location.href = "http://127.0.0.1:5173/Academy"; //i will send the id of acdemy created to this url so i can displayed in it
-      }, 3000);
-    } else {
-      setsubmitFailure(true);
-      if (academyNameexists) {
-        //only when name exists we show this error msg
-        setNameError("this name is already used.");
-        setnamefieldColor("red");
-      }
-      setTimeout(() => {
-        setsubmitFailure(false);
-      }, 3000);
+      ).then((response) => {
+        console.log(response.payload.status); //response.payload is the response that we get from the service/controller methode
+        if (response.payload.status === false) {
+          setnamefieldColor("red");
+          setNameError("team name already exists");
+          setsubmitFailure(true);
+          setTimeout(() => {
+            setsubmitFailure(false);
+          }, 3000);
+        } else {
+          //Alert ----------------------
+          setSubmitSuccess(true);
+          setTimeout(() => {
+            setSubmitSuccess(false);
+            window.location.href = "http://127.0.0.1:5173/Academy"; //i will send the id of acdemy created to this url so i can displayed in it
+          }, 3000);
+        }
+      });
     }
   };
   return (

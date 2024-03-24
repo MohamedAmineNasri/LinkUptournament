@@ -98,23 +98,7 @@ export const editAcademyStatusToRejected = createAsyncThunk(
   }
 );
 
-// --------------------------------------------------------------
 
-export const academybyNameexists = createAsyncThunk(
-  'academy/academybyNameexists',
-  async ({name}) => {
-    console.log(name)
-    try {
-      const response = await axios.get(
-        'http://localhost:8000/academy/academyBynameExists/'+name,
-      );
-      console.log( response.data)
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-);
 
 
 export const addnewAcademy = createAsyncThunk(
@@ -191,19 +175,6 @@ const academySlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      //get by name
-      .addCase(academybyNameexists.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(academybyNameexists.fulfilled, (state, action) => {
-        state.loading = false;
-        state.academyNameexists = action.payload;
-      })
-      .addCase(academybyNameexists.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
   }
 });
 

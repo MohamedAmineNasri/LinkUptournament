@@ -5,6 +5,7 @@ const AcademySchema = new mongoose.Schema(
     AcademyName: {
       type: String,
       require: "AcademyName is required !!",
+      unique: true
     },
     Location: {
       type: String,

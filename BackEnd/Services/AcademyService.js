@@ -7,21 +7,29 @@ const getAllAcademies = async (req, res, next) => {
         res.json(academies);  
 };
 
-
-
 const addAcademy =  async (req, res, next) => {
-    const academyData = new academy()
-    academyData.AcademyName = req.body.AcademyName;
-    academyData.Location = req.body.Location;
-    academyData.Logo = req.body.Logo;
-    academyData.FoundedYear = req.body.FoundedYear;
-    academyData.LegitimacyDocuments = req.body.LegitimacyDocuments;
-    await academyData.save()
-    res.json({
+    const { AcademyName } = req.body;
+    try {   
+    const existingAcademy = await academy.findOne({AcademyName});
+    if (existingAcademy) {
+        return res.json({status : false});
+    }     
+        const academyData = new academy()
+        academyData.AcademyName = req.body.AcademyName;
+        academyData.Location = req.body.Location;
+        academyData.Logo = req.body.Logo;
+        academyData.FoundedYear = req.body.FoundedYear;
+        academyData.LegitimacyDocuments = req.body.LegitimacyDocuments;
+        await academyData.save()
+    return res.json({
             id:academyData._id,
-            message : "Academy sucessfully added ! "
+            message : "Academy sucessfully added ! ",
+            status : true
         });
-}
+    }catch (error) {
+        console.error("Error adding team and assigning to academy:", error);
+        res.status(500).json( "Internal server error" );
+    }}
 
 
 

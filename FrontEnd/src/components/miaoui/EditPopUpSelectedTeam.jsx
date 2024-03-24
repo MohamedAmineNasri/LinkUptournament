@@ -15,7 +15,7 @@ export const EditPopUpSelectedTeam = (props) => {
   const dispatch = useDispatch();
 
   // Initialize state for edited values
-  const [teamName, setteamName] = useState("");
+  const [teamName, setteamName] = useState(props.Tname);
   const [editedLogo, setEditedLogo] = useState(null);
   //validator states
   const [nameError, setNameError] = useState("");
@@ -63,8 +63,28 @@ export const EditPopUpSelectedTeam = (props) => {
           name: teamName || props.Tname,
           logo: editedLogo || props.Tlogo,
         })
-      );
-      handleClose();
+      )
+        .then((response) => {
+          console.log(response); //response.payload is the response that we get from the service/controller methode
+          if (teamName === props.Tname) {
+            if (response.payload === false) {
+              console.log("the name exists");
+              setnamefieldColor("red");
+              setNameError("team name already exists");
+            }
+            console.log("same name");
+            setNameError(null);
+            setnamefieldColor("green");
+            handleClose();
+          } else if (response.payload === false) {
+            console.log("the name exists");
+            setnamefieldColor("red");
+            setNameError("name  :    " + teamName + "      do already exists");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
   };
 

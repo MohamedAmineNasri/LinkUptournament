@@ -1,9 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { addTeamAndAssaignToAcademy } from "../../redux/slice/teamSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 
 export const AddTeamPopUpWindow = (props) => {
@@ -64,10 +64,21 @@ export const AddTeamPopUpWindow = (props) => {
         addTeamAndAssaignToAcademy({
           idAcademy: props.id,
           name: Name,
-          logo: Logo || props.aLogo, // selected team logo or academy logo if no logo selected when creating the team
+          logo: Logo || props.aLogo,
         })
-      );
-      handleClose();
+      )
+        .then((response) => {
+          console.log(response.payload); //response.payload is the response that we get from the service/controller methode
+          if (response.payload === false) {
+            setnamefieldColor("red");
+            setNameError("team name already exists");
+          } else {
+            handleClose(); // Close only if team name doesn't already exist
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
   };
 

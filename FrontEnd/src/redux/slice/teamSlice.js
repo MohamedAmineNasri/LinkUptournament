@@ -52,7 +52,10 @@ export const addTeamAndAssaignToAcademy = createAsyncThunk(
           academy: idAcademy
         }
       );
-      window.location.reload();
+      //we refresh only when team is created sucessfully
+      if (response.data === true){
+        window.location.reload();
+      }
       return response.data;
     } catch (error) {
       throw Error('Error add teams: ' + error.message);
@@ -71,7 +74,10 @@ export const editTeam = createAsyncThunk(
           TeamLogo: logo,
         }
       );
-      window.location.reload();
+      //we refresh only when team is created sucessfully
+      if (response.data === true){
+        window.location.reload();
+      }
       return response.data;
     } catch (error) {
       throw Error('Error edit teams: ' + error.message);
@@ -102,7 +108,7 @@ const teamSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })  
-          .addCase(fetchteams.pending, (state) => {
+      .addCase(fetchteams.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
@@ -114,7 +120,6 @@ const teamSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      ;
   }
 });
 

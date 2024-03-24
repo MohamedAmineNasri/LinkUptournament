@@ -23,28 +23,43 @@ const addTeam =  async (req, res, next) => {
 }
 
 const updateTeam = async (req,res,next)=>{
+    const {TeamName} = req.body;
+    try {
+    const existingTeam = await Team.findOne({TeamName});
+    if (existingTeam) {
+        return res.json(false);
+    }     
     const TeamData = await Team.findById(req.params.id);
     TeamData.TeamName = req.body.TeamName;
     TeamData.TeamLogo = req.body.TeamLogo;
     await TeamData.save()
-    res.json("Team updated sucessfully");
+    return res.json(true);
+    }catch (error) {
+        console.error("Error updating team :", error);
+        res.status(500).json( "Internal server error" );
+    }
 }
 
 
-
-
-const addTeamAndAssaignToAcademy =  async (req, res, next) => {
-    const { TeamName, TeamLogo,academy  } = req.body;
-    const TeamData = new Team({ TeamName,TeamLogo,academy });
-    await TeamData.save();
-
-     targetAcademy = await academyService.getAcademyByIdParam(academy)
-     targetAcademy.teams.push(TeamData);
-     await targetAcademy.save();
-    res.json({
-        message : "Team sucessfully added ! "
-    });
+const addTeamAndAssaignToAcademy = async (req, res, next) => {
+    const { TeamName, TeamLogo, academy } = req.body;
+    try {   
+        const existingTeam = await Team.findOne({ TeamName });
+        if (existingTeam) {
+            return res.json(false);
+        }     
+        const TeamData = new Team({ TeamName,TeamLogo,academy });
+        await TeamData.save();
+        const targetAcademy = await academyService.getAcademyByIdParam(academy)
+        targetAcademy.teams.push(TeamData);
+        await targetAcademy.save();
+        return res.json(true);
+    } catch (error) {
+        console.error("Error adding team and assigning to academy:", error);
+        res.status(500).json( "Internal server error" );
+    }
 }
+
 
 
 
@@ -54,20 +69,6 @@ const getTeamById =  async (req,res,next)=>{
 }
 
 
-// const getTeamByAcademyId = async (req, res, next) => {
-    
-//         const targetAcademy = await academyService.getAcademyByIdParam(req.params.id);
-//         const teamData = []; 
-
-//         for (const teamId of targetAcademy.teams) {
-           
-//             const team = await Team.findById(teamId); 
-//             teamData.push(team);
-//         }
-
-//         res.json(teamData);
-    
-// }
 const getTeamByAcademyId = async (req, res, next) => {
     try {
         const targetAcademy = await academyService.getAcademyByIdParam(req.params.id);

@@ -5,6 +5,7 @@ const TeamSchema = new mongoose.Schema(
     TeamName: {
       type: String,
       require: "AcademyName is required !!",
+      unique: true
     },
     TeamLogo: {
       type: String,

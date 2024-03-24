@@ -18,6 +18,7 @@ router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
 
 router.delete("/deleteTeam/:id" ,teamService.deleteTeamById);
 router.put("/updateTeam/:id",teamService.updateTeam);
+router.put("/updateTeamSameName/:id",teamService.updateTeamSameName);
 
 router.post("/updateMW/:id",teamService.updateTeamMatchesWon);
 router.post("/cancelMW/:id",teamService.cancelTeamMatchesWon);

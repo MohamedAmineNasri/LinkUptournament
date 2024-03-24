@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
-import { editTeam } from "../../redux/slice/teamSlice";
+import { editTeam, editTeamSameName } from "../../redux/slice/teamSlice";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 
 export const EditPopUpSelectedTeam = (props) => {
@@ -63,28 +63,30 @@ export const EditPopUpSelectedTeam = (props) => {
           name: teamName || props.Tname,
           logo: editedLogo || props.Tlogo,
         })
-      )
-        .then((response) => {
-          console.log(response); //response.payload is the response that we get from the service/controller methode
+      ).then((response) => {
+        // console.log(response);
+        if (response.payload === false) {
+          //name exist in db
           if (teamName === props.Tname) {
-            if (response.payload === false) {
-              console.log("the name exists");
-              setnamefieldColor("red");
-              setNameError("team name already exists");
-            }
+            // when user update with the same name (no change but click in button)
+            console.log("the name exists");
             console.log("same name");
-            setNameError(null);
-            setnamefieldColor("green");
-            handleClose();
-          } else if (response.payload === false) {
+
+            dispatch(
+              editTeamSameName({
+                //we call this update that do not check for duplicate name and do the update
+                teamid: props.Tid,
+                name: teamName || props.Tname,
+                logo: editedLogo || props.Tlogo,
+              })
+            );
+          } else {
             console.log("the name exists");
             setnamefieldColor("red");
             setNameError("name  :    " + teamName + "      do already exists");
           }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+        }
+      });
     }
   };
 

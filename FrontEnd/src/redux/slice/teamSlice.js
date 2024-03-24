@@ -84,6 +84,24 @@ export const editTeam = createAsyncThunk(
     }
   }
 );
+export const editTeamSameName = createAsyncThunk(
+  'team/editTeamSameName',
+  async ({ teamid, name, logo}) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/team/updateTeamSameName/'+teamid,
+        {
+          TeamName: name, 
+          TeamLogo: logo,
+        }
+      );
+        window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw Error('Error edit teams: ' + error.message);
+    }
+  }
+);
 
 const teamSlice = createSlice({
   name: 'team',

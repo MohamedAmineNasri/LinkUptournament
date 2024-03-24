@@ -39,6 +39,14 @@ const updateTeam = async (req,res,next)=>{
         res.status(500).json( "Internal server error" );
     }
 }
+const updateTeamSameName = async (req,res,next)=>{
+    const TeamData = await Team.findById(req.params.id);
+    TeamData.TeamName = req.body.TeamName;
+    TeamData.TeamLogo = req.body.TeamLogo;
+    await TeamData.save()
+    return res.json("success");
+    
+}
 
 
 const addTeamAndAssaignToAcademy = async (req, res, next) => {
@@ -346,4 +354,4 @@ const assignPlayerToTeam = async (req, res) => {
 
 
 
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam};
+module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};

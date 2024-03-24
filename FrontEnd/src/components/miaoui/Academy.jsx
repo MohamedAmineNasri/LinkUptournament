@@ -196,6 +196,7 @@ export const Academy = () => {
                     <DropDownAcademy
                       id={academyData._id}
                       academyLogo={academyData.Logo}
+                      academyname={academyData.AcademyName}
                     />
                   </div>
                 </div>

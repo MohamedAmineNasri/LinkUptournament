@@ -57,7 +57,29 @@ export const editAcademy = createAsyncThunk(
         }
       );
       
-      // window.location.reload();
+      //  window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const editAcademysameName = createAsyncThunk(
+  'academy/editAcademysameName',
+  async ({ id, name, location, date ,logo,doc,status}) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/academy/updateAcademyforduplicateName/'+id,
+        {
+          AcademyName: name, 
+          Location: location,
+          FoundedYear: date,
+          Logo :logo,
+          LegitimacyDocuments : doc,
+          Status: status  //rejected -----> pending
+        }
+      );
+       window.location.reload();
       return response.data;
     } catch (error) {
       throw error;

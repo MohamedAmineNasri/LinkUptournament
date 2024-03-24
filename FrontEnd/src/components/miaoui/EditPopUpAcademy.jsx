@@ -3,7 +3,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAcademyById, editAcademy } from "../../redux/slice/academySlice";
+import {
+  fetchAcademyById,
+  editAcademy,
+  editAcademysameName,
+} from "../../redux/slice/academySlice";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 
 export const EditPopUpAcademy = (props) => {
@@ -25,9 +29,7 @@ export const EditPopUpAcademy = (props) => {
   const dispatch = useDispatch();
 
   // Redux state
-  const { academyDataById, academyNameexists } = useSelector(
-    (state) => state.root.academy
-  );
+  const { academyDataById } = useSelector((state) => state.root.academy);
   // Fetch academyById -------------
 
   //date correct format
@@ -42,16 +44,13 @@ export const EditPopUpAcademy = (props) => {
       .padStart(2, "0")}`;
   }
   // Initialize state for edited values
-  const [editedName, setEditedName] = useState("");
+  const [editedName, setEditedName] = useState(props.academyname); // i used props from academy component bcz fetch take time and the value gets empty to condition
   const [editedLocation, setEditedLocation] = useState("");
   const [editedDate, setEditedDate] = useState("");
   const [editedLogo, setEditedLogo] = useState(null);
   const [editedDoc, seteditedDoc] = useState(null);
 
   const [docChanged, setdocChanged] = useState("false");
-
-  // Initialize flag to track changes
-  const [isChanged, setIsChanged] = useState(false);
 
   // useEffect(() => {
   //   dispatch(fetchAcademyById(props.id));
@@ -73,7 +72,6 @@ export const EditPopUpAcademy = (props) => {
       } else {
         setNameError(null);
         setnamefieldColor("green");
-        setIsChanged(true);
       }
     } else {
       setNameError("Academy Name is required");
@@ -95,7 +93,6 @@ export const EditPopUpAcademy = (props) => {
       } else {
         setLocationError(null);
         setlocationfieldColor("green");
-        setIsChanged(true);
       }
     } else {
       setLocationError("Location is required");
@@ -119,7 +116,6 @@ export const EditPopUpAcademy = (props) => {
         setFoundedDateError(null);
         setdatefieldColor("green");
         setEditedDate(enteredDate);
-        setIsChanged(true);
       }
     }
   };
@@ -129,7 +125,6 @@ export const EditPopUpAcademy = (props) => {
     if (file) {
       const base64 = await convertToBase64(file);
       setEditedLogo(base64);
-      setIsChanged(true);
     }
   };
 
@@ -138,16 +133,12 @@ export const EditPopUpAcademy = (props) => {
     const base64 = await convertToBase64(file);
     seteditedDoc(base64);
     setdocChanged("true");
-    setIsChanged(true);
   };
 
   //redux
   useEffect(() => {
     dispatch(fetchAcademyById(props.id));
-    dispatch(
-      academybyNameexists({ name: editedName || academyDataById.AcademyName })
-    );
-  }, [dispatch, editedName, academyDataById.AcademyName]);
+  }, [dispatch]);
 
   // Handle save changes
   const handleSaveChanges = (e) => {
@@ -157,78 +148,128 @@ export const EditPopUpAcademy = (props) => {
     if (!nameError && !locationError && !foundedDateError) {
       //---2 doc modified
       if (academyDataById.Status === "Rejected" && docChanged === "true") {
-        if (
-          academyNameexists.AcademyName === academyDataById.AcademyName ||
-          academyNameexists === false
-        ) {
-          dispatch(
-            editAcademy({
-              id: props.id,
-              name: editedName || academyDataById.AcademyName,
-              location: editedLocation || academyDataById.Location,
-              date: editedDate || academyDataById.FoundedYear,
-              logo: editedLogo || academyDataById.Logo,
-              doc: editedDoc,
-              status: "Pending",
-            })
-          );
-          handleClose();
-          window.location.reload();
-        } else {
-          setNameError("This name is already used.");
-          setnamefieldColor("red");
-        }
+        dispatch(
+          editAcademy({
+            //IT WILL be excuted only when changing to name that dosen't exist in db
+            id: props.id,
+            name: editedName || academyDataById.AcademyName,
+            location: editedLocation || academyDataById.Location,
+            date: editedDate || academyDataById.FoundedYear,
+            logo: editedLogo || academyDataById.Logo,
+            doc: editedDoc,
+            status: "Pending",
+          })
+        ).then((response) => {
+          // console.log(response);
+          if (response.payload === false) {
+            //name exist in db
+            if (editedName === academyDataById.AcademyName) {
+              // when user update with the same name (no change but click in button)
+              console.log("the name exists");
+              console.log("same name");
+              console.log("docchanged :" + docChanged);
+              dispatch(
+                editAcademysameName({
+                  //we call this update that do not check for duplicate name and do the update
+                  id: props.id,
+                  name: editedName || academyDataById.AcademyName,
+                  location: editedLocation || academyDataById.Location,
+                  date: editedDate || academyDataById.FoundedYear,
+                  logo: editedLogo || academyDataById.Logo,
+                  doc: editedDoc,
+                  status: "Pending",
+                })
+              );
+            } else {
+              console.log("the name exists");
+              setnamefieldColor("red");
+              setNameError(
+                "name  :    " + editedName + "      do already exists"
+              );
+            }
+          }
+        });
       }
       //---2 doc not modified
       if (academyDataById.Status === "Rejected" && docChanged !== "true") {
-        if (
-          academyNameexists.AcademyName === academyDataById.AcademyName ||
-          academyNameexists === false
-        ) {
-          dispatch(
-            editAcademy({
-              id: props.id,
-              name: editedName || academyDataById.AcademyName,
-              location: editedLocation || academyDataById.Location,
-              date: editedDate || academyDataById.FoundedYear,
-              logo: editedLogo || academyDataById.Logo,
-              doc: editedDoc,
-              status: "Rejected",
-            })
-          );
-          handleClose();
-          window.location.reload();
-        } else {
-          setNameError("This name is already used.");
-          setnamefieldColor("red");
-        }
+        dispatch(
+          editAcademy({
+            id: props.id,
+            name: editedName || academyDataById.AcademyName,
+            location: editedLocation || academyDataById.Location,
+            date: editedDate || academyDataById.FoundedYear,
+            logo: editedLogo || academyDataById.Logo,
+            doc: editedDoc,
+            status: "Rejected",
+          })
+        ).then((response) => {
+          if (response.payload === false) {
+            if (editedName === academyDataById.AcademyName) {
+              console.log("the name exists");
+              console.log("same name");
+              console.log("docchanged :" + docChanged);
+              dispatch(
+                editAcademysameName({
+                  id: props.id,
+                  name: editedName || academyDataById.AcademyName,
+                  location: editedLocation || academyDataById.Location,
+                  date: editedDate || academyDataById.FoundedYear,
+                  logo: editedLogo || academyDataById.Logo,
+                  doc: editedDoc,
+                  status: "Rejected",
+                })
+              );
+            } else {
+              console.log("the name exists");
+              setnamefieldColor("red");
+              setNameError(
+                "name  :    " + editedName + "      do already exists"
+              );
+            }
+          }
+        });
       }
       //---2
       else if (
         academyDataById.Status === "Pending" ||
         academyDataById.Status === "Approved"
       ) {
-        if (
-          academyNameexists.AcademyName === academyDataById.AcademyName ||
-          academyNameexists === false
-        ) {
-          dispatch(
-            editAcademy({
-              id: props.id,
-              name: editedName || academyDataById.AcademyName,
-              location: editedLocation || academyDataById.Location,
-              date: editedDate || academyDataById.FoundedYear,
-              logo: editedLogo || academyDataById.Logo,
-              doc: editedDoc || academyDataById.LegitimacyDocuments,
-              status: academyDataById.Status,
-            })
-          );
-          handleClose();
-          window.location.reload();
-        } else {
-          setNameError("This name is already used.");
-          setnamefieldColor("red");
-        }
+        dispatch(
+          editAcademy({
+            id: props.id,
+            name: editedName || academyDataById.AcademyName,
+            location: editedLocation || academyDataById.Location,
+            date: editedDate || academyDataById.FoundedYear,
+            logo: editedLogo || academyDataById.Logo,
+            doc: editedDoc || academyDataById.LegitimacyDocuments,
+            status: academyDataById.Status,
+          })
+        ).then((response) => {
+          if (response.payload === false) {
+            if (editedName === academyDataById.AcademyName) {
+              console.log("the name exists");
+              console.log("same name");
+              console.log("docchanged :" + docChanged);
+              dispatch(
+                editAcademysameName({
+                  id: props.id,
+                  name: editedName || academyDataById.AcademyName,
+                  location: editedLocation || academyDataById.Location,
+                  date: editedDate || academyDataById.FoundedYear,
+                  logo: editedLogo || academyDataById.Logo,
+                  doc: editedDoc || academyDataById.LegitimacyDocuments,
+                  status: academyDataById.Status,
+                })
+              );
+            } else {
+              console.log("the name exists");
+              setnamefieldColor("red");
+              setNameError(
+                "name  :    " + editedName + "      do already exists"
+              );
+            }
+          }
+        });
       }
     }
   };

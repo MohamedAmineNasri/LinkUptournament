@@ -9,7 +9,10 @@ function DropDownAcademy(props) {
         <Dropdown.Toggle variant="success">Options</Dropdown.Toggle>
         <Dropdown.Menu style={{ backgroundColor: "#8bc34a" }}>
           <div>
-            <EditPopUpAcademy id={props.id}></EditPopUpAcademy>
+            <EditPopUpAcademy
+              id={props.id}
+              academyname={props.academyname}
+            ></EditPopUpAcademy>
           </div>
           <AddTeamPopUpWindow
             id={props.id}

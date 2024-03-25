@@ -18,6 +18,11 @@ export const Academy = () => {
   useEffect(() => {
     if (loading === false && error === null) {
       dispatch(fetchAcademy());
+      // const userId = localStorage.getItem("user");
+      // const userObject = JSON.parse(userId);
+      // Extract the id property from the user object
+      // const userIdOnly = userObject.id;
+      // console.log(userIdOnly);
     }
   }, [loading, error, dispatch]);
 

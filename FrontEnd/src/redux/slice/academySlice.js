@@ -57,7 +57,7 @@ export const editAcademy = createAsyncThunk(
         }
       );
       
-      //  window.location.reload();
+      window.location.reload();
       return response.data;
     } catch (error) {
       throw error;

@@ -40,6 +40,10 @@ const TeamSchema = new mongoose.Schema(
       ref: 'Academy',
       // required: true
     },
+    // Players: [{
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Player'
+    // }]
 
     // Group stage data-------------------------------------------------------------------
     GS_MatchesWon: {

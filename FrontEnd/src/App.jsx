@@ -26,6 +26,8 @@ import SignIn from "./pages/Authentication Pages/SignIn";
 import Register from "./pages/Authentication Pages/SignUp";
 import Tables from "./pages/User Tables/Tables";
 import Profile from "./pages/Profile Pages/Profile";
+import Chat from "./pages/Chat/Chat";
+import ChatroomPage from "./pages/Chat/ChatroomPage";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
@@ -90,6 +92,8 @@ function App() {
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/chatpage" element={<ChatroomPage />} />
               <Route path="/userstable" element={<Tables />} />
               <Route path="/settings" element={<Settings />} />
             </Route>

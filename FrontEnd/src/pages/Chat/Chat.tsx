@@ -101,15 +101,17 @@ return (
                         onChange={(e) => setChatroomName(e.target.value)}
                     />
                 </div>
-                <button className={styles.button} onClick={createChatroom}>Create ChatRoom</button>
+                <button className={styles.chatButton} onClick={createChatroom}>Create ChatRoom</button>
+
             </div>
       <div className="chatrooms">
         {chatrooms.map((chatroom) => (
           <div key={chatroom._id} className="chatroom">
             <div>{chatroom.name}</div>
             <Link to={"/chatroom/" + chatroom._id}>
-              <div className={styles.join}>Join</div>
+              <div className={styles.joinLink}>Join</div>
             </Link>
+
           </div>
         ))}
       </div>

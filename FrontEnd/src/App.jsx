@@ -34,6 +34,8 @@ import Settings from "./Dashboard/src/pages/Settings";
 import Group from "./components/Group"
 import AddTournament from "./components/AddTournament";
 import Tournament from "./components/Tournament";
+import Tournement from "./pages/Tournament";
+
 // import TournamentBracket  from "./components/TournamentBracket";
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
@@ -63,7 +65,7 @@ function App() {
         </Route>
 
         <Route path="/Academy" element={<Academy />} />
-        <Route path="/tournament" element={<Tournament />} />
+        <Route path="/tournement" element={<Tournement />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />
         <Route path="/player" element={<AddPlayerForm />} />

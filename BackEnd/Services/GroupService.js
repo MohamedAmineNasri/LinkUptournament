@@ -50,14 +50,15 @@ const updateGroup = async (req,res,next)=>{
 }
 const createGroups = async (req, res , next) => {
   const tournament = await Tournament.findById(req.params.id);
-  let teamsChunks = [];
+  let teamsChunks = []; 
+  const numGroups = req.params.nbG;
+  const numTeams = req.params.nbT; 
 
   switch(tournament.type) {
-    case 'Group Stage Tournament':
-      const numGroups = Math.ceil(tournament.teams.length/ 4);
-      for (let i = 0; i < tournament.teams.length; i += 4) {
+       case 'Group Stage':
+      for (let i = 0; i < tournament.teams.length; i += numTeams) {
         let teamsChunk = [];
-        for (const teamId of tournament.teams.slice(i, i + 4)) {
+        for (const teamId of tournament.teams.slice(i, i + numTeams)) {
           const teamDoc = await Team.findById(teamId);
           teamsChunk.push({
             team: teamId,
@@ -76,14 +77,14 @@ const createGroups = async (req, res , next) => {
       }
       
       for (let j = 0; j < numGroups; j++) {
-            const groupName = 'Group ' + String.fromCharCode(65 + j);
-            const group = new Group({
-              name: groupName,
-              tournament: tournament,
-              teams: teamsChunks[j]
-            });
-            await group.save();
-           }
+        const groupName = 'Group ' + String.fromCharCode(65 + j);
+        const group = new Group({
+          name: groupName,
+          tournament: tournament,
+          teams: teamsChunks[j]
+        });
+        await group.save();
+      }
       break;
       case 'Round Robin Tournament':
         let teams = [];
@@ -128,47 +129,6 @@ const createGroups = async (req, res , next) => {
 
 
 
-// const createGroupsStage = async (req, res , next) => {
-//   // Trouver le tournoi par son identifiant et attendre le résultat avec le mot-clé await
-//   const tournament = await Tournament.findById(req.params.id);
-//   // Créer un tableau pour stocker les groupes
-//   const groups = [];
-//   // Obtenir le nombre d'équipes
-//   const numTeams = tournament.teams.length;
-//   // Calculer le nombre de groupes nécessaires
-//   const numGroups = Math.ceil(numTeams / 4);
-//   // Diviser le tableau des équipes en sous-tableaux de taille 4
-//   const teamsChunks = [];
-//   for (let i = 0; i < numTeams; i += 4) {
-//     teamsChunks.push(tournament.teams.slice(i, i + 4).map(team => ({
-//       team: team,
-//       MJ: 0,
-//       G: 0,
-//       N: 0,
-//       P: 0,
-//       BP: 0,
-//       BC: 0,
-//       DB: 0,
-//       PTS: 0
-//     })));
-//   }
-//   // Créer un groupe pour chaque sous-tableau
-//   for (let j = 0; j < numGroups; j++) {
-//     const groupName = 'Group ' + String.fromCharCode(65 + j);
-//     const group = new Group({
-//       name: groupName,
-//       tournament: tournament,
-//       teams: teamsChunks[j]
-//     });
-//     // Ajouter le groupe au tableau
-//     await group.save();
-//     res.json({
-//        message : "Group sucessfully added ! "
-//     });
-//   }
-//   // Afficher le résultat
-//   console.log('Les groupes ont été créés avec succès.');
-// };
 const updateGrouptri = async (id , req, res , next) => {
   console.log('updateGrouptri called');
   const group = await Group.findById(id);

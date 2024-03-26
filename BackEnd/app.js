@@ -26,7 +26,7 @@ const playerRouter = require("./Routes/playerRouter");
 
 
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 

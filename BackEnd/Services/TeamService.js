@@ -84,17 +84,28 @@ const getTeamByAcademyId = async (req, res, next) => {
 
         const teamData = []; 
 
-        for (const teamId of targetAcademy.teams) {
-            const team = await Team.findById(teamId); 
-            teamData.push(team);
+        // Check if the academy has teams
+        if (targetAcademy.teams.length > 0 ) {
+            for (const teamId of targetAcademy.teams) {
+                const team = await Team.findById(teamId); 
+                if (team) { // Check if team is found
+                    teamData.push(team);
+                } else {
+                    console.log(`Team with ID ${teamId} not found`);
+                }
+            }
+        } else {
+            console.log('No teams found for the academy');
         }
 
         console.log('Team Data:', teamData);
         res.json(teamData);
     } catch (error) {
-        next(error);
+        console.error("Error adding team and assigning to academy:", error);
+        res.status(500).json( "Internal server error" );
     }
 }
+
 
 
 

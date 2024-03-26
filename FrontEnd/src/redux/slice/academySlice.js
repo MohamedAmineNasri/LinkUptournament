@@ -15,11 +15,11 @@ export const fetchAllAcademy = createAsyncThunk(
   }
 );
 //next ----> get academy by user id  : http://localhost:8000/academy/getAcademy/USERID
-export const fetchAcademy = createAsyncThunk(
+export const fetchAcademybyManagerId = createAsyncThunk(
   'academy/fetchAcademy',
-  async () => {
+  async ({idmanger}) => {
     try {
-      const response = await axios.get('http://localhost:8000/academy/getAcademy/65d63d731ae37b6822a03daa');
+      const response = await axios.get('http://localhost:8000/academy/getAcademyByMangerId/'+ idmanger);
       return response.data;
     } catch (error) {
       throw error;
@@ -123,9 +123,9 @@ export const editAcademyStatusToRejected = createAsyncThunk(
 
 
 
-export const addnewAcademy = createAsyncThunk(
+export const addAcademyAndAssaignToManager = createAsyncThunk(
   'academy/addnewAcademy',
-  async ({ name, location,logo,foundedYear,doc }) => {
+  async ({ name, location,logo,foundedYear,doc ,mangerid}) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/academy/addAcademy',
@@ -134,7 +134,8 @@ export const addnewAcademy = createAsyncThunk(
           Location: location,
           Logo: logo,
           FoundedYear:foundedYear,
-          LegitimacyDocuments : doc
+          LegitimacyDocuments : doc,
+          ManagerID :mangerid
         }
       );
       return response.data;
@@ -159,15 +160,15 @@ const academySlice = createSlice({
   extraReducers: (builder) => {
     builder
     // fetchAcademy
-      .addCase(fetchAcademy.pending, (state) => {
+      .addCase(fetchAcademybyManagerId.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchAcademy.fulfilled, (state, action) => {
+      .addCase(fetchAcademybyManagerId.fulfilled, (state, action) => {
         state.loading = false;
         state.academyData = action.payload;
       })
-      .addCase(fetchAcademy.rejected, (state, action) => {
+      .addCase(fetchAcademybyManagerId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })

@@ -1,4 +1,5 @@
 const academy = require('../Models/Academy')
+const user =require('../Models/Users')
 
 
 
@@ -7,19 +8,20 @@ const getAllAcademies = async (req, res, next) => {
         res.json(academies);  
 };
 
-const addAcademy =  async (req, res, next) => {
+const addAcademyAndAssaignToManager =  async (req, res, next) => {
     const { AcademyName } = req.body;
     try {   
     const existingAcademy = await academy.findOne({AcademyName});
     if (existingAcademy) {
         return res.json({status : false});
-    }     
+    }   
         const academyData = new academy()
         academyData.AcademyName = req.body.AcademyName;
         academyData.Location = req.body.Location;
         academyData.Logo = req.body.Logo;
         academyData.FoundedYear = req.body.FoundedYear;
         academyData.LegitimacyDocuments = req.body.LegitimacyDocuments;
+        academyData.user = req.body.ManagerID
         await academyData.save()
     return res.json({
             id:academyData._id,
@@ -72,6 +74,18 @@ const getAcademyById =  async (req,res,next)=>{
     res.json(academyData);
 }
 
+const getAcademyByMangerId = async (req, res, next) => {
+    try {
+      const academyData = await academy.findOne({ user: req.params.idmanger });
+      if (!academyData) {
+        return res.status(404).json({ message: 'Academy not found for the given user ID' });
+      }
+      res.json(academyData);
+    } catch (error) {
+      console.error('Error fetching academy:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
 
 
 
@@ -109,4 +123,4 @@ const updateStatustoRejected = async (req,res,next)=>{
 
 
 
-module.exports = { getAllAcademies,addAcademy, deleteAcademyById, getAcademyById,getAcademyByIdParam,updateAcademy,updateStatustoApproved,updateStatustoRejected,updateAcademyforduplicateName};
+module.exports = { getAllAcademies,addAcademyAndAssaignToManager,getAcademyByMangerId, deleteAcademyById, getAcademyById,getAcademyByIdParam,updateAcademy,updateStatustoApproved,updateStatustoRejected,updateAcademyforduplicateName};

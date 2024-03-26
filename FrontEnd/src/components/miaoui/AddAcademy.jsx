@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addnewAcademy } from "../../redux/slice/academySlice";
+import { addAcademyAndAssaignToManager } from "../../redux/slice/academySlice";
 import { useState, useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
@@ -156,6 +156,13 @@ export const AddAcademy = () => {
   //submit logic
   const handleSaveChanges = async (e) => {
     e.preventDefault(); // for refrech bug
+
+    // get manger id from local storage
+    const userId = localStorage.getItem("user");
+    const userObject = JSON.parse(userId);
+    // Extract the id property from the user object
+    const userIdOnly = userObject.id;
+    console.log(userIdOnly);
     if (
       nameError == null &&
       Name.trim() != null &&
@@ -168,12 +175,13 @@ export const AddAcademy = () => {
       Doc.myDoc != ""
     ) {
       dispatch(
-        addnewAcademy({
+        addAcademyAndAssaignToManager({
           name: Name.trim(),
           location: Location,
           logo: Logo.myLogo,
           foundedYear: FoundedYear,
           doc: Doc.myDoc,
+          mangerid: userIdOnly,
         })
       ).then((response) => {
         console.log(response.payload.status); //response.payload is the response that we get from the service/controller methode

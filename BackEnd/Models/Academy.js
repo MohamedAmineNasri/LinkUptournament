@@ -30,7 +30,12 @@ const AcademySchema = new mongoose.Schema(
     teams: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team'
-      }]
+      }],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+        
+    },
   },
 );
 

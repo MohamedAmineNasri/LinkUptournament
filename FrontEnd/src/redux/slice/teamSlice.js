@@ -15,9 +15,9 @@ export const fetchteams = createAsyncThunk(
 
 export const fetchTeamOfAcademy = createAsyncThunk(
   'team/fetchTeam',
-  async () => {
+  async (idAcademy) => {
     try {
-      const response = await axios.get('http://localhost:8000/Team/getTeambyAcademyId/65d63d731ae37b6822a03daa');
+      const response = await axios.get('http://localhost:8000/Team/getTeambyAcademyId/'+idAcademy);
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);

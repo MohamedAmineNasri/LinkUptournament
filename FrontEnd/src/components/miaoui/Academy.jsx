@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import TeamCard from "./TeamCard";
 import DropDownAcademy from "./DropDownAcademy";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAcademy } from "../../redux/slice/academySlice";
+import { fetchAcademybyManagerId } from "../../redux/slice/academySlice";
 import academyImagespectators from "../../assets/Mi-imgs/1.jpg";
 import academyImageteam from "../../assets/Mi-imgs/team1.jpg";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
@@ -16,13 +16,17 @@ export const Academy = () => {
 
   // fetch and refresh when academy updated
   useEffect(() => {
+    const userId = localStorage.getItem("user");
+    const userObject = JSON.parse(userId);
+    //Extract the id property from the user object
+    const userIdOnly = userObject.id;
+
     if (loading === false && error === null) {
-      dispatch(fetchAcademy());
-      // const userId = localStorage.getItem("user");
-      // const userObject = JSON.parse(userId);
-      // Extract the id property from the user object
-      // const userIdOnly = userObject.id;
-      // console.log(userIdOnly);
+      dispatch(
+        fetchAcademybyManagerId({
+          idmanger: userIdOnly,
+        })
+      );
     }
   }, [loading, error, dispatch]);
 
@@ -209,7 +213,7 @@ export const Academy = () => {
                 <div className="col-md-7 col-lg-8">
                   <div className="widget-body mb-3 teamsBorderBox ">
                     <div className="teamsBordersolid">
-                      <TeamCard />
+                      <TeamCard idacademy={academyData._id} />
                     </div>
                   </div>
                 </div>

@@ -4,9 +4,10 @@ const academyService = require('../Services/AcademyService')
 
 router.get("/" , academyService.getAllAcademies);
 
-router.post("/addAcademy",academyService.addAcademy);
+router.post("/addAcademy",academyService.addAcademyAndAssaignToManager);
 
 router.get("/getAcademy/:id" ,academyService.getAcademyById);
+router.get("/getAcademyByMangerId/:idmanger" ,academyService.getAcademyByMangerId);
 
 
 

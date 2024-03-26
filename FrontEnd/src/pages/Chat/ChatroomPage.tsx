@@ -18,10 +18,6 @@ import EmojiPicker from 'emoji-picker-react';
 const ChatroomPage = () => {
     const user = useSelector(selectCurrentUser);
     const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
-    const userRole = user ? `Role : ${user.roles}` : 'Welcome';
-    const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
-    // console.log('user'+ user._id)
-    // console.log('role'+ userRole)
     const { id } = useParams();
     const [socket, setSocket] = useState(null);
     const [messages, setMessages] = useState([]);

@@ -33,6 +33,9 @@ const User = require("./Models/Users.js");
 
 io.on("connection", async (socket) => {
   console.log("connected:" + socket.id);
+  console.log("User ID:", socket.handshake.query.userId);
+  // Store the user ID in the socket for later use
+  socket.userId = socket.handshake.query.userId;
 
   socket.on("disconnect", () => {
     console.log("disconnect:" + socket.id);
@@ -54,11 +57,11 @@ io.on("connection", async (socket) => {
   socket.on("chatroomMessage", async ({ id, message }) => {
     if (message.trim().length > 0) {
       try {
-        // Fetch user details from the database
+        // Fetch user details from the database using the stored userId
         const foundUser = await User.findById(socket.userId);
 
         if (!foundUser) {
-          console.log("User not found!");
+          console.log("User not found for ID:", socket.userId);
           return;
         }
 
@@ -84,4 +87,3 @@ io.on("connection", async (socket) => {
     }
   });
 });
-

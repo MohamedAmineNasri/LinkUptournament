@@ -42,9 +42,40 @@ import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
 import { useEffect , useState } from 'react';
+import io from "socket.io-client";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
+
+  // const [socket, setSocket] = useState(null);
+  // const setupSocket = () => {
+  //   const token = localStorage.getItem("token");
+  //   if (token && !socket) {
+  //     const newsocket = io("http://localhost:8000", {
+  //       query: {
+  //         token: localStorage.getItem("token"),
+  //       },
+  //     });
+
+  //     newsocket.on("disconnect", () => {
+  //       setSocket(null);
+  //       setTimeout(setSocket, 3000);
+  //       //makeToast("error", "Disconnected !");
+  //       console.log("Disconnected")
+  //     });
+  //     newsocket.on("connect", () => {
+  //      // makeToast("success", "Connected !");
+  //       console.log("Connected")
+  //     });
+
+  //     setSocket(newsocket);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   setupSocket();
+  // }, []); 
+
 
   console.log(fixtures);
 
@@ -93,7 +124,7 @@ function App() {
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/chat" element={<Chat />} />
-              <Route path="/chatpage" element={<ChatroomPage />} />
+              <Route path="/chatroom/:id" element={<ChatroomPage />} />
               <Route path="/userstable" element={<Tables />} />
               <Route path="/settings" element={<Settings />} />
             </Route>

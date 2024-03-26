@@ -1,4 +1,4 @@
-.card {
+card {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   border-radius: 4px;
   padding: 1rem;
@@ -19,15 +19,15 @@
   font-size: 1.1rem;
   font-weight: bold;
   display: inline-block;
-  position: absolute;
+  /* Remove absolute positioning */
+  /* position: absolute;
   top: -1rem;
-  left: -0.75rem;
+  left: -0.75rem; */
 }
 
 .cardBody {
   margin-top: 2rem;
 }
-
 .inputGroup {
   margin-bottom: 1rem;
 }
@@ -133,4 +133,5 @@
 .ownMessage {
   color: #00cc00;
   font-weight: bold;
+  
 }

@@ -28,6 +28,10 @@ const ChatroomPage = () => {
     const [userId, setUserId] = useState("");
     const messageRef = useRef("");
     const [message, setMessage] = useState("");
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const toggleEmojiPicker = () => {
+      setShowEmojiPicker(!showEmojiPicker);
+  };
     const setupSocket = () => {
       const newSocket = io("http://localhost:8000", {
         query: {
@@ -124,16 +128,21 @@ const ChatroomPage = () => {
             </div>
             <div className={styles.chatroomActions}>
             <div>
-                            <input
-                                type="text"
-                                name="message"
-                                placeholder="Say Something !!"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                className={styles.inputField}
-                            />
-                            <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width={300}/>
-              </div>
+                <input
+                    type="text"
+                    name="message"
+                    placeholder="Say Something !!"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className={styles.inputField}
+                />
+                {/* Toggle button for EmojiPicker */}
+                <button className={styles.emojiButton} onClick={toggleEmojiPicker}>
+                    {showEmojiPicker ? "Close Emoji Picker" : "Open Emoji Picker"}
+                </button>
+                {/* EmojiPicker */}
+                {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width="100%" />}
+            </div>
               <div>
                 <button className={styles.sendButton} onClick={sendMessage}>
                   Send

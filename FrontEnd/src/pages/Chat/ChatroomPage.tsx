@@ -12,6 +12,9 @@ import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 
+import EmojiPicker from 'emoji-picker-react';
+
+
 const ChatroomPage = () => {
     const user = useSelector(selectCurrentUser);
     const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
@@ -24,7 +27,7 @@ const ChatroomPage = () => {
     const [messages, setMessages] = useState([]);
     const [userId, setUserId] = useState("");
     const messageRef = useRef("");
-
+    const [message, setMessage] = useState("");
     const setupSocket = () => {
       const newSocket = io("http://localhost:8000", {
         query: {
@@ -45,7 +48,6 @@ const ChatroomPage = () => {
         setMessages((prevMessages) => [...prevMessages, message]);
       });
       
-      // Receive all previous messages when joining the chatroom
       newSocket.on("allMessages", (allMessages) => {
         setMessages(allMessages);
       });
@@ -53,27 +55,35 @@ const ChatroomPage = () => {
       return newSocket;
     };
     
-    // Function to send message
     const sendMessage = () => {
       const newMessage = {
-        id,
-        message: messageRef.current.value,
-        name: userFullName, // Include the sender's name
-        userId: user.id, // Include the sender's ID
+          id,
+          message,
+          name: userFullName, 
+          userId: user.id, 
       };
       console.log("Sending message:", newMessage);
-      
+    
       if (socket) {
-        socket.emit("chatroomMessage", newMessage);
-        messageRef.current.value = "";
+          socket.emit("chatroomMessage", newMessage);
+          setMessage(""); 
       }
-    };
+  };
+  
+
+  const handleEmojiClick = (emojiObject) => {
+    setMessage(prevMessage => prevMessage + emojiObject.emoji); 
+  };
+
+
+
+
+    
   
     useEffect(() => {
       const newSocket = setupSocket();
       setSocket(newSocket);
     
-      // Emit joinRoom event when the socket is connected and the user ID is available
       if (newSocket && user) {
         newSocket.emit("joinRoom", { id: id });
       }
@@ -83,7 +93,12 @@ const ChatroomPage = () => {
           newSocket.disconnect();
         }
       };
-    }, [user]); // Add user as a dependency to re-run the effect when user changes
+    }, [user]);
+    useEffect(() => {
+      if (user) {
+        setUserId(user.id);
+      }
+    }, [user]);
     
 
     return (
@@ -99,28 +114,35 @@ const ChatroomPage = () => {
                     className={
                       userId === message.userId ? styles.ownMessage : styles.otherMessage
                     }
+                    
                   >
-                    {message.name}
+                    {message.name } :
                   </span>{" "}
                   {message.message}
                 </div>
               ))}
             </div>
             <div className={styles.chatroomActions}>
-              <div>
-                <input
-                  type="text"
-                  name="message"
-                  placeholder="Say Something !!"
-                  ref={messageRef}
-                />
+            <div>
+                            <input
+                                type="text"
+                                name="message"
+                                placeholder="Say Something !!"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                className={styles.inputField}
+                            />
+                            <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width={300}/>
               </div>
               <div>
-                <button className={styles.join} onClick={sendMessage}>
+                <button className={styles.sendButton} onClick={sendMessage}>
                   Send
                 </button>
               </div>
-            </div>
+      </div>
+
+
+
           </div>
         </div>
       </DefaultLayout>

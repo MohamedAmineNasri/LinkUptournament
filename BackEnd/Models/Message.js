@@ -15,6 +15,6 @@ const messageSchema = new mongoose.Schema({
         type: String,
         require: 'Message is required !!'
     }
-})
+}, { timestamps: true }); 
 
 module.exports = mongoose.model("Message", messageSchema);

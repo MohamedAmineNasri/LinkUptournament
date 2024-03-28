@@ -4,7 +4,7 @@ const SibApiV3Sdk = require("sib-api-v3-sdk");
  const sendAcademyStatusEmail = async (email, firstName, lastName, status) => {
 
 // Set your SendinBlue API key
-const apiKey = process.env.ACADEMY_EMAIL_SECRET
+const apiKey = "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"
 // Configure API key authorization: api-key
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKeyAuth = defaultClient.authentications['api-key'];

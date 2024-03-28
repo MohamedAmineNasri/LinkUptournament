@@ -1,5 +1,6 @@
 const academy = require('../Models/Academy')
-const user =require('../Models/Users')
+const user =require('../Models/Users');
+const { sendAcademyStatusEmail } = require('./AcademyStatusEmailSender');
 
 
 
@@ -111,12 +112,18 @@ const updateStatustoApproved = async (req,res,next)=>{
     const academyData = await academy.findById(req.params.id);
     academyData.Status = "Approved";
     await academyData.save()
+    //we retrive the manger  from academy's user id
+    const mangerData = await user.findById(academyData.user)
+    await sendAcademyStatusEmail(mangerData.email,mangerData.firstName,mangerData.lastName,academyData.Status)
     res.json("Academy's Status updated sucessfully");
 }
 const updateStatustoRejected = async (req,res,next)=>{
     const academyData = await academy.findById(req.params.id);
     academyData.Status = "Rejected";
     await academyData.save()
+    //we retrive the manger  from academy's user id
+    const mangerData = await user.findById(academyData.user)
+    await sendAcademyStatusEmail(mangerData.email,mangerData.firstName,mangerData.lastName,academyData.Status)
     res.json("Academy's Status updated sucessfully");
 }
 //---------------------------------------------

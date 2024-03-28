@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router();
 const tournamentService = require("../Services/TounamentService");
+
 const multer = require('multer');
 const path = require('path');
 
@@ -9,9 +10,9 @@ router.post('/add', tournamentService.addTournament);
 
 router.put('/update/:id', tournamentService.updateTournament);
 
-router.delete('/delete/:id', tournamentService.deleteTournament);
+router.delete('/:id', tournamentService.deleteTournament);
 
-router.get('/all', tournamentService.getAllTournaments);
+router.get('/', tournamentService.getAllTournaments);
 
 router.get('/:id', tournamentService.getTournamentById);
 

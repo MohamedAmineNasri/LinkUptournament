@@ -44,9 +44,8 @@ app.use(express.urlencoded({limit: '50mb'}));
 // app.use("/tournement", tournementRouter);
 
 
-app.use('/group', groupRoutes);
-app.use('/staduim', staduimRoutes);
-app.use('/tournament', tournamentRoutes);
+
+
 
 
 
@@ -62,7 +61,9 @@ app.use("/player", playerRouter);
 app.use("/match",match)
 app.use('/academy', AcademyRouter);
 app.use('/team', TeamRouter);
-
+app.use('/tournament', tournamentRoutes);
+app.use('/group', groupRoutes);
+app.use('/staduim', staduimRoutes);
 
 // Handle options credentials check - before CORS! 
 // and fetch cookies credentials requirement

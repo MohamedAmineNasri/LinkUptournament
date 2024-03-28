@@ -34,11 +34,8 @@ const updateTournament = async (req, res, next) => {
   
   // Get all tournaments
   const getAllTournaments = async (req, res, next) => {
-    const tournaments = await Tournament.find({});
-    res.json({
-      message: "Successfully retrieved all tournaments!",
-      tournaments: tournaments
-    });
+    const tournaments = await Tournament.find();
+    res.json(tournaments);
   };
   
   // Get a tournament by ID

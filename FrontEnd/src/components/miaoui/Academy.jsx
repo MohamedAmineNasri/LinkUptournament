@@ -8,6 +8,7 @@ import academyImageteam from "../../assets/Mi-imgs/team1.jpg";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 import HeaderNavBar from "./HeaderNavBar";
 import Badge from "react-bootstrap/Badge";
+import video from "../../assets/Mi-imgs/stadiumvideo.mp4";
 
 export const Academy = () => {
   const dispatch = useDispatch();
@@ -61,26 +62,32 @@ export const Academy = () => {
       <div className="site-wrap">
         <HeaderNavBar></HeaderNavBar>
         {/* header/overlay image */}
-        <div
-          className="hero overlay"
-          style={{ backgroundImage: `url(${academyImagespectators})` }}
-        >
+        <div className="hero overlay2" style={{ position: "relative" }}>
+          <video
+            className="video-background"
+            src={video}
+            autoPlay
+            loop
+            muted
+          ></video>
           <div className="container">
             <div className="row align-items-center">
               <div
-                className="col-lg-12 mx-auto "
-                style={{ textAlign: "-webkit-center" }}
+                className="col-lg-12 mx-auto"
+                style={{ textAlign: "-webkit-center", opacity: 0.8 }}
               >
                 <img
                   src={academyData.Logo}
                   alt="Logo"
                   className="img-fluid academyLogosizeInHero"
+                  style={{ opacity: 0.8 }}
                 />
                 <h1 className="text-white">{academyData.AcademyName}</h1>
               </div>
             </div>
           </div>
         </div>
+
         {/* separator */}
 
         {/* Academy */}

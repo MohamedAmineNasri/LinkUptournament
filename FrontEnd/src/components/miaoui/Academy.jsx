@@ -121,10 +121,7 @@ export const Academy = () => {
                     <p className="mb-2">
                       Status :{" "}
                       <span>
-                        <Badge
-                          className="mt-3"
-                          bg={getStatusColor(academyData.Status)}
-                        >
+                        <Badge bg={getStatusColor(academyData.Status)}>
                           {academyData.Status}
                         </Badge>
                       </span>

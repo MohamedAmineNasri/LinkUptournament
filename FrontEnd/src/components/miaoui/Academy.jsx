@@ -7,6 +7,7 @@ import academyImagespectators from "../../assets/Mi-imgs/1.jpg";
 import academyImageteam from "../../assets/Mi-imgs/team1.jpg";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 import HeaderNavBar from "./HeaderNavBar";
+import Badge from "react-bootstrap/Badge";
 
 export const Academy = () => {
   const dispatch = useDispatch();
@@ -45,11 +46,11 @@ export const Academy = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case "Pending":
-        return "text-warning";
+        return "warning";
       case "Rejected":
-        return "text-danger";
+        return "danger";
       case "Approved":
-        return "text-success";
+        return "success";
       default:
         return "text-muted";
     }
@@ -119,8 +120,13 @@ export const Academy = () => {
                     </p>
                     <p className="mb-2">
                       Status :{" "}
-                      <span className={getStatusColor(academyData.Status)}>
-                        {academyData.Status}
+                      <span>
+                        <Badge
+                          className="mt-3"
+                          bg={getStatusColor(academyData.Status)}
+                        >
+                          {academyData.Status}
+                        </Badge>
                       </span>
                     </p>
                     {academyData.Status === "Approved" && (

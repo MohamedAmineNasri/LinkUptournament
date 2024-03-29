@@ -39,7 +39,7 @@ import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
 import { useEffect, useState } from "react";
-
+import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 function App() {
   const [fixtures, setFixtures] = useState(data);
 
@@ -62,6 +62,7 @@ function App() {
         </Route>
         <Route path="/addAcademy" element={<AddAcademy />} />
         <Route path="/Academy" element={<Academy />} />
+        <Route path="/team/:idTeam" element={<CheckSelectedTeam />} />
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />

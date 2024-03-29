@@ -13,6 +13,19 @@ export const fetchteams = createAsyncThunk(
   }
 );
 
+
+export const fetchteamById = createAsyncThunk(
+  'team/fetchTeamById', 
+  async ({teamId}) => {
+    try {
+      const response = await axios.get('http://localhost:8000/Team/getTeam/'+teamId);
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching teams: ' + error.message);
+    }
+  }
+);
+
 export const fetchTeamOfAcademy = createAsyncThunk(
   'team/fetchTeam',
   async (idAcademy) => {
@@ -108,6 +121,7 @@ const teamSlice = createSlice({
   initialState: {
     teamData: [],
     allteamData: [],
+    SelectedteamDataById: [],
     loading: false,
     error: null
   },
@@ -135,6 +149,18 @@ const teamSlice = createSlice({
         state.allteamData = action.payload;
       })
       .addCase(fetchteams.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchteamById.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchteamById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.SelectedteamDataById = action.payload;
+      })
+      .addCase(fetchteamById.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })

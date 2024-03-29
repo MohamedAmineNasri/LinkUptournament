@@ -1231,8 +1231,16 @@ h1, h2, h3, h4, h5,
       padding-top: 50px;
       padding-bottom: 20px;
     }
+    .teamBox {
+      padding-top: 30px;
+      padding-bottom: 0;
+      
+    }
     .academyLogoMwidth {
       max-width: 200px;
+    }
+    .teamLogoMwidth {
+      max-width: 120px;
     }
     .teamsBorderBox {
       border-radius: 20px;

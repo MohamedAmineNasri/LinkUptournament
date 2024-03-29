@@ -2,8 +2,10 @@ import DeleteTeamPopUp from "./DeleteTeamPopUp";
 import Button from "react-bootstrap/Button";
 import EditPopUpSelectedTeam from "./EditPopUpSelectedTeam";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 
 function DropDownTeamSettings(props) {
+  const navigate = useNavigate();
   return (
     <div className="m-3 textAlignRight">
       <Dropdown>
@@ -16,8 +18,16 @@ function DropDownTeamSettings(props) {
             Add Players
           </Button>
           {/* check players ----------------------------------------------------- */}
-          <Button variant="success" style={{ width: "-webkit-fill-available" }}>
-            Check Players
+          <Button
+            variant="success"
+            style={{ width: "-webkit-fill-available" }}
+            // onClick={() => {
+            //   window.location.href = `/team?id=${props.idTeam}`;
+
+            // }}
+            onClick={() => navigate(`/team/${props.idTeam}`)}
+          >
+            Check Team
           </Button>
           {/* Edit Team ----------------------------------------------------- */}
           <EditPopUpSelectedTeam

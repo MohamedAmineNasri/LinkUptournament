@@ -9,6 +9,7 @@ router.post(
   "/getTeamAndAssaignAcademy",
   teamService.addTeamAndAssaignToAcademy
 );
+router.get("/ofTeam/:idTeam", teamService.getPlayersByTeamId);
 router.post(
   "/assignPlayerToTeam/:teamId/:playerId",
   teamService.assignPlayerToTeam)

@@ -75,6 +75,10 @@ const getTeamById =  async (req,res,next)=>{
     const TeamData = await Team.findById(req.params.id);
     res.json(TeamData);
 }
+const getTeamById2 =   async (id)=>{
+    const TeamData = await Team.findById(id);
+    return TeamData;
+}
 
 
 const getTeamByAcademyId = async (req, res, next) => {
@@ -326,7 +330,37 @@ const resetGroupStageData = async (req,res, next) => {
   res.json(TeamData)
   
 };
-
+//  i added this for testing  ------------------------------------------------------
+const getPlayersByTeamId = async (req, res, next) => {
+    try {
+        const targetTeam = await getTeamById2(req.params.idTeam);
+        console.log('Target team:', targetTeam);
+  
+        const playerData = []; 
+  
+        // Check if the academy has teams
+        if (targetTeam.Players.length > 0 ) {
+            for (const playerId of targetTeam.Players) {
+                const player = await Player.findById(playerId); 
+                if (player) { // Check if team is found
+                  playerData.push(player);
+                } else {
+                    console.log(`player with ID ${playerId} not found`);
+                }
+            }
+        } else {
+            console.log('No teams found for the academy');
+        }
+  
+        console.log('player Data:', playerData);
+        res.json(playerData);
+    } catch (error) {
+        console.error("Error", error);
+        res.status(500).json( "Internal server error" );
+    }
+  }
+  
+  // -----------------------------------------------------------------------------
 
 
 const assignPlayerToTeam = async (req, res) => {
@@ -365,4 +399,4 @@ const assignPlayerToTeam = async (req, res) => {
 
 
 
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};
+module.exports = { getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};

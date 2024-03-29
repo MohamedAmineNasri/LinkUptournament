@@ -5,13 +5,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchteamById } from "../../redux/slice/teamSlice";
 import video from "../../assets/Mi-imgs/teamV.mp4";
 import HeaderNavBar from "./HeaderNavBar";
+import Table from "react-bootstrap/Table";
+import logo from "../../assets/Mi-imgs/personpng.png";
+import { fetchplayerByTeamId } from "../../redux/slice/teamSlice";
 
 export const CheckSelectedTeam = () => {
   const { idTeam } = useParams();
   const dispatch = useDispatch();
+
   const { SelectedteamDataById, loading, error } = useSelector(
     (state) => state.root.team
   );
+  const { players } = useSelector((state) => state.root.team);
   // get team Data
   useEffect(() => {
     if (loading === false && error === null) {
@@ -22,6 +27,16 @@ export const CheckSelectedTeam = () => {
       );
     }
   }, [dispatch, loading, error]);
+
+  // Fetch player data for each player ID in team data
+  useEffect(() => {
+    dispatch(
+      fetchplayerByTeamId({
+        teamId: idTeam,
+      })
+    );
+    console.log(players);
+  }, [dispatch, idTeam]);
   return (
     <>
       <div className="site-wrap bg-black">
@@ -125,8 +140,42 @@ export const CheckSelectedTeam = () => {
               {/* Academy teams */}
               <div className="col-lg-12">
                 <div className="widget-body mb-3 teamsBorderBox ">
-                  <div className="teamsBordersolid">
-                    {/* <TeamCard idacademy={academyData._id} /> */}
+                  <div style={{ border: "solid thin" }}>
+                    <div>
+                      <Table responsive="xl">
+                        <thead>
+                          <tr>
+                            <th>Player Image</th>
+                            <th>Player Name</th>
+                            <th>Table heading</th>
+                            <th>Table heading</th>
+                            <th>Table heading</th>
+                            <th>Table heading</th>
+                          </tr>
+                        </thead>
+                        {players.map((player) => (
+                          <tbody>
+                            {SelectedteamDataById.Players &&
+                              SelectedteamDataById.Players.length > 0 && (
+                                <tr>
+                                  <td>
+                                    <img
+                                      style={{ maxWidth: "80px" }}
+                                      src={logo}
+                                    ></img>
+                                  </td>
+                                  <td>{player.position}</td>
+                                  <td>{player.academic_membership}</td>
+                                  <td>{player.legal_guardian}</td>
+
+                                  <td>Table cell</td>
+                                  <td>Table cell</td>
+                                </tr>
+                              )}
+                          </tbody>
+                        ))}
+                      </Table>
+                    </div>
                   </div>
                 </div>
               </div>

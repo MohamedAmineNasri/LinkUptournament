@@ -116,12 +116,27 @@ export const editTeamSameName = createAsyncThunk(
   }
 );
 
+// ena miaoui i added this for testing dw , hani 9otlk mesh kif barsha ness ---------------------------
+export const fetchplayerByTeamId =  createAsyncThunk(
+  'team/fetchplayerByTeamId', 
+  async ({teamId}) => {
+    try {
+      const response = await axios.get('http://localhost:8000/team/ofTeam/'+teamId);
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching teams: ' + error.message);
+    }
+  }
+);
+// ------------------------------------------------------------------------------------------------------
+
 const teamSlice = createSlice({
   name: 'team',
   initialState: {
     teamData: [],
     allteamData: [],
     SelectedteamDataById: [],
+    players :[],
     loading: false,
     error: null
   },
@@ -161,6 +176,18 @@ const teamSlice = createSlice({
         state.SelectedteamDataById = action.payload;
       })
       .addCase(fetchteamById.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchplayerByTeamId.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchplayerByTeamId.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.players = action.payload;
+      })
+      .addCase(fetchplayerByTeamId.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })

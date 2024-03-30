@@ -1227,6 +1227,11 @@ h1, h2, h3, h4, h5,
       box-shadow: 1px 1px 7px 3px rgba(1, 0, 0, 0.5);
       background-color: #2f4f4f6b;
     }
+    .SelectedTeamsBox {
+      border-radius: 20px;
+      box-shadow: 1px 1px 7px 3px rgba(1, 0, 0, 0.5);
+      background-color: #2f4f4f6b;
+    }
     .academyBox {
       padding-top: 50px;
       padding-bottom: 20px;
@@ -1245,6 +1250,14 @@ h1, h2, h3, h4, h5,
     .teamsBorderBox {
       border-radius: 20px;
       height: 650px;
+      overflow-y: auto;
+      scrollbar-width: none; /* Hide the scrollbar for Firefox */
+      -ms-overflow-style: none; /* Hide the scrollbar for Internet Explorer/Edge */
+      -webkit-scrollbar-width: none; /* Hide the scrollbar for WebKit browsers (Chrome, Safari) */      
+      
+    }
+    .playersBorderBox {
+      height: 400px;
       overflow-y: auto;
       scrollbar-width: none; /* Hide the scrollbar for Firefox */
       -ms-overflow-style: none; /* Hide the scrollbar for Internet Explorer/Edge */

@@ -8,6 +8,7 @@ import HeaderNavBar from "./HeaderNavBar";
 import Table from "react-bootstrap/Table";
 import logo from "../../assets/Mi-imgs/personpng.png";
 import { fetchplayerByTeamId } from "../../redux/slice/teamSlice";
+import nightFeildImage from "../../assets/Mi-imgs/nightFeild.jpg";
 
 export const CheckSelectedTeam = () => {
   const { idTeam } = useParams();
@@ -50,34 +51,31 @@ export const CheckSelectedTeam = () => {
             loop
             muted
           ></video>
-          <div className="container">
-            <div className="row align-items-center">
-              <div
-                className="col-lg-12 mx-auto"
-                style={{ textAlign: "-webkit-center", opacity: 0.9 }}
-              >
-                {/* <img
-                  src={SelectedteamDataById.TeamLogo}
-                  alt="Logo"
-                  className="img-fluid academyLogosizeInHero"
-                  style={{ opacity: 0.8 }}
-                /> */}
-                {/* <h1 className="text-white " style={{ fontSize: "72px" }}>
-                  {SelectedteamDataById.TeamName}
-                </h1> */}
-              </div>
-            </div>
-          </div>
         </div>
-        <div>
-          <div>
-            <div className="row mr-0 ml-0 justify-content-center align-items-top AcademyandTeamsBox ">
+        <div
+          className=" overlay backImgAcademyandTeam"
+          style={{
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundImage: `url(${nightFeildImage})`,
+          }}
+        >
+          <div className="container-fluid px-30 pt-40">
+            <div
+              className="row mr-0 ml-0 justify-content-center align-items-top SelectedTeamsBox "
+              style={{
+                borderRadius: "20px",
+              }}
+            >
               <div
-                className="col-lg-12 col-md-8 word-wrap-break"
-                style={{ textAlign: "-webkit-center" }}
+                className="col-lg-12 col-md-8  word-wrap-break"
+                style={{
+                  textAlign: "-webkit-center",
+                }}
               >
                 <div className=" row teamBox">
-                  <div className="col-lg-4">
+                  {/* --------------------------------------------------------------------------------- */}
+                  <div className="col-lg-4 col-md-3">
                     <img
                       src={SelectedteamDataById.TeamLogo}
                       alt="Logo"
@@ -93,56 +91,90 @@ export const CheckSelectedTeam = () => {
                       <strong>{SelectedteamDataById.TeamName}</strong>
                     </h3>
                   </div>
-                  <div
-                    style={{
-                      textAlignLast: "start",
-                      alignContent: "center",
-                      fontSize: "22px",
-                    }}
-                    className="ml-10 col-lg-3"
-                  >
-                    <h1 className=" mb-4 ">
-                      Total_MatchesPlayed :{" "}
-                      {SelectedteamDataById.Total_MatchesPlayed}
-                    </h1>
-                    <h1 className=" mb-4 ">
-                      Total_MatchesWon : {SelectedteamDataById.Total_MatchesWon}
-                    </h1>
+                  {/* --------------------------------------------------------------------------------- */}
+                  <div className="row col-lg-8 col-md-8">
+                    {/* --------------------------------------------------------------------------------- */}
+                    <div
+                      style={{
+                        textAlignLast: "start",
+                        alignContent: "center",
+                        fontSize: "16px",
+                      }}
+                      className=" pl-5 col-lg-6"
+                    >
+                      <h1 className=" mb-4 ">
+                        Total_MatchesPlayed :{" "}
+                        {SelectedteamDataById.Total_MatchesPlayed}
+                      </h1>
+                      <h1 className=" mb-4 ">
+                        Total_MatchesWon :{" "}
+                        {SelectedteamDataById.Total_MatchesWon}
+                      </h1>
 
-                    <h1 className=" mb-4 ">
-                      Total_MatchesDrawn :{" "}
-                      {SelectedteamDataById.Total_MatchesDrawn}
-                    </h1>
-                  </div>
-                  <div
-                    style={{
-                      textAlignLast: "start",
-                      alignContent: "center",
-                      fontSize: "22px",
-                    }}
-                    className=" ml-10 col-lg-3 "
-                  >
-                    <h1 className=" mb-4 ">
-                      Total_MatchesLost :{" "}
-                      {SelectedteamDataById.Total_MatchesLost}
-                    </h1>
-                    <h1 className=" mb-4 ">
-                      Total_Goals_scored :{" "}
-                      {SelectedteamDataById.Total_Goals_scored}
-                    </h1>
-                    <h1 className=" mb-4 ">
-                      Total_Goals_received :{" "}
-                      {SelectedteamDataById.Total_Goals_received}
-                    </h1>
+                      <h1 className=" mb-4 ">
+                        Total_MatchesDrawn :{" "}
+                        {SelectedteamDataById.Total_MatchesDrawn}
+                      </h1>
+                    </div>
+                    {/* --------------------------------------------------------------------------------- */}
+                    <div
+                      style={{
+                        textAlignLast: "start",
+                        alignContent: "center",
+                        fontSize: "16px",
+                      }}
+                      className=" pl-5 col-lg-6 "
+                    >
+                      <h1 className=" mb-4 ">
+                        Total_MatchesLost :{" "}
+                        {SelectedteamDataById.Total_MatchesLost}
+                      </h1>
+                      <h1 className=" mb-4 ">
+                        Total_Goals_scored :{" "}
+                        {SelectedteamDataById.Total_Goals_scored}
+                      </h1>
+                      <h1 className=" mb-4 ">
+                        Total_Goals_received :{" "}
+                        {SelectedteamDataById.Total_Goals_received}
+                      </h1>
+                    </div>
+                    {/* --------------------------------------------------------------------------------- */}
                   </div>
                 </div>
               </div>
-              {/* Academy teams */}
-              <div className="col-lg-12">
-                <div className="widget-body mb-3 teamsBorderBox ">
-                  <div style={{ border: "solid thin" }}>
+              {/* Players of team */}
+              <div className="col-lg-12 px-0">
+                <div className=" playersBorderBox ">
+                  <div>
+                    {/* condition if no players exist */}
+                    {players.length === 0 && (
+                      <div
+                        hidden={false}
+                        style={{
+                          padding: "20px",
+                          textAlign: "center",
+                          alignItems: "center",
+                          paddingTop: "150px",
+                          paddingBottom: "220px",
+                        }}
+                      >
+                        <h3
+                          style={{
+                            color: "white",
+                            fontSize: "24px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          No Players created yet
+                        </h3>
+                        <p style={{ color: "#666", fontSize: "18px" }}>
+                          Start by creating a new Player to this Team!
+                        </p>
+                      </div>
+                    )}
+                    {/* --------------------------------------------------------------------------------- */}
                     <div>
-                      <Table responsive="xl">
+                      <Table hover responsive="xl">
                         <thead>
                           <tr>
                             <th>Player Image</th>
@@ -154,7 +186,7 @@ export const CheckSelectedTeam = () => {
                           </tr>
                         </thead>
                         {players.map((player) => (
-                          <tbody>
+                          <tbody style={{ borderTop: "none" }}>
                             {SelectedteamDataById.Players &&
                               SelectedteamDataById.Players.length > 0 && (
                                 <tr>
@@ -167,7 +199,6 @@ export const CheckSelectedTeam = () => {
                                   <td>{player.position}</td>
                                   <td>{player.academic_membership}</td>
                                   <td>{player.legal_guardian}</td>
-
                                   <td>Table cell</td>
                                   <td>Table cell</td>
                                 </tr>

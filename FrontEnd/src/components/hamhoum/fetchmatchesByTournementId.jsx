@@ -177,7 +177,7 @@ if (TournementId.length ==0) {
                     </div>
 
                     <div className="text-center widget-vs-contents mb-4">
-                      <h4>Tournament</h4>
+                      <h4>{match.matchstatus}</h4>
                       <p className="mb-5">
                         <span className="d-block">{match.date}</span>
                         <span className="d-block">{match.startingtime}</span>
@@ -195,10 +195,19 @@ if (TournementId.length ==0) {
                    {/* <AddMatchPopUpWindow TournementId= {match._id}/> */}
                    <EditPopUpSelectedMatch
                     matchid={match._id}
-                    time={match.startingtime}
-                    date={match.date}
-                    type={match.matchtype}
+                    referee = {match.referee}
+                    date = {match.date}
+                    logo={match.logo}
+                    matchstatus={match.matchstatus}
+                    team1={match.team1}
+                    team2={match.team2}
+                    weathercondition={match.weathercondition}
+                    startingtime={match.startingtime}
+                    matchtype={match.matchtype}
                     location={match.location}
+                    tournementId={match.tournementId}
+                    team1Gols={match.team1Gols}
+                    team2Gols={match.team2Gols}
                   ></EditPopUpSelectedMatch>
                   <DeleateMatchPopUp matchid={match._id}></DeleateMatchPopUp>
                 </div>

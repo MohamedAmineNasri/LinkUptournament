@@ -43,7 +43,8 @@ import { data } from "./components/TestWitheDummyData/dummy-data";
 import { useEffect , useState } from 'react';
 import Fetchalltour from "./components/hamhoum/getAllTournement";
 import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
-// import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+
 function App() {
   const [fixtures, setFixtures] = useState(data);
 
@@ -54,7 +55,7 @@ function App() {
     <Routes>
       <Route path="/group" element={<Group />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
-      {/* <Route path="/fetchmatchforview" element={<Fetchmatchforview />} /> */}
+      <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
       <Route path="/fetchmatchbytour/:tournamentId" element={<Fetchmatchbytour />} />
       <Route path="/testtt" element={<AddMatchPopUpWindow />} />
       

@@ -26,8 +26,7 @@ export const AddMatchPopUpWindow = (props) => {
    const [Startingtime, setStartingtime] = useState(null);
    const [Logo, setLogo ] = useState({myLogo:""});
    const [Matchstatus, setMatchstatus ] = useState(null);
-   const [tournament, settournament ] = useState(null);
-   
+   const [tournament, settournament ] = useState(null);   
    const [Team1, setTeam1 ] = useState(null);
    const [Team2, setTeam2 ] = useState(null);
     const [TournementId, setTournementId ] = useState([]);
@@ -41,7 +40,7 @@ export const AddMatchPopUpWindow = (props) => {
     e.preventDefault();
     dispatch(
         addnewMatch({
-          
+          // matchTime: 0,
           referee:Referee,
           date:Date,
           logo:Logo.myLogo,
@@ -167,7 +166,7 @@ export const AddMatchPopUpWindow = (props) => {
 <br/>
                <Form.Select size="lg"
                 onChange={(e) => setWeathercondition(e.target.value)}>
-      <option>Open this select menu</option>
+      <option> select weather</option>
       <option value="sunny">sunny</option>
       <option value="rainy">rainy</option>
       <option value="windy">windy</option>
@@ -181,6 +180,7 @@ export const AddMatchPopUpWindow = (props) => {
               <Form.Label style={{ color: "white" }}>team1 :</Form.Label>
               <br/>
               <select onChange={(e) => setTeam1(e.target.value)}>
+              <option> select Team1</option>
     {teamsWithNames.map((teamName, index) => (
       <option key={index} value={tournament.teams[index]}>
         {teamName}
@@ -192,6 +192,7 @@ export const AddMatchPopUpWindow = (props) => {
          <Form.Label style={{ color: "white" }}>team2 :</Form.Label>
               <br/>
               <select onChange={(e) => setTeam2(e.target.value)}>
+              <option> select Team2</option>
     {teamsWithNames.map((teamName, index) => (
       <option key={index} value={tournament.teams[index]}>
         {teamName}

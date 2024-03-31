@@ -22,6 +22,12 @@ async function getAllematch(req, res) {
 //create 
 async function creatematch(req, res) {
   try {
+    let matchTime = 0;
+
+// Update match time every minute
+setInterval(() => {
+  matchTime++; // Increment match time by 1 minute
+}, 60000); // 60000 ms = 1 minute
     const { card, ...matchData } = req.body;
     const matche = new match(matchData);
   

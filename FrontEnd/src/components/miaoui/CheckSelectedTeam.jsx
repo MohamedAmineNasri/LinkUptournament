@@ -9,6 +9,8 @@ import Table from "react-bootstrap/Table";
 import logo from "../../assets/Mi-imgs/personpng.png";
 import { fetchplayerByTeamId } from "../../redux/slice/teamSlice";
 import nightFeildImage from "../../assets/Mi-imgs/nightFeild.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export const CheckSelectedTeam = () => {
   const { idTeam } = useParams();
@@ -38,6 +40,13 @@ export const CheckSelectedTeam = () => {
     );
     console.log(players);
   }, [dispatch, idTeam]);
+
+  // delete logic
+
+  // const handledeletePlayer = () => {
+  //   dispatch(deleteTeam(props.teamid));
+  //   window.location.reload();
+  // };
   return (
     <>
       <div className="site-wrap bg-black">
@@ -51,6 +60,18 @@ export const CheckSelectedTeam = () => {
             loop
             muted
           ></video>
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-lg-12">
+                <h1
+                  style={{ fontSize: "7rem", wordBreak: "break-word" }}
+                  className="col-md-12 pb-5 pt-5 TitleTeam"
+                >
+                  {SelectedteamDataById.TeamName}
+                </h1>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           className=" overlay backImgAcademyandTeam"
@@ -71,6 +92,8 @@ export const CheckSelectedTeam = () => {
                 className="col-lg-12 col-md-8  word-wrap-break"
                 style={{
                   textAlign: "-webkit-center",
+                  backgroundColor: "#228b221c",
+                  borderRadius: "20px",
                 }}
               >
                 <div className=" row teamBox">
@@ -173,40 +196,49 @@ export const CheckSelectedTeam = () => {
                       </div>
                     )}
                     {/* --------------------------------------------------------------------------------- */}
-                    <div>
-                      <Table hover responsive="xl">
-                        <thead>
-                          <tr>
-                            <th>Player Image</th>
-                            <th>Player Name</th>
-                            <th>Table heading</th>
-                            <th>Table heading</th>
-                            <th>Table heading</th>
-                            <th>Table heading</th>
-                          </tr>
-                        </thead>
-                        {players.map((player) => (
-                          <tbody style={{ borderTop: "none" }}>
-                            {SelectedteamDataById.Players &&
-                              SelectedteamDataById.Players.length > 0 && (
-                                <tr>
-                                  <td>
-                                    <img
-                                      style={{ maxWidth: "80px" }}
-                                      src={logo}
-                                    ></img>
-                                  </td>
-                                  <td>{player.position}</td>
-                                  <td>{player.academic_membership}</td>
-                                  <td>{player.legal_guardian}</td>
-                                  <td>Table cell</td>
-                                  <td>Table cell</td>
-                                </tr>
-                              )}
-                          </tbody>
-                        ))}
-                      </Table>
-                    </div>
+                    {players.length !== 0 && (
+                      <div>
+                        <Table hover responsive="xl">
+                          <thead>
+                            <tr>
+                              <th>Player Image</th>
+                              <th>Player Name</th>
+                              <th>Table heading</th>
+                              <th>Table heading</th>
+                              <th>Table heading</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          {players.map((player) => (
+                            <tbody style={{ borderTop: "none" }}>
+                              {SelectedteamDataById.Players &&
+                                SelectedteamDataById.Players.length > 0 && (
+                                  <tr>
+                                    <td>
+                                      <img
+                                        style={{ maxWidth: "80px" }}
+                                        src={logo}
+                                      ></img>
+                                    </td>
+                                    <td>{player.position}</td>
+                                    <td>{player.academic_membership}</td>
+                                    <td>{player.legal_guardian}</td>
+                                    <td>Table cell</td>
+                                    <td>
+                                      <button className="hover:text-warning px-3">
+                                        <FontAwesomeIcon icon={faEdit} />
+                                      </button>
+                                      <button className="hover:text-warning">
+                                        <FontAwesomeIcon icon={faTrash} />
+                                      </button>
+                                    </td>
+                                  </tr>
+                                )}
+                            </tbody>
+                          ))}
+                        </Table>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

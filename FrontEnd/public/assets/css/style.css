@@ -1199,8 +1199,13 @@ h1, h2, h3, h4, h5,
     }
     .TitleAddAcademy {
       text-shadow: 5px 2px 0px #1db428e6;
-      text-align: -webkit-center; /* For webkit browsers */
+      text-align: -webkit-center; 
            
+    }
+    .TitleTeam {
+      text-shadow: 5px 2px 0px #1db42829;
+      text-align: -webkit-center; 
+          
     }
     .addAcademyFormBorder {
       box-shadow: 1px 1px 30px 10px rgba(1, 0, 0, 0.5);

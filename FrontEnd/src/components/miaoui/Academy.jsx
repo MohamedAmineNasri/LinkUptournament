@@ -102,7 +102,10 @@ export const Academy = () => {
               <div className="row  justify-content-center align-items-top AcademyandTeamsBox ">
                 <div
                   className="col-md-5 col-lg-4 word-wrap-break"
-                  style={{ textAlign: "-webkit-center" }}
+                  style={{
+                    textAlign: "-webkit-center",
+                    borderRight: "solid medium",
+                  }}
                 >
                   <div className="academyBox">
                     <img
@@ -125,10 +128,13 @@ export const Academy = () => {
                       Creating Date :{" "}
                       <span className="text-muted">{formattedDate}</span>
                     </p>
-                    <p className="mb-2">
+                    <p className="mb-2 ">
                       Status :{" "}
                       <span>
-                        <Badge bg={getStatusColor(academyData.Status)}>
+                        <Badge
+                          className=" p-2"
+                          bg={getStatusColor(academyData.Status)}
+                        >
                           {academyData.Status}
                         </Badge>
                       </span>
@@ -160,7 +166,7 @@ export const Academy = () => {
                 {/* Academy teams */}
                 <div className="col-md-7 col-lg-8">
                   <div className="widget-body mb-3 teamsBorderBox ">
-                    <div className="teamsBordersolid">
+                    <div className="p-4">
                       <TeamCard idacademy={academyData._id} />
                     </div>
                   </div>

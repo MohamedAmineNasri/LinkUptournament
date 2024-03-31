@@ -12,7 +12,28 @@ export const fetchMatch = createAsyncThunk(
     }
   }
 );
-
+export const fetchMatchByTournementId = createAsyncThunk(
+  'match/fetchMatchByTournementId',
+  async (matchid) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/match/tournement/${matchid}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const fetchAllTour = createAsyncThunk(
+  'match/fetchallTournementId',
+  async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/match/');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 export const fetchMatchById = createAsyncThunk(
   'match/fetchMatch',
   async (matchid) => {
@@ -26,15 +47,25 @@ export const fetchMatchById = createAsyncThunk(
 );
 export const editMatch = createAsyncThunk(
   'match/editMatch',
-  async ({ matchid,date, time,type,location}) => {
+  async ({ matchid,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
     try {
       const response = await axios.put(
         'http://localhost:8000/match/'+matchid,
         {
-           Date: date, 
-          startingTime: time,
-           matchType:type,
-           location:location
+           referee:referee,
+          date:date,
+          tournamentName:tournamentName,
+          startingtime:startingtime,
+          matchtype:matchtype,
+          location:location,
+          logo:logo,
+          matchstatus:matchstatus,
+          team2Gols:team2Gols,
+          team1Gols:team1Gols,
+          weathercondition:weathercondition,
+          team1:team1,
+           team2:team2,
+   tournementId:tournementId,
 
           
         }
@@ -60,21 +91,42 @@ export const deleteMatch = createAsyncThunk(
     }
   }
 );
+export const deletetour = createAsyncThunk(
+  'match/deleteMatch',
+  async (matchid) => {
+    try {
+      console.log(matchid)
+      const response = await axios.delete('http://localhost:8000/tournament/'+matchid);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 
 export const addnewMatch = createAsyncThunk(
   'match/addMatch',
-  async ({  time,type,location}) => {
+  async ({team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/match/',
         {
-          
-          startingTime: time,
-          matchType:type,
-          location:location
-          
-
+         
+          referee:referee,
+          date:date,
+          tournamentName:tournamentName,
+          startingtime:startingtime,
+          matchtype:matchtype,
+          location:location,
+          logo:logo,
+          matchstatus:matchstatus,
+          team2Gols:team2Gols,
+          team1Gols:team1Gols,
+          weathercondition:weathercondition,
+          team1:team1,
+           team2:team2,
+   tournementId:tournementId,
           
         }
       );

@@ -13,10 +13,10 @@ export const EditPopUpSelectedMatch = (props) => {
   const handleShow = () => setShow(true);
 
   // Initialize state for edited values
-  const [editedTime, setEditedTime] = useState("");
-  const [editedDate, setEditedDate] = useState("");
-  const [editedType, setEditedType] = useState("");
-  const [editedLoc, setEditedLoc] = useState("");
+  const [editedTime, setEditedTime] = useState(null);
+  const [editedDate, setEditedDate] = useState(null);
+  const [editedType, setEditedType] = useState(null);
+  const [editedLoc, setEditedLoc] = useState(null);
 
   // Initialize flag to track changes
   const [isChanged, setIsChanged] = useState(false);
@@ -46,9 +46,9 @@ export const EditPopUpSelectedMatch = (props) => {
       dispatch(
         editMatch({
           matchid: props.matchid,
-          time: editedTime || props.time,
+          startingtime: editedTime || props.time,
           date: editedDate || props.date,
-          type: editedType || props.type,
+          matchtype: editedType || props.type,
           location: editedLoc || props.location,
         })
       );
@@ -59,7 +59,7 @@ export const EditPopUpSelectedMatch = (props) => {
 
   return (
     <>
-      <Button className="popUpButton" variant="success" onClick={handleShow}>
+      <Button  variant="success" onClick={handleShow}>
         Edit Team
       </Button>
 
@@ -80,6 +80,9 @@ export const EditPopUpSelectedMatch = (props) => {
                 value={editedTime || props.time}
                 onChange={(e) => handleTimeChange(e)}
               />
+              <Form.Label className="popUpWindowLabelColor">
+                Date :{" "}
+              </Form.Label>
               <Form.Control
                 type="date"
                 placeholder="change Academy Name"
@@ -87,6 +90,9 @@ export const EditPopUpSelectedMatch = (props) => {
                 value={editedDate || props.date}
                 onChange={(e) => handleDateChange(e)}
               />
+              <Form.Label className="popUpWindowLabelColor">
+                match type :{" "}
+              </Form.Label>
               <Form.Control
                 type="type"
                 placeholder="change Academy Name"
@@ -94,6 +100,9 @@ export const EditPopUpSelectedMatch = (props) => {
                 value={editedType || props.type}
                 onChange={(e) => handleTypeChange(e)}
               />
+              <Form.Label className="popUpWindowLabelColor">
+                location :{" "}
+              </Form.Label>
               <Form.Control
                 type="type"
                 placeholder="change Academy Name"

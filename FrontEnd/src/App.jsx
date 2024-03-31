@@ -34,22 +34,40 @@ import Settings from "./Dashboard/src/pages/Settings";
 import Group from "./components/Group"
 import AddTournament from "./components/AddTournament";
 import Tournament from "./components/Tournament";
-// import TournamentBracket  from "./components/TournamentBracket";
+//import TournamentBracket  from "./components/TournamentBracket";
 import MatchCard from "./components/hamhoum/match";
+
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
 import { useEffect , useState } from 'react';
-
+import Fetchalltour from "./components/hamhoum/getAllTournement";
+import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
+// import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
 function App() {
   const [fixtures, setFixtures] = useState(data);
 
-  console.log(fixtures);
+  // console.log(fixtures);
 
   const refresh = () => window.location.reload(true);
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/group" element={<Group />} />
+      <Route path="/fetchalltour" element={<Fetchalltour />} />
+      {/* <Route path="/fetchmatchforview" element={<Fetchmatchforview />} /> */}
+      <Route path="/fetchmatchbytour/:tournamentId" element={<Fetchmatchbytour />} />
+      <Route path="/testtt" element={<AddMatchPopUpWindow />} />
+      
+        <Route path="/addTournament" element={<AddTournament />} />
+        <Route path="/Tournament/:tournamentId" element={<Tournament />} />
+        <Route path="/tournamentBracket" element={<TournamentBracket />} />
+        <Route path="/t" element={<EditPopUpmatch />} />
+        <Route path="/match" element={<MatchCard />} />
+        <Route path="/a" element={<Table data={fixtures} />}></Route>
+        <Route
+          path="/fixture/:matchID"
+          element={<Fixture data={fixtures} />} />
+      <Route path="/" element={<Layout />}/>
         {/* Public Routes  */}
         <Route index element={<Home />} />
         <Route path="/contact" element={<Contact />} />
@@ -57,24 +75,19 @@ function App() {
         <Route path="/matches" element={<Matches />} />
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
-
+        <Route path="/Academy" element={<Academy />} />
         <Route element={<RequireAuth allowedRoles={['Manager']} />}>
         <Route path="/addAcademy" element={<AddAcademy />} />
 
-        <Route path="/Academy" element={<Academy />} />
+        
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />
         <Route path="/player" element={<AddPlayerForm />} />
         <Route path="/lineup-builder" element={<LineupBuilder />} />
-        <Route path="/t" element={<EditPopUpmatch />} />
-        <Route path="/match" element={<MatchCard />} />
-        <Route path="/a" element={<Table data={fixtures} />}></Route>
-        <Route
-          path="/fixture/:matchID"
-          element={<Fixture data={fixtures} />} />   
-        <Route path="/testtt" element={<AddMatchPopUpWindow />} />
-        <Route path="/testt" element={<AddMatch />} />
+           
+        
+        {/* <Route path="/testt" element={<AddMatch />} /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
@@ -94,10 +107,7 @@ function App() {
         </Route>
       </Route>
    
-        <Route path="/group" element={<Group />} />
-        <Route path="/addTournament" element={<AddTournament />} />
-        <Route path="/Tournament/:tournamentId" element={<Tournament />} />
-        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+        
       </Routes>
     
   );

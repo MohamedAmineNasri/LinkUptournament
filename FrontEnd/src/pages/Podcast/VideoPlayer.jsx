@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Grid, Typography, Paper, styled } from '@mui/material';
 import { SocketContext } from './SocketContext';
+import { useSelector } from 'react-redux';
+import { selectCurrentToken, selectCurrentUser } from "../../../Features/auth/authSlice.js"; 
 
 const StyledVideo = styled('video')(({ theme }) => ({
   width: '550px',
@@ -17,6 +19,8 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 
 const VideoPlayer = () => {
   const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } = useContext(SocketContext);
+  const user = useSelector(selectCurrentUser);
+
 
   return (
     <Grid container justifyContent="center">

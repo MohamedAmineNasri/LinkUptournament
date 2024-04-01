@@ -1,4 +1,8 @@
 require("dotenv").config();
+const express = require("express");
+const http = require("http");
+const cors = require("cors");
+const socketio = require("socket.io");
 
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE);
@@ -18,6 +22,9 @@ const server = app.listen(8000, () => {
   console.log("Server is listening on port 8000");
 });
 
+app.get("/", (req, res) => {
+  res.send("Running");
+});
 
 const io = require("socket.io")(server, {
   allowEIO3: true,
@@ -32,6 +39,7 @@ const Message = require("./Models/Message");
 const User = require("./Models/Users.js");
 
 io.on("connection", async (socket) => {
+  socket.emit("me", socket.id);
   console.log("connected:" + socket.id);
   console.log("User ID:", socket.handshake.query.userId);
   // Store the user ID in the socket for later use
@@ -85,5 +93,15 @@ io.on("connection", async (socket) => {
         console.error("Error sending message:", error);
       }
     }
+  });
+
+  // Handle callUser event
+  socket.on("callUser", ({ userToCall, signalData, from, name }) => {
+    io.to(userToCall).emit("callUser", { signal: signalData, from, name });
+  });
+
+  // Handle answerCall event
+  socket.on("answerCall", (data) => {
+    io.to(data.to).emit("callAccepted", data.signal);
   });
 });

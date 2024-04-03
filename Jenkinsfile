@@ -47,7 +47,4 @@ sh('docker-compose build')
 
         
 
-      
-    }
-}
-
+    

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Grid, Typography, Paper, styled } from '@mui/material';
 import { SocketContext } from './SocketContext';
 import { useSelector } from 'react-redux';
-import { selectCurrentToken, selectCurrentUser } from "../../../Features/auth/authSlice.js"; 
+import { selectCurrentUser } from "../../../Features/auth/authSlice.js";
 
 const StyledVideo = styled('video')(({ theme }) => ({
   width: '550px',
@@ -21,18 +21,30 @@ const VideoPlayer = () => {
   const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } = useContext(SocketContext);
   const user = useSelector(selectCurrentUser);
 
+  useEffect(() => {
+    if (stream.screenStream && userVideo.current) {
+      userVideo.current.srcObject = stream.screenStream;
+    }
+  }, [stream.screenStream]);
 
   return (
     <Grid container justifyContent="center">
-      {stream && (
-        <StyledPaper>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography>
+        {stream && ( // Conditionally render for both camera and screen streams
+      <StyledPaper>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography>
+          {/* Show camera stream if available */}
+          {stream.cameraStream && (
             <StyledVideo playsInline muted ref={myVideo} autoPlay />
-          </Grid>
-        </StyledPaper>
-      )}
-      {callAccepted && !callEnded && (
+          )}
+          {/* Show screen stream if available (takes precedence if both streams exist) */}
+          {stream.screenStream && (
+            <StyledVideo playsInline ref={userVideo} autoPlay />
+          )}
+        </Grid>
+      </StyledPaper>
+    )}
+      {callAccepted && !callEnded && ( // Conditionally render for incoming calls
         <StyledPaper>
           <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom>{call.name || 'Name'}</Typography>

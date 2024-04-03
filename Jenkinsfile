@@ -27,7 +27,15 @@ sh('npm run build-dev')
 }
 }
 }
-
+        stage('Building images (node and mongo)') {
+steps{
+script {
+    dir('BackEnd') {
+sh('docker-compose build')
+}
+}
+}
+        }
      
     
     

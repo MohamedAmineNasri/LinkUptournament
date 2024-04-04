@@ -44,7 +44,7 @@ export const DeleteTeamPopUp = (props) => {
             Close
           </Button>
           <Button
-            style={{ backgroundColor: "#8bc34a" }}
+            style={{ backgroundColor: "rgb(255 26 75)" }}
             variant="primary"
             onClick={handledeleteChanges}
           >

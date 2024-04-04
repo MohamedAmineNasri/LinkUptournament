@@ -18,18 +18,6 @@ function DropDownTeamSettings(props) {
         <Dropdown.Menu
           style={{ backgroundColor: "#8bc34a ", containerType: "inline-size" }}
         >
-          {/* add players ----------------------------------------------------- */}
-          <Button
-            variant="success"
-            style={{
-              width: "-webkit-fill-available",
-              backgroundColor: "#8bc34a",
-            }}
-            onClick={() => navigate(`/player/`)}
-            // onClick={() => navigate(`/player/${props.idTeam}`)}
-          >
-            Add Players
-          </Button>
           {/* check players ----------------------------------------------------- */}
           <Button
             variant="success"

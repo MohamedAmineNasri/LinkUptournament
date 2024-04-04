@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Button from "react-bootstrap/Button";
 import { fetchteamById } from "../../redux/slice/teamSlice";
 import video from "../../assets/Mi-imgs/teamV.mp4";
 import HeaderNavBar from "./HeaderNavBar";
@@ -10,11 +11,13 @@ import logo from "../../assets/Mi-imgs/personpng.png";
 import { fetchplayerByTeamId } from "../../redux/slice/teamSlice";
 import nightFeildImage from "../../assets/Mi-imgs/nightFeild.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 
 export const CheckSelectedTeam = () => {
   const { idTeam } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { SelectedteamDataById, loading, error } = useSelector(
     (state) => state.root.team
@@ -105,7 +108,7 @@ export const CheckSelectedTeam = () => {
                       className="img-fluid teamLogoMwidth " //rounded-circle
                     />
                     <h3
-                      className="mb-4 mt-1 "
+                      className="mb-3 mt-1 "
                       style={{
                         fontWeight: "bold",
                         fontSize: "24px",
@@ -113,6 +116,20 @@ export const CheckSelectedTeam = () => {
                     >
                       <strong>{SelectedteamDataById.TeamName}</strong>
                     </h3>
+                    {/* add players ----------------------------------------------------- */}
+                    <div>
+                      <Button
+                        className="mb-3"
+                        variant="success"
+                        style={{
+                          backgroundColor: "rgba(139, 195, 74, 0.2)",
+                        }}
+                        onClick={() => navigate(`/player/`)}
+                        // onClick={() => navigate(`/player/${idTeam}`)} //need to add id in the route of add player
+                      >
+                        Player <FontAwesomeIcon icon={faPlus} />
+                      </Button>
+                    </div>
                   </div>
                   {/* --------------------------------------------------------------------------------- */}
                   <div className="row col-lg-8 col-md-8">

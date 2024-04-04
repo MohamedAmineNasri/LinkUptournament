@@ -2,14 +2,13 @@ pipeline {
     agent any
 
     stages {
-        stage('Install dependencies') {
-            steps{
+        stage('container UP') {
+            steps {
                 script {
-                    sh 'npm install'
-                            
-}
-}
-}
+                    sh 'docker compose up '
+                }
+            }
+        }
 
 //         stage('Install dependencies') {
 // steps{

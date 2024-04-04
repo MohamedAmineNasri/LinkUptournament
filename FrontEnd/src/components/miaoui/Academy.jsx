@@ -30,6 +30,7 @@ export const Academy = () => {
           idmanger: userIdOnly,
         })
       );
+      localStorage.setItem("AcademyStatus", academyData.Status);
     }
   }, [loading, error, dispatch]);
 

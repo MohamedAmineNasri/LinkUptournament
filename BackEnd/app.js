@@ -91,12 +91,12 @@ app.post("/consumer", async (req, res) => {
     await peer.setLocalDescription(answer);
     const payload = {
         sdp: peer.localDescription
-    }
+    } 
 
     res.json(payload);
 });
 
-app.post('/broadcast', async (req, res) => {
+app.post('/broadcast', async (req, res) => { 
     const peer = new webrtc.RTCPeerConnection({
         iceServers: [
             {

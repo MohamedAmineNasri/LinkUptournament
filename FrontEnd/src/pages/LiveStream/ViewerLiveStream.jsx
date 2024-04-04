@@ -1,8 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 import Breadcrumb from '../../Dashboard/src/components/Breadcrumbs/Breadcrumb';
 import axios from 'axios';
 import { SocketContext } from '../Podcast/SocketContext'; 
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../../Features/auth/authSlice';
+import { useParams } from 'react-router-dom/dist/umd/react-router-dom.development';
+import { io } from 'socket.io-client';
+import styles from '../../pages/Chat/ChatStyle.module.css';
+import EmojiPicker from 'emoji-picker-react';
+
 
 const ViewerLiveStream = () => {
     const { stream } = React.useContext(SocketContext);
@@ -67,6 +74,91 @@ const ViewerLiveStream = () => {
             }
         }
     };
+
+        const user = useSelector(selectCurrentUser);
+        const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
+        const { id } = useParams();
+        const [socket, setSocket] = useState(null);
+        const [messages, setMessages] = useState([]);
+        const [userId, setUserId] = useState("");
+        const messageRef = useRef("");
+        const [message, setMessage] = useState("");
+        const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+        const toggleEmojiPicker = () => {
+        setShowEmojiPicker(!showEmojiPicker);
+    };
+        const setupSocket = () => {
+        const newSocket = io("http://localhost:8000", {
+            query: {
+            token: localStorage.getItem("token"),
+            userId: user.id,
+            },
+        });
+        
+        newSocket.on("connect", () => {
+            console.log("Connected to socket");
+        });
+        
+        newSocket.on("disconnect", () => {
+            console.log("Disconnected from socket");
+        });
+        
+        newSocket.on("newMessage", (message) => {
+            setMessages((prevMessages) => [...prevMessages, message]);
+        });
+        
+        newSocket.on("allMessages", (allMessages) => {
+            setMessages(allMessages);
+        });
+        
+        return newSocket;
+        };
+        
+        const sendMessage = () => {
+        const newMessage = {
+            id,
+            message,
+            name: userFullName, 
+            userId: user.id, 
+        };
+        console.log("Sending message:", newMessage);
+        
+        if (socket) {
+            socket.emit("chatroomMessage", newMessage);
+            setMessage(""); 
+        }
+    };
+    
+
+    const handleEmojiClick = (emojiObject) => {
+        setMessage(prevMessage => prevMessage + emojiObject.emoji); 
+    };
+
+
+
+
+        
+    
+        useEffect(() => {
+        const newSocket = setupSocket();
+        setSocket(newSocket);
+        
+        if (newSocket && user) {
+            newSocket.emit("joinRoom", { id: id });
+        }
+        
+        return () => {
+            if (newSocket) {
+            newSocket.disconnect();
+            }
+        };
+        }, [user]);
+        useEffect(() => {
+        if (user) {
+            setUserId(user.id);
+        }
+        }, [user]);
+    
     
     return (
         <DefaultLayout>
@@ -84,19 +176,52 @@ const ViewerLiveStream = () => {
                         <button id="sound" type="button" style={{ backgroundColor: '#4CAF50', padding: '0.5em 1em', border: '1px solid #ccc' }}>Unmute</button>
                     </div>
                 </section>
+<section className="livechat" style={{ color: '#000', padding: '1em', flex: 1 }}>
+    <h5 style={{ paddingTop: 0, marginTop: 0 }}>Chat Section :</h5>
+    <div className="chatroomContent" style={{ height: '7em', overflowY: 'scroll' }}>
+        <ul id="message-list" style={{ paddingTop: '1px', listStyle: 'none', paddingLeft: 0 }}>
+            {messages.map((message, i) => (
+                <li key={i} className="message" style={{ color: 'red' }}>
+                    <span className={userId === message.userId ? styles.ownMessage : styles.otherMessage}>
+                        {message.name}:
+                    </span>{" "}
+                    {message.message}
+                </li>
+            ))}
+        </ul>
+    </div>
+    <div className="chat-input-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <input
+            type="text"
+            id="chat-input"
+            placeholder="Say Something !!"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            style={{ flex: 3, marginBottom: 0, width: '100%', padding: '0.5em', border: '1px solid #ccc', borderRadius: '5px' }}
+        />
+        {/* Toggle button for EmojiPicker */}
+        <button
+            className={styles.emojiButton}
+            onClick={toggleEmojiPicker}
+            style={{ backgroundColor: '#4CAF50', color: '#fff', border: 'none', padding: '0.5em 1em', cursor: 'pointer', borderRadius: '5px' }}
+        >
+            {showEmojiPicker ? "Close Emoji Picker" : "Open Emoji Picker"}
+        </button>
+        {/* EmojiPicker */}
+        {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width="100%" />}
+        <button
+            type="submit"
+            style={{ flex: 1, marginLeft: '1em', width: '100%', backgroundColor: '#4CAF50', color: '#fff', border: 'none', padding: '0.5em 1em', borderRadius: '5px' }}
+            onClick={sendMessage}
+        >
+            Send
+        </button>
+    </div>
+</section>
 
-                <section className="livechat" style={{ color: '#000', padding: '1em', flex: 1 }}>
-                    <h5 style={{ paddingTop: 0, marginTop: 0 }}>Viewers in chat: <span id="viewerCount">0</span></h5>
 
-                    <div className="messages" id="messages" style={{ height: '7em', overflowY: 'scroll' }}>
-                        <ul id="message-list" style={{ paddingTop: '1px', listStyle: 'none', paddingLeft: 0 }}></ul>
-                    </div>
 
-                    <div className="chat-input-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <input type="text" id="chat-input" placeholder="Type away!" style={{ flex: 3, marginBottom: 0, width: '100%', padding: '0.5em' }} />
-                        <button type="submit" style={{ flex: 1, marginLeft: '1em', width: '100%', backgroundColor: '#4CAF50', color: '#fff', border: 'none', padding: '0.5em 1em' }}>Chat</button>
-                    </div>
-                </section>
+
             </main>
         </DefaultLayout>
     );

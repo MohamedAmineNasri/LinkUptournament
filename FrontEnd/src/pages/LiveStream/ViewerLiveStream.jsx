@@ -205,7 +205,7 @@ const ViewerLiveStream = () => {
             onClick={toggleEmojiPicker}
             style={{ backgroundColor: '#4CAF50', color: '#fff', border: 'none', padding: '0.5em 1em', cursor: 'pointer', borderRadius: '5px' }}
         >
-            {showEmojiPicker ? "Close Emoji Picker" : "Open Emoji Picker"}
+            {showEmojiPicker ? "🙂" : "🙂"}
         </button>
         {/* EmojiPicker */}
         {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width="100%" />}

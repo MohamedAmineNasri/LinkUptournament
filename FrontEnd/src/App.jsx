@@ -26,6 +26,8 @@ import SignIn from "./pages/Authentication Pages/SignIn";
 import Register from "./pages/Authentication Pages/SignUp";
 import Tables from "./pages/User Tables/Tables";
 import Profile from "./pages/Profile Pages/Profile";
+import Chat from "./pages/Chat/Chat";
+import ChatroomPage from "./pages/Chat/ChatroomPage";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
@@ -37,18 +39,51 @@ import Tournament from "./components/Tournament";
 import Tournement from "./pages/Tournament";
 
 // import TournamentBracket  from "./components/TournamentBracket";
+
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
 import { useEffect , useState } from 'react';
+import io from "socket.io-client";
+import EditTournament from "./components/Tournament/EditTounament";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
 
+  // const [socket, setSocket] = useState(null);
+  // const setupSocket = () => {
+  //   const token = localStorage.getItem("token");
+  //   if (token && !socket) {
+  //     const newsocket = io("http://localhost:8000", {
+  //       query: {
+  //         token: localStorage.getItem("token"),
+  //       },
+  //     });
+
+  //     newsocket.on("disconnect", () => {
+  //       setSocket(null);
+  //       setTimeout(setSocket, 3000);
+  //       //makeToast("error", "Disconnected !");
+  //       console.log("Disconnected")
+  //     });
+  //     newsocket.on("connect", () => {
+  //      // makeToast("success", "Connected !");
+  //       console.log("Connected")
+  //     });
+
+  //     setSocket(newsocket);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   setupSocket();
+  // }, []); 
+
+
   console.log(fixtures);
 
-  const refresh = () => window.location.reload(true);
+  // const refresh = () => window.location.reload(true);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -60,9 +95,11 @@ function App() {
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
 
+        {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
         <Route element={<RequireAuth allowedRoles={['Manager']} />}>
-        <Route path="/addAcademy" element={<AddAcademy />} />
-        </Route>
+  <Route path="/addAcademy" element={<AddAcademy />} />
+  <Route path="/Academy" element={<Academy />} />
+</Route>
 
         <Route path="/Academy" element={<Academy />} />
         <Route path="/tournement" element={<Tournement />} />
@@ -71,11 +108,12 @@ function App() {
         <Route path="/player" element={<AddPlayerForm />} />
         <Route path="/lineup-builder" element={<LineupBuilder />} />
         <Route path="/t" element={<EditPopUpmatch />} />
-        <Route path="/tests" element={<MatchCard />} />
+        <Route path="/match" element={<MatchCard />} />
         <Route path="/a" element={<Table data={fixtures} />}></Route>
         <Route
           path="/fixture/:matchID"
-          element={<Fixture data={fixtures} />} />   
+          element={<Fixture data={fixtures} />}
+        ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
         <Route path="/signup" element={<SignUp />} />
@@ -90,6 +128,8 @@ function App() {
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/chatroom/:id" element={<ChatroomPage />} />
               <Route path="/userstable" element={<Tables />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
@@ -100,7 +140,10 @@ function App() {
         <Route path="/group" element={<Group />} />
         <Route path="/addTournament" element={<AddTournament />} />
         <Route path="/Tournament/:tournamentId" element={<Tournament />} />
+        <Route path="/edit-tournament/:tournamentId" element={<EditTournament />}  />
         {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+
+        {/* </Route> */}
       </Routes>
     
   );

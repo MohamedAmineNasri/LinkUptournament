@@ -7,10 +7,14 @@ import {  fetchteams } from "../redux/slice/teamSlice";
 import axios from "axios";
 import addformstadiumImage from "../assets/Mi-imgs/2.jpg";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 // import Group from "./Group";
 
 export const AddTournament = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const [type, setType] = useState("default_type");
   const [nbG, setNbG] = useState("default_type");
   const [nbT, setNbT] = useState("default_type");
@@ -108,7 +112,7 @@ export const AddTournament = () => {
           // setLogo(null);
           // setType("");
           // setRules("");
-          // setStatus("");
+           setStatus("");
           // setWinner(null);
           // setDateDebut("");
           // setDateFin("");
@@ -117,7 +121,7 @@ export const AddTournament = () => {
           console.log("im here just before create groups" ,addTournamentResponse.payload._id, nbG , nbT )  ;
 
           await dispatch(createGroupsThunk({ id: addTournamentResponse.payload._id, nbG, nbT }));
-          // Pass the tournament ID here
+          navigate(`/tournament/${addTournamentResponse.payload._id}`);
         }
       } catch (error) {
         console.error("Error adding tournament:", error);
@@ -287,9 +291,9 @@ export const AddTournament = () => {
                         
                       >
                         <option value="">Select Tournament status</option>
-                        <option value="Group Stage Tournament">comming soon</option>
-                        <option value="Knockout Tournament">ended</option>
-                        <option value="Round Robin Tournament">started</option>
+                        <option value="comming soon">comming soon</option>
+                        <option value="ended">ended</option>
+                        <option value="started">started</option>
                       </select>
                      
                     </div>

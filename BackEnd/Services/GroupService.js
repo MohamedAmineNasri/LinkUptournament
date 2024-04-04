@@ -53,25 +53,30 @@ const createGroups = async (req, res , next) => {
   let teamsChunks = []; 
   const numGroups = req.params.nbG;
   const numTeams = req.params.nbT; 
+  let teams; 
 
   switch(tournament.type) {
-       case 'Group Stage':
-      for (let i = 0; i < tournament.teams.length; i += numTeams) {
+    case 'Group Stage':
+      teams = [...tournament.teams]; // Create a copy of the teams array
+      for (let i = 0; i < numGroups; i++) {
         let teamsChunk = [];
-        for (const teamId of tournament.teams.slice(i, i + numTeams)) {
-          const teamDoc = await Team.findById(teamId);
-          teamsChunk.push({
-            team: teamId,
-            TeamName : teamDoc.TeamName,
-            MJ: 0,
-            G: 0,
-            N: 0,
-            P: 0,
-            BP: 0,
-            BC: 0,
-            DB: 0,
-            PTS: 0
-          });
+        for (let j = 0; j < numTeams; j++) {
+          if (teams.length > 0) {
+            let teamId = teams.splice(Math.floor(Math.random() * teams.length), 1)[0];
+            const teamDoc = await Team.findById(teamId);
+            teamsChunk.push({
+              team: teamId,
+              TeamName : teamDoc.TeamName,
+              MJ: 0,
+              G: 0,
+              N: 0,
+              P: 0,
+              BP: 0,
+              BC: 0,
+              DB: 0,
+              PTS: 0
+            });
+          }
         }
         teamsChunks.push(teamsChunk);
       }
@@ -86,45 +91,42 @@ const createGroups = async (req, res , next) => {
         await group.save();
       }
       break;
-      case 'Round Robin Tournament':
-        let teams = [];
-        for (const teamId of tournament.teams) {
-          const teamDoc = await Team.findById(teamId);
-          teams.push({
-            team: teamId,
-            TeamName : teamDoc.TeamName,
-            MJ: 0,
-            G: 0,
-            N: 0,
-            P: 0,
-            BP: 0,
-            BC: 0,
-            DB: 0,
-            PTS: 0
-          });
-        }
-        const group = new Group({
-          name: 'Group A',
-          tournament: tournament,
-          teams: teams
+    case 'Round Robin Tournament':
+      teams = [];
+      for (const teamId of tournament.teams) {
+        const teamDoc = await Team.findById(teamId);
+        teams.push({
+          team: teamId,
+          TeamName : teamDoc.TeamName,
+          MJ: 0,
+          G: 0,
+          N: 0,
+          P: 0,
+          BP: 0,
+          BC: 0,
+          DB: 0,
+          PTS: 0
         });
-        await group.save();
-        break;
-      
+      }
+      const group = new Group({
+        name: 'Group A',
+        tournament: tournament,
+        teams: teams
+      });
+      await group.save();
+      break;
+    
     default:
       res.status(400).json({ message: 'Invalid tournament type' });
       return;
   }
-
-  // Save the groups back to the tournament and save it
-  //tournament.groups = teamsChunks;
-  //await tournament.save();
 
   res.json({
     message : "Groups successfully created!",
     tournament: tournament
   });
 };
+
 
 
 

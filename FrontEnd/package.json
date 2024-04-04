@@ -28,6 +28,7 @@
     "emoji-picker-react": "^4.9.2",
     "flatpickr": "^4.6.13",
     "jsvectormap": "^1.5.3",
+    "peerjs": "^1.5.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",

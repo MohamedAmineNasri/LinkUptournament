@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect } from 'react';
 import { Grid, Typography, Paper, styled } from '@mui/material';
 import { SocketContext } from './SocketContext';
@@ -29,22 +30,20 @@ const VideoPlayer = () => {
 
   return (
     <Grid container justifyContent="center">
-        {stream && ( // Conditionally render for both camera and screen streams
-      <StyledPaper>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography>
-          {/* Show camera stream if available */}
-          {stream.cameraStream && (
-            <StyledVideo playsInline muted ref={myVideo} autoPlay />
-          )}
-          {/* Show screen stream if available (takes precedence if both streams exist) */}
-          {stream.screenStream && (
-            <StyledVideo playsInline ref={userVideo} autoPlay />
-          )}
-        </Grid>
-      </StyledPaper>
-    )}
-      {callAccepted && !callEnded && ( // Conditionally render for incoming calls
+      {stream && (
+        <StyledPaper>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography>
+            {stream.cameraStream && (
+              <StyledVideo playsInline muted ref={myVideo} autoPlay />
+            )}
+            {stream.screenStream && (
+              <StyledVideo playsInline ref={userVideo} autoPlay />
+            )}
+          </Grid>
+        </StyledPaper>
+      )}
+      {callAccepted && !callEnded && (
         <StyledPaper>
           <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom>{call.name || 'Name'}</Typography>

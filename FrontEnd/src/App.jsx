@@ -44,7 +44,8 @@ import { data } from "./components/TestWitheDummyData/dummy-data";
 import { useEffect , useState } from 'react';
 import io from "socket.io-client";
 import VideoPodcast from "./pages/Podcast/VideoPodcast";
-import VideoLiveStream from "./pages/Podcast/VideoLiveStream";
+import ViewerLiveStream from "./pages/LiveStream/ViewerLiveStream";
+import VideoLiveStream from "./pages/LiveStream/VideoLiveStream";
 
 
 function App() {
@@ -98,7 +99,8 @@ function App() {
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/videopodcast" element={<VideoPodcast />} />
-              <Route path="/VideoLiveStream" element={<VideoLiveStream />} />
+              <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
+              <Route path="/videolivestream" element={<VideoLiveStream />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/chatroom/:id" element={<ChatroomPage />} />
               <Route path="/userstable" element={<Tables />} />

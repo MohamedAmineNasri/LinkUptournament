@@ -3,6 +3,7 @@ const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const socketio = require("socket.io");
+const webrtc = require("wrtc");
 
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE);
@@ -18,8 +19,14 @@ mongoose.connection.once("open", () => {
 
 
 const app = require("./app");
-const server = app.listen(8000, () => {
-  console.log("Server is listening on port 8000");
+
+// Create HTTP server using the app
+const server = http.createServer(app);
+
+// Start the server
+const PORT = process.env.PORT || 8000;
+server.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
 
 app.get("/", (req, res) => {

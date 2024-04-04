@@ -23,7 +23,7 @@ export const DeleteTeamPopUp = (props) => {
       <Button
         variant="success"
         onClick={handleShow}
-        style={{ width: "-webkit-fill-available" }}
+        style={{ width: "-webkit-fill-available", backgroundColor: "#8bc34a" }}
       >
         Delete Team
       </Button>
@@ -36,10 +36,18 @@ export const DeleteTeamPopUp = (props) => {
           Are you sure you want to delete this team ? {props.teamid}
         </Modal.Body>
         <Modal.Footer className="popUpWindowBlackColor">
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            style={{ backgroundColor: "#8bc34a" }}
+            variant="secondary"
+            onClick={handleClose}
+          >
             Close
           </Button>
-          <Button variant="primary" onClick={handledeleteChanges}>
+          <Button
+            style={{ backgroundColor: "#8bc34a" }}
+            variant="primary"
+            onClick={handledeleteChanges}
+          >
             Delete
           </Button>
         </Modal.Footer>

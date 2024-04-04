@@ -1,0 +1,38 @@
+# Use a Node.js base image
+# FROM node:16.10.0
+
+# WORKDIR /app/backend
+
+# # Copy package.json and package-lock.json to the container
+# COPY ./package.json ./
+
+# # Install dependencies
+# RUN npm install
+
+# # Copy the rest of the application code to the container
+# COPY . .
+
+# # Expose the port your app runs on
+# EXPOSE 8000
+
+# # Command to run your application
+# CMD ["npm", "start"]
+
+FROM node:latest
+
+WORKDIR /app/backend
+
+COPY package.json .
+COPY package-lock.json .
+
+
+RUN npm install && \
+    npm rebuild bcrypt --build-from-source
+
+COPY . .
+
+EXPOSE 8000
+
+CMD [ "npm", "start" ]
+
+

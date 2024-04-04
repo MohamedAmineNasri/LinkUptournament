@@ -340,7 +340,12 @@ export const AddAcademy = () => {
                       )}
                     </div>
                     <div className="col-md-1 align-self-center">
-                      <Button variant="success" size="lg" onClick={handleShow}>
+                      <Button
+                        style={{ backgroundColor: "#8bc34a" }}
+                        variant="success"
+                        size="lg"
+                        onClick={handleShow}
+                      >
                         Show
                       </Button>
                       <Modal show={show} onHide={handleClose}>
@@ -366,6 +371,7 @@ export const AddAcademy = () => {
                       className="btn btn-success py-3 px-5 btn-block"
                       value="add academy "
                       onClick={handleSaveChanges}
+                      style={{ backgroundColor: "#8bc34a" }}
                     />
                   </div>
                 </div>

@@ -279,7 +279,7 @@ export const EditPopUpAcademy = (props) => {
       <Button
         variant="success"
         onClick={handleShow}
-        style={{ width: "-webkit-fill-available" }}
+        style={{ width: "-webkit-fill-available", backgroundColor: "#8bc34a" }}
       >
         Edit Academy
       </Button>
@@ -365,10 +365,18 @@ export const EditPopUpAcademy = (props) => {
           </Form>
         </Modal.Body>
         <Modal.Footer className="popUpWindowBlackColor">
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            style={{ backgroundColor: "#8bc34a" }}
+            variant="secondary"
+            onClick={handleClose}
+          >
             Close
           </Button>
-          <Button variant="success" onClick={handleSaveChanges}>
+          <Button
+            style={{ backgroundColor: "#8bc34a" }}
+            variant="success"
+            onClick={handleSaveChanges}
+          >
             Save Changes
           </Button>
         </Modal.Footer>

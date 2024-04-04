@@ -9,22 +9,34 @@ function DropDownTeamSettings(props) {
   return (
     <div className="m-3 textAlignRight">
       <Dropdown>
-        <Dropdown.Toggle variant="success">Settings</Dropdown.Toggle>
+        <Dropdown.Toggle
+          style={{ backgroundColor: "#8bc34a" }}
+          variant="success"
+        >
+          Settings
+        </Dropdown.Toggle>
         <Dropdown.Menu
-          style={{ backgroundColor: "#8bc34a", containerType: "inline-size" }}
+          style={{ backgroundColor: "#8bc34a ", containerType: "inline-size" }}
         >
           {/* add players ----------------------------------------------------- */}
-          <Button variant="success" style={{ width: "-webkit-fill-available" }}>
+          <Button
+            variant="success"
+            style={{
+              width: "-webkit-fill-available",
+              backgroundColor: "#8bc34a",
+            }}
+            onClick={() => navigate(`/player/`)}
+            // onClick={() => navigate(`/player/${props.idTeam}`)}
+          >
             Add Players
           </Button>
           {/* check players ----------------------------------------------------- */}
           <Button
             variant="success"
-            style={{ width: "-webkit-fill-available" }}
-            // onClick={() => {
-            //   window.location.href = `/team?id=${props.idTeam}`;
-
-            // }}
+            style={{
+              width: "-webkit-fill-available",
+              backgroundColor: "#8bc34a",
+            }}
             onClick={() => navigate(`/team/${props.idTeam}`)}
           >
             Check Team

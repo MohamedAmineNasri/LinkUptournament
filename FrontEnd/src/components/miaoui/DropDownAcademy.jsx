@@ -6,7 +6,12 @@ function DropDownAcademy(props) {
   return (
     <div>
       <Dropdown>
-        <Dropdown.Toggle variant="success">Options</Dropdown.Toggle>
+        <Dropdown.Toggle
+          style={{ backgroundColor: "#8bc34a" }}
+          variant="success"
+        >
+          Options
+        </Dropdown.Toggle>
         <Dropdown.Menu style={{ backgroundColor: "#8bc34a" }}>
           <div>
             <EditPopUpAcademy

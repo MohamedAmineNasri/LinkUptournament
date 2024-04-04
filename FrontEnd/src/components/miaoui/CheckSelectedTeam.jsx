@@ -124,8 +124,8 @@ export const CheckSelectedTeam = () => {
                         style={{
                           backgroundColor: "rgba(139, 195, 74, 0.2)",
                         }}
-                        onClick={() => navigate(`/player/`)}
-                        // onClick={() => navigate(`/player/${idTeam}`)} //need to add id in the route of add player
+                        // onClick={() => navigate(`/player/`)}
+                        onClick={() => navigate(`/player/${idTeam}`)} //need to add id in the route of add player
                       >
                         Player <FontAwesomeIcon icon={faPlus} />
                       </Button>

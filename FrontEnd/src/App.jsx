@@ -66,7 +66,7 @@ function App() {
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />
-        <Route path="/player" element={<AddPlayerForm />} />
+        <Route path="/player/:idTeam" element={<AddPlayerForm />} />
         <Route path="/lineup-builder" element={<LineupBuilder />} />
         <Route path="/t" element={<EditPopUpmatch />} />
         <Route path="/tests" element={<MatchCard />} />

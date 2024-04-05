@@ -25,6 +25,8 @@ import SignIn from "./pages/Authentication Pages/SignIn";
 import Register from "./pages/Authentication Pages/SignUp";
 import Tables from "./pages/User Tables/Tables";
 import Profile from "./pages/Profile Pages/Profile";
+import Chat from "./pages/Chat/Chat";
+import ChatroomPage from "./pages/Chat/ChatroomPage";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
@@ -39,13 +41,18 @@ import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
 import { useEffect, useState } from "react";
+import io from "socket.io-client";
+import VideoPodcast from "./pages/Podcast/VideoPodcast";
+import ViewerLiveStream from "./pages/LiveStream/ViewerLiveStream";
+import VideoLiveStream from "./pages/LiveStream/VideoLiveStream";
 import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
+
 function App() {
   const [fixtures, setFixtures] = useState(data);
 
   console.log(fixtures);
 
-  const refresh = () => window.location.reload(true);
+  // const refresh = () => window.location.reload(true);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -63,15 +70,24 @@ function App() {
         <Route path="/addAcademy" element={<AddAcademy />} />
         <Route path="/Academy" element={<Academy />} />
         <Route path="/team/:idTeam" element={<CheckSelectedTeam />} />
+        {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
+        <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
+          <Route path="/addAcademy" element={<AddAcademy />} />
+          <Route path="/Academy" element={<Academy />} />
+        </Route>
+
         <Route path="/tournament" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />
         <Route path="/player/:idTeam" element={<AddPlayerForm />} />
         <Route path="/lineup-builder" element={<LineupBuilder />} />
         <Route path="/t" element={<EditPopUpmatch />} />
-        <Route path="/tests" element={<MatchCard />} />
+        <Route path="/match" element={<MatchCard />} />
         <Route path="/a" element={<Table data={fixtures} />}></Route>
-        <Route path="/fixture/:matchID" element={<Fixture data={fixtures} />} />
+        <Route
+          path="/fixture/:matchID"
+          element={<Fixture data={fixtures} />}
+        ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
         <Route path="/signup" element={<SignUp />} />
@@ -98,6 +114,11 @@ function App() {
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/userslist" element={<UserList />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/videopodcast" element={<VideoPodcast />} />
+            <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
+            <Route path="/videolivestream" element={<VideoLiveStream />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/chatroom/:id" element={<ChatroomPage />} />
             <Route path="/userstable" element={<Tables />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
@@ -108,6 +129,8 @@ function App() {
       <Route path="/addTournament" element={<AddTournament />} />
       <Route path="/Tournament/:tournamentId" element={<Tournament />} />
       {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+
+      {/* </Route> */}
     </Routes>
   );
 }

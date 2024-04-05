@@ -1,0 +1,11 @@
+.landing-page {
+  background: transparent;
+}
+.bg-hero {
+  background-image: url("../../../public/assets/images/hero-img-removebg-preview.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 50%;
+}

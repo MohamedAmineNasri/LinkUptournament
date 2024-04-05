@@ -1,0 +1,89 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/*body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #0d0f12;
+}*/
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  background: #212529;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #363636;
+}
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  background-color: transparent !important;
+}
+.css-953pxc-MuiInputBase-root-MuiInput-root::after {
+  border-bottom: 2px solid #2b9451 !important;
+}
+.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: #2b9451 !important;
+}
+.css-953pxc-MuiInputBase-root-MuiInput-root::before {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.42) !important;
+  transition: border-bottom-width 0.15s ease !important;
+}
+.css-953pxc-MuiInputBase-root-MuiInput-root:hover::before {
+  border-bottom-width: 2.5px !important; /* Increase border-bottom width to 4px on hover */
+  transition: border-bottom-width 0.15s ease !important;
+}
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover {
+  background-color: #2b94511a !important;
+}
+.css-n70jm4-MuiInputBase-root-MuiInput-root-MuiSelect-root::before {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.42) !important;
+  transition: border-bottom-width 0.15s ease !important;
+}
+.css-n70jm4-MuiInputBase-root-MuiInput-root-MuiSelect-root:hover::before {
+  border-bottom-width: 2.5px !important; /* Increase border-bottom width to 4px on hover */
+  transition: border-bottom-width 0.15s ease !important;
+}
+.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
+  color: white !important;
+}
+.css-194jhg8-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: #2b9451 !important;
+}
+.css-n70jm4-MuiInputBase-root-MuiInput-root-MuiSelect-root::after {
+  border-bottom: 2px solid #2b9451 !important;
+}
+
+.MuiInputBase-formControl
+  .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
+  background: transparent;
+}
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus {
+  background-color: #2b945105;
+}
+
+.css-1x51dt5-MuiInputBase-input-MuiInput-input:focus {
+  background-color: #2b945105;
+}
+.css-tlc64q-MuiPaper-root-MuiDialog-paper {
+  background-color: transparent !important;
+}
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
+  color: white;
+}
+.css-rnmm7m-MuiPaper-root-MuiDialog-paper{
+  background-color: transparent !important;
+}

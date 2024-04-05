@@ -1,0 +1,130 @@
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { addPlayer } from "../redux/playerReducers/addPlayerSlice";
+import { soccerPositions } from "../data/playersPositions";
+import Header from "../components/Header";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./PlayerForm.css";
+
+const AddPlayerForm = () => {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    legal_guardian: "",
+    academic_membership: "",
+    position: "",
+    skills: [],
+  });
+  const [skillsSize, setSkillsSize] = useState(1);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleAddSkill = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      skills: [...prevData.skills, ""],
+    }));
+    setSkillsSize(Object.keys(formData.skills).length + 1);
+  };
+
+  const handleSkillInputChange = (e, index) => {
+    const newSkills = [...formData.skills];
+    newSkills[index] = e.target.value;
+    setFormData((prevData) => ({
+      ...prevData,
+      skills: newSkills,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    //dispatch(addPlayer(formData));
+    toast.success("Player added successfully 👌");
+  };
+
+  return (
+    <div>
+      <Header />
+
+      <div className="row " style={{ height: "100vh", margin: 0 }}>
+        <div className="col-lg-5 text-center player-bg"></div>
+        <div
+          className="col-lg-5 mx-auto text-center"
+          style={{ width: "50vw", paddingTop: "9%" }}
+        >
+          <form onSubmit={handleSubmit} className="player-form">
+            <h2 className="text-white">PLAYER</h2>
+            <Form.Group controlId="legal_guardian">
+              <Form.Control
+                type="text"
+                name="legal_guardian"
+                value={formData.legal_guardian}
+                onChange={handleInputChange}
+                placeholder="Enter legal guardian"
+              />
+            </Form.Group>
+            <Form.Group controlId="academic_membership">
+              <Form.Control
+                type="text"
+                name="academic_membership"
+                value={formData.academic_membership}
+                onChange={handleInputChange}
+                placeholder="Enter academic membership"
+              />
+            </Form.Group>
+            <Form.Group controlId="position">
+              <Form.Control
+                as="select"
+                name="position"
+                value={formData.position}
+                onChange={handleInputChange}
+              >
+                <option value="">Select Position</option>
+                {Object.entries(soccerPositions).map(([key, value]) => (
+                  <option key={key} value={key} style={{ padding: "30px" }}>
+                    {value}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="skills">
+              {formData.skills.map((skill, index) => (
+                <div key={index}>
+                  <Form.Control
+                    type="text"
+                    value={skill}
+                    onChange={(e) => handleSkillInputChange(e, index)}
+                    placeholder={`Enter skill ${index + 1}`}
+                  />
+                </div>
+              ))}
+            </Form.Group>
+            <div className="row justify-content-center gap">
+              <Button
+                variant="secondary"
+                disabled={skillsSize == 3}
+                onClick={handleAddSkill}
+              >
+                Add Skill
+              </Button>
+              <Button variant="success" type="submit">
+                Add Player
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <ToastContainer />
+    </div>
+  );
+};
+
+export default AddPlayerForm;

@@ -9,6 +9,8 @@ import AddMatchPopUpWindow from "./AddMatchPopUpWindow";
 import { Link } from 'react-router-dom';
 import Deleatetour from "./deleattournamentpopup";
 import not_found from "../../../public/assets/images/not found.png"
+// import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout.js';
+import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 
 
 
@@ -20,8 +22,8 @@ export const fetchtour = (props) => {
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/tournament');
-        setTournementId(response.data);
+        const response = await axios.get('http://localhost:8000/tournament/all');
+        setTournementId(response.data.tournaments);
       
       } catch (error) {
         console.error('Error fetching tournaments:', error);
@@ -34,6 +36,7 @@ export const fetchtour = (props) => {
 
   return (
     <>
+    <DefaultLayout>
       <div className="row"style={{backgroundColor:"#1A1E25"}}>
    
 
@@ -110,7 +113,7 @@ export const fetchtour = (props) => {
         ))}
      
     </div>
-    
+    </DefaultLayout>
     </>
   );
 };

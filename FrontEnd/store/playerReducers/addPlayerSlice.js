@@ -9,7 +9,16 @@ const initialState = {
 export const addPlayer = (payload) => async (dispatch) => {
   dispatch(postDataPending());
   try {
-    await axios.post("http://localhost:8000/player", payload);
+    await axios.post("http://localhost:8000/player/", payload);
+    dispatch(postDataFulfilled());
+  } catch (error) {
+    dispatch(postDataRejected(error.message));
+  }
+};
+export const addPlayerMi = (payload) => async (dispatch) => {
+  dispatch(postDataPending());
+  try {
+    await axios.post("http://localhost:8000/player/addPlayer", payload);
     dispatch(postDataFulfilled());
   } catch (error) {
     dispatch(postDataRejected(error.message));

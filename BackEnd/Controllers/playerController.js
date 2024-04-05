@@ -4,8 +4,19 @@ const Team =require('../Models/Team')
 const Academy =require('../Models/Academy')
 const TeamService = require('../Services/TeamService')
 
-// Create a player
+
+
 async function createPlayer(req, res) {
+  try {
+    const player = new Player(req.body);
+    await player.save();
+    res.status(201).send(player);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+}
+// Create a player
+async function createPlayerMi(req, res) {
   const { team } = req.body;
   try {
     console.log(team)
@@ -83,4 +94,5 @@ module.exports = {
   getPlayerById,
   updatePlayerById,
   deletePlayerById,
+  createPlayerMi
 };

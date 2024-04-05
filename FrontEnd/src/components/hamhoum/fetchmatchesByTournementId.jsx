@@ -11,6 +11,7 @@ import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
 import Button from "react-bootstrap/Button";
+import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 
 export const fetchtour = () => {
     const { tournamentId } = useParams();
@@ -98,7 +99,7 @@ if (TournementId.length ==0) {
       }
   return (
     <>
-   
+   <DefaultLayout>
     <div>
         <div className="site-wrap">
           <div className="site-mobile-menu site-navbar-target">
@@ -235,7 +236,7 @@ if (TournementId.length ==0) {
     
     
  
-   
+      </DefaultLayout>
     </>
   );
 };

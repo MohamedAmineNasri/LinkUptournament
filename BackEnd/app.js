@@ -24,6 +24,19 @@ const bodyParser = require("body-parser");
 
 
 
+
+
+
+
+
+// app.use(cors());
+// app.use(express.json());
+
+
+
+
+
+
 const cookieParser = require('cookie-parser')
 
 // i added the {limit: '50mb'} so i can upolad files larger than 100kb
@@ -34,6 +47,8 @@ app.use(express.urlencoded({limit: '50mb'}));
 
 // Handle options credentials check - before CORS! 
 // and fetch cookies credentials requirement
+// Handle options credentials check - before CORS! 
+// and fetch cookies credentials requirement
 app.use(credentials); 
 
 // Cross Origin Resource Sharing
@@ -42,6 +57,28 @@ app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use(cors(corsOptions));
+
+
+
+
+
+// app.use(credentials); 
+
+// Cross Origin Resource Sharing
+//  app.use(cors(corsOptions));
+// app.use("/tournement", tournementRouter);
+// app.use("/team", teamRouter);
+
+
+
+// Handle options credentials check - before CORS! 
+// and fetch cookies credentials requirement
+// app.use(credentials); 
+// app.use(cors(corsOptions));
+// Cross Origin Resource Sharing
 
 
 

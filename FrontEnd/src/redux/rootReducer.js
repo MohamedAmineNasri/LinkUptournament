@@ -5,7 +5,7 @@ import groupReducer from './slice/groupSlice';
 import tournamentReducer from './slice/tournamentSlice';
 import matchReducer from './slice/matchSlice';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   team: teamReducer,
   academy : academyReducer ,
   tournament : tournamentReducer ,

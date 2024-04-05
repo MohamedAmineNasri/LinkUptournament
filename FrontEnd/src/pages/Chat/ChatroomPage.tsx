@@ -134,7 +134,7 @@ const ChatroomPage = () => {
                 />
                 {/* Toggle button for EmojiPicker */}
                 <button className={styles.emojiButton} onClick={toggleEmojiPicker}>
-                    {showEmojiPicker ? "Close Emoji Picker" : "Open Emoji Picker"}
+                      {showEmojiPicker ? "🙂" : "🙂"}
                 </button>
                 {/* EmojiPicker */}
                 {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width="100%" />}

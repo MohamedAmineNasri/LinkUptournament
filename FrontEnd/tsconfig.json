@@ -19,7 +19,7 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
         },
-        "include": ["src", "src/lib.d.ts"],
+        "include": ["src", "src/lib.d.ts", "../BackEnd/Services/AcademyStatusEmailSender.js"],
         "references": [{ "path": "./tsconfig.node.json" }]
     }
     

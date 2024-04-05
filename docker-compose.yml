@@ -1,0 +1,32 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./BackEnd
+      dockerfile: DockerFile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./BackEnd:/app/backend
+      - /app/backend/node_modules/
+    depends_on:
+      - mongo
+  # frontend:
+  #   build:
+  #     context: ./FrontEnd
+  #     dockerfile: DockerFile
+  #   ports:
+  #     - "5173:5173" 
+  #   volumes:
+  #     - ./FrontEnd:/app/frontend
+  #     - /app/frontend/node_modules/
+  #   environment:
+  #     - REACT_APP_BACKEND_URL=http://localhost:8000
+  #   depends_on:
+  #     - backend
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mydata:/data/db

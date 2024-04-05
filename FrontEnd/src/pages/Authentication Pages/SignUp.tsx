@@ -266,7 +266,7 @@
                     required
                 />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
                 <label>Account Image:</label>
                 <input
                     type="file"
@@ -276,7 +276,7 @@
                     value={formData.accountImage}
                     onChange={handleChange}
                 />
-            </div>
+            </div> */}
             <div className="form-group">
                 <label>Birthday:</label>
                 <input

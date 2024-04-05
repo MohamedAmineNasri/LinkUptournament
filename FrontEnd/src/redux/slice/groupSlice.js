@@ -2,17 +2,30 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Async thunk for creating groups
+
 export const createGroupsThunk = createAsyncThunk(
   'groups/create',
-  async (id, { rejectWithValue }) => {
+  async (arg, thunkAPI) => {
+    const { id, nbG, nbT } = arg;
+    console.log(id , nbG , nbT );
+    const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.post(`http://localhost:8000/group/addGroupsStage/${id}`);
+      console.log("in groupslice")
+      const response = await axios.post(`http://localhost:8000/group/addGroupsStage/${id}/${nbG}/${nbT}`);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      if (error && error.response) {
+        return rejectWithValue(error.response.data);
+      } else {
+        // Handle unexpected errors
+        console.error(error);
+        return rejectWithValue('Unexpected error');
+      }
     }
   }
 );
+
+
 export const fetchGroupsByTournamentIdThunk = createAsyncThunk(
     'groups/fetchByTournamentId',
     async (id, { rejectWithValue }) => {

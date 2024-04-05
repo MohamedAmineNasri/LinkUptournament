@@ -40,6 +40,7 @@ export const deleteTournament = createAsyncThunk(
 export const updateTournament = createAsyncThunk(
     'tournament/updateTournament',
     async ({ id, ...tournamentData }) => {
+      console.log(tournamentData)
       const response = await axios.put(`http://localhost:8000/tournament/update/${id}`, tournamentData);
       return response.data;
     }
@@ -100,7 +101,36 @@ export const fetchTournaments = createAsyncThunk(
       .addCase(fetchtournamentByIdThunk.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload ? action.payload.message : action.error.message;
-      });
+      })
+      // Delete Tournament
+      .addCase(deleteTournament.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(deleteTournament.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.tournaments = state.tournaments.filter(tournament => tournament.id !== action.payload);
+      })
+      .addCase(deleteTournament.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      // Update Tournament
+      .addCase(updateTournament.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(updateTournament.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        const index = state.tournaments.findIndex(tournament => tournament.id === action.payload.id);
+        if (index !== -1) {
+          state.tournaments[index] = action.payload;
+        }
+      })
+      .addCase(updateTournament.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
   },
   });
   export default tournamentSlice.reducer;

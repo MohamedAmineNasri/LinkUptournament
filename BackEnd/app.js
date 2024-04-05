@@ -17,6 +17,7 @@ const corsOptions = require('./config/corsOptions');
 const credentials = require('./middlewares/credentials');
 // const tournementRouter = require("./Routes/tournementRouter");
 const playerRouter = require("./Routes/playerRouter");
+const refereeRouter = require("./Routes/refereeRouter");
 const chatroomRouter = require("./Routes/chatroom");
 const webrtc = require("wrtc");
 const bodyParser = require("body-parser");
@@ -54,12 +55,13 @@ app.use(credentials);
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
 
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.use(cors(corsOptions));
+
 
 
 
@@ -101,7 +103,7 @@ app.use("/chatroom", require("./Routes/chatroom"));
 
 
 app.use("/player", playerRouter);
-
+app.use("/referee", refereeRouter);
 
 app.use('/group', groupRoutes);
 app.use('/staduim', staduimRoutes);
@@ -110,6 +112,7 @@ app.use('/team', TeamRouter);
 app.use("/match",match)
 app.use('/academy', AcademyRouter);
 
+app.use('/uploads', express.static('uploads'));
 
 
 // WebRTC endpoints

@@ -161,7 +161,7 @@ const teamSlice = createSlice({
       })
       .addCase(fetchteams.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.allteamData = action.payload;
+        state.teams = action.payload;
       })
       .addCase(fetchteams.rejected, (state, action) => {
         state.status = 'failed';

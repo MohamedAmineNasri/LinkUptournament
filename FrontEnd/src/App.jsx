@@ -32,10 +32,24 @@ import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 import AdminDashboard from "./Dashboard/AdminDashboard";
 import Settings from "./Dashboard/src/pages/Settings";
-import Group from "./components/Group";
-import AddTournament from "./components/AddTournament";
-import Tournament from "./components/Tournament";
+import Tournament from "./pages/TournamentManagementPages/Tournament";
+import TournamentLayout from "./pages/TournamentManagementPages/TournamentLayout";
+import ManageTournament from "./pages/TournamentManagementPages/ManageTournament";
+import ManageParticipant from "./pages/TournamentManagementPages/ManageParticipant";
+import ManagePlayer from "./components/TournamentManagementComponenets/ManagePlayer";
+import ManageTeam from "./components/TournamentManagementComponenets/ManageTeam";
+import ManageReferees from "./components/TournamentManagementComponenets/ManageReferees";
+import ConsultTeam from "./components/TournamentManagementComponenets/ConsultTeam";
+import ConsultPlayer from "./components/TournamentManagementComponenets/ConsultPlayer";
+import ConsultReferee from "./components/TournamentManagementComponenets/ConsultReferee";
+import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
+import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
+import FormatSelect from "./components/TournamentManagementComponenets/FormatSelect";
+import EditTournament from "./components/TournamentManagementComponenets/EditTournament";
+import AddTournament from "./pages/TournamentManagementPages/ManageTournament1";
+
 // import TournamentBracket  from "./components/TournamentBracket";
+
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
@@ -70,6 +84,28 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
         <Route index element={<Home />} />
+          {/**YASSINE_ROUTES*/}
+      {/* <Route path="/page" element={<LandingPage />} /> */}
+      <Route path="/manage" element={<TournamentLayout />}>
+        
+        <Route index element={<ManageTournament />} />
+        <Route path="edit/:tournamentId" element={<EditTournament />} />
+        <Route path="tournament/:tournamentId" element={<Tournament/>}/>
+        <Route path="addtournament" element={<AddTournament/>}/>
+        <Route path="format" element={<FormatSelect />}>
+          <Route path="bracket" element={<ManageTournamentFormat />} />
+          <Route path="group" element={<ManageTournamentGroup />} />
+        </Route>
+        <Route path="participant" element={<ManageParticipant />}>
+          <Route path="team" element={<ManageTeam />} />
+          <Route path="team/consult" element={<ConsultTeam />} />
+          <Route path="player" element={<ManagePlayer />} />
+          <Route path="player/consult" element={<ConsultPlayer />} />
+          <Route path="referee" element={<ManageReferees />} />
+          <Route path="referee/consult" element={<ConsultReferee />} />
+        </Route>
+      </Route>
+     
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/matches" element={<Matches />} />
@@ -88,7 +124,8 @@ function App() {
           <Route path="/Academy" element={<Academy />} />
         </Route>
 
-        <Route path="/tournament" element={<Tournament />} />
+        <Route path="/Academy" element={<Academy />} />
+        <Route path="/tournement" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />
         <Route path="/player/:idTeam" element={<AddPlayerForm />} />
@@ -137,9 +174,7 @@ function App() {
         </Route>
       </Route>
 
-      <Route path="/group" element={<Group />} />
-      <Route path="/addTournament" element={<AddTournament />} />
-      <Route path="/Tournament/:tournamentId" element={<Tournament />} />
+     
       {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
 
       {/* </Route> */}

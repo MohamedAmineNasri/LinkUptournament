@@ -11,7 +11,7 @@ const TournamentSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['Group Stage Tournament', 'Knockout Tournament', 'Round Robin Tournament'],
+    enum: ['Group Stage', 'Knockout' , 'Group stage and Knockout'],
     required: true
   },
   rules: {
@@ -37,7 +37,9 @@ const TournamentSchema = new mongoose.Schema({
   teams: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Team'
-  }]
-});
+  }] ,
+  
+}, 
+{ timestamps: true });
 
 module.exports = mongoose.model('Tournament', TournamentSchema);

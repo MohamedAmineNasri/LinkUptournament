@@ -5,28 +5,21 @@ import userSix from '../../Dashboard/src/images/user/user-06.png';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser } from "../../../Features/auth/authSlice.js"; 
-
 import styles from './ChatStyle.module.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
 
-
-
 const Chat = () => {
     const user = useSelector(selectCurrentUser);
     const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
-    const userRole = user ? `Role : ${user.roles}` : 'Welcome';
+    const userRole = user && user.roles;
     const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
-    // console.log('user'+ user)
-    // console.log('role'+ userRole)
+    console.log('role'+userRole)
     const [chatroomName, setChatroomName] = useState("");
+    const [chatroomNameError, setChatroomNameError] = useState("");
 
     const setupSocket = () => {
-        // Implement your socket setup logic here
-        // For example:
-        // const socket = io('http://localhost:8000');
-        // socket.on('connect', () => console.log('Connected to socket'));
-        // return socket;
+      
     };
 
     const [chatrooms, setChatrooms] = useState([]);
@@ -41,84 +34,82 @@ const Chat = () => {
                 setChatrooms(response.data);
             })
             .catch((err) => {
-                // Properly handle errors here
                 console.error(err);
-
-                // Use setTimeout correctly
                 setTimeout(getChatrooms, 3000);
             });
     };
 
     const createChatroom = () => {
-        // Send a POST request to the server to create a new chatroom
-        axios
-          .post(
-            "http://localhost:8000/chatroom",
-            { name: chatroomName }, // Pass the chatroom name in the request body
-            {
-              headers: {
-                Authorization: "Bearer " + localStorage.getItem("token"),
-              },
-            }
-          )
-          .then((response) => {
-            // If chatroom creation is successful, fetch the updated chatroom list
-            getChatrooms();
-            // Reset the chatroom name input
-            setChatroomName("");
-          })
-          .catch((err) => {
-            // Properly handle errors here
-            console.error(err);
-          });
-      };
+        if (validateChatroomName()) {
+            axios
+                .post(
+                    "http://localhost:8000/chatroom",
+                    { name: chatroomName }, 
+                    {
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("token"),
+                        },
+                    }
+                )
+                .then((response) => {
+                    getChatrooms();
+                    setChatroomName("");
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        }
+    };
+
+    const validateChatroomName = () => {
+        if (chatroomName.trim() === "") {
+            setChatroomNameError("Chatroom name is required");
+            return false;
+        } else {
+            setChatroomNameError("");
+            return true;
+        }
+    };
 
     useEffect(() => {
-        // Call setupSocket here
         const socket = setupSocket();
         getChatrooms();
-
-        // Cleanup function to close socket on component unmount
         return () => {
-            // Close socket connection here if needed
         };
     }, []);
 
-return (
-    <DefaultLayout>
-    <Breadcrumb pageName="Chat" />
-    <div className={styles.card}>
-            <div className={styles.cardHeader}>Chatrooms</div>
-            <div className={styles.cardBody}>
-                <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel} htmlFor="chatroomName">Chatroom Name</label>
+    return (
+        <DefaultLayout>
+            <Breadcrumb pageName="Chat" />
+            <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '20px', margin: '20px' }}>
+                <div style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>Chatrooms</div>
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ marginRight: '10px' }} htmlFor="chatroomName">Chatroom Name</label>
                     <input
                         type="text"
-                        className={styles.inputField}
                         name="chatroomName"
                         id="chatroomName"
                         placeholder="Enter Chatroom Name"
+                        value={chatroomName}
                         onChange={(e) => setChatroomName(e.target.value)}
+                        style={{ padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
                     />
+                    <button style={{ marginLeft: '10px', padding: '5px 10px', borderRadius: '5px', backgroundColor: '#4CAF50', color: '#fff', border: 'none', cursor: 'pointer' }} onClick={createChatroom}>Create ChatRoom</button>
+                    {chatroomNameError && <div style={{ color: 'red' }}>{chatroomNameError}</div>}
                 </div>
-                <button className={styles.chatButton} onClick={createChatroom}>Create ChatRoom</button>
-
-            </div>
-      <div className="chatrooms">
-        {chatrooms.map((chatroom) => (
-          <div key={chatroom._id} className="chatroom">
-            <div>{chatroom.name}</div>
-            <Link to={"/chatroom/" + chatroom._id}>
-              <div className={styles.joinLink}>Join</div>
-            </Link>
-
-          </div>
-        ))}
-      </div>
-    </div>
-
-    </DefaultLayout>
-);
+                <div>
+                    {chatrooms.map((chatroom) => (
+                        <div key={chatroom._id} style={{ marginBottom: '10px' }}>
+                            <div>{chatroom.name}</div>
+                            <Link to={"/chatroom/" + chatroom._id} style={{ textDecoration: 'none' }}>
+                                <div style={{ backgroundColor: '#4CAF50', color: '#fff', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer', textAlign: 'center' }}>Join</div>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+            </div>    
+        </DefaultLayout>
+    );
 };
 
 export default Chat;

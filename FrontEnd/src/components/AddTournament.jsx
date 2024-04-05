@@ -37,6 +37,7 @@ export const AddTournament = () => {
 
   const dispatch = useDispatch();
   const teams = useSelector((state) => state.root.team.teams);
+  console.log(teams)
 
 
   useEffect(() => {

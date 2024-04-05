@@ -1,4 +1,3 @@
-
 import "./App.css";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
@@ -6,11 +5,11 @@ import Blog from "./pages/Blog";
 import Matches from "./pages/Matches";
 import Players from "./pages/Players";
 import Single from "./pages/Single";
-import AddAcademy from "./components/AddAcademy";
+import AddAcademy from "./components/miaoui/AddAcademy";
 import AddMatchPopUpWindow from "./components/hamhoum/AddMatchPopUpWindow";
 import AddMatch from "./components/hamhoum/anotherAddMatch";
 import EditPopUpmatch from "./components/hamhoum/EditPopUpMatch";
-import Academy from "./components/Academy";
+import Academy from "./components/miaoui/Academy";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -33,10 +32,21 @@ import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 import AdminDashboard from "./Dashboard/AdminDashboard";
 import Settings from "./Dashboard/src/pages/Settings";
-import Group from "./components/Group"
-import AddTournament from "./components/AddTournament";
-import Tournament from "./components/Tournament";
-import Tournement from "./pages/Tournament";
+import Tournament from "./pages/TournamentManagementPages/Tournament";
+import TournamentLayout from "./pages/TournamentManagementPages/TournamentLayout";
+import ManageTournament from "./pages/TournamentManagementPages/ManageTournament";
+import ManageParticipant from "./pages/TournamentManagementPages/ManageParticipant";
+import ManagePlayer from "./components/TournamentManagementComponenets/ManagePlayer";
+import ManageTeam from "./components/TournamentManagementComponenets/ManageTeam";
+import ManageReferees from "./components/TournamentManagementComponenets/ManageReferees";
+import ConsultTeam from "./components/TournamentManagementComponenets/ConsultTeam";
+import ConsultPlayer from "./components/TournamentManagementComponenets/ConsultPlayer";
+import ConsultReferee from "./components/TournamentManagementComponenets/ConsultReferee";
+import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
+import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
+import FormatSelect from "./components/TournamentManagementComponenets/FormatSelect";
+import EditTournament from "./components/TournamentManagementComponenets/EditTournament";
+import AddTournament from "./pages/TournamentManagementPages/ManageTournament1";
 
 // import TournamentBracket  from "./components/TournamentBracket";
 
@@ -44,42 +54,15 @@ import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
-import { useEffect , useState } from 'react';
+import { useEffect, useState } from "react";
 import io from "socket.io-client";
-import EditTournament from "./components/Tournament/EditTounament";
+import VideoPodcast from "./pages/Podcast/VideoPodcast";
+import ViewerLiveStream from "./pages/LiveStream/ViewerLiveStream";
+import VideoLiveStream from "./pages/LiveStream/VideoLiveStream";
+import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
-
-  // const [socket, setSocket] = useState(null);
-  // const setupSocket = () => {
-  //   const token = localStorage.getItem("token");
-  //   if (token && !socket) {
-  //     const newsocket = io("http://localhost:8000", {
-  //       query: {
-  //         token: localStorage.getItem("token"),
-  //       },
-  //     });
-
-  //     newsocket.on("disconnect", () => {
-  //       setSocket(null);
-  //       setTimeout(setSocket, 3000);
-  //       //makeToast("error", "Disconnected !");
-  //       console.log("Disconnected")
-  //     });
-  //     newsocket.on("connect", () => {
-  //      // makeToast("success", "Connected !");
-  //       console.log("Connected")
-  //     });
-
-  //     setSocket(newsocket);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setupSocket();
-  // }, []); 
-
 
   console.log(fixtures);
 
@@ -89,23 +72,51 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
         <Route index element={<Home />} />
+          {/**YASSINE_ROUTES*/}
+      {/* <Route path="/page" element={<LandingPage />} /> */}
+      <Route path="/manage" element={<TournamentLayout />}>
+        
+        <Route index element={<ManageTournament />} />
+        <Route path="edit/:tournamentId" element={<EditTournament />} />
+        <Route path="tournament/:tournamentId" element={<Tournament/>}/>
+        <Route path="addtournament" element={<AddTournament/>}/>
+        <Route path="format" element={<FormatSelect />}>
+          <Route path="bracket" element={<ManageTournamentFormat />} />
+          <Route path="group" element={<ManageTournamentGroup />} />
+        </Route>
+        <Route path="participant" element={<ManageParticipant />}>
+          <Route path="team" element={<ManageTeam />} />
+          <Route path="team/consult" element={<ConsultTeam />} />
+          <Route path="player" element={<ManagePlayer />} />
+          <Route path="player/consult" element={<ConsultPlayer />} />
+          <Route path="referee" element={<ManageReferees />} />
+          <Route path="referee/consult" element={<ConsultReferee />} />
+        </Route>
+      </Route>
+     
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/players" element={<Players />} />
         <Route path="/single" element={<Single />} />
 
+        <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
+          {/* <Route path="/addAcademy" element={<AddAcademy />} /> */}
+        </Route>
+        <Route path="/addAcademy" element={<AddAcademy />} />
+        <Route path="/Academy" element={<Academy />} />
+        <Route path="/team/:idTeam" element={<CheckSelectedTeam />} />
         {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
-        <Route element={<RequireAuth allowedRoles={['Manager']} />}>
-  <Route path="/addAcademy" element={<AddAcademy />} />
-  <Route path="/Academy" element={<Academy />} />
-</Route>
+        <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
+          <Route path="/addAcademy" element={<AddAcademy />} />
+          <Route path="/Academy" element={<Academy />} />
+        </Route>
 
         <Route path="/Academy" element={<Academy />} />
-        <Route path="/tournement" element={<Tournement />} />
+        <Route path="/tournement" element={<Tournament />} />
         <Route path="/groups" element={<TournamentRoundRobin />} />
         <Route path="/test" element={<TournamentBracket />} />
-        <Route path="/player" element={<AddPlayerForm />} />
+        <Route path="/player/:idTeam" element={<AddPlayerForm />} />
         <Route path="/lineup-builder" element={<LineupBuilder />} />
         <Route path="/t" element={<EditPopUpmatch />} />
         <Route path="/match" element={<MatchCard />} />
@@ -122,30 +133,40 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
         {/* Protected Routes  */}
-        <Route element={<PersistLogin/>}>
-        {/* <Route element={<RequireAuth  />}> */}
-            <Route element={<RequireAuth allowedRoles={['Admin','Supporter','Agent','Manager','TournamentCoordinator']} />}>
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/userslist" element={<UserList />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/chatroom/:id" element={<ChatroomPage />} />
-              <Route path="/userstable" element={<Tables />} />
-              <Route path="/settings" element={<Settings />} />
-            </Route>
-
+        <Route element={<PersistLogin />}>
+          {/* <Route element={<RequireAuth  />}> */}
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[
+                  "Admin",
+                  "Supporter",
+                  "Agent",
+                  "Manager",
+                  "TournamentCoordinator",
+                ]}
+              />
+            }
+          >
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/userslist" element={<UserList />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/videopodcast" element={<VideoPodcast />} />
+            <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
+            <Route path="/videolivestream" element={<VideoLiveStream />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/chatroom/:id" element={<ChatroomPage />} />
+            <Route path="/userstable" element={<Tables />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
         </Route>
       </Route>
-   
-        <Route path="/group" element={<Group />} />
-        <Route path="/addTournament" element={<AddTournament />} />
-        <Route path="/Tournament/:tournamentId" element={<Tournament />} />
-        <Route path="/edit-tournament/:tournamentId" element={<EditTournament />}  />
-        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
 
-        {/* </Route> */}
-      </Routes>
-    
+     
+      {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+
+      {/* </Route> */}
+    </Routes>
   );
 }
 

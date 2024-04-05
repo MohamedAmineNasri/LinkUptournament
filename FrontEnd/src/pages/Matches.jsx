@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import Academy from "../components/Academy";
+import Academy from "../components/miaoui/Academy";
 
 export class Matches extends Component {
   render() {

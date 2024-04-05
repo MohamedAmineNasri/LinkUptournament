@@ -132,11 +132,9 @@ const ChatroomPage = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     className={styles.inputField}
                 />
-                {/* Toggle button for EmojiPicker */}
                 <button className={styles.emojiButton} onClick={toggleEmojiPicker}>
-                    {showEmojiPicker ? "Close Emoji Picker" : "Open Emoji Picker"}
+                      {showEmojiPicker ? "🙂" : "🙂"}
                 </button>
-                {/* EmojiPicker */}
                 {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width="100%" />}
             </div>
               <div>

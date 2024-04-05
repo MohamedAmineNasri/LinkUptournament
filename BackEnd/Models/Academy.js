@@ -5,6 +5,7 @@ const AcademySchema = new mongoose.Schema(
     AcademyName: {
       type: String,
       require: "AcademyName is required !!",
+      unique: true
     },
     Location: {
       type: String,
@@ -24,12 +25,17 @@ const AcademySchema = new mongoose.Schema(
     },
     Status: {
       type: String,
-      default: "Not Verified"
+      default: "Pending" //Approved //Rejected
     },
     teams: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team'
-      }]
+      }],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+        
+    },
   },
 );
 

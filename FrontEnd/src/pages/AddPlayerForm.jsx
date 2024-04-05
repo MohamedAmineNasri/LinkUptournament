@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addPlayer } from "../../store/playerReducers/addPlayerSlice";
+import {
+  addPlayer,
+  addPlayerMi,
+} from "../../store/playerReducers/addPlayerSlice";
 import { soccerPositions } from "../data/playersPositions";
 import Header from "../components/Header";
+import { useParams } from "react-router-dom";
 import "./PlayerForm.css";
 
 const AddPlayerForm = () => {
+  const { idTeam } = useParams();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     legal_guardian: "",
     academic_membership: "",
     position: "",
     skills: [],
+    team: idTeam,
   });
   const [skillsSize, setSkillsSize] = useState(1);
   useState(() => {
@@ -47,7 +53,7 @@ const AddPlayerForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    dispatch(addPlayer(formData));
+    dispatch(addPlayerMi(formData));
   };
 
   return (

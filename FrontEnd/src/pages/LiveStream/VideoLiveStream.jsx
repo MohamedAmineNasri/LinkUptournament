@@ -44,7 +44,7 @@ const VideoLiveStream = () => {
 
     const startStream = async () => {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); // Update constraints
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); 
             setStream(stream);
             const peer = createPeer();
             stream.getTracks().forEach(track => peer.addTrack(track, stream));

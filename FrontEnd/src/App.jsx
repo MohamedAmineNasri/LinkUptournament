@@ -44,6 +44,9 @@ import { useEffect , useState } from 'react';
 import Fetchalltour from "./components/hamhoum/getAllTournement";
 import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+import Fetchonematch  from './components/hamhoum/fetchOneMatchByID'
+import Panel  from './components/hamhoum/panel'
+import Test from "./components/TestWitheDummyData/testplayer"
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -53,11 +56,14 @@ function App() {
   const refresh = () => window.location.reload(true);
   return (
     <Routes>
+      <Route path="/yest" element={<Test />} />
+      <Route path="/panel/:match" element={<Panel/>}/>
       <Route path="/group" element={<Group />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
       <Route path="/fetchmatchbytour/:tournamentId" element={<Fetchmatchbytour />} />
       <Route path="/testtt" element={<AddMatchPopUpWindow />} />
+      <Route path="/fetchonematch/:tournamentId" element={<Fetchonematch/>}/>
       
         <Route path="/addTournament" element={<AddTournament />} />
         <Route path="/Tournament/:tournamentId" element={<Tournament />} />

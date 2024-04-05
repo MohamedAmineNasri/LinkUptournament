@@ -57,7 +57,7 @@ export const fetchtour = (props) => {
             
               <Card.Img
                 variant="top"
-                //to do get logo frome upload 
+                //to do get logo frome upload   {`${match.logo}`}
                 src={match.logo||not_found} 
                 style={{ alignSelf: "center", maxWidth: "200px" }}
               />
@@ -108,8 +108,9 @@ export const fetchtour = (props) => {
             </Card>
           </div>
         ))}
-      
+     
     </div>
+    
     </>
   );
 };

@@ -161,7 +161,7 @@ if (TournementId.length ==0) {
                               
                             </span>
                             <span  >
-                              <span style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>{match.team1Gols}:{match.team2Gols}</span>
+                              <span style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>{match.goal1.length}:{match.goal2.length}</span>
                               
                             </span>
                           </div>
@@ -210,6 +210,7 @@ if (TournementId.length ==0) {
                     team2Gols={match.team2Gols}
                   ></EditPopUpSelectedMatch>
                   <DeleateMatchPopUp matchid={match._id}></DeleateMatchPopUp>
+                  <Link to ={`/panel/${match._id}`}>re</Link>
                 </div>
                   </div>
                 </div>   ))}

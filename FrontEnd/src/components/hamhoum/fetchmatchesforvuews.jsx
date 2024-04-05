@@ -21,6 +21,7 @@ export const fetchtour = () => {
   const[Team2name,setteam2name]=useState([]);
   const[Team2logo,setteam2logo]=useState([]);
   
+  
   const handleShow = () => MatchCard
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -29,6 +30,7 @@ export const fetchtour = () => {
       
         const response = await axios.get('http://localhost:8000/match/');
         setTournementId(response.data);
+       
       } catch (error) {
         console.error('Error fetching tournaments:', error);
       }
@@ -138,18 +140,21 @@ if (TournementId.length ==0) {
 
               <div className="row">
                 <div className="col-12 title-section">
-                  <h2 className="heading"> Matches</h2>
+                  <h2 className="heading" > Matches</h2>
                 </div>
                 {TournementId
         .slice()
         .reverse()
         .map((match, index) => (
-                <div className="col-lg-6 mb-4">
-                  <div className="bg-light p-4 rounded">
+          
+                <div className="col-lg-6 mb-4" >
+                  <Link to ={`/fetchonematch/${match._id}`}>
+                  <div className="bg-light p-4 rounded" >
                     <div className="widget-body">
                       <div className="widget-vs">
                         <div className="d-flex align-items-center justify-content-around justify-content-between w-100">
                           <div className="team-1 text-center">
+                           
                             <img
                               src={Team1logo.slice().reverse()[index]}
                               alt="Image"
@@ -162,7 +167,7 @@ if (TournementId.length ==0) {
                               
                             </span>
                             <span  >
-                              <span style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>{match.team1Gols}:{match.team2Gols}</span>
+                              <span style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>{match.goal1.length}:{match.goal2.length}</span>
                               
                             </span>
                           </div>
@@ -186,17 +191,8 @@ if (TournementId.length ==0) {
                       </p>
                     </div>
                     
-                <div className="row justify-content-around">                  
-                  {/* <Fetch matchid={match._id}
-                    time={match.startingTime}
-                    date={match.Date}
-                    type={match.matchType}
-                    location={match.location}> </Fetch> */}
-                    {/* <MatchByID matchid={match._id}>test</MatchByID> */}
-                   {/* <AddMatchPopUpWindow TournementId= {match._id}/> */}
-                  
-                </div>
-                  </div>
+               
+                  </div> </Link>
                 </div>   ))}
                
                 
@@ -209,6 +205,7 @@ if (TournementId.length ==0) {
           
           
         </div>
+        
       </div>
     
     

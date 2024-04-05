@@ -26,6 +26,12 @@ async function getAllPlayers(req, res) {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+//get player by team
+async function getplayerByteam(req, res) {
+  const { id } = req.params; 
+  const player = await Player.find({team:id})
+   res.json(player)
+}
 
 // Get player by ID
 async function getPlayerById(req, res) {
@@ -74,4 +80,5 @@ module.exports = {
   getPlayerById,
   updatePlayerById,
   deletePlayerById,
+  getplayerByteam,
 };

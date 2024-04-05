@@ -47,11 +47,12 @@ export const fetchMatchById = createAsyncThunk(
 );
 export const editMatch = createAsyncThunk(
   'match/editMatch',
-  async ({ matchid,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
+  async ({goal2,goal1,matchid,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
     try {
       const response = await axios.put(
         'http://localhost:8000/match/'+matchid,
-        {
+        {goal1:goal1,
+          goal2:goal2,
            referee:referee,
           date:date,
           tournamentName:tournamentName,

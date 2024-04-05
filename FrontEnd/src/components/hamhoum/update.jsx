@@ -9,6 +9,7 @@ import { convertToBase64 } from "../../utilities/convertFileBase64";
 import axios from 'axios';
 
 import MatchByID from "./getAllTournement";
+import Panel from "./panel"
 
 
 
@@ -207,9 +208,11 @@ export const EditPopUpSelectedMatch = (props) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ backgroundColor: "#222831" }} closeButton>
+
           <Modal.Title>Edit Match</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "#222831" }}>
+          
           <Form style={{ color: "black" }}>
           <Form.Group className="mb-3" controlId="locationInput">
           <Form.Group className="mb-3" controlId="locationInput">
@@ -217,6 +220,7 @@ export const EditPopUpSelectedMatch = (props) => {
             
             <Form.Label style={{ color: "white" }}>match statu : {Matchstatus||props.matchstatus}</Form.Label>
 <br/>
+
                 <Form.Select size="lg"
                 onChange={(e) => handleMatchstatus(e)}>
       <option>Open this select menu</option>

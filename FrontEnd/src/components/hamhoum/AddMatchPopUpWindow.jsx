@@ -84,7 +84,7 @@ export const AddMatchPopUpWindow = (props) => {
         setMatchstatus("Starting Soon")
         const response = await axios.get('http://localhost:8000/tournament/' + tournamentId);
         const tournament = response.data.tournament;
-        // console.log("Successfully retrieved the tournament:", tournament);
+        console.log("Successfully retrieved the tournament:", tournament);
         settournament(tournament)
         // Fetch team names for each team ID
         const teamsWithNames = await Promise.all(tournament.teams.map(async teamId => {

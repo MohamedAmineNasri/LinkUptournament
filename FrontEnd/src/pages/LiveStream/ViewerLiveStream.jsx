@@ -25,7 +25,6 @@ const ViewerLiveStream = () => {
         init();
 
         return () => {
-            // Cleanup function if needed
         };
     }, []);
 
@@ -199,7 +198,6 @@ const ViewerLiveStream = () => {
             onChange={(e) => setMessage(e.target.value)}
             style={{ flex: 3, marginBottom: 0, width: '100%', padding: '0.5em', border: '1px solid #ccc', borderRadius: '5px' }}
         />
-        {/* Toggle button for EmojiPicker */}
         <button
             className={styles.emojiButton}
             onClick={toggleEmojiPicker}
@@ -207,7 +205,6 @@ const ViewerLiveStream = () => {
         >
             {showEmojiPicker ? "🙂" : "🙂"}
         </button>
-        {/* EmojiPicker */}
         {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width="100%" />}
         <button
             type="submit"

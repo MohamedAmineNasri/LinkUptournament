@@ -22,11 +22,7 @@ const Chat = () => {
     const [chatroomName, setChatroomName] = useState("");
 
     const setupSocket = () => {
-        // Implement your socket setup logic here
-        // For example:
-        // const socket = io('http://localhost:8000');
-        // socket.on('connect', () => console.log('Connected to socket'));
-        // return socket;
+      
     };
 
     const [chatrooms, setChatrooms] = useState([]);
@@ -41,20 +37,17 @@ const Chat = () => {
                 setChatrooms(response.data);
             })
             .catch((err) => {
-                // Properly handle errors here
                 console.error(err);
 
-                // Use setTimeout correctly
                 setTimeout(getChatrooms, 3000);
             });
     };
 
     const createChatroom = () => {
-        // Send a POST request to the server to create a new chatroom
         axios
           .post(
             "http://localhost:8000/chatroom",
-            { name: chatroomName }, // Pass the chatroom name in the request body
+            { name: chatroomName }, 
             {
               headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"),
@@ -62,62 +55,51 @@ const Chat = () => {
             }
           )
           .then((response) => {
-            // If chatroom creation is successful, fetch the updated chatroom list
             getChatrooms();
-            // Reset the chatroom name input
             setChatroomName("");
           })
           .catch((err) => {
-            // Properly handle errors here
             console.error(err);
           });
       };
 
     useEffect(() => {
-        // Call setupSocket here
         const socket = setupSocket();
         getChatrooms();
-
-        // Cleanup function to close socket on component unmount
         return () => {
-            // Close socket connection here if needed
         };
     }, []);
 
 return (
-    <DefaultLayout>
-    <Breadcrumb pageName="Chat" />
-    <div className={styles.card}>
-            <div className={styles.cardHeader}>Chatrooms</div>
-            <div className={styles.cardBody}>
-                <div className={styles.inputGroup}>
-                    <label className={styles.inputLabel} htmlFor="chatroomName">Chatroom Name</label>
-                    <input
-                        type="text"
-                        className={styles.inputField}
-                        name="chatroomName"
-                        id="chatroomName"
-                        placeholder="Enter Chatroom Name"
-                        onChange={(e) => setChatroomName(e.target.value)}
-                    />
-                </div>
-                <button className={styles.chatButton} onClick={createChatroom}>Create ChatRoom</button>
-
-            </div>
-      <div className="chatrooms">
-        {chatrooms.map((chatroom) => (
-          <div key={chatroom._id} className="chatroom">
-            <div>{chatroom.name}</div>
-            <Link to={"/chatroom/" + chatroom._id}>
-              <div className={styles.joinLink}>Join</div>
-            </Link>
-
-          </div>
-        ))}
+  <DefaultLayout>
+  <Breadcrumb pageName="Chat" />
+  <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '20px', margin: '20px' }}>
+      <div style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>Chatrooms</div>
+      <div style={{ marginBottom: '20px' }}>
+          <label style={{ marginRight: '10px' }} htmlFor="chatroomName">Chatroom Name</label>
+          <input
+              type="text"
+              name="chatroomName"
+              id="chatroomName"
+              placeholder="Enter Chatroom Name"
+              value={chatroomName}
+              onChange={(e) => setChatroomName(e.target.value)}
+              style={{ padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
+          />
+          <button style={{ marginLeft: '10px', padding: '5px 10px', borderRadius: '5px', backgroundColor: '#4CAF50', color: '#fff', border: 'none', cursor: 'pointer' }} onClick={createChatroom}>Create ChatRoom</button>
       </div>
-    </div>
-
-    </DefaultLayout>
+      <div>
+          {chatrooms.map((chatroom) => (
+              <div key={chatroom._id} style={{ marginBottom: '10px' }}>
+                  <div>{chatroom.name}</div>
+                  <Link to={"/chatroom/" + chatroom._id} style={{ textDecoration: 'none' }}>
+                  <div style={{ backgroundColor: '#4CAF50', color: '#fff', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer', textAlign: 'center' }}>Join</div>
+                  </Link>
+              </div>
+          ))}
+      </div>
+  </div>    
+</DefaultLayout>
 );
 };
 

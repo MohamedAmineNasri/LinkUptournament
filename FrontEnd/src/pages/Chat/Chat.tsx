@@ -98,7 +98,7 @@ return (
               </div>
           ))}
       </div>
-  </div>
+  </div>    
 </DefaultLayout>
 );
 };

@@ -18,7 +18,8 @@ const Tournament = () => {
       title: "Knockout",
       html: `
           <div>
-
+          <p>How many teams in this tournament?</p>
+          <input type="number" class="swal2-input" value="4" id="teams"/>
               <p>How many teams do you want to start the elimination phase with?</p>
               <select id="tournamentSelect" class="swal2-select">
                 <option value="2">2</option>
@@ -34,12 +35,13 @@ const Tournament = () => {
       showCancelButton: true,
       focusConfirm: false,
       preConfirm: () => {
-        console.log("here");
         const selectedValue = document.getElementById("tournamentSelect").value;
+        const teamsValue = document.getElementById("teams").value;
+        const state ={ type: "Knockout", nbP: selectedValue , nbT: teamsValue };
         setNbPhase(selectedValue);
+        setNbPhase(teamsValue);
         setTournamentType("Knockout");
-        // navigate("/bracket", { state: { PhaseValue: selectedValue } });
-        navigate("/addTournament", { state: { type: tournamentType, nbPhase: selectedValue } });
+        navigate("/addTournament", { state });
       },
     });
   };
@@ -48,9 +50,7 @@ const Tournament = () => {
       title: "Group stage and Knockout",
       html: `
       <div>
-      <p>How many groups do you want to create?</p>
-      <input type="number" class="swal2-input" value="4" id="groups"/>
-      <p>How many teams are there in each group?</p>
+      <p>How many teams in this tournament?</p>
       <input type="number" class="swal2-input" value="4" id="teams"/>
       <p>How many teams do you want to start the elimination phase with?</p>
       <select id="tournamentSelect" class="swal2-select">
@@ -67,14 +67,16 @@ const Tournament = () => {
       focusConfirm: false,
       preConfirm: () => {
         const selectedValue = document.getElementById("tournamentSelect").value;
-        const groupsValue = document.getElementById("groups").value;
+        
         const teamsValue = document.getElementById("teams").value;
+        const state = { type:"Group stage and Knockout", nbG:1, nbT: teamsValue, nbP: selectedValue  };
         setTournamentType("Group stage and Knockout");
-        setNbGroups(groupsValue);
+        setNbGroups(1);
         setNbTeams(teamsValue);
         setNbPhase(selectedValue);
+        console.log("Navigating with state:", state);
         navigate("/addTournament", {
-          state: { type: tournamentType, nbgroups: nbGroups, nbteams: nbTeams },
+          state ,
         });
       },
     });

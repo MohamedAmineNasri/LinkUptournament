@@ -18,6 +18,7 @@ export const AddTournament = () => {
   const [type, setType] = useState("default_type");
   const [nbG, setNbG] = useState("default_type");
   const [nbT, setNbT] = useState("default_type");
+  const [nbP, setNbP] = useState("default_type");
   const [name, setName] = useState("");
   const [logo, setLogo] = useState(null);
 
@@ -54,13 +55,14 @@ export const AddTournament = () => {
       setType(location.state.type);
       setNbG(location.state.nbG) ;
       setNbT(location.state.nbT);
+      setNbP(location.state.nbP);
     }
   }, [location.state]);
 
   console.log("Updated type:", type);
   console.log("nb groupe:", nbG);
   console.log("nb teams:", nbT);
-
+  console.log("nbPhase:", nbP);
 
   const handleTeamSelection = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);

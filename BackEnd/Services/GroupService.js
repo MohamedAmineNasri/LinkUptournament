@@ -91,7 +91,7 @@ const createGroups = async (req, res , next) => {
         await group.save();
       }
       break;
-    case 'Round Robin Tournament':
+    case 'Group stage and Knockout':
       teams = [];
       for (const teamId of tournament.teams) {
         const teamDoc = await Team.findById(teamId);

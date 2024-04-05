@@ -17,6 +17,7 @@ const corsOptions = require('./config/corsOptions');
 const credentials = require('./middlewares/credentials');
 // const tournementRouter = require("./Routes/tournementRouter");
 const playerRouter = require("./Routes/playerRouter");
+const refereeRouter = require("./Routes/refereeRouter");
 const chatroomRouter = require("./Routes/chatroom");
 
 
@@ -65,7 +66,7 @@ app.use("/chatroom", require("./Routes/chatroom"));
 
 
 app.use("/player", playerRouter);
-
+app.use("/referee", refereeRouter);
 
 app.use('/group', groupRoutes);
 app.use('/staduim', staduimRoutes);

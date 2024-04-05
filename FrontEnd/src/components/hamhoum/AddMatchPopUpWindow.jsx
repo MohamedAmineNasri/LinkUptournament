@@ -15,6 +15,7 @@ export const AddMatchPopUpWindow = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
+  
 
 
   //add logic
@@ -34,6 +35,10 @@ export const AddMatchPopUpWindow = (props) => {
    const [teamsWithNames, setteamsWithNames ] = useState([]);
    const [Team1Gols, setTeam1Gols ] = useState(null);
    const [Team2Gols, setTeam2Gols ] = useState(null);
+   const [isValid, setIsValid] = useState(true);
+   const [isValid1, setIsValid1] = useState(true);
+   const [isValid2, setIsValid2] = useState(true);
+   const [isValid3, setIsValid3] = useState(true);
    
   const dispatch = useDispatch();
   const handleSaveChanges = (e) => {
@@ -64,6 +69,31 @@ export const AddMatchPopUpWindow = (props) => {
     consolo.log(props.tourid+"44")
     
    
+  };
+  const handleNameChange = (e) => {
+    const newName = e.target.value;
+    setMatchtype(newName);
+    // Validate name (only letters)
+    setIsValid(/^[a-zA-Z]+$/.test(newName));
+  };
+  const handlelocationChange = (e) => {
+    const newName = e.target.value;
+    setLocation(newName);
+    // Validate name (only letters)
+    setIsValid3(/^[a-zA-Z]+$/.test(newName));
+  };
+  const handlerefChange = (e) => {
+    const newName = e.target.value;
+    setReferee(newName);
+    // Validate name (only letters)
+    setIsValid2(/^[a-zA-Z]+$/.test(newName));
+  };
+  const handleDateChange = (e) => {
+    const newDate = e.target.value;
+    setDate(newDate);
+    // Validate date (greater than today)
+    const today = new Date().toISOString().slice(0, 10); // Get today's date as string
+    setIsValid1(newDate > today); // Compare entered date with today's date
   };
   const handleLogoUpload = async (e) => {
     const file = e.target.files[0];
@@ -142,8 +172,10 @@ export const AddMatchPopUpWindow = (props) => {
                 placeholder="date"
                 autoFocus
                 value={Date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={handleDateChange}
+                style={{ borderColor: isValid1 ? 'green' : 'red' }} 
               />
+               {!isValid1 && <p>Date must be greater than today.</p>}
             </Form.Group>
           <Form.Label style={{ color: "white" }}>starting time :</Form.Label>
               <Form.Control
@@ -159,8 +191,10 @@ export const AddMatchPopUpWindow = (props) => {
                 placeholder="match type"
                 autoFocus
                 value={Matchtype}
-                onChange={(e) => setMatchtype(e.target.value)}
+                onChange={handleNameChange}
+                style={{ borderColor: isValid ? 'green' : 'red'  }} 
               />
+              {!isValid && <p style={{ color:"white"}}>match type must contain only letters.</p>}
                
               <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label>
 <br/>
@@ -209,21 +243,15 @@ export const AddMatchPopUpWindow = (props) => {
                 placeholder="Referee"
                 autoFocus
                 value={Referee}
-                onChange={(e) => setReferee(e.target.value)}
-              />
+                onChange={handlerefChange}
+                style={{ borderColor: isValid1 ? 'green' : 'red' }} 
+                />
+                 {!isValid2 && <p style={{ color:"white"}}>Referee must contain only letters.</p>}
+
+              
             </Form.Group>
             
-            <Form.Group className="mb-3" controlId="locationInput">
-              <Form.Label style={{ color: "white" }}>logo :</Form.Label>
-              <Form.Control
-                type="file"
-                accept=".png"
-                placeholder="match location"
-                autoFocus
-              
-                onChange={(e) => handleLogoUpload(e)}
-              />
-            </Form.Group>
+            
            
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label style={{ color: "white" }}>match location :</Form.Label>
@@ -232,8 +260,10 @@ export const AddMatchPopUpWindow = (props) => {
                 placeholder="match location"
                 autoFocus
                 value={Location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
+                onChange={handlelocationChange}
+                style={{ borderColor: isValid1 ? 'green' : 'red' }} 
+                />
+                 {!isValid3 && <p style={{ color:"white"}}>location must contain only letters.</p>}
             </Form.Group>
            
             {/* <Form.Group> <select  onChange={(e) => setTournementId(e.target.value)}>

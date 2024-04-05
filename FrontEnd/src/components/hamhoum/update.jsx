@@ -309,17 +309,7 @@ export const EditPopUpSelectedMatch = (props) => {
               />
             </Form.Group>
             
-            <Form.Group className="mb-3" controlId="locationInput">
-              <Form.Label style={{ color: "white" }}>logo :</Form.Label>
-              <Form.Control
-                type="file"
-                accept=".png"
-                placeholder="match location"
-                autoFocus
-              
-                onChange={(e) => handleLogoUpload(e)}
-              />
-            </Form.Group>
+            
            
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label style={{ color: "white" }}>match location :</Form.Label>

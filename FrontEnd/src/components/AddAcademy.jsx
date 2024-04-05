@@ -157,9 +157,9 @@ export const AddAcademy = () => {
   //submit logic
   const handleSaveChanges = (e) => {
     e.preventDefault(); // for refrech bug
-    if (
-      nameError == null &&
-      Name.trim() != null &&
+if (
+  nameError == null &&
+  Name.trim() != null &&
       locationError == null &&
       Location.trim() != null &&
       foundedDateError == null &&

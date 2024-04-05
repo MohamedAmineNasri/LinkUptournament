@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
+import Button from "react-bootstrap/Button";
 
 export const fetchtour = () => {
     const { tournamentId } = useParams();
@@ -210,7 +211,9 @@ if (TournementId.length ==0) {
                     team2Gols={match.team2Gols}
                   ></EditPopUpSelectedMatch>
                   <DeleateMatchPopUp matchid={match._id}></DeleateMatchPopUp>
-                  <Link to ={`/panel/${match._id}`}>re</Link>
+                  <Link to ={`/panel/${match._id}`}><Button  size='lg' variant="outline-info" >
+                  Referee
+      </Button></Link>
                 </div>
                   </div>
                 </div>   ))}

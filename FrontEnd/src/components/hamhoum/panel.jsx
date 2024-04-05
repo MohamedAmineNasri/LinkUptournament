@@ -233,9 +233,7 @@ export const fetchtour = () => {
     </option>
   ))}
 </select>
-<Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
-          </Button>
+
           
                         
                       </ul>
@@ -248,11 +246,18 @@ export const fetchtour = () => {
           </div></span>
 
                       <div id="date-countdown2" className="pb-1"></div>
-                    </div>
+                    </div> <div style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
+                    <Button variant="primary"  onClick={handleSaveChanges}>
+            Save Changes
+          </Button></div>
                   </div>
+                  
                 </div>
+                
               </div>
+              
               </div>
+              
               </div>
 
 

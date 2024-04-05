@@ -35,7 +35,7 @@ export class Home extends Component {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/tests" className="nav-link">
+                        <Link to="/fetchmatchforview" className="nav-link">
                           Match Cards
                         </Link>
                       </li>

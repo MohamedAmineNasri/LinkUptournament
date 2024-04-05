@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addPlayer } from "../../store/playerReducers/addPlayerSlice";
+import {
+  addPlayer,
+  addPlayerMi,
+} from "../../store/playerReducers/addPlayerSlice";
 import { soccerPositions } from "../data/playersPositions";
 import Header from "../components/Header";
 import { useParams } from "react-router-dom";
@@ -50,7 +53,7 @@ const AddPlayerForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    dispatch(addPlayer(formData));
+    dispatch(addPlayerMi(formData));
   };
 
   return (

@@ -1,19 +1,10 @@
 const Player = require("../Models/Player");
 
-const Team =require('../Models/Team')
-const Academy =require('../Models/Academy')
-const TeamService = require('../Services/TeamService')
-
 // Create a player
 async function createPlayer(req, res) {
-  const { team } = req.body;
   try {
-    console.log(team)
-    const targetTeam = await TeamService.getTeamById2(team)
     const player = new Player(req.body);
     await player.save();
-    targetTeam.Players.push(player);
-    await targetTeam.save();
     res.status(201).send(player);
   } catch (error) {
     res.status(400).send(error);
@@ -34,6 +25,12 @@ async function getAllPlayers(req, res) {
     console.error("Error fetching players with team:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
+}
+//get player by team
+async function getplayerByteam(req, res) {
+  const { id } = req.params; 
+  const player = await Player.find({team:id})
+   res.json(player)
 }
 
 // Get player by ID
@@ -83,4 +80,5 @@ module.exports = {
   getPlayerById,
   updatePlayerById,
   deletePlayerById,
+  getplayerByteam,
 };

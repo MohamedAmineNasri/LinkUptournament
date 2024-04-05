@@ -8,9 +8,10 @@ import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import AddMatchPopUpWindow from "./AddMatchPopUpWindow";
 import NavBar from "./navbar";
 import Footer from "./foter";
-import EditPopUpAcademy from "./EditPopUpMatch";
+import MatchByID from "./getAllTournement"
 import EditPopUpmatch from "./EditPopUpMatch";
 import EditPopUpSelectedMatch from "./update";
+import Showmatch from "./getAllTournement";
 
 const MatchCard = (props) => {
   const matchData = useSelector((state) => state.root.match.matchData);
@@ -20,15 +21,17 @@ const MatchCard = (props) => {
 
   useEffect(() => {
     dispatch(fetchMatch());
+    
   }, [dispatch]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-
-  return (
+ 
+  return (<>
+  <div style={{ backgroundColor:"rgb(35, 79, 30)"}}><AddMatchPopUpWindow  /></div>
     <div className="row"style={{backgroundColor:"rgb(35, 79, 30)"}}>
-      <NavBar></NavBar>
+      
 
 
       {matchData.length === 0 && !loading && !error && (
@@ -51,6 +54,7 @@ const MatchCard = (props) => {
           </p>
         </div>
       )}
+      
       {matchData
         .slice()
         .reverse()
@@ -73,7 +77,7 @@ const MatchCard = (props) => {
               />
               <Card.Body>
                 <Card.Title style={{ fontSize: "24px" }}>
-                  <strong>{match.Date}</strong>
+                  <strong>{match.date}</strong>
                 </Card.Title>
                 <ListGroup style={{ color: "white" }}>
                   <ListGroup.Item
@@ -84,7 +88,7 @@ const MatchCard = (props) => {
                       letterSpacing: "2px",
                     }}
                   >
-                    starting Time : {match.startingTime}
+                    starting Time : {match.startingtime}
                   </ListGroup.Item>
                   <ListGroup.Item
                     style={{
@@ -94,7 +98,7 @@ const MatchCard = (props) => {
                       letterSpacing: "2px",
                     }}
                   >
-                    match Type : {match.matchType}
+                    match Type : {match.matchtype}
                   </ListGroup.Item>
                   <ListGroup.Item
                     style={{
@@ -123,19 +127,25 @@ const MatchCard = (props) => {
                       padding: "0px",
                       letterSpacing: "2px",
                     }}
-                  >
+                  > 
                     team2 : {match.team2}
                   </ListGroup.Item>
                 </ListGroup>
               </Card.Body>
               <Card.Body>
-                <div className="row justify-content-around">
-                  <Button variant="success">Check match</Button>
-                  <EditPopUpSelectedMatch
-                    matchid={match._id}
+                <div className="row justify-content-around">                  
+                  {/* <Fetch matchid={match._id}
                     time={match.startingTime}
                     date={match.Date}
                     type={match.matchType}
+                    location={match.location}> </Fetch> */}
+                    {/* <MatchByID matchid={match._id}>test</MatchByID> */}
+                   
+                  <EditPopUpSelectedMatch
+                    matchid={match._id}
+                    time={match.startingtime}
+                    date={match.date}
+                    type={match.matchtype}
                     location={match.location}
                   ></EditPopUpSelectedMatch>
                 </div>
@@ -143,9 +153,9 @@ const MatchCard = (props) => {
             </Card>
           </div>
         ))}
-      <Footer></Footer>
+      
     </div>
-    
+    </>
   );
 };
 

@@ -21,44 +21,62 @@ async function getAllematch(req, res) {
   }
 //create 
 async function creatematch(req, res) {
-  try{
+  try {
+    let matchTime = 0;
+
+// Update match time every minute
+setInterval(() => {
+  matchTime++; // Increment match time by 1 minute
+}, 60000); // 60000 ms = 1 minute
     const { card, ...matchData } = req.body;
     const matche = new match(matchData);
-  //const matche = new match({team1,team2,date,referee,startingTime,extraTime,matchStatus,location,matchType,weatherCondition,tournementId,team1Gols,team2Gols});
- 
   
-  const tournament_name = await tournament.findById(req.body.tournementId)
-  if (!req.body.tournementId) {
-    matche.tournamentName = null;
-}
-else
-  {matche.tournamentName= tournament_name.name }
+    // Populate tournamentName if tournementId exists
+    if (req.body.tournementId) {
+      const tournamentData = await tournament.findById(req.body.tournementId);
+      if (tournamentData) {
+        matche.tournamentName = tournamentData.name;
+      } else {
+        matche.tournamentName = null; // Tournament not found
+        
+      }
+    } else {
+      matche.tournamentName = null; // tournementId not provided
+    }
 
-  for (let i = 0; i < req.body.card.length; i++) {
-    const card = req.body.card[i];
+    if (req.body.card && req.body.card.length > 0) {
+      for (let i = 0; i < req.body.card.length; i++) {
+        const cardData = req.body.card[i];
+        
+        // Fetch player information using the card.player ID
+        const playerInfo = await player.findById(cardData.player);
+        
+        // Populate the card name with player's name and number
+        if (playerInfo) {
+          cardData.name = playerInfo.name;
+          cardData.number = playerInfo.number;
+        } else {
+          cardData.name = 'Unknown'; // Player not found
+          cardData.number = 'Unknown';
+        }
+        
+        // Push the modified card into the newMatch card array
+        matche.card.push(cardData);
+      }
+    } else {
+      // No card data provided
+      matche.card = []; // or any other default behavior you desire
+    }
     
-    // Fetch player information using the card.player ID
-    const playerInfo = await player.findById(card.player);
-    
-    // Populate the card name with player's name
-    card.name = playerInfo.name;
-    card.number=playerInfo.number
-    
-    // Push the modified card into the newMatch card array
-   
-    matche.card.push(card);
-    
-    
-   }
-  
-  await matche.save()
+    await matche.save();
  
-  res.json(matche)
-  }catch (error) {
+    res.json(matche);
+  } catch (error) {
     // Handle errors
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
-}}
+  }
+}
 
   // Update match by ID
 async function updatematchById(req, res) {
@@ -80,14 +98,14 @@ async function updatematchById(req, res) {
     // Update score for team 1 
 async function updatescore2ById(req, res) {
   const TeamMWData = await match.findById(req.params.id);
-  TeamMWData.score[0] += 1;
+  TeamMWData.team1Gols += 1;
   
   await TeamMWData.save()
   res.json("Team one  increased by 1 sucessfully",TeamMWData);
   }
   async function updatescore2_ById(req, res) {
     const TeamMWData = await match.findById(req.params.id);
-    TeamMWData.score[0] -= 1;
+    TeamMWData.team1Gols -= 1;
     
     await TeamMWData.save()
     res.json("Team one  decreased by 1 sucessfully",TeamMWData);
@@ -95,14 +113,14 @@ async function updatescore2ById(req, res) {
      // Update score for team 2 
 async function updatescoreById(req, res) {
   const TeamMWData = await match.findById(req.params.id);
-  TeamMWData.score[1] += 1;
+  TeamMWData.team2Gols += 1;
   
   await TeamMWData.save()
   res.json("Team two  increased by 1 sucessfully",TeamMWData);
   }
   async function updatescore_ById(req, res) {
     const TeamMWData = await match.findById(req.params.id);
-    TeamMWData.score[1] -= 1;
+    TeamMWData.team2Gols -= 1;
     
     await TeamMWData.save()
     res.json("Team two  decreased by 1 sucessfully",TeamMWData);

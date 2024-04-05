@@ -83,20 +83,23 @@ const Chat = () => {
             <Breadcrumb pageName="Chat" />
             <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '20px', margin: '20px' }}>
                 <div style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>Chatrooms</div>
-                <div style={{ marginBottom: '20px' }}>
-                    <label style={{ marginRight: '10px' }} htmlFor="chatroomName">Chatroom Name</label>
-                    <input
-                        type="text"
-                        name="chatroomName"
-                        id="chatroomName"
-                        placeholder="Enter Chatroom Name"
-                        value={chatroomName}
-                        onChange={(e) => setChatroomName(e.target.value)}
-                        style={{ padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
-                    />
-                    <button style={{ marginLeft: '10px', padding: '5px 10px', borderRadius: '5px', backgroundColor: '#4CAF50', color: '#fff', border: 'none', cursor: 'pointer' }} onClick={createChatroom}>Create ChatRoom</button>
-                    {chatroomNameError && <div style={{ color: 'red' }}>{chatroomNameError}</div>}
-                </div>
+                {userRole.includes('Admin') && (
+    <div style={{ marginBottom: '20px' }}>
+        <label style={{ marginRight: '10px' }} htmlFor="chatroomName">Chatroom Name</label>
+        <input
+            type="text"
+            name="chatroomName"
+            id="chatroomName"
+            placeholder="Enter Chatroom Name"
+            value={chatroomName}
+            onChange={(e) => setChatroomName(e.target.value)}
+            style={{ padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}
+        />
+        <button style={{ marginLeft: '10px', padding: '5px 10px', borderRadius: '5px', backgroundColor: '#4CAF50', color: '#fff', border: 'none', cursor: 'pointer' }} onClick={createChatroom}>Create ChatRoom</button>
+        {chatroomNameError && <div style={{ color: 'red' }}>{chatroomNameError}</div>}
+    </div>
+)}
+
                 <div>
                     {chatrooms.map((chatroom) => (
                         <div key={chatroom._id} style={{ marginBottom: '10px' }}>

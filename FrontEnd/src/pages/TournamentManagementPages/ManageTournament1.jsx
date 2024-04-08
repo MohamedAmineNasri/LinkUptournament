@@ -35,8 +35,8 @@ const AddTournament = () => {
 
 //   const [division, setDivision] = useState("");
 //   const [divisionError, setDivisionError] = useState("");
-  const teams = useSelector((state) => state.root.team.teams);
-
+  const teams = useSelector((state) => state.root.team.teams );
+  console.log("im here");
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();

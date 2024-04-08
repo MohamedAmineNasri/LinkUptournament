@@ -42,5 +42,6 @@ router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
 
 router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
 
+router.get('/teams/search/:searchString', teamService.getTeamsByName);
 
 module.exports = router;

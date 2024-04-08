@@ -99,7 +99,7 @@ const FormatSelect = () => {
 
         console.log("Navigating with state:", state); // Log the state
 
-        navigate("/manage/addtournament", { state });
+        navigate("/manage/addT", { state });
       },
       
     });
@@ -108,13 +108,13 @@ const FormatSelect = () => {
   return (
     <>
       {location.pathname == "/manage/format" ? (
-        <div className="rounded-sm border p-4  border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="rounded-sm border p-4  border-stroke  shadow-default bg-green-100 dark:bg-slate-700 dark:border-strokedark dark:bg-boxdark">
           <h1 className="text-xl uppercase font-semibold text-black dark:text-white text-center my-5">
             Choose a tournament ranking
           </h1>
           <div className="flex items-center justify-between p-8 my-16">
             <div className="flex flex-col items-center">
-              <h5>Group stages</h5>
+              <h5 className="text-black dark:text-white" >Group stages</h5>
               <img
                 src="/assets/images/groupe.png"
                 className="hover:scale-110 hover:animate-pulse"
@@ -124,7 +124,7 @@ const FormatSelect = () => {
               />
             </div>
             <div className="flex flex-col items-center">
-              <h5>Group stages and elimination phase</h5>
+              <h5 className="text-black dark:text-white">Group stages and elimination phase</h5>
               <img
                 src="/assets/images/poule_eliminatoire.png"
                 className="hover:scale-110 hover:animate-pulse"
@@ -134,7 +134,7 @@ const FormatSelect = () => {
               />
             </div>
             <div className="flex flex-col items-center">
-              <h5>Elimination phase</h5>
+              <h5 className="text-black dark:text-white">Elimination phase</h5>
               <img
                 src="/assets/images/eliminatoire.png"
                 className="hover:scale-110 hover:animate-pulse"

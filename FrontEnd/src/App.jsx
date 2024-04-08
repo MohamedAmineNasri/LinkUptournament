@@ -65,6 +65,7 @@ import Fetchonematch  from './components/hamhoum/fetchOneMatchByID'
 import Fetchalltour from "./components/hamhoum/getAllTournement";
 import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+import AddTour from "./pages/TournamentManagementPages/AddTournament";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -91,6 +92,7 @@ function App() {
         <Route index element={<ManageTournament />} />
         <Route path="edit/:tournamentId" element={<EditTournament />} />
         <Route path="tournament/:tournamentId" element={<Tournament/>}/>
+        <Route path="addT" element={<AddTour/>} />
         <Route path="addtournament" element={<AddTournament/>}/>
         <Route path="format" element={<FormatSelect />}>
           <Route path="bracket" element={<ManageTournamentFormat />} />

@@ -394,9 +394,19 @@ const assignPlayerToTeam = async (req, res) => {
   }
 };
 
+const getTeamsByName = async (req, res, next) => {
+    const searchString = req.params.searchString; // Get the search string from request parameters
+    try {
+        // Use a regular expression to search for teams by name containing the provided string
+        const teams = await Team.find({ TeamName: { $regex: searchString, $options: 'i' } });
+        res.json(teams);
+    } catch (error) {
+        console.error("Error getting teams by name:", error);
+        res.status(500).json("Internal server error");
+    }
+};
 
 
 
 
-
-module.exports = { getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};
+module.exports = {getTeamsByName , getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};

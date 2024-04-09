@@ -2,11 +2,11 @@ var express = require('express')
 var router = express.Router();
 const groupService = require('../Services/GroupService')
 
-
+  
 router.get('/', groupService.getAllGroups); 
 router.get('/tournament/:id', groupService.getGroupsByTournamentId); 
 router.post('/add', groupService.addGroup) ;
-router.post('/addGroupsStage/:id', groupService.createGroups) ;
+router.post('/addGroupsStage/:id/:nbG/:nbT', groupService.createGroups) ;
 router.get('/:id', groupService.getGroupById);
 router.put('/:groupId/team/:teamId/updateMG', async (req, res, next) => {
     console.log('PUT /:groupId/team/:teamId/updateMG called');

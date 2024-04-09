@@ -12,12 +12,35 @@ export const fetchteams = createAsyncThunk(
     }
   }
 );
+export const fetchTeamsByName = createAsyncThunk(
+  'team/fetchTeamsByName',
+  async (searchString) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/team/teams/search/${searchString}`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching teams by name: ' + error.message);
+    }
+  }
+);
+
+export const fetchteamById = createAsyncThunk(
+  'team/fetchTeamById', 
+  async ({teamId}) => {
+    try {
+      const response = await axios.get('http://localhost:8000/Team/getTeam/'+teamId);
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching teams: ' + error.message);
+    }
+  }
+);
 
 export const fetchTeamOfAcademy = createAsyncThunk(
   'team/fetchTeam',
-  async () => {
+  async (idAcademy) => {
     try {
-      const response = await axios.get('http://localhost:8000/Team/getTeambyAcademyId/65d63d731ae37b6822a03daa');
+      const response = await axios.get('http://localhost:8000/Team/getTeambyAcademyId/'+idAcademy);
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);
@@ -40,7 +63,7 @@ export const deleteTeam = createAsyncThunk(
 );
 
 
-export const addTeam = createAsyncThunk(
+export const addTeamAndAssaignToAcademy = createAsyncThunk(
   'team/addTeam',
   async ({idAcademy, name, logo }) => {
     try {
@@ -52,7 +75,10 @@ export const addTeam = createAsyncThunk(
           academy: idAcademy
         }
       );
-      window.location.reload();
+      //we refresh only when team is created sucessfully
+      if (response.data === true){
+        window.location.reload();
+      }
       return response.data;
     } catch (error) {
       throw Error('Error add teams: ' + error.message);
@@ -71,7 +97,28 @@ export const editTeam = createAsyncThunk(
           TeamLogo: logo,
         }
       );
-      window.location.reload();
+      //we refresh only when team is created sucessfully
+      if (response.data === true){
+        window.location.reload();
+      }
+      return response.data;
+    } catch (error) {
+      throw Error('Error edit teams: ' + error.message);
+    }
+  }
+);
+export const editTeamSameName = createAsyncThunk(
+  'team/editTeamSameName',
+  async ({ teamid, name, logo}) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/team/updateTeamSameName/'+teamid,
+        {
+          TeamName: name, 
+          TeamLogo: logo,
+        }
+      );
+        window.location.reload();
       return response.data;
     } catch (error) {
       throw Error('Error edit teams: ' + error.message);
@@ -79,10 +126,27 @@ export const editTeam = createAsyncThunk(
   }
 );
 
+// ena miaoui i added this for testing dw , hani 9otlk mesh kif barsha ness ---------------------------
+export const fetchplayerByTeamId =  createAsyncThunk(
+  'team/fetchplayerByTeamId', 
+  async ({teamId}) => {
+    try {
+      const response = await axios.get('http://localhost:8000/team/ofTeam/'+teamId);
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching teams: ' + error.message);
+    }
+  }
+);
+// ------------------------------------------------------------------------------------------------------
+
 const teamSlice = createSlice({
   name: 'team',
   initialState: {
     teamData: [],
+    allteamData: [],
+    SelectedteamDataById: [],
+    players :[],
     loading: false,
     error: null
   },
@@ -101,7 +165,7 @@ const teamSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })  
-          .addCase(fetchteams.pending, (state) => {
+      .addCase(fetchteams.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
@@ -113,7 +177,42 @@ const teamSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      ;
+      .addCase(fetchteamById.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchteamById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.SelectedteamDataById = action.payload;
+      })
+      .addCase(fetchteamById.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchplayerByTeamId.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchplayerByTeamId.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.players = action.payload;
+      })
+      .addCase(fetchplayerByTeamId.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchTeamsByName.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTeamsByName.fulfilled, (state, action) => {
+        state.loading = false;
+        state.teamData = action.payload;
+      })
+      .addCase(fetchTeamsByName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   }
 });
 

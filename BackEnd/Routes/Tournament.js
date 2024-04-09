@@ -12,7 +12,7 @@ router.put('/update/:id', tournamentService.updateTournament);
 
 router.delete('/:id', tournamentService.deleteTournament);
 
-router.get('/', tournamentService.getAllTournaments);
+router.get('/all', tournamentService.getAllTournaments);
 
 router.get('/:id', tournamentService.getTournamentById);
 

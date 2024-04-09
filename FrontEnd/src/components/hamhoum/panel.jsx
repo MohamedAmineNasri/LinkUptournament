@@ -13,6 +13,7 @@ import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
 import { editMatch } from "../../redux/slice/matchSlice";
 import { useDispatch } from "react-redux";
+import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 
 export const fetchtour = () => {
     const { match } = useParams();
@@ -60,6 +61,7 @@ export const fetchtour = () => {
         console.error('Error fetching tournaments:', error);
       }
     };
+    const popone = ( )=>{T1.pop(1)}
     const fetchMatchesWithTeamDetails = async () => {
       try {
         const matchesResponse = await axios.get('http://localhost:8000/match/'+match);
@@ -143,6 +145,7 @@ export const fetchtour = () => {
 
   return (
     <>
+    <DefaultLayout>
      <div className="site-section bg-dark">
             <div className="container">
    <div className="row mb-5">
@@ -274,7 +277,7 @@ export const fetchtour = () => {
     
     
  
-   
+              </DefaultLayout>
     </>
   );
 };

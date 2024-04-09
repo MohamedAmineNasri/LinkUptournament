@@ -2,18 +2,46 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Install dependencies') {
-steps{
-script {
-     dir('BackEnd') {
-                    sh 'npm install'
+        stage('container UP') {
+            steps {
+                script {
+                    sh 'docker compose up '
                 }
+            }
+        }
 
-}
-}
-}
-             
+//         stage('Install dependencies') {
+// steps{
+// script {
+//      dir('BackEnd') {
+//                     sh 'npm install'
+//                 }
+
+// }
+// }
+// }
+//         stage('Unit Test') {
+// steps{
+// script {
+//      dir('BackEnd') {
+// sh('npm test')
+//      }
+// }
+// }
+//         } 
+//         stage('SonarQube Analysis') {
+//             steps {
+//                 script {
+                    
+//                      def scannerHome = tool 'scanner'
+//                     withSonarQubeEnv {
+//                     sh "${scannerHome}/bin/sonar-scanner"
+                    
+//                 }
+//             }
+//         }
+//         }
+        
     
       
 
@@ -27,15 +55,7 @@ script {
 // }
 // }
 // }
-        stage('Building images (node and mongo)') {
-steps{
-script {
-    dir('BackEnd') {
-sh('docker-compose build')
-}
-}
-}
-        }
+
      
     
     
@@ -43,8 +63,21 @@ sh('docker-compose build')
     
     }}
 
-       
+        // stage('mouving to back_end') {
+        //     steps {
+        //         script {
+        //             echo "mouving to backend "
+        //             sh 'cd BackEnd'
+                   
+
+        //         }
+        //     }
+            
+              
+        // }
 
         
 
-    
+      
+//     }
+// }

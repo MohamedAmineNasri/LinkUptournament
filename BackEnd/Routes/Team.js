@@ -9,6 +9,7 @@ router.post(
   "/getTeamAndAssaignAcademy",
   teamService.addTeamAndAssaignToAcademy
 );
+router.get("/ofTeam/:idTeam", teamService.getPlayersByTeamId);
 router.post(
   "/assignPlayerToTeam/:teamId/:playerId",
   teamService.assignPlayerToTeam)
@@ -18,6 +19,7 @@ router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
 
 router.delete("/deleteTeam/:id" ,teamService.deleteTeamById);
 router.put("/updateTeam/:id",teamService.updateTeam);
+router.put("/updateTeamSameName/:id",teamService.updateTeamSameName);
 
 router.post("/updateMW/:id",teamService.updateTeamMatchesWon);
 router.post("/cancelMW/:id",teamService.cancelTeamMatchesWon);
@@ -40,5 +42,6 @@ router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
 
 router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
 
+router.get('/teams/search/:searchString', teamService.getTeamsByName);
 
 module.exports = router;

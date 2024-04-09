@@ -23,28 +23,51 @@ const addTeam =  async (req, res, next) => {
 }
 
 const updateTeam = async (req,res,next)=>{
+    const {TeamName} = req.body;
+    try {
+    const existingTeam = await Team.findOne({TeamName});
+    if (existingTeam) {
+        return res.json(false);
+    }     
     const TeamData = await Team.findById(req.params.id);
     TeamData.TeamName = req.body.TeamName;
     TeamData.TeamLogo = req.body.TeamLogo;
     await TeamData.save()
-    res.json("Team updated sucessfully");
+    return res.json(true);
+    }catch (error) {
+        console.error("Error updating team :", error);
+        res.status(500).json( "Internal server error" );
+    }
+}
+const updateTeamSameName = async (req,res,next)=>{
+    const TeamData = await Team.findById(req.params.id);
+    TeamData.TeamName = req.body.TeamName;
+    TeamData.TeamLogo = req.body.TeamLogo;
+    await TeamData.save()
+    return res.json("success");
+    
 }
 
 
-
-
-const addTeamAndAssaignToAcademy =  async (req, res, next) => {
-    const { TeamName, TeamLogo,academy  } = req.body;
-    const TeamData = new Team({ TeamName,TeamLogo,academy });
-    await TeamData.save();
-
-     targetAcademy = await academyService.getAcademyByIdParam(academy)
-     targetAcademy.teams.push(TeamData);
-     await targetAcademy.save();
-    res.json({
-        message : "Team sucessfully added ! "
-    });
+const addTeamAndAssaignToAcademy = async (req, res, next) => {
+    const { TeamName, TeamLogo, academy } = req.body;
+    try {   
+        const existingTeam = await Team.findOne({ TeamName });
+        if (existingTeam) {
+            return res.json(false);
+        }     
+        const TeamData = new Team({ TeamName,TeamLogo,academy });
+        await TeamData.save();
+        const targetAcademy = await academyService.getAcademyByIdParam(academy)
+        targetAcademy.teams.push(TeamData);
+        await targetAcademy.save();
+        return res.json(true);
+    } catch (error) {
+        console.error("Error adding team and assigning to academy:", error);
+        res.status(500).json( "Internal server error" );
+    }
 }
+
 
 
 
@@ -52,22 +75,12 @@ const getTeamById =  async (req,res,next)=>{
     const TeamData = await Team.findById(req.params.id);
     res.json(TeamData);
 }
+const getTeamById2 =   async (id)=>{
+    const TeamData = await Team.findById(id);
+    return TeamData;
+}
 
 
-// const getTeamByAcademyId = async (req, res, next) => {
-    
-//         const targetAcademy = await academyService.getAcademyByIdParam(req.params.id);
-//         const teamData = []; 
-
-//         for (const teamId of targetAcademy.teams) {
-           
-//             const team = await Team.findById(teamId); 
-//             teamData.push(team);
-//         }
-
-//         res.json(teamData);
-    
-// }
 const getTeamByAcademyId = async (req, res, next) => {
     try {
         const targetAcademy = await academyService.getAcademyByIdParam(req.params.id);
@@ -75,17 +88,28 @@ const getTeamByAcademyId = async (req, res, next) => {
 
         const teamData = []; 
 
-        for (const teamId of targetAcademy.teams) {
-            const team = await Team.findById(teamId); 
-            teamData.push(team);
+        // Check if the academy has teams
+        if (targetAcademy.teams.length > 0 ) {
+            for (const teamId of targetAcademy.teams) {
+                const team = await Team.findById(teamId); 
+                if (team) { // Check if team is found
+                    teamData.push(team);
+                } else {
+                    console.log(`Team with ID ${teamId} not found`);
+                }
+            }
+        } else {
+            console.log('No teams found for the academy');
         }
 
         console.log('Team Data:', teamData);
         res.json(teamData);
     } catch (error) {
-        next(error);
+        console.error("Error adding team and assigning to academy:", error);
+        res.status(500).json( "Internal server error" );
     }
 }
+
 
 
 
@@ -306,7 +330,37 @@ const resetGroupStageData = async (req,res, next) => {
   res.json(TeamData)
   
 };
-
+//  i added this for testing  ------------------------------------------------------
+const getPlayersByTeamId = async (req, res, next) => {
+    try {
+        const targetTeam = await getTeamById2(req.params.idTeam);
+        console.log('Target team:', targetTeam);
+  
+        const playerData = []; 
+  
+        // Check if the academy has teams
+        if (targetTeam.Players.length > 0 ) {
+            for (const playerId of targetTeam.Players) {
+                const player = await Player.findById(playerId); 
+                if (player) { // Check if team is found
+                  playerData.push(player);
+                } else {
+                    console.log(`player with ID ${playerId} not found`);
+                }
+            }
+        } else {
+            console.log('No teams found for the academy');
+        }
+  
+        console.log('player Data:', playerData);
+        res.json(playerData);
+    } catch (error) {
+        console.error("Error", error);
+        res.status(500).json( "Internal server error" );
+    }
+  }
+  
+  // -----------------------------------------------------------------------------
 
 
 const assignPlayerToTeam = async (req, res) => {
@@ -340,9 +394,19 @@ const assignPlayerToTeam = async (req, res) => {
   }
 };
 
+const getTeamsByName = async (req, res, next) => {
+    const searchString = req.params.searchString; // Get the search string from request parameters
+    try {
+        // Use a regular expression to search for teams by name containing the provided string
+        const teams = await Team.find({ TeamName: { $regex: searchString, $options: 'i' } });
+        res.json(teams);
+    } catch (error) {
+        console.error("Error getting teams by name:", error);
+        res.status(500).json("Internal server error");
+    }
+};
 
 
 
 
-
-module.exports = { getAllTeams,addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam};
+module.exports = {getTeamsByName , getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};

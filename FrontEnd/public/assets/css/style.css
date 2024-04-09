@@ -1199,8 +1199,13 @@ h1, h2, h3, h4, h5,
     }
     .TitleAddAcademy {
       text-shadow: 5px 2px 0px #1db428e6;
-      text-align: -webkit-center; /* For webkit browsers */
+      text-align: -webkit-center; 
            
+    }
+    .TitleTeam {
+      text-shadow: 5px 2px 0px #1db42829;
+      text-align: -webkit-center; 
+          
     }
     .addAcademyFormBorder {
       box-shadow: 1px 1px 30px 10px rgba(1, 0, 0, 0.5);
@@ -1227,16 +1232,37 @@ h1, h2, h3, h4, h5,
       box-shadow: 1px 1px 7px 3px rgba(1, 0, 0, 0.5);
       background-color: #2f4f4f6b;
     }
+    .SelectedTeamsBox {
+      border-radius: 20px;
+      box-shadow: 1px 1px 7px 3px rgba(1, 0, 0, 0.5);
+      background-color: #2f4f4f6b;
+    }
     .academyBox {
       padding-top: 50px;
       padding-bottom: 20px;
     }
+    .teamBox {
+      padding-top: 30px;
+      padding-bottom: 0;
+      
+    }
     .academyLogoMwidth {
       max-width: 200px;
+    }
+    .teamLogoMwidth {
+      max-width: 120px;
     }
     .teamsBorderBox {
       border-radius: 20px;
       height: 650px;
+      overflow-y: auto;
+      scrollbar-width: none; /* Hide the scrollbar for Firefox */
+      -ms-overflow-style: none; /* Hide the scrollbar for Internet Explorer/Edge */
+      -webkit-scrollbar-width: none; /* Hide the scrollbar for WebKit browsers (Chrome, Safari) */      
+      
+    }
+    .playersBorderBox {
+      height: 400px;
       overflow-y: auto;
       scrollbar-width: none; /* Hide the scrollbar for Firefox */
       -ms-overflow-style: none; /* Hide the scrollbar for Internet Explorer/Edge */
@@ -1252,7 +1278,18 @@ h1, h2, h3, h4, h5,
       color: white;
       background-color: #e8f3db40;
       border-color: #dfeecc;
+      
     }
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(80%);
+    }
+    
     /* -------------------------------------------- */
     
 
@@ -1277,7 +1314,7 @@ h1, h2, h3, h4, h5,
 
 /* Button Styles */
 .btn {
-  background-color: #1976D2;
+  /* background-color: #1976D2; */
   color: #fff;
   cursor: pointer;
 }

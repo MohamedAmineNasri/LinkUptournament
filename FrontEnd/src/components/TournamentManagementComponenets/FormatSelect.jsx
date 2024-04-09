@@ -38,7 +38,7 @@ const FormatSelect = () => {
         setNbPhase(selectedValue);
         setNbPhase(teamsValue);
         setTournamentType("Knockout");
-        navigate("/manage/addtournament", { state  });
+        navigate("/manage/addT", { state  });
       },
     });
   };
@@ -73,7 +73,7 @@ const FormatSelect = () => {
         setNbTeams(teamsValue);
         setNbPhase(selectedValue);
         console.log("Navigating with state:", state);
-        navigate("/manage/addtournament", {
+        navigate("/manage/addT", {
           state ,
         });
       },

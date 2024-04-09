@@ -32,9 +32,9 @@ import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
 import AdminDashboard from "./Dashboard/AdminDashboard";
 import Settings from "./Dashboard/src/pages/Settings";
-import Tournament from "./pages/TournamentManagementPages/Tournament";
+import Tournament from "./components/Tournament/Tournament";
 import TournamentLayout from "./pages/TournamentManagementPages/TournamentLayout";
-import ManageTournament from "./pages/TournamentManagementPages/ManageTournament";
+import ManageTournament from "./components/Tournament/ManageTournament";
 import ManageParticipant from "./pages/TournamentManagementPages/ManageParticipant";
 import ManagePlayer from "./components/TournamentManagementComponenets/ManagePlayer";
 import ManageTeam from "./components/TournamentManagementComponenets/ManageTeam";
@@ -44,8 +44,8 @@ import ConsultPlayer from "./components/TournamentManagementComponenets/ConsultP
 import ConsultReferee from "./components/TournamentManagementComponenets/ConsultReferee";
 import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
 import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
-import FormatSelect from "./components/TournamentManagementComponenets/FormatSelect";
-import EditTournament from "./components/TournamentManagementComponenets/EditTournament";
+import FormatSelect from "./components/Tournament/FormatSelect";
+import EditTournament from "./components/Tournament/EditTournament";
 import AddTournament from "./pages/TournamentManagementPages/ManageTournament1";
 
 // import TournamentBracket  from "./components/TournamentBracket";
@@ -65,7 +65,7 @@ import Fetchonematch  from './components/hamhoum/fetchOneMatchByID'
 import Fetchalltour from "./components/hamhoum/getAllTournement";
 import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
-import AddTour from "./pages/TournamentManagementPages/AddTournament";
+import AddTour from "./components/Tournament/AddTournament";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);

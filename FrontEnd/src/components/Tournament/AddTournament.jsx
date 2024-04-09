@@ -115,7 +115,7 @@ const AddTour = () => {
           await dispatch(
             createGroupsThunk({ id: addTournamentResponse.payload._id, nbG, nbT })
           );
-          navigate(`/manage`);
+          navigate(`/manage/tournament/${addTournamentResponse.payload._id}`);
         }
       } catch (error) {
         console.error("Error adding tournament:", error);
@@ -154,6 +154,7 @@ const AddTour = () => {
       setDateFinError(null);
     }
   };
+  
 
   return (
     <>
@@ -350,9 +351,7 @@ const AddTour = () => {
                       <th scope="col" className="px-6 py-3 dark:text-slate-50">
                         Team Name
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        <span className="sr-only">Edit</span>
-                      </th>
+                      
                     </tr>
                   </thead>
                   <tbody>

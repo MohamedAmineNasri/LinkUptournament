@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import { Button as MuiButton } from "@mui/material";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { addTournament } from "../../redux/slice/tournamentSlice";
-import { fetchteams , fetchTeamsByName } from "../../redux/slice/teamSlice";
+import {  fetchTeamsByName } from "../../redux/slice/teamSlice";
 import { createGroupsThunk } from "../../redux/slice/groupSlice";
 import axios from "axios";
 
@@ -250,25 +248,25 @@ const AddTour = () => {
                 </div>
               </div>
 
-              <div class="col-span-3">
+              <div className="col-span-3">
                 <label
-                  for="datefin"
-                  class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  htmlFor="datefin"
+                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
                 >
                   End Date
                 </label>
-                <div class="mt-2">
+                <div className="mt-2">
                   <input
                     type="date"
                     name="datefin"
                     id="datefin"
-                    autocomplete="datefin"
+                    autoComplete="datefin"
                     value={dateFin}
                     onChange={(e) => {
                       setDateFin(e.target.value);
                       validateDateFin(e.target.value);
                     }}
-                    class="block w-full rounded-md border-0 py-1.5 text-slate-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-slate-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
                 {dateFinError && (
@@ -278,7 +276,7 @@ const AddTour = () => {
 
               <div className="col-span-5">
                 <label
-                  for="rules"
+                  htmlFor="rules"
                   className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
                 >
                   Rules
@@ -324,9 +322,9 @@ const AddTour = () => {
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         ></path>
                       </svg>
                     </div>
@@ -453,9 +451,6 @@ const AddTour = () => {
           </div>
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
-              Cancel
-            </button>
             <button
               type="submit"
               className="rounded-md bg-teal-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

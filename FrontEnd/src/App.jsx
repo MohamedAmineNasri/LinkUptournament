@@ -45,8 +45,6 @@ import ConsultReferee from "./components/TournamentManagementComponenets/Consult
 import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
 import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
 import FormatSelect from "./components/Tournament/FormatSelect";
-import EditTournament from "./components/Tournament/EditTournament";
-import AddTournament from "./pages/TournamentManagementPages/ManageTournament1";
 
 // import TournamentBracket  from "./components/TournamentBracket";
 
@@ -91,7 +89,6 @@ function App() {
       <Route path="/manage" element={<TournamentLayout />}>
         
         <Route index element={<ManageTournament />} />
-        {/* <Route path="edit/:tournamentId" element={<EditTournament />} /> */}
         <Route path="editt/:tournamentId" element={<Edit/>} />
         <Route path="tournament/:tournamentId" element={<Tournament/>}/>
         <Route path="addT" element={<AddTour/>} />

@@ -9,15 +9,12 @@ import MatchByID from "./getAllTournement";
 import { useParams } from 'react-router-dom';
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 
+
 export const AddMatchPopUpWindow = (props) => {
   const [show, setShow] = useState(false);
   const { tournamentId } = useParams();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
-  
-
-
   //add logic
  
   const [Matchtype, setMatchtype] = useState(null);
@@ -39,6 +36,8 @@ export const AddMatchPopUpWindow = (props) => {
    const [isValid1, setIsValid1] = useState(true);
    const [isValid2, setIsValid2] = useState(true);
    const [isValid3, setIsValid3] = useState(true);
+   const [isValidteam2, setIsValidteam2] = useState(true);
+   const [isValidteam1, setIsValidteam1] = useState(true);
    
   const dispatch = useDispatch();
   const handleSaveChanges = (e) => {
@@ -66,7 +65,7 @@ export const AddMatchPopUpWindow = (props) => {
        
     );
     handleClose();
-    consolo.log(props.tourid+"44")
+    
     
    
   };
@@ -75,6 +74,20 @@ export const AddMatchPopUpWindow = (props) => {
     setMatchtype(newName);
     // Validate name (only letters)
     setIsValid(/^[a-zA-Z]+$/.test(newName));
+  };
+  const handleteam2 = (e) => {
+    const newName = e.target.value;
+    setTeam2(newName);
+    // Validate name (only letters)
+    setIsValidteam2(newName!=Team1 && newName!= "null") ;
+   
+  };
+  const handleteam1 = (e) => {
+    const newName = e.target.value;
+    setTeam1(newName);
+    // Validate name (only letters)
+    setIsValidteam1(newName!=Team2 && newName!= "null");
+   
   };
   const handlelocationChange = (e) => {
     const newName = e.target.value;
@@ -134,6 +147,7 @@ export const AddMatchPopUpWindow = (props) => {
     };
   
     fetchTournaments();
+    
   }, [tournamentId]);
  
 
@@ -194,7 +208,7 @@ export const AddMatchPopUpWindow = (props) => {
                 onChange={handleNameChange}
                 style={{ borderColor: isValid ? 'green' : 'red'  }} 
               />
-              {!isValid && <p style={{ color:"white"}}>match type must contain only letters.</p>}
+              {!isValid && <p style={{ color:"red"}}>match type must contain only letters.</p>}
                
               <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label>
 <br/>
@@ -213,8 +227,8 @@ export const AddMatchPopUpWindow = (props) => {
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label style={{ color: "white" }}>team1 :</Form.Label>
               <br/>
-              <select onChange={(e) => setTeam1(e.target.value)}>
-              <option> select Team1</option>
+              <select onChange={handleteam1}>
+              <option value= "null"> select Team1 </option>
     {teamsWithNames.map((teamName, index) => (
       <option key={index} value={tournament.teams[index]}>
         {teamName}
@@ -222,18 +236,21 @@ export const AddMatchPopUpWindow = (props) => {
       
     ))}
   </select>
+  {!isValidteam1 && <p style={{ color:"red"}}>please select deferent team1</p>}
          <br/>
          <Form.Label style={{ color: "white" }}>team2 :</Form.Label>
               <br/>
-              <select onChange={(e) => setTeam2(e.target.value)}>
-              <option> select Team2</option>
+              <select onChange={handleteam2}>
+              <option value= "null"> select Team2</option>
     {teamsWithNames.map((teamName, index) => (
       <option key={index} value={tournament.teams[index]}>
         {teamName}
       </option>
       
+      
     ))}
   </select>
+   {!isValidteam2 && <p style={{ color:"red"}}>please select deferent team2</p>}
             </Form.Group>
          
           <Form.Group className="mb-3" controlId="locationInput">
@@ -255,6 +272,41 @@ export const AddMatchPopUpWindow = (props) => {
            
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label style={{ color: "white" }}>match location :</Form.Label>
+              
+        
+              <br/>
+              <select onChange={(e) => setLocation(e.target.value)}>
+              <option> select City</option>
+    
+              <option  value="2464470">Tunis</option>
+              <option  value="2467454">Sfax </option>
+              <option  value="2464915">Sousse </option>
+              <option  value="2468369">Gabès </option>
+              <option  value="2465624">Kairouan </option>
+              <option  value="2473305">Bizerte </option>
+              <option  value="2467813">Gafsa </option>
+              <option  value="2504205">Ariana </option>
+              <option  value="2473448">Kasserine </option>
+              <option  value="2464008">Monastir </option>
+              <option  value="2471046">Ben Arous </option>
+              <option  value="2467580">La Marsa</option>
+              <option  value="2465440">Tataouine</option>
+              <option  value="2469566">Nabeul </option>
+              <option  value="2470233">Hammamet </option>
+              <option  value="2468843">Mahdia </option>
+              <option  value="2472771">Beja</option>
+              <option  value="2467815">Jendouba </option>
+              <option  value="2462881">Sidi Bouzid</option>
+              <option  value="2468560">Medenine </option>
+              <option  value="2469254">El Kef</option>
+              <option  value="2465196">Zaghouan </option>
+              <option  value="2462962">Siliana </option>
+              <option  value="2464475">Tozeur </option>
+
+      
+    
+  </select>
+              
               <Form.Control
                 type="select"
                 placeholder="match location"

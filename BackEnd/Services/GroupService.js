@@ -92,28 +92,39 @@ const createGroups = async (req, res , next) => {
       }
       break;
     case 'Group stage and Knockout':
-      teams = [];
-      for (const teamId of tournament.teams) {
-        const teamDoc = await Team.findById(teamId);
-        teams.push({
-          team: teamId,
-          TeamName : teamDoc.TeamName,
-          MJ: 0,
-          G: 0,
-          N: 0,
-          P: 0,
-          BP: 0,
-          BC: 0,
-          DB: 0,
-          PTS: 0
-        });
+      teams = [...tournament.teams]; // Create a copy of the teams array
+      for (let i = 0; i < numGroups; i++) {
+        let teamsChunk = [];
+        for (let j = 0; j < numTeams; j++) {
+          if (teams.length > 0) {
+            let teamId = teams.splice(Math.floor(Math.random() * teams.length), 1)[0];
+            const teamDoc = await Team.findById(teamId);
+            teamsChunk.push({
+              team: teamId,
+              TeamName : teamDoc.TeamName,
+              MJ: 0,
+              G: 0,
+              N: 0,
+              P: 0,
+              BP: 0,
+              BC: 0,
+              DB: 0,
+              PTS: 0
+            });
+          }
+        }
+        teamsChunks.push(teamsChunk);
       }
-      const group = new Group({
-        name: 'Group A',
-        tournament: tournament,
-        teams: teams
-      });
-      await group.save();
+      
+      for (let j = 0; j < numGroups; j++) {
+        const groupName = 'Group ' + String.fromCharCode(65 + j);
+        const group = new Group({
+          name: groupName,
+          tournament: tournament,
+          teams: teamsChunks[j]
+        });
+        await group.save();
+      }
       break;
     
     default:

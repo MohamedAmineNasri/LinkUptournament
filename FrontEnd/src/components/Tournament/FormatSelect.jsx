@@ -48,8 +48,10 @@ const FormatSelect = () => {
       title: "Group stage and Knockout",
       html: `
       <div>
-      <p>How many teams in this tournament?</p>
-      <input type="number" class="swal2-input" value="4" id="teams"/>
+      <p>How many groups do you want to create?</p>
+          <input type="number" class="swal2-input" value="4" id="groups"/>
+              <p>How many teams are there in each group?</p>
+              <input type="number" class="swal2-input" value="4" id="teams"/>
       <p>How many teams do you want to start the elimination phase with?</p>
       <select id="tournamentSelect" class="swal2-select">
                 <option value="2">2</option>
@@ -65,9 +67,9 @@ const FormatSelect = () => {
       focusConfirm: false,
       preConfirm: () => {
         const selectedValue = document.getElementById("tournamentSelect").value;
-        
+        const groupsValue = document.getElementById("groups").value;
         const teamsValue = document.getElementById("teams").value;
-        const state = { type:"Group stage and Knockout", nbG:1, nbT: teamsValue, nbP: selectedValue ,open : true };
+        const state = { type:"Group stage and Knockout", nbG: groupsValue, nbT: teamsValue, nbP: selectedValue ,open : true };
         setTournamentType("Group stage and Knockout");
         setNbGroups(1);
         setNbTeams(teamsValue);

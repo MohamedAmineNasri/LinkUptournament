@@ -53,8 +53,8 @@ export const EditPopUpmatch = (props) => {
       dispatch(
         editMatch({
           id: props.id,
-          time: editedTime || props.time,
-          type: editedType || props.type,
+          startingtime: editedTime || props.time,
+          matchtype: editedType || props.type,
           
         })
       );
@@ -82,7 +82,7 @@ export const EditPopUpmatch = (props) => {
                 type="text"
                 placeholder="change match time"
                 autoFocus
-                value={editedTime ||matchDataById.time}
+                value={editedTime ||props.time}
                 onChange={handleTimeChange}
               />
             </Form.Group>
@@ -94,7 +94,7 @@ export const EditPopUpmatch = (props) => {
                 type="text"
                 placeholder="change match type"
                 autoFocus
-                value={editedType || 'matchDataById.type'}
+                value={editedType || props.type}
                 onChange={handleTypeChange}
               />
             </Form.Group>

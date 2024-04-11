@@ -8,6 +8,6 @@ router.get("/", playerController.getAllPlayers);
 router.get("/:id", playerController.getPlayerById);
 router.patch("/:id", playerController.updatePlayerById);
 router.delete("/:id", playerController.deletePlayerById);
+router.get("/team/:id",playerController.getplayerByteam)
 
 module.exports = router;
- 

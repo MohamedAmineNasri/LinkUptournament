@@ -220,9 +220,9 @@ export const CheckSelectedTeam = () => {
                             <tr>
                               <th>Player Image</th>
                               <th>Player Name</th>
-                              <th>Table heading</th>
-                              <th>Table heading</th>
-                              <th>Table heading</th>
+                              <th>Player Number</th>
+                              <th>academic membership</th>
+                              <th>legal guardian</th>
                               <th>Actions</th>
                             </tr>
                           </thead>
@@ -237,7 +237,8 @@ export const CheckSelectedTeam = () => {
                                         src={logo}
                                       ></img>
                                     </td>
-                                    <td>{player.position}</td>
+                                    <td>{player.name}</td>
+                                    <td>{player.number}</td>
                                     <td>{player.academic_membership}</td>
                                     <td>{player.legal_guardian}</td>
                                     <td>Table cell</td>

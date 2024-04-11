@@ -17,6 +17,8 @@ const AddPlayerForm = () => {
   const { idTeam } = useParams();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
+    name: "",
+    number: "",
     legal_guardian: "",
     academic_membership: "",
     position: "",
@@ -78,6 +80,24 @@ const AddPlayerForm = () => {
         >
           <form onSubmit={handleSubmit} className="player-form">
             <h2 className="text-white">PLAYER</h2>
+            <Form.Group controlId="p name">
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Player Name"
+              />
+            </Form.Group>
+            <Form.Group controlId="ph numb">
+              <Form.Control
+                type="text"
+                name="number"
+                value={formData.number}
+                onChange={handleInputChange}
+                placeholder="Phone Number"
+              />
+            </Form.Group>
             <Form.Group controlId="legal_guardian">
               <Form.Control
                 type="text"

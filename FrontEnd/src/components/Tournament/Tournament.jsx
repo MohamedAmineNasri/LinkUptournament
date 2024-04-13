@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Group from './Group';
+import TournamentBracket from './TournamentBracket';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
 
@@ -96,7 +97,7 @@ export const Tournament = () => {
               <Group key={group._id} groupId={group._id} />
             ))}
           </div>
-       
+       <TournamentBracket tournamentId={tournament._id}></TournamentBracket>
        
           <script src="https://cdn.lordicon.com/lordicon.js"></script>
       </div>

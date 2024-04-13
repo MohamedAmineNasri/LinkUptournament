@@ -11,10 +11,9 @@ import { useDispatch } from "react-redux";
 
 
 const ManageTournament = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const tournaments = useSelector((state) => state.root.tournament.tounamentData);
-  // const [TournementId, setTournementId] = useState([]);
   const [searchInput, setSearchInput] = useState("");   
   const [filteredTournaments, setFilteredTournaments] = useState([]); // New state for filtered tournaments
 
@@ -42,7 +41,7 @@ const ManageTournament = () => {
 
   // const [anchorEl, setAnchorEl] = useState(null);
   // Inside your component function
-const [anchorElMap, setAnchorElMap] = useState({});
+  const [anchorElMap, setAnchorElMap] = useState({});
   const open = Boolean(anchorElMap);
 
   const handleClick = (event, tournamentId) => {
@@ -150,7 +149,7 @@ const [anchorElMap, setAnchorElMap] = useState({});
 
 
         <div>
-       
+
         <div className="py-4 px-2 md:px-2 xl:px-3.5">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {filteredTournaments.map((tournament, index) => (

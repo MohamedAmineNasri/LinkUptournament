@@ -1,89 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import "./TournamentBracket.css";
+import axios from 'axios';
 
-const TournamentBracket = () => {
-  const leftTeams = [
-    [
-      {
-        name: "Team A",
-        score: 30,
-      },
-      {
-        name: "Team B",
-        score: 25,
-      },
-    ],
-    [
-      {
-        name: "Team C",
-        score: 20,
-      },
-      {
-        name: "Team D",
-        score: 35,
-      },
-    ],
-    [
-      {
-        name: "Team E",
-        score: 28,
-      },
-      {
-        name: "Team F",
-        score: 22,
-      },
-    ],
-    [
-      {
-        name: "Team G",
-        score: 32,
-      },
-      {
-        name: "Team H",
-        score: 27,
-      },
-    ],
-    [
-      {
-        name: "Team I",
-        score: 18,
-      },
-      {
-        name: "Team J",
-        score: 23,
-      },
-    ],
-    [
-      {
-        name: "Team K",
-        score: 29,
-      },
-      {
-        name: "Team L",
-        score: 33,
-      },
-    ],
-    [
-      {
-        name: "Team M",
-        score: 26,
-      },
-      {
-        name: "Team N",
-        score: 31,
-      },
-    ],
-    [
-      {
-        name: "Team O",
-        score: 24,
-      },
-      {
-        name: "Team P",
-        score: 21,
-      },
-    ],
-  ];
+
+const TournamentBracket = ({tournamentId}) => {
+
+  const [leftTeams, setTeamsData] = useState([]);
+
+  useEffect(() => {
+    const fetchTournament = async () => {
+      const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
+      setTeamsData(response.data.tournament.teams);
+      console.log(response)
+    };
+
+    fetchTournament();
+
+  }, [tournamentId]);
+
+  
 
   return (
     <div>
@@ -95,22 +30,30 @@ const TournamentBracket = () => {
                 Round 1<br />
                 <span class="date">March 16</span>
               </div>
-              {leftTeams.map((team) => {
-                return (
-                  <ul class="matchup">
-                    <li class="team team-top">
-                      {team[0].name}
-                      <span class="score">
-                        <div className="score-text">{team[0].score}</div>
-                      </span>
-                    </li>
-                    <li class="team team-bottom">
-                      {team[1].name}
-                      <span class="score"><div className="score-text">{team[1].score}</div></span>
-                    </li>
-                  </ul>
-                );
-              })}
+              {leftTeams.map((team, index) => {
+  // Check if the current index is divisible by 2 and less than the length of the array
+  if (index % 2 === 0 && index < leftTeams.length - 1) {
+    return (
+      <ul className="matchup" key={index}>
+        <li className="team team-top">
+          {leftTeams[index]}
+          <span className="score">&nbsp;
+            <div className="score-text">{leftTeams[index].score}</div>&nbsp;
+          </span>
+        </li>
+        <li className="team team-bottom">
+          {leftTeams[index + 1]}
+          <span className="score"> &nbsp;
+            <div className="score-text">{leftTeams[index + 1].score}</div> &nbsp;
+          </span>
+        </li>
+      </ul>
+    );
+  } else {
+    return null; // If the condition is not met, return null to skip rendering
+  }
+})}
+
             </div>{" "}
             {/*<!-- END ROUND ONE -->*/}
             <div class="round round-two">

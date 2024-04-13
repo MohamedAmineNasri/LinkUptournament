@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import Fetchmatchforview from "../components/hamhoum/fetchmatchesforvuews"
 
 export class Home extends Component {
   render() {
@@ -105,52 +106,8 @@ export class Home extends Component {
               </div>
             </div>
           </div>
-
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="d-flex team-vs">
-                  <span className="score">4-1</span>
-                  <div className="team-1 w-50">
-                    <div className="team-details w-100 text-center">
-                      <img
-                        src="./public/assets/images/logo_1.png"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                      <h3>
-                        LA LEGA <span>(win)</span>
-                      </h3>
-                      <ul className="list-unstyled">
-                        <li>Anja Landry (7)</li>
-                        <li>Eadie Salinas (12)</li>
-                        <li>Ashton Allen (10)</li>
-                        <li>Baxter Metcalfe (5)</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="team-2 w-50">
-                    <div className="team-details w-100 text-center">
-                      <img
-                        src="./public/assets/images/logo_2.png"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                      <h3>
-                        JUVENDU <span>(loss)</span>
-                      </h3>
-                      <ul className="list-unstyled">
-                        <li>Macauly Green (3)</li>
-                        <li>Arham Stark (8)</li>
-                        <li>Stephan Murillo (9)</li>
-                        <li>Ned Ritter (5)</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<Fetchmatchforview></Fetchmatchforview>
+         
 
           {/* <div className="latest-news">
             <div className="container">
@@ -250,161 +207,7 @@ export class Home extends Component {
             </div>
           </div> */}
 
-          <div className="site-section bg-dark">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-6">
-                  <div className="widget-next-match">
-                    <div className="widget-title">
-                      <h3>Next Match</h3>
-                    </div>
-                    <div className="widget-body mb-3">
-                      <div className="widget-vs">
-                        <div className="d-flex align-items-center justify-content-around justify-content-between w-100">
-                          <div className="team-1 text-center">
-                            <img
-                              src="./public/assets/images/logo_1.png"
-                              alt="Image"
-                            />
-                            <h3>Football League</h3>
-                          </div>
-                          <div>
-                            <span className="vs">
-                              <span>VS</span>
-                            </span>
-                          </div>
-                          <div className="team-2 text-center">
-                            <img
-                              src="./public/assets/images/logo_2.png"
-                              alt="Image"
-                            />
-                            <h3>Soccer</h3>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-center widget-vs-contents mb-4">
-                      <h4>Tournament Event</h4>
-                      <p className="mb-5">
-                        <span className="d-block">December 20th, 2020</span>
-                        <span className="d-block">9:30 AM GMT+0</span>
-                        <strong className="text-primary">New Euro Arena</strong>
-                      </p>
-
-                      <div id="date-countdown2" className="pb-1"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6">
-                  <div className="widget-next-match">
-                    <table className="table custom-table">
-                      <thead>
-                        <tr>
-                          <th>P</th>
-                          <th>Team</th>
-                          <th>W</th>
-                          <th>D</th>
-                          <th>L</th>
-                          <th>PTS</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>
-                            <strong className="text-white">
-                              Football League
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>
-                            <strong className="text-white">Soccer</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>
-                            <strong className="text-white">Juvendo</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>
-                            <strong className="text-white">
-                              French Football League
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>
-                            <strong className="text-white">Legia Abante</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>6</td>
-                          <td>
-                            <strong className="text-white">
-                              Gliwice League
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>7</td>
-                          <td>
-                            <strong className="text-white">Cornika</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>8</td>
-                          <td>
-                            <strong className="text-white">
-                              Gravity Smash
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
 
           {/* <div className="site-section">
             <div className="container">

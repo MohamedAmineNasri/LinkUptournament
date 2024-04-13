@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Group from '../../pages/group/Group';
+import Group from './Group';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
 

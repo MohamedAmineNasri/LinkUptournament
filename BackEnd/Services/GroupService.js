@@ -49,6 +49,8 @@ const updateGroup = async (req,res,next)=>{
 
    
 }
+
+
 const createGroups = async (req, res , next) => {
   const tournament = await Tournament.findById(req.params.id);
   let teamsChunks = []; 
@@ -189,6 +191,7 @@ const updateGroupAfterMatch = async (req, res, next) => {
       team2.BP += match.team2Gols ;
       team1.BC += match.team2Gols;
       team2.BC += match.team1Gols ;
+      team1.BP += match.team1Gols ;
       team1.DB = team1.BP - team1.BC;
       team2.DB = team2.BP - team2.BC;
 

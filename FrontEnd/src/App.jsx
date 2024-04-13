@@ -17,7 +17,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LineupBuilder from "./pages/LineupBuilder";
 import AddPlayerForm from "./pages/AddPlayerForm";
 import TournamentRoundRobin from "./pages/TournamentRoundRobin";
-import TournamentBracket from "./pages/TournamentBracket";
+import TournamentBracket from "./components/Tournament/TournamentBracket";
 
 import Layout from "./pages/Layout";
 import Welcome from "./pages/Welcome";

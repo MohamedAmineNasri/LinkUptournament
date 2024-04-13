@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Win, Draw, Lose } from "../../components/GroupStageLogo";
+import { Win, Draw, Lose } from "../GroupStageLogo";
 
 
 export const Group = ({ groupId }) => { 
@@ -58,13 +58,17 @@ export const Group = ({ groupId }) => {
               <td className=" text-black dark:text-white">{team.BC}</td>
               <td className=" text-black dark:text-white">{team.DB}</td>
               <td className=" text-black dark:text-white">{team.PTS}</td>
-              <td colSpan="4" className="flex justify-start space-x-2">
-                <Win />
-                <Lose />
-                <Win />
-                <Draw />
-                <Draw />
-              </td>
+              <td colSpan="4" className="flex justify-start pl-4 space-x-2">
+                  {[...Array(team.G)].map((_, i) => (
+                    <Win key={i} />
+                  ))}
+                  {[...Array(team.P)].map((_, i) => (
+                    <Draw key={i} />
+                  ))}
+                  {[...Array(team.N)].map((_, i) => (
+                    <Lose key={i} />
+                  ))}
+                </td>
             </tr>
           ))}
         </tbody>

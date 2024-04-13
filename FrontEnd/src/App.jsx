@@ -68,15 +68,22 @@ import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
+import Payment from "./components/hamhoum/Payment"
+import Completiont from "./components/hamhoum/Completion"
+import {Elements,PaymentElement} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
-
+  
   // console.log(fixtures);
 
   // const refresh = () => window.location.reload(true);
   return (
     <Routes>
+        
+    <Route path="/payment" element={<Payment />} />
+    <Route path="/completion" element={<Completiont />} />
       <Route path="/panel/:match" element={<Panel/>}/>     
       	<Route path="/fetchalltour" element={<Fetchalltour />} />
       	<Route path="/fetchmatchforview" element={<Fetchmatchforview />} />

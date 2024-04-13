@@ -23,6 +23,7 @@ export const fetchtour = () => {
   const[T1go,sett1go]=useState([]);
   const[T2go,sett2go]=useState([]);
   const[T2,sett2]=useState([]);
+  const[Weather,setweather]= useState([])
   
   const handleShow = () => MatchCard
   useEffect(() => {
@@ -33,6 +34,9 @@ export const fetchtour = () => {
         const response = await axios.get('http://localhost:8000/match/'+tournamentId);
        
         setTournementId(response.data);
+        
+        
+        
         sett1(response.data.goal1)
         sett2(response.data.goal2)
         const teamsWithNames1 = await Promise.all(response.data.goal1.map(async teamId => {
@@ -60,9 +64,15 @@ export const fetchtour = () => {
     
     const fetchMatchesWithTeamDetails = async () => {
       try {
+        
         const matchesResponse = await axios.get('http://localhost:8000/match/'+tournamentId);
         
         const team2 = matchesResponse.data.team2;
+        const weather = await axios.get ("http://api.openweathermap.org/data/2.5/forecast?id="+matchesResponse.data.location+"&dt=1712750400&appid=f30fae93770f8d10eec128c5c8627b54")
+        setweather(weather.data)
+        console.log(matchesResponse.data.date)
+        console.log(weather.data)
+        console.log(Weather,"gtgtgtrgtrgtr")
        
 
         

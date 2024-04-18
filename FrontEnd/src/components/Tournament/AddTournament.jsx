@@ -52,7 +52,7 @@ const AddTour = () => {
       setNbP(location.state.nbP);
     }
   }, [location.state]);
-
+ 
   const handleTeamSelection = (e, teamid) => {
      console.log(teamid)
     if (e.target.checked) {
@@ -69,6 +69,7 @@ const AddTour = () => {
     setLogo(file);
     setUploadedLogo(URL.createObjectURL(file));
   };
+  const teamCount = (nbG !== undefined) ? parseInt(nbT * nbG) : nbT;
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
@@ -78,12 +79,16 @@ const AddTour = () => {
 
     if (!nameError && !dateDebutError && !dateFinError) {
       try {
-        if (selectedTeams.length !== parseInt(nbT * nbG)) {
-          setTeamSelectionError(`You must select exactly ${nbT * nbG} teams.`);
+        
+        if (selectedTeams.length !== Number(teamCount)) {
+          console.log(selectedTeams.length)
+          console.log(teamCount)
+          setTeamSelectionError(`You must select exactly ${teamCount} teams.`);
           return;
         } else {
           setTeamSelectionError("");
         }
+        
         const formData = new FormData();
         formData.append("logo", logo);
 
@@ -103,16 +108,19 @@ const AddTour = () => {
           date_fin: dateFin,
           teams: selectedTeams,
         };
-
+        console.log("here")
         const addTournamentResponse = await dispatch(
           addTournament(tournamentData)
         );
-
+          
         if (addTournamentResponse.payload) {
           setStatus("");
-          await dispatch(
-            createGroupsThunk({ id: addTournamentResponse.payload._id, nbG, nbT })
-          );
+          // Only create groups if the tournament type is not 'knockout'
+          if (addTournamentResponse.payload.type !== 'knockout') {
+            await dispatch(
+              createGroupsThunk({ id: addTournamentResponse.payload._id, nbG, nbT })
+            );
+          }
           navigate(`/manage/tournament/${addTournamentResponse.payload._id}`);
         }
       } catch (error) {
@@ -120,6 +128,8 @@ const AddTour = () => {
       }
     }
   };
+
+
 
   const validateName = (value) => {
     if (!value.trim()) {
@@ -302,7 +312,7 @@ const AddTour = () => {
           </h2>
           <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
   Please Affect{" "}
-  <span style={{ fontWeight: "bold", color: "#FF5733" }}>{nbT * nbG}</span> teams to your tournament
+  <span style={{ fontWeight: "bold", color: "#FF5733" }}>{teamCount}</span> teams to your tournament
 </p>
 
           {teamSelectionError && (

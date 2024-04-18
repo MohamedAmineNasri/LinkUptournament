@@ -17,7 +17,25 @@ export const Tournament = () => {
   useEffect(() => {
     const fetchTournament = async () => {
       const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
-      setTournament(response.data.tournament);
+      const tournamentData = response.data.tournament;
+
+      // Get current date
+      const currentDate = new Date();
+      // Convert tournament start date to Date object
+      const startDate = new Date(tournamentData.date_debut);
+      // Convert tournament end date to Date object
+      const endDate = new Date(tournamentData.date_fin);
+
+      // Check if tournament has started or ended
+      if (currentDate < startDate) {
+        tournamentData.status = 'Coming Soon';
+      } else if (currentDate > endDate) {
+        tournamentData.status = 'Ended';
+      } else {
+        tournamentData.status = 'Started';
+      }
+
+      setTournament(tournamentData);
     };
 
     const fetchGroups = async () => {
@@ -97,7 +115,8 @@ export const Tournament = () => {
               <Group key={group._id} groupId={group._id} />
             ))}
           </div>
-       <TournamentBracket tournamentId={tournament._id}></TournamentBracket>
+          {/* Only render TournamentBracket if tournament type is 'knockout' */}
+      {tournament.type === 'Knockout' &&  <TournamentBracket tournamentId={tournament._id}></TournamentBracket>}
        
           <script src="https://cdn.lordicon.com/lordicon.js"></script>
       </div>

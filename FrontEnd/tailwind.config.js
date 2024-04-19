@@ -51,6 +51,9 @@ module.exports = {
         success: '#219653',
         danger: '#D34053',
         warning: '#FFA70B',
+        'custom-red': '#ee1e46',
+        'custom-green': '#234F1E',
+
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],

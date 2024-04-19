@@ -24,5 +24,6 @@ router.put('/:groupId/team/:teamId/updateMG', async (req, res, next) => {
 router.put("/updatetri/:id", groupService.updateGrouptri)
 router.delete('/delete/:id', groupService.deleteGroupById) 
 router.put('/update/:id' , groupService.updateGroup) 
+router.put("/updatetgroupaftermatch/:matchId", groupService.updateGroupAfterMatch)
 
 module.exports = router;

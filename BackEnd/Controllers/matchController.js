@@ -19,6 +19,8 @@ async function getAllematch(req, res) {
     const matchById = await match.findById(req.params.id)
     res.json(matchById)
   }
+
+  
 //create 
 async function creatematch(req, res) {
   try {

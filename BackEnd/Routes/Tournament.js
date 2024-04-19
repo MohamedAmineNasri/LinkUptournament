@@ -3,6 +3,10 @@ var router = express.Router();
 const tournamentService = require("../Services/TounamentService");
 const multer = require('multer');
 const path = require('path');
+const Player = require('../Models/Player');
+
+const { sendSMS } = require('../Controllers/smsController');
+const Tournament = require('../Models/Tournament');
 
 
 router.post('/add', tournamentService.addTournament);
@@ -12,6 +16,7 @@ router.put('/update/:id', tournamentService.updateTournament);
 router.delete('/delete/:id', tournamentService.deleteTournament);
 
 router.get('/all', tournamentService.getAllTournaments);
+router.get('/search/:searchString', tournamentService.getTournamentByName);
 
 router.get('/:id', tournamentService.getTournamentById);
 
@@ -45,6 +50,36 @@ const storage = multer.diskStorage({
         }
       }
     });
+  });
+
+
+  router.post('/sendSMS/:tournamentId/:playerId', async (req, res) => {
+    const { playerId, tournamentId } = req.params;
+  
+    try {
+      // Retrieve player's phone number using the playerId
+      const player = await Player.findById(playerId);
+      const playerPhoneNumber = "+216"+ player.number;
+      const tournament = await Tournament.findById(tournamentId) // Assuming phoneNumber is the field storing the player's phone number
+  
+      // Calculate time remaining until the tournament start date
+      const currentDate = new Date();
+      const startDate = new Date(tournament.date_debut);
+      const timeRemainingMs = startDate.getTime() - currentDate.getTime();
+      const daysRemaining = Math.floor(timeRemainingMs / (1000 * 60 * 60 * 24));
+      const hoursRemaining = Math.floor((timeRemainingMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  
+      // Compose the message
+      const message = `The tournament ${tournament.name} will start in ${daysRemaining} days and ${hoursRemaining} hours. Get yourself Ready !`;
+  
+      // Send the SMS
+      await sendSMS(playerPhoneNumber, message);
+  
+      res.status(200).send('SMS sent successfully');
+    } catch (error) {
+      console.error('Error sending SMS:', error);
+      res.status(500).send('Failed to send SMS');
+    }
   });
   
 

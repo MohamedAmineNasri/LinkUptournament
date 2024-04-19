@@ -1,9 +1,4 @@
-    import { BRAND } from '../../Dashboard/src/types/brand';
-    import BrandOne from '../../Dashboard/src/images/brand/brand-01.svg';
-    import BrandTwo from '../../Dashboard/src/images/brand/brand-02.svg';
-    import BrandThree from '../../Dashboard/src/images/brand/brand-03.svg';
-    import BrandFour from '../../Dashboard/src/images/brand/brand-04.svg';
-    import BrandFive from '../../Dashboard/src/images/brand/brand-05.svg';
+
     import { useGetUsersQuery,useDeleteUserByIdMutation,  useUpdateUserByIdMutation  } from "../../../Features/users/usersApiSlice.js";
     import ReactWhatsapp from 'react-whatsapp';
     import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,8 +7,6 @@
     import { faUserPen } from '@fortawesome/free-solid-svg-icons';
     import { useState } from 'react';
     import {
-        Button,
-        Dialog,
         DialogActions,
         DialogContent,
         DialogContentText,
@@ -21,6 +14,7 @@
     } from '@mui/material';
     import { Button as MuiButton, Dialog as MuiDialog } from '@mui/material';
     import TextField from '@mui/material/TextField';
+    import ReactPaginate from 'react-paginate';
 
 
         const UsersTable = () => {
@@ -96,7 +90,22 @@
                     // Reset other fields as needed
                 });
             };
-        
+         // Pagination
+   
+// Pagination
+const [pageNumber, setPageNumber] = useState(0);
+const usersPerPage = 5;
+
+// Calculate the index of the first and last user to display on the current page
+const startIndex = pageNumber * usersPerPage;
+const endIndex = Math.min(startIndex + usersPerPage, users ? users.length : 0);
+
+// Calculate pageCount only if users data is available
+const pageCount = users ? Math.ceil(users.length / usersPerPage) : 0;
+
+const changePage = ({ selected }) => {
+    setPageNumber(selected);
+}
             return (
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
@@ -133,7 +142,8 @@
             </div>
 
             {isSuccess &&
-                    users.map((user, key) => (
+                // Display users within the range of startIndex to endIndex
+                users.slice(startIndex, endIndex).map((user, key) => (
                         <div
                             className={`grid grid-cols-3 sm:grid-cols-5 ${
                                 key === users.length - 1
@@ -245,7 +255,7 @@
                             value={updatedUserData.email}
                             onChange={(e) => setUpdatedUserData({ ...updatedUserData, email: e.target.value })}
                         />
-                        {/* Add other fields as needed */}
+
 
                         {/* Dialog Actions */}
                         <DialogActions>
@@ -255,6 +265,52 @@
                     </form>
                 </DialogContent>
             </MuiDialog>
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                pageCount={pageCount}
+                containerClassName={"pagination"}
+                disabledClassName={"pagination__link--disabled"}
+                
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "1rem",
+                    marginBottom: "1rem",
+                    padding: "1rem"
+                }}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakLabel={"..."}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                forcePage={pageNumber}
+                onPageChange={changePage}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                activeClassName={"active"}
+                pageStyle={{
+                    margin: "0 0.5rem",
+                    padding: "0.5rem",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    backgroundColor: "#f0f0f0",
+                    color: "#333",
+                    transition: "background-color 0.3s ease",
+                }}
+                activeLinkStyle={{
+                    backgroundColor: "#007bff",
+                    color: "#fff",
+                }}
+            />
+
+
         </div>
     );
 };

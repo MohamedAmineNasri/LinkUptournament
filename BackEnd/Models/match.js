@@ -22,6 +22,10 @@ var match = new Schema({
     tournementId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournement'},
     card:[{player: {type: mongoose.Schema.Types.ObjectId, ref: 'Player'},name:String,number:Number,yellow:Number,red:Number}],
     w:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
+    group: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group',
+      },
    
 });
 module.exports = mongoose.model('match', match)

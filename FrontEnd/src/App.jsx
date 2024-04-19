@@ -17,7 +17,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LineupBuilder from "./pages/LineupBuilder";
 import AddPlayerForm from "./pages/AddPlayerForm";
 import TournamentRoundRobin from "./pages/TournamentRoundRobin";
-import TournamentBracket from "./pages/TournamentBracket";
+import TournamentBracket from "./components/Tournament/TournamentBracket";
 
 import Layout from "./pages/Layout";
 import Welcome from "./pages/Welcome";
@@ -45,8 +45,6 @@ import ConsultReferee from "./components/TournamentManagementComponenets/Consult
 import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
 import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
 import FormatSelect from "./components/Tournament/FormatSelect";
-import EditTournament from "./components/Tournament/EditTournament";
-import AddTournament from "./pages/TournamentManagementPages/ManageTournament1";
 
 // import TournamentBracket  from "./components/TournamentBracket";
 
@@ -91,7 +89,6 @@ function App() {
       <Route path="/manage" element={<TournamentLayout />}>
         
         <Route index element={<ManageTournament />} />
-        {/* <Route path="edit/:tournamentId" element={<EditTournament />} /> */}
         <Route path="editt/:tournamentId" element={<Edit/>} />
         <Route path="tournament/:tournamentId" element={<Tournament/>}/>
         <Route path="addT" element={<AddTour/>} />

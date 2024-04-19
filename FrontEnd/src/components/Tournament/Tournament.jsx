@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Group from '../group/Group';
+import Group from '../../pages/group/Group';
 import axios from 'axios';
 
 export const Tournament = () => {

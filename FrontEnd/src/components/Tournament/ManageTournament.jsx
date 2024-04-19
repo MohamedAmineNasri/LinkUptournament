@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
-import TextField from "@mui/material/TextField";
-import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { Button as MuiButton, Dialog as MuiDialog } from "@mui/material";
+import { Button as MuiButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate  } from 'react-router-dom';
+import { deleteTournament } from '../../redux/slice/tournamentSlice';
+import { useDispatch } from "react-redux";
+
 
 const ManageTournament = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [TournementId, setTournementId] = useState([]);
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -29,15 +32,29 @@ const ManageTournament = () => {
   // Inside your component function
 const [anchorElMap, setAnchorElMap] = useState({});
   const open = Boolean(anchorElMap);
+
   const handleClick = (event, tournamentId) => {
     setAnchorElMap(prevState => ({
       ...prevState,
       [tournamentId]: event.currentTarget
     }));
   };
-  const handleClose = () => {
-    setAnchorElMap(null);
+  const handleClose = async (tournamentId) => {
+    try {
+      await dispatch(deleteTournament(tournamentId));
+      // Remove the deleted tournament from the state
+      setTournementId(prevTournaments => prevTournaments.filter(tournament => tournament._id !== tournamentId));
+      console.log(`Tournament with ID ${tournamentId} deleted successfully`);
+    } catch (error) {
+      console.error('Error deleting tournament:', error);
+    }
+    // Close the menu after deleting the tournament
+    setAnchorElMap(prevState => ({
+      ...prevState,
+      [tournamentId]: null
+    }));
   };
+  
 
   return (
     <div className="rounded-sm border p-4  border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -128,10 +145,10 @@ const [anchorElMap, setAnchorElMap] = useState({});
         }}
       >
                     <MenuItem onClick={() => navigate(`/manage/tournament/${tournament._id}`)}>Select tournament</MenuItem>
-                    <MenuItem onClick={() => navigate(`/manage/edit/${tournament._id}`)}>Edit tournament</MenuItem>
+                    <MenuItem onClick={() => navigate(`/manage/editt/${tournament._id}`)}>Edit tournament</MenuItem>
                     <MenuItem onClick={() => navigate(`/fetchmatchbytour/${tournament._id}`)}>get matches </MenuItem>
 
-                    <MenuItem onClick={handleClose}>Delete tournament</MenuItem>
+                    <MenuItem onClick={() => handleClose(tournament._id)}>Delete tournament</MenuItem>
                   </Menu>
                 </div>
   </div>

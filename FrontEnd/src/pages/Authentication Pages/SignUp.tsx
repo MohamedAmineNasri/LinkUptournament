@@ -26,7 +26,8 @@
             });
             
             const [signup, { isLoading }] = useSignupMutation();
-            
+            const [errMsg, setErrMsg] = useState('');
+
             const handleChange = (e) => {
                 const { name, value } = e.target;
                 setFormData((prevData) => ({
@@ -37,6 +38,33 @@
             
             const handleSubmit = async (e) => {
                 e.preventDefault();
+        
+                // Validate length of firstName and lastName
+                if (formData.firstName.length < 3 || formData.lastName.length < 3) {
+                    setErrMsg('First Name and Last Name must be at least 3 characters long.');
+                    return;
+                }
+        
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(formData.email)) {
+                    setErrMsg('Please enter a valid email address.');
+                    return;
+                }
+        
+                // Validate phone number format
+                // Assuming a valid phone number consists of only digits and is of length 10
+                const phoneRegex = /^\d{8}(\d{2})?$/;
+                if (formData.phoneNumber && !phoneRegex.test(formData.phoneNumber)) {
+                    setErrMsg('Please enter a valid phone number.');
+                    return;
+                }
+        
+                // Validate password length
+                if (formData.password.length < 5) {
+                    setErrMsg('Password must be at least 5 characters long.');
+                    return;
+                }
         
                 try {
                     const userData = await signup(formData).unwrap();
@@ -207,8 +235,9 @@
                     </h2>
 
                     <form onSubmit={handleSubmit}>
+                    {errMsg && <p className="text-red-500">{errMsg}</p>}
             <div className="form-group">
-                <label>First Name:</label>
+                <label className='text-black dark:text-white'>First Name:</label>
                 <input
                     type="text"
                     className="form-control"
@@ -220,7 +249,7 @@
                 />
             </div>
             <div className="form-group">
-                <label>Last Name:</label>
+                <label className='text-black dark:text-white'>Last Name:</label>
                 <input
                     type="text"
                     className="form-control"
@@ -232,7 +261,7 @@
                 />
             </div>
             <div className="form-group">
-                <label>Email:</label>
+                <label className='text-black dark:text-white'>Email:</label>
                 <input
                     type="text"
                     className="form-control"
@@ -244,7 +273,7 @@
                 />
             </div>
             <div className="form-group">
-                <label>Phone Number:</label>
+                <label className='text-black dark:text-white'>Phone Number:</label>
                 <input
                     type="text"
                     className="form-control"
@@ -255,7 +284,7 @@
                 />
             </div>
             <div className="form-group">
-                <label>Password:</label>
+                <label className='text-black dark:text-white'>Password:</label>
                 <input
                     type="password"
                     className="form-control"
@@ -278,7 +307,7 @@
                 />
             </div> */}
             <div className="form-group">
-                <label>Birthday:</label>
+                <label className='text-black dark:text-white'>Birthday:</label>
                 <input
                     type="date"
                     className="form-control"
@@ -290,7 +319,7 @@
                 />
             </div>
             <div className="form-group">
-            <label>Bio:</label>
+            <label className='text-black dark:text-white'>Bio:</label>
             <input
                 type="text"
                 className="form-control"
@@ -303,9 +332,9 @@
             </div>
 
             <div className="form-group">
-                <label>Roles:</label>
+                <label className='text-black dark:text-white'>Roles:</label>
                 <select
-                    className="form-control"
+                    className="form-control "
                     name="roles"
                     value={formData.roles}
                     onChange={handleChange}

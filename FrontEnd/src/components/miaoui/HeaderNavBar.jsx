@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
-
+import Translate from "./Apis/Translate ";
+import { Button } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 export const HeaderNavBar = () => {
   return (
     <div>
@@ -52,6 +56,25 @@ export const HeaderNavBar = () => {
                     <Link to="/profile" className="nav-link">
                       Profile
                     </Link>
+                  </li>
+                  {/* google translate api call  */}
+                  <li>
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        style={{
+                          backgroundColor: "transparent",
+                          border: "none",
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          style={{ fontSize: "24px" }}
+                          icon={faLanguage}
+                        />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Translate />
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </li>
                 </ul>
               </nav>

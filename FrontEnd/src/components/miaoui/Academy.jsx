@@ -3,7 +3,6 @@ import TeamCard from "./TeamCard";
 import DropDownAcademy from "./DropDownAcademy";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademybyManagerId } from "../../redux/slice/academySlice";
-import academyImagespectators from "../../assets/Mi-imgs/1.jpg";
 import academyImageteam from "../../assets/Mi-imgs/team1.jpg";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 import HeaderNavBar from "./HeaderNavBar";
@@ -16,7 +15,6 @@ export const Academy = () => {
   const { academyData, loading, error } = useSelector(
     (state) => state.root.academy
   );
-
   // fetch and refresh when academy updated
   useEffect(() => {
     const userId = localStorage.getItem("user");
@@ -83,7 +81,9 @@ export const Academy = () => {
                   className="img-fluid academyLogosizeInHero"
                   style={{ opacity: 0.8 }}
                 />
-                <h1 className="text-white">{academyData.AcademyName}</h1>
+                <h1 className="text-white notranslate">
+                  {academyData.AcademyName}
+                </h1>
               </div>
             </div>
           </div>
@@ -92,6 +92,7 @@ export const Academy = () => {
         {/* separator */}
 
         {/* Academy */}
+
         <div
           className="hero backImgAcademyandTeam"
           style={{
@@ -116,16 +117,18 @@ export const Academy = () => {
                     />
 
                     <h3
-                      className="mb-4 mt-3 "
+                      className="mb-4 mt-3 notranslate "
                       style={{ fontWeight: "bold", fontSize: "40px" }}
                     >
                       <strong>{academyData.AcademyName}</strong>
                     </h3>
-                    <p className=" mb-4">
-                      Location :{" "}
-                      <span className="text-muted">{academyData.Location}</span>
+                    <p className=" mb-4 ">
+                      Location :
+                      <span className="text-muted notranslate">
+                        {academyData.Location}
+                      </span>
                     </p>
-                    <p className=" mb-4">
+                    <p className=" mb-4 ">
                       Creating Date :{" "}
                       <span className="text-muted">{formattedDate}</span>
                     </p>
@@ -133,7 +136,7 @@ export const Academy = () => {
                       Status :{" "}
                       <span>
                         <Badge
-                          className=" p-2"
+                          className=" p-2 notranslate"
                           bg={getStatusColor(academyData.Status)}
                         >
                           {academyData.Status}

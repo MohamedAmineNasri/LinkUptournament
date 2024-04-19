@@ -46,11 +46,11 @@ import VideoPodcast from "./pages/Podcast/VideoPodcast";
 import ViewerLiveStream from "./pages/LiveStream/ViewerLiveStream";
 import VideoLiveStream from "./pages/LiveStream/VideoLiveStream";
 import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
-import Panel  from './components/hamhoum/panel'
-import Fetchonematch  from './components/hamhoum/fetchOneMatchByID'
+import Panel from "./components/hamhoum/panel";
+import Fetchonematch from "./components/hamhoum/fetchOneMatchByID";
 import Fetchalltour from "./components/hamhoum/getAllTournement";
-import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
-import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
+import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -60,12 +60,15 @@ function App() {
   // const refresh = () => window.location.reload(true);
   return (
     <Routes>
-      <Route path="/panel/:match" element={<Panel/>}/>     
-      	<Route path="/fetchalltour" element={<Fetchalltour />} />
-      	<Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
-      	<Route path="/fetchmatchbytour/:tournamentId" element={<Fetchmatchbytour />} />
-      	<Route path="/testtt" element={<AddMatchPopUpWindow />} />
-      	<Route path="/fetchonematch/:tournamentId" element={<Fetchonematch/>}/>
+      <Route path="/panel/:match" element={<Panel />} />
+      <Route path="/fetchalltour" element={<Fetchalltour />} />
+      <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
+      <Route
+        path="/fetchmatchbytour/:tournamentId"
+        element={<Fetchmatchbytour />}
+      />
+      <Route path="/testtt" element={<AddMatchPopUpWindow />} />
+      <Route path="/fetchonematch/:tournamentId" element={<Fetchonematch />} />
 
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}

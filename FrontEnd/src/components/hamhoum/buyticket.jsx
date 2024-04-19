@@ -1,3 +1,4 @@
+// to do 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Form from "react-bootstrap/Form";
@@ -10,8 +11,6 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
-import Button from "react-bootstrap/Button";
-import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 
 export const fetchtour = () => {
     const { tournamentId } = useParams();
@@ -22,21 +21,25 @@ export const fetchtour = () => {
   const[Team2name,setteam2name]=useState([]);
   const[Team2logo,setteam2logo]=useState([]);
   
+  
   const handleShow = () => MatchCard
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
         
       
-        const response = await axios.get('http://localhost:8000/match/tournement/'+tournamentId);
-        setTournementId(response.data);
+        const response = await axios.get('http://localhost:8000/match/');
+        setTournementId(response.data.filter(
+    (match) => match.matchstatus === "Starting Soon"
+  ));
+       
       } catch (error) {
         console.error('Error fetching tournaments:', error);
       }
     };
     const fetchMatchesWithTeamDetails = async () => {
       try {
-        const matchesResponse = await axios.get('http://localhost:8000/match/tournement/'+tournamentId);
+        const matchesResponse = await axios.get('http://localhost:8000/match/');
         
         const team2 = matchesResponse.data.map((e)=>e.team2);
         const teamPromises2 = team2.map(teamId =>
@@ -94,12 +97,12 @@ export const fetchtour = () => {
   }, []);
 if (TournementId.length ==0) {
  
-        return <div style={{ backgroundColor:"rgb(35, 79, 30)"}}><AddMatchPopUpWindow tourid={tournamentId}  /><br/>Loading tournament...</div>;
+        return <div style={{ backgroundColor:"rgb(35, 79, 30)"}}><br/>Loading tournament...</div>;
        
       }
   return (
     <>
-   <DefaultLayout>
+   
     <div>
         <div className="site-wrap">
           <div className="site-mobile-menu site-navbar-target">
@@ -115,7 +118,7 @@ if (TournementId.length ==0) {
             <div className="container">
               <div className="d-flex align-items-center">
                 <div className="site-logo">
-                  <AddMatchPopUpWindow></AddMatchPopUpWindow>
+                  
                 </div>
                 <div className="ml-auto">
                 
@@ -139,18 +142,21 @@ if (TournementId.length ==0) {
 
               <div className="row">
                 <div className="col-12 title-section">
-                  <h2 className="heading">Upcoming Match</h2>
+                  <h2 className="heading" > Matches</h2>
                 </div>
                 {TournementId
         .slice()
         .reverse()
         .map((match, index) => (
-                <div className="col-lg-6 mb-4">
-                  <div className="bg-light p-4 rounded">
+          
+                <div className="col-lg-6 mb-4" >
+                  <Link to ={`/payment`}>
+                  <div className="bg-light p-4 rounded" >
                     <div className="widget-body">
                       <div className="widget-vs">
                         <div className="d-flex align-items-center justify-content-around justify-content-between w-100">
                           <div className="team-1 text-center">
+                           
                             <img
                               src={Team1logo.slice().reverse()[index]}
                               alt="Image"
@@ -187,36 +193,8 @@ if (TournementId.length ==0) {
                       </p>
                     </div>
                     
-                <div className="row justify-content-around">                  
-                  {/* <Fetch matchid={match._id}
-                    time={match.startingTime}
-                    date={match.Date}
-                    type={match.matchType}
-                    location={match.location}> </Fetch> */}
-                    {/* <MatchByID matchid={match._id}>test</MatchByID> */}
-                   {/* <AddMatchPopUpWindow TournementId= {match._id}/> */}
-                   <EditPopUpSelectedMatch
-                    matchid={match._id}
-                    referee = {match.referee}
-                    date = {match.date}
-                    logo={match.logo}
-                    matchstatus={match.matchstatus}
-                    team1={match.team1}
-                    team2={match.team2}
-                    weathercondition={match.weathercondition}
-                    startingtime={match.startingtime}
-                    matchtype={match.matchtype}
-                    location={match.location}
-                    tournementId={match.tournementId}
-                    team1Gols={match.team1Gols}
-                    team2Gols={match.team2Gols}
-                  ></EditPopUpSelectedMatch>
-                  <DeleateMatchPopUp matchid={match._id}></DeleateMatchPopUp>
-                  <Link to ={`/panel/${match._id}`}   ><Button  size='lg' variant="outline-info" >
-                  Referee
-      </Button></Link>
-                </div>
-                  </div>
+               
+                  </div> </Link>
                 </div>   ))}
                
                 
@@ -229,6 +207,7 @@ if (TournementId.length ==0) {
           
           
         </div>
+        
       </div>
     
     
@@ -236,7 +215,7 @@ if (TournementId.length ==0) {
     
     
  
-      </DefaultLayout>
+   
     </>
   );
 };

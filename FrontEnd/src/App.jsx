@@ -1,4 +1,4 @@
-import "./App.css";
+
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -47,7 +47,7 @@ import ManageTournamentGroup from "./components/TournamentManagementComponenets/
 import FormatSelect from "./components/Tournament/FormatSelect";
 import EditTournament from "./components/Tournament/EditTournament";
 import AddTournament from "./pages/TournamentManagementPages/ManageTournament1";
-
+import Pdf from  "./components/hamhoum/justpdf"
 // import TournamentBracket  from "./components/TournamentBracket";
 
 import MatchCard from "./components/hamhoum/match";
@@ -65,10 +65,11 @@ import Panel  from './components/hamhoum/panel'
 import Fetchonematch  from './components/hamhoum/fetchOneMatchByID'
 import Fetchalltour from "./components/hamhoum/getAllTournement";
 import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
+import Buy from "./components/hamhoum/buyticket"
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
-import Payment from "./components/hamhoum/Payment"
+import Payment from "./components/hamhoum/Payments"
 import Completiont from "./components/hamhoum/Completion"
 import {Elements,PaymentElement} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
@@ -81,9 +82,10 @@ function App() {
   // const refresh = () => window.location.reload(true);
   return (
     <Routes>
-        
-    <Route path="/payment" element={<Payment />} />
-    <Route path="/completion" element={<Completiont />} />
+      <Route path="/buy" element={<Buy />} />
+        <Route path="/pdf" element={<Pdf />} />
+     <Route path="/payment" element={<Payment />} />
+    <Route path="/completion" element={<Completiont />} /> 
       <Route path="/panel/:match" element={<Panel/>}/>     
       	<Route path="/fetchalltour" element={<Fetchalltour />} />
       	<Route path="/fetchmatchforview" element={<Fetchmatchforview />} />

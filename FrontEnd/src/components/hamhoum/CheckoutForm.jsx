@@ -1,7 +1,7 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-
+import "./yasser.css";
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
@@ -38,6 +38,7 @@ export default function CheckoutForm() {
   };
 
   return (
+    <body id="body">
     <form id="payment-form" onSubmit={handleSubmit}>
       
       <PaymentElement id="payment-element" />
@@ -48,6 +49,6 @@ export default function CheckoutForm() {
       </button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
-    </form>
+    </form> </body>
   );
 }

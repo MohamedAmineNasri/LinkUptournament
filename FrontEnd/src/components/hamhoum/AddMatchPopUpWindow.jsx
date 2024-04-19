@@ -127,8 +127,9 @@ export const AddMatchPopUpWindow = (props) => {
         setMatchstatus("Starting Soon")
         const response = await axios.get('http://localhost:8000/tournament/' + tournamentId);
         const tournament = response.data.tournament;
-        console.log("Successfully retrieved the tournament:", tournament);
+        console.log("Successfully retrieved the tournament:", response.data.tournament.type);
         settournament(tournament)
+        setMatchtype(response.data.tournament.type)
         // Fetch team names for each team ID
         const teamsWithNames = await Promise.all(tournament.teams.map(async teamId => {
           const teamResponse = await axios.get(`http://localhost:8000/team/getTeam/${teamId}`);
@@ -202,10 +203,10 @@ export const AddMatchPopUpWindow = (props) => {
               <Form.Label style={{ color: "white" }}>match type :</Form.Label>
               <Form.Control
                 type="tex"
-                placeholder="match type"
+               
                 autoFocus
                 value={Matchtype}
-                onChange={handleNameChange}
+                
                 style={{ borderColor: isValid ? 'green' : 'red'  }} 
               />
               {!isValid && <p style={{ color:"red"}}>match type must contain only letters.</p>}

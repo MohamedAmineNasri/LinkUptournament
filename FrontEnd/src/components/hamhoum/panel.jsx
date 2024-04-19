@@ -15,9 +15,9 @@ import { editMatch } from "../../redux/slice/matchSlice";
 import { useDispatch } from "react-redux";
 import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 
-export const fetchtour = () => {
-    const { match } = useParams();
-  
+export const fetchtour = (props) => {
+  const { match } = useParams();
+  const[Matchstatus,setmatchstatus]=useState();
   const [TournementId, setTournementId] = useState([]);
   const[Team1name,setteam1name]=useState();
   const[Team1logo,setteam1logo]=useState();
@@ -29,8 +29,9 @@ export const fetchtour = () => {
   const[T2playername,sett2name]=useState([]);
   const[T1playername,sett1name]=useState([]);
   const[T1playerid,sett1id]=useState([]);
-  const[w,setw]=useState();
-  const [isChanged, setIsChanged] = useState(false);
+  const[W,setw]=useState();
+
+  
   
   const handleShow = () => MatchCard
   const dispatch = useDispatch();
@@ -40,15 +41,33 @@ export const fetchtour = () => {
         editMatch({
           matchid: match,
           goal1: T1,
-          goal2: T2
+          goal2: T2,
+
+          
         })
       );
     
     // window.location.reload();
-    
+   
+       
   };
+  const dispatch2 = useDispatch();
+  const winer = () => { 
+      
+
+
+    dispatch2(
+    editMatch({
+      matchid: match,
+      matchstatus:"Finished",
+      w:W,
+    })
+  );
+
+ 
+
+}
   useEffect(() => {
-    const fetchplayer=async()=>{}
     const fetchTournaments = async () => {
       try {
         
@@ -56,17 +75,28 @@ export const fetchtour = () => {
         const response = await axios.get('http://localhost:8000/match/'+match);
        
         setTournementId(response.data);
+       
+        setT1(response.data.goal1)
+        setT2(response.data.goal2)
         
+        console.log(response.data,"rrrrr")
       } catch (error) {
         console.error('Error fetching tournaments:', error);
       }
     };
-    const popone = ( )=>{T1.pop(1)}
+    
     const fetchMatchesWithTeamDetails = async () => {
       try {
         const matchesResponse = await axios.get('http://localhost:8000/match/'+match);
-        setT1(matchesResponse.data.goal1)
-        setT2(matchesResponse.data.goal2)
+        console.log(matchesResponse.data.team1 )
+        // setw(matchesResponse.team1)
+       
+         if(matchesResponse.data.goal1.length>matchesResponse.data.goal2.length){setw(matchesResponse.data.team1)}
+     
+         if(matchesResponse.data.goal1.length<matchesResponse.data.goal2.length){setw(matchesResponse.data.team2)}
+        if(matchesResponse.data.goal1.length==matchesResponse.data.goal2.length){setw(null)}
+        
+       
         
         const team2 = matchesResponse.data.team2;
        
@@ -74,8 +104,8 @@ export const fetchtour = () => {
         
 
 
-         const teamPromises2 =    axios.get(`http://localhost:8000/team/getTeam/${team2}`);
-         const getteam2player= axios.get(`http://localhost:8000/player/team/${team2}`)
+         const teamPromises2 = await axios.get(`http://localhost:8000/team/getTeam/${team2}`);
+         const getteam2player= await axios.get(`http://localhost:8000/player/team/${team2}`)
          
         
       
@@ -110,8 +140,7 @@ export const fetchtour = () => {
           const playerResponse1name = await (await getteam1player).data.map((e)=>e.name+" "+e.number)
           sett1name(playerResponse1name)
           const playerResponse1id = await (await getteam1player).data.map((e)=>e._id)
-          sett1id(playerResponse1id)
-          
+      
           
           // Extract team names from responses
           const teamNames1 = teamResponses1.data.TeamName;
@@ -138,7 +167,7 @@ export const fetchtour = () => {
     
     fetchTournaments();
     fetchMatchesWithTeamDetails()
-    
+ 
 
   }, [match]);
 
@@ -146,19 +175,21 @@ export const fetchtour = () => {
   return (
     <>
     <DefaultLayout>
+   
      <div className="site-section bg-dark">
             <div className="container">
    <div className="row mb-5">
                 <div className="col-lg-12">
                   <div className="widget-next-match">
                     <div className="widget-title">
-                      <h3>{TournementId.tournamentName}</h3>
+                      <h3>{TournementId.tournamentName}   </h3>
                     </div>
                     <div className="widget-body mb-3"  >
                         
                       <div className="widget-vs">
                         <div className="d-flex align-items-center justify-content-around justify-content-between w-100">
                           <div className="team-1 text-center"  >
+                         
                             <img
                               src={Team1logo}
                               alt="Image"
@@ -167,8 +198,8 @@ export const fetchtour = () => {
                           </div>
                           <div style={{display: 'flex',alignItems: 'center',justifyContent: 'space-evenly',}}>
                             <span className="vs" >
-                                {T1.length}<span >VS</span> {T2.length}
-                              
+                            {T1.length}<span >VS</span> {T2.length}
+                          
                             </span>
                            
                           </div>
@@ -209,14 +240,14 @@ export const fetchtour = () => {
                         
                         <li>{Team1name} Gola</li>
                         <select onChange={(e) => setT1([...T1,e.target.value])} style={{ backgroundColor: 'black', color: 'white' }}>
-  <option>select player</option>
+  <option>select player1</option>
   {T1playername.map((teamName, index) => (
     <option key={index} value={T1playerid[index]}>
       {teamName}
     </option>
   ))}
 </select>
-                        
+                   
                         
                       </ul>
                     </div>
@@ -227,9 +258,9 @@ export const fetchtour = () => {
                       
                       <ul className="list-unstyled">
                         
-                        <li>{Team2name} Gola</li>
-                        <select onChange={(e) => setT2([...T2,e.target.value])} style={{ backgroundColor: 'black', color: 'white' }}>
-  <option>select player</option>
+                        <li>{Team2name} Gola </li>
+                        <select onChange={(a) => setT2([...T2,a.target.value])} style={{ backgroundColor: 'black', color: 'white' }}>
+  <option>select player2 </option>
   {T2playername.map((teamName, index) => (
     <option key={index} value={T2playerid[index]}>
       {teamName}
@@ -249,10 +280,12 @@ export const fetchtour = () => {
           </div></span>
 
                       <div id="date-countdown2" className="pb-1"></div>
-                    </div> <div style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
-                    <Button variant="primary"  onClick={handleSaveChanges}>
-            Save Changes
-          </Button></div>
+                    </div>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+  <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
+  <Button variant="primary" onClick={winer}>end match</Button>
+</div>
                   </div>
                   
                 </div>

@@ -212,7 +212,7 @@ if (TournementId.length ==0) {
                     team2Gols={match.team2Gols}
                   ></EditPopUpSelectedMatch>
                   <DeleateMatchPopUp matchid={match._id}></DeleateMatchPopUp>
-                  <Link to ={`/panel/${match._id}`}   ><Button  size='lg' variant="outline-info" >
+                  <Link to ={`/panel/${match._id}`}  tournementId={match.tournementId} ><Button  size='lg' variant="outline-info" >
                   Referee
       </Button></Link>
                 </div>

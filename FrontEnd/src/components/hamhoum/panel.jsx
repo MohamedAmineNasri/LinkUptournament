@@ -14,6 +14,7 @@ import not_found from "../../../public/assets/images/not found.png"
 import { editMatch } from "../../redux/slice/matchSlice";
 import { useDispatch } from "react-redux";
 import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
+import Swal from "sweetalert2";
 
 export const fetchtour = (props) => {
   const { match } = useParams();
@@ -30,6 +31,7 @@ export const fetchtour = (props) => {
   const[T1playername,sett1name]=useState([]);
   const[T1playerid,sett1id]=useState([]);
   const[W,setw]=useState();
+  
 
   
   
@@ -39,10 +41,11 @@ export const fetchtour = (props) => {
     
       dispatch(
         editMatch({
+          
           matchid: match,
           goal1: T1,
           goal2: T2,
-
+          
           
         })
       );
@@ -51,9 +54,27 @@ export const fetchtour = (props) => {
    
        
   };
+  const handleEndMatch = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, end it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setmatchstatus("test")
+        // If user clicks "Yes", execute the winer function
+        winer();
+        setmatchstatus("Finished")
+      }
+    });
+  };
   const dispatch2 = useDispatch();
   const winer = () => { 
-      
+    
 
 
     dispatch2(
@@ -61,9 +82,9 @@ export const fetchtour = (props) => {
       matchid: match,
       matchstatus:"Finished",
       w:W,
-    })
+    }, )
   );
-
+  ;
  
 
 }
@@ -90,7 +111,7 @@ export const fetchtour = (props) => {
         const matchesResponse = await axios.get('http://localhost:8000/match/'+match);
         console.log(matchesResponse.data.team1 )
         // setw(matchesResponse.team1)
-       
+         if(matchesResponse.data.matchstatus=="Finished"){setmatchstatus("Finished")}
          if(matchesResponse.data.goal1.length>matchesResponse.data.goal2.length){setw(matchesResponse.data.team1)}
      
          if(matchesResponse.data.goal1.length<matchesResponse.data.goal2.length){setw(matchesResponse.data.team2)}
@@ -167,6 +188,7 @@ export const fetchtour = (props) => {
     
     fetchTournaments();
     fetchMatchesWithTeamDetails()
+    
  
 
   }, [match]);
@@ -175,9 +197,12 @@ export const fetchtour = (props) => {
   return (
     <>
     <DefaultLayout>
+    
    
      <div className="site-section bg-dark">
+     <Link to ={`/fetchmatchbytour/${TournementId.tournementId}`}> <button>Return</button></Link>
             <div className="container">
+              
    <div className="row mb-5">
                 <div className="col-lg-12">
                   <div className="widget-next-match">
@@ -239,7 +264,7 @@ export const fetchtour = (props) => {
                       <ul className="list-unstyled">
                         
                         <li>{Team1name} Gola</li>
-                        <select onChange={(e) => setT1([...T1,e.target.value])} style={{ backgroundColor: 'black', color: 'white' }}>
+                        <select disabled={Matchstatus =="Finished"} onChange={(e) => setT1([...T1,e.target.value])} style={{ backgroundColor: 'black', color: 'white' }}>
   <option>select player1</option>
   {T1playername.map((teamName, index) => (
     <option key={index} value={T1playerid[index]}>
@@ -259,7 +284,7 @@ export const fetchtour = (props) => {
                       <ul className="list-unstyled">
                         
                         <li>{Team2name} Gola </li>
-                        <select onChange={(a) => setT2([...T2,a.target.value])} style={{ backgroundColor: 'black', color: 'white' }}>
+                        <select disabled={Matchstatus =="Finished"} onChange={(a) => setT2([...T2,a.target.value])} style={{ backgroundColor: 'black', color: 'white' }}>
   <option>select player2 </option>
   {T2playername.map((teamName, index) => (
     <option key={index} value={T2playerid[index]}>
@@ -284,7 +309,7 @@ export const fetchtour = (props) => {
                     
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
   <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
-  <Button variant="primary" onClick={winer}>end match</Button>
+  <Button variant="primary" onClick={handleEndMatch} disabled={Matchstatus =="Finished"}>end match</Button>
 </div>
                   </div>
                   

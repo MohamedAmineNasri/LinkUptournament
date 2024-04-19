@@ -211,9 +211,9 @@ export const AddMatchPopUpWindow = (props) => {
               />
               {!isValid && <p style={{ color:"red"}}>match type must contain only letters.</p>}
                
-              <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label>
-<br/>
-               <Form.Select size="lg"
+              {/* <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label> */}
+
+               {/* <Form.Select size="lg"
                 onChange={(e) => setWeathercondition(e.target.value)}>
       <option> select weather</option>
       <option value="sunny">sunny</option>
@@ -222,7 +222,7 @@ export const AddMatchPopUpWindow = (props) => {
       <option value="stormy">stormy</option>
       <option value="cloudy">cloudy</option>
      
-    </Form.Select>
+    </Form.Select> */}
             </Form.Group>
           
             <Form.Group className="mb-3" controlId="locationInput">
@@ -264,7 +264,7 @@ export const AddMatchPopUpWindow = (props) => {
                 onChange={handlerefChange}
                 style={{ borderColor: isValid1 ? 'green' : 'red' }} 
                 />
-                 {!isValid2 && <p style={{ color:"white"}}>Referee must contain only letters.</p>}
+                 {!isValid2 && <p style={{ color:"red"}}>Referee must contain only letters.</p>}
 
               
             </Form.Group>
@@ -308,7 +308,7 @@ export const AddMatchPopUpWindow = (props) => {
     
   </select>
               
-              <Form.Control
+              {/* <Form.Control
                 type="select"
                 placeholder="match location"
                 autoFocus
@@ -316,7 +316,7 @@ export const AddMatchPopUpWindow = (props) => {
                 onChange={handlelocationChange}
                 style={{ borderColor: isValid1 ? 'green' : 'red' }} 
                 />
-                 {!isValid3 && <p style={{ color:"white"}}>location must contain only letters.</p>}
+                 {!isValid3 && <p style={{ color:"white"}}>location must contain only letters.</p>} */}
             </Form.Group>
            
             {/* <Form.Group> <select  onChange={(e) => setTournementId(e.target.value)}>

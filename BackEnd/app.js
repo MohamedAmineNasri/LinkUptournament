@@ -8,6 +8,8 @@ const groupRoutes = require('./Routes/Group');
 const staduimRoutes = require('./Routes/Staduim');
 const tournamentRoutes = require('./Routes/Tournament');
 const match= require("./Routes/match")
+var AchievementRouter = require('./Routes/Achievement');
+
 
 
 
@@ -109,6 +111,7 @@ app.use('/tournament', tournamentRoutes);
 app.use('/team', TeamRouter);   
 app.use("/match",match)
 app.use('/academy', AcademyRouter);
+app.use('/achievement', AchievementRouter);
 
 
 

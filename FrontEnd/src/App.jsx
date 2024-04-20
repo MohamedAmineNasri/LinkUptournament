@@ -65,6 +65,7 @@ import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
+import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -166,6 +167,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/videopodcast" element={<VideoPodcast />} />
             <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
+            <Route path="/viewerlivestreamui" element={<ViewerLiveStreamUi />} />
             <Route path="/videolivestream" element={<VideoLiveStream />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/chatroom/:id" element={<ChatroomPage />} />

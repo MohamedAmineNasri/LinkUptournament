@@ -135,7 +135,8 @@
         border-radius: 10px;
         display: flex;
         flex-direction: column;
-        height: calc(100% - 72px);
+        /* height: calc(100% - 72px); */
+        height: 700px;
     }
     .chat-header {
         padding: 16px;
@@ -259,6 +260,8 @@
         padding: 8px;
         box-shadow: var(--navigation-box-shadow);
         background-color: var(--message-bg);
+        margin-top: 241px;
+
     }
     .chat-input {
         border: none;

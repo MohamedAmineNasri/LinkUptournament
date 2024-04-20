@@ -5,6 +5,12 @@ import Breadcrumb from '../../Dashboard/src/components/Breadcrumbs/Breadcrumb';
 import axios from 'axios'; 
 import { SocketContext } from '../Podcast/SocketContext'; 
 import './ViewerLiveStreamUi.css'
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom/dist/umd/react-router-dom.development';
+import { selectCurrentUser } from '../../../Features/auth/authSlice';
+import { io } from 'socket.io-client';
+import EmojiPicker from 'emoji-picker-react';
+
 
 const Wrapper = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -110,6 +116,86 @@ const VideoLiveStreamUi = () => {
             console.error('Error handling negotiation needed event:', error);
         }
     };
+
+    const user = useSelector(selectCurrentUser);
+        const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
+        const { id } = useParams();
+        const [socket, setSocket] = useState(null);
+        const [messages, setMessages] = useState([]);
+        const [userId, setUserId] = useState("");
+        const messageRef = useRef("");
+        const [message, setMessage] = useState("");
+        const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+        const toggleEmojiPicker = () => {
+        setShowEmojiPicker(!showEmojiPicker);
+    };
+        const setupSocket = () => {
+        const newSocket = io("http://localhost:8000", {
+            query: {
+            token: localStorage.getItem("token"),
+            userId: user.id,
+            },
+        });
+        
+        newSocket.on("connect", () => {
+            console.log("Connected to socket");
+        });
+        
+        newSocket.on("disconnect", () => {
+            console.log("Disconnected from socket");
+        });
+        
+        newSocket.on("newMessage", (message) => {
+            setMessages((prevMessages) => [...prevMessages, message]);
+        });
+        
+        newSocket.on("allMessages", (allMessages) => {
+            setMessages(allMessages);
+        });
+        
+        return newSocket;
+        };
+        
+        const sendMessage = () => {
+        const newMessage = {
+            id,
+            message,
+            name: userFullName, 
+            userId: user.id, 
+        };
+        console.log("Sending message:", newMessage);
+        
+        if (socket) {
+            socket.emit("chatroomMessage", newMessage);
+            setMessage(""); 
+        }
+    };
+    
+
+    const handleEmojiClick = (emojiObject) => {
+        setMessage(prevMessage => prevMessage + emojiObject.emoji); 
+    };
+
+        useEffect(() => {
+        const newSocket = setupSocket();
+        setSocket(newSocket);
+        
+        if (newSocket && user) {
+            newSocket.emit("joinRoom", { id: id });
+        }
+        
+        return () => {
+            if (newSocket) {
+            newSocket.disconnect();
+            }
+        };
+        }, [user]);
+        useEffect(() => {
+        if (user) {
+            setUserId(user.id);
+        }
+        }, [user]);
+
     return (
         <DefaultLayout>
         <div>
@@ -149,72 +235,7 @@ const VideoLiveStreamUi = () => {
            
             <div className="app-main">
                 <div className="video-call-wrapper">
-                    {/* <div className="video-participant">
-                        <div className="participant-action">
-                        <button className="btn-mute"></button>
-                        <button className="btn-camera"></button>
-                        </div>
-                        <a href="#" className="name-tag">Andy Will</a>
-                        <img
-                        src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                        alt="participant"
-                        />
-                    </div>
-                    <div className="video-participant">
-                        <div className="participant-action">
-                        <button className="btn-mute"></button>
-                        <button className="btn-camera"></button>
-                        </div>
-                        <a href="#" className="name-tag">Emmy Lou</a>
-                        <img
-                        src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                        alt="participant"
-                        />
-                    </div>
-                    <div className="video-participant">
-                        <div className="participant-action">
-                        <button className="btn-mute"></button>
-                        <button className="btn-camera"></button>
-                        </div>
-                        <a href="#" className="name-tag">Tim Russel</a>
-                        <img
-                        src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
-                        alt="participant"
-                        />
-                    </div>
-                    <div className="video-participant">
-                        <div className="participant-action">
-                        <button className="btn-mute"></button>
-                        <button className="btn-camera"></button>
-                        </div>
-                        <a href="#" className="name-tag">Jessica Bell</a>
-                        <img
-                        src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-                        alt="participant"
-                        />
-                    </div>
-                    <div className="video-participant">
-                        <div className="participant-action">
-                        <button className="btn-mute"></button>
-                        <button className="btn-camera"></button>
-                        </div>
-                        <a href="#" className="name-tag">Ryan Patrick</a>
-                        <img
-                        src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                        alt="participant"
-                        />
-                    </div>
-                    <div className="video-participant">
-                        <div className="participant-action">
-                        <button className="btn-mute"></button>
-                        <button className="btn-camera"></button>
-                        </div>
-                        <a href="#" className="name-tag">Tina Cate</a>
-                        <img
-                        src="https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
-                        alt="participant"
-                        />
-                    </div> */}
+
                 <VideoContainer>
                     <VideoPlayer ref={videoRef} autoPlay />
                 </VideoContainer>
@@ -285,175 +306,74 @@ const VideoLiveStreamUi = () => {
                 <div className="chat-header">
                     <button className="chat-header-button">Live Chat</button>
                 </div>
-                <div className="chat-area">
-                    <div className="message-wrapper">
-                    <div className="profile-picture">
-                        <img
-                        src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                        alt=""
-                        />
-                    </div>
-                    <div className="message-content">
-                        <p className="name">Ryan Patrick</p>
-                        <div className="message">Helloo team!😍</div>
-                    </div>
-                    </div>
-                    <div className="message-wrapper">
-                    <div className="profile-picture">
-                        <img
-                        src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                        alt=""
-                        />
-                    </div>
-                    <div className="message-content">
-                        <p className="name">Andy Will</p>
-                        <div className="message">
-                        Hello! Can you hear me?🤯 <a className="mention">@ryanpatrick</a>
-                        </div>
-                    </div>
-                    </div>
-                    <div className="message-wrapper">
-                    <div className="profile-picture">
-                        <img
-                        src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-                        alt=""
-                        />
-                    </div>
-                    <div className="message-content">
-                        <p className="name">Jessica Bell</p>
-                        <div className="message">Hi team! Let's get started it.</div>
-                    </div>
-                    </div>
-                    <div className="message-wrapper reverse">
-                    <div className="profile-picture">
-                        <img
-                        src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                        alt=""
-                        />
-                    </div>
-                    <div className="message-content">
-                        <p className="name">Emmy Lou</p>
-                        <div className="message">Good morning!🌈</div>
-                    </div>
-                    </div>
-                    <div className="message-wrapper">
-                    <div className="profile-picture">
-                        <img
-                        src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
-                        alt=""
-                        />
-                    </div>
-                    <div className="message-content">
-                        <p className="name">Tim Russel</p>
-                        <div className="message">New design document⬇️</div>
-                        <div className="message-file">
-                        <div className="icon sketch">
-                            <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 512 512"
-                            >
-                            <path
-                                fill="#ffd54f"
-                                d="M96 191.02v-144l160-30.04 160 30.04v144z"
-                            />
-                            <path
-                                fill="#ffecb3"
-                                d="M96 191.02L256 16.98l160 174.04z"
-                            />
-                            <path fill="#ffa000" d="M0 191.02l256 304 256-304z" />
-                            <path fill="#ffca28" d="M96 191.02l160 304 160-304z" />
-                            <g fill="#ffc107">
-                                <path d="M0 191.02l96-144v144zM416 47.02v144h96z" />
-                            </g>
-                            </svg>
-                        </div>
-                        <div className="file-info">
-                            <div className="file-name">NewYear.sketch</div>
-                            <div className="file-size">120 MB</div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div className="message-wrapper">
-                    <div className="profile-picture">
-                        <img
-                        src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                        alt=""
-                        />
-                    </div>
-                    <div className="message-content">
-                        <p className="name">Ryan Patrick</p>
-                        <div className="message">Hi team!❤️</div>
-                        <div className="message">
-                        I downloaded the file <a className="mention">@timrussel</a>
-                        </div>
-                    </div>
-                    </div>
-
-                    <div className="message-wrapper reverse">
-                    <div className="profile-picture">
-                        <img
-                        src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                        alt=""
-                        />
-                    </div>
-                    <div className="message-content">
-                        <p className="name">Emmy Lou</p>
-                        <div className="message">Woooww! Awesome❤️</div>
-                    </div>
-                    </div>
-                </div>
-                <div className="chat-typing-area-wrapper">
-                    <div className="chat-typing-area">
-                    <input
-                        type="text"
-                        placeholder="Type your message..."
-                        className="chat-input"
-                    />
-                    <button className="send-button">
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth="2"
-                        className="feather feather-send"
-                        viewBox="0 0 24 24"
-                        >
-                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                        </svg>
-                    </button>
-                    </div>
-                </div>
-                </div>
-                <div className="participants">
-                <div className="participant profile-picture">
-                    <img
-                    src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
-                    alt=""
-                    />
-                </div>
-                <div className="participant profile-picture">
-                    <img
-                    src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                    alt=""
-                    />
-                </div>
-                <div className="participant profile-picture">
-                    <img
-                    src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-                    alt=""
-                    />
-                </div>
-                <div className="participant profile-picture">
-                    <img
+                <div className="chat-area" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+    {messages.map((message, i) => (
+        <div
+            key={i}
+            className={userId === message.userId ? "message-wrapper reverse" : "message-wrapper"}
+        >
+            <div className="profile-picture">
+                <img
                     src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
                     alt=""
-                    />
+                />
+            </div>
+            <div className="message-content">
+                <p className="name">{message.name}</p>
+                <div className="message">{message.message}</div>
+            </div>
+        </div>
+    ))}
+    {showEmojiPicker && (
+            <div
+                style={{
+                    position: 'absolute',
+                    top: 'calc(100% - 550px)', 
+                    right: 0,
+                    zIndex: 999,
+                }}
+            >
+                <EmojiPicker onEmojiClick={handleEmojiClick} height={400} width="100%" />
+            </div>
+        )}
+</div>
+
+
+
+
+
+<div className="chat-typing-area-wrapper">
+    <div className="chat-typing-area">
+        <input
+            type="text"
+            placeholder="Type your message..."
+            className="chat-input"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+        />
+        <button className="send-button" onClick={sendMessage}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="feather feather-send"
+                viewBox="0 0 24 24"
+            >
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+            </svg>
+        </button>
+        <button className="send-button" onClick={toggleEmojiPicker}>
+            {showEmojiPicker ? "🙂" : "🙂"}
+        </button>
+    
+    </div>
+</div>
+
                 </div>
-                <div className="participant-more">2+</div>
-                </div>
+              
             </div>
             <button className="expand-btn" onClick={expandRightSide}>
                 <svg

@@ -50,8 +50,6 @@ const AchievementsSchema = new mongoose.Schema(
             ],
       default: 'NOTACTIVE'
     },
-    
-    
   },
 );
 

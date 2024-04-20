@@ -37,11 +37,13 @@ export const HeaderNavBar = () => {
                       Match Time
                     </Link>
                   </li>
-                  <li>
-                    <Link to="/addAcademy" className="nav-link">
-                      Academy Creation
-                    </Link>
-                  </li>
+                  {!localStorage.getItem("hideAddAcademy") && (
+                    <li>
+                      <Link to="/addAcademy" className="nav-link">
+                        Academy Creation
+                      </Link>
+                    </li>
+                  )}
                   <li>
                     <Link to="/Academy" className="nav-link">
                       Academy

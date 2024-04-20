@@ -1,21 +1,51 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Typography, AppBar, styled } from '@mui/material';
 import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 import Breadcrumb from '../../Dashboard/src/components/Breadcrumbs/Breadcrumb';
-import axios from 'axios';
+import axios from 'axios'; 
 import { SocketContext } from '../Podcast/SocketContext'; 
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../../../Features/auth/authSlice';
-import { useParams } from 'react-router-dom/dist/umd/react-router-dom.development';
-import { io } from 'socket.io-client';
-import styles from '../../pages/Chat/ChatStyle.module.css';
-import EmojiPicker from 'emoji-picker-react';
 import './ViewerLiveStreamUi.css'
 
+const Wrapper = styled('div')(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+}));
 
-const ViewerLiveStreamUi = () => {
+const VideoContainer = styled('div')(({ theme }) => ({
+    position: 'relative',
+    width: '100%',
+    height: '100%', // Set the height to 100%
+    border: '1px solid #E8E8E8',
+    marginBottom: '1em',
+}));
+
+
+const VideoPlayer = styled('video')(({ theme }) => ({
+    width: '100%',
+}));
+
+const Button = styled('button')(({ theme }) => ({
+    padding: '0.5em 1em',
+    fontSize: '1em',
+    fontWeight: 'bold',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    '&:hover': {
+        backgroundColor: '#45a049',
+    },
+}));
+
+
+const VideoLiveStreamUi = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [rightSideVisible, setRightSideVisible] = useState(false);
-
+    
     // Toggle dark mode
     const toggleDarkMode = () => {
         console.log("ddd")
@@ -26,31 +56,33 @@ const ViewerLiveStreamUi = () => {
             document.body.classList.remove('dark');
         }
     };
-
+    
     // Close right side panel
     const closeRightSide = () => {
         setRightSideVisible(false);
     };
-
+    
     // Expand right side panel
     const expandRightSide = () => {
         setRightSideVisible(true);
     };
-    const { stream } = React.useContext(SocketContext);
+
+    const [stream, setStream] = useState(null);
     const videoRef = useRef(null);
 
-    useEffect(() => {
-        const init = async () => {
+    const startStream = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); 
+            setStream(stream);
             const peer = createPeer();
-            peer.addTransceiver("video", { direction: "recvonly" }); 
-            peer.addTransceiver("audio", { direction: "recvonly" });
-        };
-
-        init();
-
-        return () => {
-        };
-    }, []);
+            stream.getTracks().forEach(track => peer.addTrack(track, stream));
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+            }
+        } catch (error) {
+            console.error('Error starting stream:', error);
+        }
+    };
 
     const createPeer = () => {
         const peer = new RTCPeerConnection({
@@ -60,9 +92,7 @@ const ViewerLiveStreamUi = () => {
                 }
             ]
         });
-        peer.ontrack = handleTrackEvent;
         peer.onnegotiationneeded = () => handleNegotiationNeededEvent(peer);
-
         return peer;
     };
 
@@ -73,114 +103,13 @@ const ViewerLiveStreamUi = () => {
             const payload = {
                 sdp: peer.localDescription
             };
-
-            const { data } = await axios.post('http://localhost:8000/consumer', payload);
+            const { data } = await axios.post('http://localhost:8000/broadcast', payload); 
             const desc = new RTCSessionDescription(data.sdp);
-            peer.setRemoteDescription(desc).catch(e => console.log(e));
+            peer.setRemoteDescription(desc);
         } catch (error) {
             console.error('Error handling negotiation needed event:', error);
         }
     };
-
-    const handleTrackEvent = (e) => {
-        if (e.streams && e.streams.length > 0) {
-            const stream = e.streams[0];
-            if (stream.getVideoTracks().length > 0 && videoRef.current) {
-                videoRef.current.srcObject = stream;
-            }
-            const audioTracks = stream.getAudioTracks();
-            if (audioTracks.length > 0) {
-                const audioElement = document.createElement('audio');
-                audioElement.srcObject = stream;
-                audioElement.autoplay = true;
-                audioElement.play();
-            }
-        }
-    };
-
-        const user = useSelector(selectCurrentUser);
-        const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
-        const { id } = useParams();
-        const [socket, setSocket] = useState(null);
-        const [messages, setMessages] = useState([]);
-        const [userId, setUserId] = useState("");
-        const messageRef = useRef("");
-        const [message, setMessage] = useState("");
-        const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-        const toggleEmojiPicker = () => {
-        setShowEmojiPicker(!showEmojiPicker);
-    };
-        const setupSocket = () => {
-        const newSocket = io("http://localhost:8000", {
-            query: {
-            token: localStorage.getItem("token"),
-            userId: user.id,
-            },
-        });
-        
-        newSocket.on("connect", () => {
-            console.log("Connected to socket");
-        });
-        
-        newSocket.on("disconnect", () => {
-            console.log("Disconnected from socket");
-        });
-        
-        newSocket.on("newMessage", (message) => {
-            setMessages((prevMessages) => [...prevMessages, message]);
-        });
-        
-        newSocket.on("allMessages", (allMessages) => {
-            setMessages(allMessages);
-        });
-        
-        return newSocket;
-        };
-        
-        const sendMessage = () => {
-        const newMessage = {
-            id,
-            message,
-            name: userFullName, 
-            userId: user.id, 
-        };
-        console.log("Sending message:", newMessage);
-        
-        if (socket) {
-            socket.emit("chatroomMessage", newMessage);
-            setMessage(""); 
-        }
-    };
-    
-
-    const handleEmojiClick = (emojiObject) => {
-        setMessage(prevMessage => prevMessage + emojiObject.emoji); 
-    };
-
-
-
-
-        
-    
-        useEffect(() => {
-        const newSocket = setupSocket();
-        setSocket(newSocket);
-        
-        if (newSocket && user) {
-            newSocket.emit("joinRoom", { id: id });
-        }
-        
-        return () => {
-            if (newSocket) {
-            newSocket.disconnect();
-            }
-        };
-        }, [user]);
-        useEffect(() => {
-        if (user) {
-            setUserId(user.id);
-        }
-        }, [user]);
     return (
         <DefaultLayout>
         <div>
@@ -217,208 +146,85 @@ const ViewerLiveStreamUi = () => {
                     <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                 </svg>
             </button>
-            <div className="left-side">
-                <div className="navigation">
-                <a href="#" className="nav-link icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-home"
-                    viewBox="0 0 24 24"
-                    >
-                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                    <path d="M9 22V12h6v10" />
-                    </svg>
-                </a>
-
-                <a href="#" className="nav-link icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    className="feather feather-message-square"
-                    >
-                    <path
-                        d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-                    />
-                    </svg>
-                </a>
-                <a href="#" className="nav-link icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-phone-call"
-                    viewBox="0 0 24 24"
-                    >
-                    <path
-                        d="M15.05 5A5 5 0 0119 8.95M15.05 1A9 9 0 0123 8.94m-1 7.98v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
-                    />
-                    </svg>
-                </a>
-                <a href="#" className="nav-link icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-hard-drive"
-                    >
-                    <line x1="22" y1="12" x2="2" y2="12" />
-                    <path
-                        d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
-                    />
-                    <line x1="6" y1="16" x2="6.01" y2="16" />
-                    <line x1="10" y1="16" x2="10.01" y2="16" />
-                    </svg>
-                </a>
-                <a href="#" className="nav-link icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-users"
-                    >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                </a>
-                <a href="#" className="nav-link icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-folder"
-                    viewBox="0 0 24 24"
-                    >
-                    <path
-                        d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"
-                    />
-                    </svg>
-                </a>
-                <a href="#" className="nav-link icon">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-settings"
-                    viewBox="0 0 24 24"
-                    >
-                    <circle cx="12" cy="12" r="3" />
-                    <path
-                        d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"
-                    />
-                    </svg>
-                </a>
-                </div>
-            </div>
+           
             <div className="app-main">
                 <div className="video-call-wrapper">
-                        {/* <div className="video-participant">
-                            <div className="participant-action">
-                            <button className="btn-mute"></button>
-                            <button className="btn-camera"></button>
-                            </div>
-                            <a href="#" className="name-tag">Andy Will</a>
-                            <img
-                            src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                            alt="participant"
-                            />
+                    {/* <div className="video-participant">
+                        <div className="participant-action">
+                        <button className="btn-mute"></button>
+                        <button className="btn-camera"></button>
                         </div>
-                        <div className="video-participant">
-                            <div className="participant-action">
-                            <button className="btn-mute"></button>
-                            <button className="btn-camera"></button>
-                            </div>
-                            <a href="#" className="name-tag">Emmy Lou</a>
-                            <img
-                            src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                            alt="participant"
-                            />
+                        <a href="#" className="name-tag">Andy Will</a>
+                        <img
+                        src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
+                        alt="participant"
+                        />
+                    </div>
+                    <div className="video-participant">
+                        <div className="participant-action">
+                        <button className="btn-mute"></button>
+                        <button className="btn-camera"></button>
                         </div>
-                        <div className="video-participant">
-                            <div className="participant-action">
-                            <button className="btn-mute"></button>
-                            <button className="btn-camera"></button>
-                            </div>
-                            <a href="#" className="name-tag">Tim Russel</a>
-                            <img
-                            src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
-                            alt="participant"
-                            />
+                        <a href="#" className="name-tag">Emmy Lou</a>
+                        <img
+                        src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                        alt="participant"
+                        />
+                    </div>
+                    <div className="video-participant">
+                        <div className="participant-action">
+                        <button className="btn-mute"></button>
+                        <button className="btn-camera"></button>
                         </div>
-                        <div className="video-participant">
-                            <div className="participant-action">
-                            <button className="btn-mute"></button>
-                            <button className="btn-camera"></button>
-                            </div>
-                            <a href="#" className="name-tag">Jessica Bell</a>
-                            <img
-                            src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-                            alt="participant"
-                            />
+                        <a href="#" className="name-tag">Tim Russel</a>
+                        <img
+                        src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
+                        alt="participant"
+                        />
+                    </div>
+                    <div className="video-participant">
+                        <div className="participant-action">
+                        <button className="btn-mute"></button>
+                        <button className="btn-camera"></button>
                         </div>
-                        <div className="video-participant">
-                            <div className="participant-action">
-                            <button className="btn-mute"></button>
-                            <button className="btn-camera"></button>
-                            </div>
-                            <a href="#" className="name-tag">Ryan Patrick</a>
-                            <img
-                            src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                            alt="participant"
-                            />
+                        <a href="#" className="name-tag">Jessica Bell</a>
+                        <img
+                        src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
+                        alt="participant"
+                        />
+                    </div>
+                    <div className="video-participant">
+                        <div className="participant-action">
+                        <button className="btn-mute"></button>
+                        <button className="btn-camera"></button>
                         </div>
-                        <div className="video-participant">
-                            <div className="participant-action">
-                            <button className="btn-mute"></button>
-                            <button className="btn-camera"></button>
-                            </div>
-                            <a href="#" className="name-tag">Tina Cate</a>
-                            <img
-                            src="https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
-                            alt="participant"
-                            />
-                        </div> */}
-                        <video ref={videoRef} id="videoplayer" autoPlay muted style={{ width: '100%', border: '1px solid #E8E8E8' }}></video>
+                        <a href="#" className="name-tag">Ryan Patrick</a>
+                        <img
+                        src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
+                        alt="participant"
+                        />
+                    </div>
+                    <div className="video-participant">
+                        <div className="participant-action">
+                        <button className="btn-mute"></button>
+                        <button className="btn-camera"></button>
+                        </div>
+                        <a href="#" className="name-tag">Tina Cate</a>
+                        <img
+                        src="https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
+                        alt="participant"
+                        />
+                    </div> */}
+                <VideoContainer>
+                    <VideoPlayer ref={videoRef} autoPlay />
+                </VideoContainer>
                 </div>
 
                 <div className="video-call-actions">
                 <button className="video-action-button mic"></button>
                 <button className="video-action-button camera"></button>
                 <button className="video-action-button maximize"></button>
+                <button className="video-action-button endcall" onClick={startStream}>Start</button>
                 <button className="video-action-button endcall">Leave</button>
                 <button className="video-action-button magnifier">
                     <svg
@@ -674,4 +480,4 @@ const ViewerLiveStreamUi = () => {
     );
 };
 
-export default ViewerLiveStreamUi;
+export default VideoLiveStreamUi;

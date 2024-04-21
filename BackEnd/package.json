@@ -37,7 +37,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "webpack": "^5.91.0"
+    "webpack": "^5.91.0",
     "@faker-js/faker": "^8.4.1"
 
   }

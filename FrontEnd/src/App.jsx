@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/react"
+import "./App.css";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -85,8 +86,8 @@ function App() {
     <Routes>
 
            <Route path="/payment/:id" element={<Payment />} />
-    <Route path="/completion" element={<Completiont />} /> 
-      <Route path="/pdf" element={<Pdf />} />
+    <Route path="/completion/:id" element={<Completiont />} /> 
+      <Route path="/pdf/" element={<Pdf />} />
           <Route path="/buy/" element={<Buy />} />
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />

@@ -1,15 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
+import { Link } from "react-router-dom";
 
-export const HeaderNavBar = () => {
+const HomeHeader = () => {
   return (
     <div>
+      <div className="site-mobile-menu site-navbar-target ">
+        <div className="site-mobile-menu-header">
+          <div className="site-mobile-menu-close">
+            <span className="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div className="site-mobile-menu-body"></div>
+      </div>
       <header className="site-navbar py-4" role="banner">
-        <div className="container-fluid">
+        <div className="container">
           <div className="d-flex align-items-center">
             <div className="site-logo">
               <a href="index.html">
-                <img src="/public/assets/images/logo.png" alt="Logo" />
+                <img src="./public/assets/images/logo.png" alt="Logo" />
               </a>
             </div>
             <div className="ml-auto">
@@ -24,7 +32,7 @@ export const HeaderNavBar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/tests" className="nav-link">
+                    <Link to="/fetchmatchforview" className="nav-link">
                       Match Cards
                     </Link>
                   </li>
@@ -40,7 +48,7 @@ export const HeaderNavBar = () => {
                   </li>
                   <li>
                     <Link to="/Academy" className="nav-link">
-                      Academy
+                      Academies
                     </Link>
                   </li>
                   <li>
@@ -75,4 +83,4 @@ export const HeaderNavBar = () => {
   );
 };
 
-export default HeaderNavBar;
+export default HomeHeader;

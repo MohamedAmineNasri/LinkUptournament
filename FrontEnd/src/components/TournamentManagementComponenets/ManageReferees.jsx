@@ -15,6 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addReferee } from "../../redux/refereeReducers/addRefereeSlice";
 import { deleteReferee } from "../../redux/refereeReducers/deleteRefereeSlice";
 import { updateReferee } from "../../redux/refereeReducers/updateRefereeSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { getRefereesQueryData } from "../../redux/refereeReducers/searchRefereeSlice";
 
 const ManageReferees = () => {
   const referees = useSelector((state) => state.root.fetchReferees.referees);
@@ -28,14 +31,22 @@ const ManageReferees = () => {
     name: "",
     country: "",
     location: "",
-    availability: null,
-    role: 0,
+    availability: "",
+    role: "",
+  });
+  const [searchQuery, setSearchQuery] = useState({
+    availability: "",
+    role: "",
   });
 
   useEffect(() => {
     dispatch(fetchReferees());
     //console.log(.length);
   }, [dispatch, fetchReferees]);
+
+  useEffect(() => {
+    dispatch(getRefereesQueryData(searchQuery));
+  }, [searchQuery]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,10 +61,10 @@ const ManageReferees = () => {
     console.log(formData);
     if (create) {
       dispatch(addReferee(formData));
-      toast.success("Player added successfully 👌");
+      toast.success("Referee added successfully 👌");
     } else {
       dispatch(updateReferee(refereeId, formData));
-      toast.success("Player updated successfully 👌");
+      toast.success("Referee updated successfully 👌");
     }
     setOpenAddForm(false);
   };
@@ -62,6 +73,67 @@ const ManageReferees = () => {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       {referees.length == 0 ? (
         <>
+          <div className="p-3 flex items-center mt-2 justify-between gap-10">
+            <h3 className="text-base font-bold flex-1 text-black dark:text-white ">
+              Filter:
+            </h3>
+            <div className="flex-1 pb-3 text-end">
+              <FormControl
+                variant="standard"
+                sx={{ minWidth: "40%", paddingRight: "20px" }}
+              >
+                <InputLabel id="location-label" sx={{ color: "white" }}>
+                  Availability
+                </InputLabel>
+                <Select
+                  labelId="Availability"
+                  id="Availability"
+                  name="availability"
+                  label="Availability"
+                  value={searchQuery.availability}
+                  onChange={(e) =>
+                    setSearchQuery({
+                      ...searchQuery,
+                      availability: e.target.value,
+                    })
+                  }
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={"All day"}>All day</MenuItem>
+                  <MenuItem value={"Not available"}>Not available</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl variant="standard" sx={{ minWidth: "40%" }}>
+                <InputLabel id="role-label" sx={{ color: "white" }}>
+                  Role
+                </InputLabel>
+                <Select
+                  labelId="role"
+                  id="role"
+                  name="role"
+                  label="role"
+                  value={searchQuery.role}
+                  onChange={(e) =>
+                    setSearchQuery({
+                      ...searchQuery,
+                      role: e.target.value,
+                    })
+                  }
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
           <div className="py-6 px-4 md:px-6 xl:px-7.5 h-100 flex flex-col items-center justify-center">
             <h4 className="md:text-xl text-lg font-semibold text-black dark:text-white">
               Looks like there are no referees to assign.
@@ -98,6 +170,67 @@ const ManageReferees = () => {
           </div>
 
           <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+            <div className="p-3 flex items-center  justify-between gap-10">
+              <h3 className="text-base font-bold flex-1 text-black dark:text-white ">
+                Filter:
+              </h3>
+              <div className="flex-1 pb-3 text-end">
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: "40%", paddingRight: "20px" }}
+                >
+                  <InputLabel id="location-label" sx={{ color: "white" }}>
+                    Availability
+                  </InputLabel>
+                  <Select
+                    labelId="Availability"
+                    id="Availability"
+                    name="availability"
+                    label="Availability"
+                    value={searchQuery.availability}
+                    onChange={(e) =>
+                      setSearchQuery({
+                        ...searchQuery,
+                        availability: e.target.value,
+                      })
+                    }
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={"All day"}>All day</MenuItem>
+                    <MenuItem value={"Not available"}>Not available</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl variant="standard" sx={{ minWidth: "40%" }}>
+                  <InputLabel id="role-label" sx={{ color: "white" }}>
+                    Role
+                  </InputLabel>
+                  <Select
+                    labelId="role"
+                    id="role"
+                    name="role"
+                    label="role"
+                    value={searchQuery.role}
+                    onChange={(e) =>
+                      setSearchQuery({
+                        ...searchQuery,
+                        role: e.target.value,
+                      })
+                    }
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
             <div className="max-w-full overflow-x-auto">
               <table className="w-full table-auto">
                 <thead>
@@ -208,7 +341,7 @@ const ManageReferees = () => {
                               setRefereeId(referee._id);
                             }}
                           >
-                            <i class="fas fa-sync-alt"></i>
+                            <FontAwesomeIcon icon={faSyncAlt} />
                           </button>
                         </div>
                       </td>
@@ -292,7 +425,7 @@ const ManageReferees = () => {
               onChange={handleInputChange}
             />
             <FormControl variant="standard" sx={{ minWidth: "100%" }}>
-              <InputLabel id="location-label" sx={{ color: "white" }}>
+              <InputLabel id="ava-label" sx={{ color: "white" }}>
                 Availability (Days and times)
               </InputLabel>
               <Select

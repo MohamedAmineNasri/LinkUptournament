@@ -1,14 +1,72 @@
-import { Link } from 'react-router-dom';
-import DropdownMessage from './DropdownMessage';
-import DropdownNotification from './DropdownNotification';
-import DropdownUser from './DropdownUser';
-import LogoIcon from '../../images/logo/logo-icon.svg';
-import DarkModeSwitcher from './DarkModeSwitcher';
+import { Link, useLocation } from "react-router-dom";
+import DropdownMessage from "./DropdownMessage";
+import DropdownNotification from "./DropdownNotification";
+import DropdownUser from "./DropdownUser";
+import LogoIcon from "../../images/logo/logo-icon.svg";
+import DarkModeSwitcher from "./DarkModeSwitcher";
+import { searchPlayers } from "../../../../redux/playerReducers/searchPlayerSlice.js";
+import { searchReferees } from "../../../../redux/refereeReducers/searchRefereeSlice.js";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
+  const location = useLocation();
+  const playerLocation = location.pathname == "/manage/participant/player";
+  const refereeLocation = location.pathname == "/manage/participant/referee";
+  const positionQuery = useSelector(
+    (state) => state.root.searchPlayers.position
+  );
+  const refereeQuery = useSelector(
+    (state) => state.root.searchReferee.queryReferee
+  );
+  const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    if (playerLocation) {
+      dispatch(searchPlayers({ name: name, position: positionQuery }));
+    }
+    if (refereeLocation) {
+      dispatch(
+        searchReferees({
+          name: refereeQuery.name,
+          role: refereeQuery.role,
+          availability: refereeQuery.availability,
+        })
+      );
+    }
+  }, [positionQuery, refereeQuery]);
+
+  const handleChange = (event: Event) => {
+    const { value } = event.target;
+    setSearchQuery(value);
+
+    // Dispatch search action after a delay (e.g., 300 milliseconds) since the user stopped typing
+    if (playerLocation) {
+      setName(value);
+      setTimeout(() => {
+        dispatch(searchPlayers({ name: value, position: positionQuery }));
+      }, 300);
+    }
+    if (refereeLocation) {
+      setName(value);
+      setTimeout(() => {
+        dispatch(
+          searchReferees({
+            name: value,
+            role: refereeQuery.role,
+            availability: refereeQuery.availability,
+          })
+        );
+      }, 300);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -26,29 +84,29 @@ const Header = (props: {
               <span className="du-block absolute right-0 h-full w-full">
                 <span
                   className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-[0] duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!w-full delay-300'
+                    !props.sidebarOpen && "!w-full delay-300"
                   }`}
                 ></span>
                 <span
                   className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-150 duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && 'delay-400 !w-full'
+                    !props.sidebarOpen && "delay-400 !w-full"
                   }`}
                 ></span>
                 <span
                   className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-200 duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!w-full delay-500'
+                    !props.sidebarOpen && "!w-full delay-500"
                   }`}
                 ></span>
               </span>
               <span className="absolute right-0 h-full w-full rotate-45">
                 <span
                   className={`absolute left-2.5 top-0 block h-full w-0.5 rounded-sm bg-black delay-300 duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!h-0 !delay-[0]'
+                    !props.sidebarOpen && "!h-0 !delay-[0]"
                   }`}
                 ></span>
                 <span
                   className={`delay-400 absolute left-0 top-2.5 block h-0.5 w-full rounded-sm bg-black duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!h-0 !delay-200'
+                    !props.sidebarOpen && "!h-0 !delay-200"
                   }`}
                 ></span>
               </span>
@@ -62,8 +120,8 @@ const Header = (props: {
         </div>
 
         <div className="hidden sm:block">
-          <form action="https://formbold.com/s/unique_form_id" method="POST">
-            <div className="relative">
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div className="relative flex items-center">
               <button className="absolute left-0 top-1/2 -translate-y-1/2">
                 <svg
                   className="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
@@ -92,6 +150,8 @@ const Header = (props: {
                 type="text"
                 placeholder="Type to search..."
                 className="w-full bg-transparent pl-9 pr-4 text-black focus:outline-none dark:text-white xl:w-125"
+                value={searchQuery}
+                onChange={handleChange}
               />
             </div>
           </form>

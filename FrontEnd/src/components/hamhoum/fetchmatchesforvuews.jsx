@@ -13,6 +13,13 @@ import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
 
 export const fetchtour = () => {
+
+
+  const containerStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
     const { tournamentId } = useParams();
   
   const [TournementId, setTournementId] = useState([]);
@@ -140,7 +147,12 @@ if (TournementId.length ==0) {
 
               <div className="row">
                 <div className="col-12 title-section">
-                  <h2 className="heading" > Matches</h2>
+                <div style={containerStyle}>
+      <h2 className="heading">Matches</h2>
+      <Link to="/buy"> {/* Use Link to wrap the button */}
+        <button>Buy Ticket</button>
+      </Link>
+    </div>
                 </div>
                 {TournementId
         .slice()

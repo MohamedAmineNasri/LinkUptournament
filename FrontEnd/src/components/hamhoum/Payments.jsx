@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./yasser.css";
+// import "./yasser.css";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";

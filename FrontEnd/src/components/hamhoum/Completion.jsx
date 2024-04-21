@@ -1,5 +1,5 @@
 
-import "./yasser.css";
+// import "./yasser.css";
 import Pdf from  "./justpdf"
 function Completion(props) {
   const centerScreen = {

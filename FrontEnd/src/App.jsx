@@ -1,4 +1,4 @@
-import "./App.css";
+import * as Sentry from "@sentry/react"
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -42,9 +42,8 @@ import ConsultReferee from "./components/TournamentManagementComponenets/Consult
 import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
 import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
 import FormatSelect from "./components/Tournament/FormatSelect";
-
+import Pdf from  "./components/hamhoum/justpdf"
 // import TournamentBracket  from "./components/TournamentBracket";
-
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
@@ -58,10 +57,15 @@ import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 import Panel from "./components/hamhoum/panel";
 import Fetchonematch from "./components/hamhoum/fetchOneMatchByID";
 import Fetchalltour from "./components/hamhoum/getAllTournement";
-import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
-import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
+import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
+import Buy from "./components/hamhoum/buyticket"
+import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
+import Payment from "./components/hamhoum/Payments"
+import Completiont from "./components/hamhoum/Completion"
+import {Elements,PaymentElement} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
 
 import TeamLineUp from "./pages/TeamLineUp";
 
@@ -69,13 +73,21 @@ import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
 
 function App() {
+  // animeaa
   const [fixtures, setFixtures] = useState(data);
 
+
   //console.log(fixtures);
+
 
   // const refresh = () => window.location.reload(true);
   return (
     <Routes>
+
+           <Route path="/payment/:id" element={<Payment />} />
+    <Route path="/completion" element={<Completiont />} /> 
+      <Route path="/pdf" element={<Pdf />} />
+          <Route path="/buy/" element={<Buy />} />
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
@@ -85,6 +97,7 @@ function App() {
       />
       <Route path="/testtt" element={<AddMatchPopUpWindow />} />
       <Route path="/fetchonematch/:tournamentId" element={<Fetchonematch />} />
+
 
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
@@ -188,4 +201,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.withProfiler(App);

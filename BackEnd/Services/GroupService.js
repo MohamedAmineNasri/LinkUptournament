@@ -1,6 +1,7 @@
 const Group = require('../Models/Group') ; 
 const Tournament = require('../Models/Tournament') ; 
 const Team = require('../Models/Team') ; 
+const Match = require('../Models/match');
 
 const getAllGroups = async (req, res, next) => {
     const groups = await Group.find();
@@ -48,6 +49,8 @@ const updateGroup = async (req,res,next)=>{
 
    
 }
+
+
 const createGroups = async (req, res , next) => {
   const tournament = await Tournament.findById(req.params.id);
   let teamsChunks = []; 
@@ -92,28 +95,39 @@ const createGroups = async (req, res , next) => {
       }
       break;
     case 'Group stage and Knockout':
-      teams = [];
-      for (const teamId of tournament.teams) {
-        const teamDoc = await Team.findById(teamId);
-        teams.push({
-          team: teamId,
-          TeamName : teamDoc.TeamName,
-          MJ: 0,
-          G: 0,
-          N: 0,
-          P: 0,
-          BP: 0,
-          BC: 0,
-          DB: 0,
-          PTS: 0
-        });
+      teams = [...tournament.teams]; // Create a copy of the teams array
+      for (let i = 0; i < numGroups; i++) {
+        let teamsChunk = [];
+        for (let j = 0; j < numTeams; j++) {
+          if (teams.length > 0) {
+            let teamId = teams.splice(Math.floor(Math.random() * teams.length), 1)[0];
+            const teamDoc = await Team.findById(teamId);
+            teamsChunk.push({
+              team: teamId,
+              TeamName : teamDoc.TeamName,
+              MJ: 0,
+              G: 0,
+              N: 0,
+              P: 0,
+              BP: 0,
+              BC: 0,
+              DB: 0,
+              PTS: 0
+            });
+          }
+        }
+        teamsChunks.push(teamsChunk);
       }
-      const group = new Group({
-        name: 'Group A',
-        tournament: tournament,
-        teams: teams
-      });
-      await group.save();
+      
+      for (let j = 0; j < numGroups; j++) {
+        const groupName = 'Group ' + String.fromCharCode(65 + j);
+        const group = new Group({
+          name: groupName,
+          tournament: tournament,
+          teams: teamsChunks[j]
+        });
+        await group.save();
+      }
       break;
     
     default:
@@ -149,6 +163,80 @@ const updateGrouptri = async (id , req, res , next) => {
   console.log('Group updated and saved');
 };
 
+
+
+const updateGroupAfterMatch = async (req, res, next) => {
+  try {
+      console.log('updateGroupAfterMatch called');
+      const match = await Match.findById(req.params.matchId);
+      if (!match) {
+          throw new Error('Match not found');
+      }
+
+      const group = await Group.findById(match.groupId);
+      console.log('Group found:', group);
+
+      const team1 = group.teams.find(team => team.team.toString() === match.team1.toString());
+      const team2 = group.teams.find(team => team.team.toString() === match.team2.toString());
+
+      if (!team1 || !team2) {
+          throw new Error('Team not found in the group');
+      }
+
+      // Update the match played (MJ) for both teams
+      team1.MJ += 1;
+      team2.MJ += 1;
+
+      // Update the balls played (BP), balls conceded (BC), and difference in balls (DB) for both teams
+      team2.BP += match.team2Gols ;
+      team1.BC += match.team2Gols;
+      team2.BC += match.team1Gols ;
+      team1.BP += match.team1Gols ;
+      team1.DB = team1.BP - team1.BC;
+      team2.DB = team2.BP - team2.BC;
+
+      if (!match.w) {
+
+          team1.PTS += 1;
+          team1.N += 1;
+          team2.PTS += 1;
+          team2.N += 1;
+      } else if (match.w.toString() === team1.team.toString()) {
+        
+          team1.PTS += 3;
+          team1.G += 1;
+          team2.P += 1;
+      } else {
+
+          team2.PTS += 3;
+          team2.G += 1;
+          team1.P += 1;
+      }
+
+      // Sort the teams in the group by PTS, DB, and BP
+      group.teams.sort((a, b) => {
+          if (b.PTS - a.PTS !== 0) {
+              return b.PTS - a.PTS;
+          } else if (b.DB - a.DB !== 0) {
+              return b.DB - a.DB;
+          } else {
+              return b.BP - a.BP;
+          }
+      });
+
+      await group.save();
+      res.json(group);
+      console.log('Group updated and saved');
+  } catch (error) {
+      console.error(error);
+      next(error);
+  }
+};
+
+
+
+
+
 const updateMG = async (groupId, teamId, newpts, req, res, next) => {
   console.log('updateMG called with groupId, teamId, newMG:', groupId, teamId, newpts);
   const group = await Group.findById(groupId);
@@ -168,4 +256,4 @@ const updateMG = async (groupId, teamId, newpts, req, res, next) => {
 
 
 
-module.exports = {addGroup,deleteGroupById,getAllGroups , getGroupById , updateGroup , createGroups  , updateGrouptri , updateMG , getGroupsByTournamentId};
+module.exports = {updateGroupAfterMatch ,  addGroup,deleteGroupById,getAllGroups , getGroupById , updateGroup , createGroups  , updateGrouptri , updateMG , getGroupsByTournamentId};

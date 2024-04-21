@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
+
 export const addTournament = createAsyncThunk(
   'tournament/addTournament',
   async (tournamentData) => {
@@ -55,6 +56,28 @@ export const fetchTournaments = createAsyncThunk(
     }
   );
 
+  export const sendSMSToPlayer = createAsyncThunk(
+    'tournament/sendSMSToPlayer',
+    async ({ tournamentId, playerId }) => {
+      try {
+        const response = await axios.post(`http://localhost:8000/tournament/sendSMS/${tournamentId}/${playerId}`);
+        return response.data;
+      } catch (error) {
+        throw Error(error.response.data);
+      }
+    }
+  );
+  export const fetchTournamentsByName = createAsyncThunk(
+    'tournament/fetchTournamentsByName',
+    async (searchString) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/tournament/search/${searchString}`);
+        return response.data;
+      } catch (error) {
+        throw new Error('Error fetching tournaments by name: ' + error.message);
+      }
+    }
+  );
 
   const tournamentSlice = createSlice({
     name: 'tournament',
@@ -131,6 +154,30 @@ export const fetchTournaments = createAsyncThunk(
         state.status = 'failed';
         state.error = action.error.message;
       })
+      .addCase(sendSMSToPlayer.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(sendSMSToPlayer.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        console.log('SMS sent successfully:', action.payload);
+      })
+      .addCase(sendSMSToPlayer.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchTournamentsByName.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTournamentsByName.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tournamentData = action.payload;
+      })
+      .addCase(fetchTournamentsByName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
   });
   export default tournamentSlice.reducer;

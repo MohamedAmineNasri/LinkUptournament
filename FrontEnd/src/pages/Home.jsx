@@ -1,82 +1,15 @@
-import React, { Component } from 'react'
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+
+import FootballNews from "../components/FootballNews";
+import HomeHeader from "../components/HomeHeader";
+import Fetchmatchforview from "../components/hamhoum/fetchmatchesforvuews"
 
 export class Home extends Component {
   render() {
     return (
       <div>
         <div className="site-wrap">
-          <div className="site-mobile-menu site-navbar-target">
-            <div className="site-mobile-menu-header">
-              <div className="site-mobile-menu-close">
-                <span className="icon-close2 js-menu-toggle"></span>
-              </div>
-            </div>
-            <div className="site-mobile-menu-body"></div>
-          </div>
-
-          <header className="site-navbar py-4" role="banner">
-            <div className="container">
-              <div className="d-flex align-items-center">
-                <div className="site-logo">
-                  <a href="index.html">
-                    <img src="./public/assets/images/logo.png" alt="Logo" />
-                  </a>
-                </div> 
-                <div className="ml-auto">
-                  <nav
-                    className="site-navigation position-relative text-right"
-                    role="navigation"
-                  >
-                    <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                      <li>
-                        <Link to="/" className="nav-link">
-                          Home
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/fetchmatchforview" className="nav-link">
-                          Match Cards
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/a" className="nav-link">
-                          Match Time
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/addAcademy" className="nav-link">
-                          Academy Creation 
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/Academy" className="nav-link">
-                          Academies
-                        </Link>
-                      </li>
-                      <li className="active">
-                        <Link to="/signin" className="nav-link">
-                          Signup
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/profile" className="nav-link">
-                          Profile
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-
-                  <a
-                    href="#"
-                    className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
-                  >
-                    <span className="icon-menu h3 text-white"></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </header>
+          <HomeHeader />
 
           <div
             className="hero overlay"
@@ -105,11 +38,12 @@ export class Home extends Component {
               </div>
             </div>
           </div>
+          <Fetchmatchforview></Fetchmatchforview>
 
-          <div className="container">
+          <div className="bg-[#0D0F12] p-20 h-36">
             <div className="row">
               <div className="col-lg-12">
-                <div className="d-flex team-vs">
+                <div className="d-flex team-vs relative top-[-80px]">
                   <span className="score">4-1</span>
                   <div className="team-1 w-50">
                     <div className="team-details w-100 text-center">
@@ -152,259 +86,7 @@ export class Home extends Component {
             </div>
           </div>
 
-          {/* <div className="latest-news">
-            <div className="container">
-              <div className="row">
-                <div className="col-12 title-section">
-                  <h2 className="heading">Latest News</h2>
-                </div>
-              </div>
-              <div className="row no-gutters">
-                <div className="col-md-4">
-                  <div className="post-entry">
-                    <a href="#">
-                      <img
-                        src="./public/assets/images/img_1.jpg"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                    </a>
-                    <div className="caption">
-                      <div className="caption-inner">
-                        <h3 className="mb-3">Romolu to stay at Real Nadrid?</h3>
-                        <div className="author d-flex align-items-center">
-                          <div className="img mb-2 mr-3">
-                            <img
-                              src="./public/assets/images/person_1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text">
-                            <h4>Mellissa Allison</h4>
-                            <span>May 19, 2020 &bullet; Sports</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="post-entry">
-                    <a href="#">
-                      <img
-                        src="./public/assets/images/img_3.jpg"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                    </a>
-                    <div className="caption">
-                      <div className="caption-inner">
-                        <h3 className="mb-3">
-                          Kai Nets Double To Secure Comfortable Away Win
-                        </h3>
-                        <div className="author d-flex align-items-center">
-                          <div className="img mb-2 mr-3">
-                            <img
-                              src="./public/assets/images/person_1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text">
-                            <h4>Mellissa Allison</h4>
-                            <span>May 19, 2020 &bullet; Sports</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="post-entry">
-                    <a href="#">
-                      <img
-                        src="./public/assets/images/img_2.jpg"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                    </a>
-                    <div className="caption">
-                      <div className="caption-inner">
-                        <h3 className="mb-3">Dogba set for Juvendu return?</h3>
-                        <div className="author d-flex align-items-center">
-                          <div className="img mb-2 mr-3">
-                            <img
-                              src="./public/assets/images/person_1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text">
-                            <h4>Mellissa Allison</h4>
-                            <span>May 19, 2020 &bullet; Sports</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          <div className="site-section bg-dark">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-6">
-                  <div className="widget-next-match">
-                    <div className="widget-title">
-                      <h3>Next Match</h3>
-                    </div>
-                    <div className="widget-body mb-3">
-                      <div className="widget-vs">
-                        <div className="d-flex align-items-center justify-content-around justify-content-between w-100">
-                          <div className="team-1 text-center">
-                            <img
-                              src="./public/assets/images/logo_1.png"
-                              alt="Image"
-                            />
-                            <h3>Football League</h3>
-                          </div>
-                          <div>
-                            <span className="vs">
-                              <span>VS</span>
-                            </span>
-                          </div>
-                          <div className="team-2 text-center">
-                            <img
-                              src="./public/assets/images/logo_2.png"
-                              alt="Image"
-                            />
-                            <h3>Soccer</h3>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-center widget-vs-contents mb-4">
-                      <h4>Tournament Event</h4>
-                      <p className="mb-5">
-                        <span className="d-block">December 20th, 2020</span>
-                        <span className="d-block">9:30 AM GMT+0</span>
-                        <strong className="text-primary">New Euro Arena</strong>
-                      </p>
-
-                      <div id="date-countdown2" className="pb-1"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6">
-                  <div className="widget-next-match">
-                    <table className="table custom-table">
-                      <thead>
-                        <tr>
-                          <th>P</th>
-                          <th>Team</th>
-                          <th>W</th>
-                          <th>D</th>
-                          <th>L</th>
-                          <th>PTS</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>
-                            <strong className="text-white">
-                              Football League
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>
-                            <strong className="text-white">Soccer</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>
-                            <strong className="text-white">Juvendo</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>
-                            <strong className="text-white">
-                              French Football League
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>
-                            <strong className="text-white">Legia Abante</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>6</td>
-                          <td>
-                            <strong className="text-white">
-                              Gliwice League
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>7</td>
-                          <td>
-                            <strong className="text-white">Cornika</strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                        <tr>
-                          <td>8</td>
-                          <td>
-                            <strong className="text-white">
-                              Gravity Smash
-                            </strong>
-                          </td>
-                          <td>22</td>
-                          <td>3</td>
-                          <td>2</td>
-                          <td>140</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {<FootballNews source={"espn"} />}
 
           {/* <div className="site-section">
             <div className="container">
@@ -715,9 +397,7 @@ export class Home extends Component {
                   <div className=" pt-5">
                     <p>
                       Copyright &copy;
-                      <script>
-                        document.write(new Date().getFullYear());
-                      </script>{" "}
+                      <script>document.write(new Date().getFullYear());</script>
                       All rights reserved | This template is made with{" "}
                       <i className="icon-heart" aria-hidden="true"></i> by{" "}
                       <a href="https://colorlib.com" target="_blank">

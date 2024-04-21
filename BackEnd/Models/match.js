@@ -24,6 +24,10 @@ var match = new Schema({
     price:Number,
     ticketNumber:Number,
     w:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
+    group: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group',
+      },
    
 });
 module.exports = mongoose.model('match', match)

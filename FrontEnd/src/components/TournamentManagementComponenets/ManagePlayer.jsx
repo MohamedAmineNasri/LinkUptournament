@@ -15,6 +15,11 @@ import { addPlayer } from "../../redux/playerReducers/addPlayerSlice";
 import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
 import { updatePlayer } from "../../redux/playerReducers/updatePlayerSlice";
 import { deletePlayer } from "../../redux/playerReducers/deletePlayerSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { getPlayersPosition } from "../../redux/playerReducers/searchPlayerSlice";
+import axios from "axios";
+
 const ManagePlayer = () => {
   const players = useSelector((state) => state.root.fetchPlayers.players);
   const dispatch = useDispatch();
@@ -33,10 +38,10 @@ const ManagePlayer = () => {
   const [skillsSize, setSkillsSize] = useState(1);
   const [create, setCreate] = useState(true);
   const [playerId, setPlayerId] = useState("");
+  const [position, setPosition] = useState("");
 
   useEffect(() => {
     dispatch(fetchPlayers());
-    console.log(players.length);
   }, [dispatch, fetchPlayers]);
 
   const handleAddSkill = () => {
@@ -80,7 +85,37 @@ const ManagePlayer = () => {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       {players.length == 0 ? (
         <>
-          <div className="py-6 px-4 md:px-6 xl:px-7.5 h-100 flex flex-col items-center justify-center">
+          <div className="p-4 flex items-center justify-between gap-10">
+            <h3 className="text-base font-bold text-black dark:text-white ">
+              Filter:
+            </h3>
+            <div className="w-1/5 pb-3">
+              <FormControl variant="standard" sx={{ width: "100%" }}>
+                <InputLabel id="Position" sx={{ color: "gray" }}>
+                  Position
+                </InputLabel>
+                <Select
+                  labelId="Position"
+                  id="Position"
+                  label="Position"
+                  name="position"
+                  value={position}
+                  onChange={(e) => {
+                    setPosition(e.target.value);
+                    dispatch(getPlayersPosition(e.target.value));
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {Object.entries(soccerPositions).map(([key, value]) => (
+                    <MenuItem value={key}>{value}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          <div className="py-6 px-4 pb-20 md:px-6 xl:px-7.5 h-100 flex flex-col items-center justify-center">
             <h4 className="md:text-xl text-lg font-semibold text-black dark:text-white">
               Looks like there are no players on the roster.
             </h4>
@@ -118,6 +153,36 @@ const ManagePlayer = () => {
 
           <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
             <div className="max-w-full overflow-x-auto">
+              <div className="p-3 flex items-center justify-between gap-10">
+                <h3 className="text-base font-bold text-black dark:text-white ">
+                  Filter:
+                </h3>
+                <div className="w-1/5 pb-3">
+                  <FormControl variant="standard" sx={{ width: "100%" }}>
+                    <InputLabel id="Position" sx={{ color: "gray" }}>
+                      Position
+                    </InputLabel>
+                    <Select
+                      labelId="Position"
+                      id="Position"
+                      label="Position"
+                      name="position"
+                      value={position}
+                      onChange={(e) => {
+                        setPosition(e.target.value);
+                        dispatch(getPlayersPosition(e.target.value));
+                      }}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {Object.entries(soccerPositions).map(([key, value]) => (
+                        <MenuItem value={key}>{value}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
               <table className="w-full table-auto">
                 <thead>
                   <tr className="bg-gray-2 text-left dark:bg-meta-4">
@@ -141,7 +206,7 @@ const ManagePlayer = () => {
                 <tbody>
                   {players.map((player, key) => (
                     <tr key={key}>
-                      <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                      <td className="border-b border-[#eee] px-4 pl-9 dark:border-strokedark xl:pl-11">
                         <div className="flex items-center gap-3">
                           <img
                             src={"/assets/images/avatar_placeholder.jpg"}
@@ -233,7 +298,7 @@ const ManagePlayer = () => {
                               setPlayerId(player._id);
                             }}
                           >
-                            <i class="fas fa-sync-alt"></i>
+                            <FontAwesomeIcon icon={faSyncAlt} />
                           </button>
                         </div>
                       </td>

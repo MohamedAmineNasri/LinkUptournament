@@ -18,28 +18,13 @@ const ManageParticipant = () => {
           <button
             className="text-lg font-semibold text-black  dark:text-white mx-auto"
             onClick={() => {
-              handleClick("teams");
-              navigate("team");
-            }}
-            style={{
-              width: "33.33%",
-              color: location.pathname.startsWith("/manage/participant/team")
-                ? "#2B9451"
-                : "",
-            }}
-          >
-            Teams
-          </button>
-          <button
-            className="text-lg font-semibold text-black  dark:text-white mx-auto"
-            onClick={() => {
               handleClick("players");
               navigate("player");
             }}
             style={{
-              width: "33.33%",
+              width: "50%",
               borderRight: "1px solid #2B9451",
-              borderLeft: "1px solid #2B9451",
+
               color: location.pathname.startsWith("/manage/participant/player")
                 ? "#2B9451"
                 : "",
@@ -54,7 +39,7 @@ const ManageParticipant = () => {
               navigate("referee");
             }}
             style={{
-              width: "33.33%",
+              width: "50%",
               color: location.pathname.startsWith("/manage/participant/referee")
                 ? "#2B9451"
                 : "",

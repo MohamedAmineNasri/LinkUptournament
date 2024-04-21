@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Achievement = require("./Achievement");
 
 const TeamSchema = new mongoose.Schema(
   {
@@ -59,7 +58,7 @@ const TeamSchema = new mongoose.Schema(
     }],
     Achievements :[{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Achievement'
+      ref: 'Tachievement'
     }],
 
     // Group stage data-------------------------------------------------------------------

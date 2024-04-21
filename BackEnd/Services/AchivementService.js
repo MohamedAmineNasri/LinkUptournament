@@ -1,5 +1,6 @@
 const Team =require('../Models/Team')
 const Achievement =require('../Models/Achievement');
+const Tachievement = require('../Models/Tachievement');
 
 const getAllAchivements = async (req, res, next) => {
     const Achievements = await Achievement.find();
@@ -12,7 +13,7 @@ try {
 const existingAchievement = await Achievement.findOne({Name});
 if (existingAchievement) {
     return res.json("failure , existing achivement name");
-}   
+}   //CReate achievement
     const achievementData = new Achievement()
     achievementData.Name = req.body.Name;
     achievementData.Description = req.body.Description;
@@ -25,11 +26,18 @@ if (existingAchievement) {
     //we extract all teams and assagin the new trophy in unlocked state to all of them 
     const allTeams = await Team.find();
 for (const team of allTeams) {
+    //insert achivement in team achivement list 
     team.Achievements.push(achievementData);
     await team.save();
+    //insert into Tachivement table 
+    const newTachievement = new Tachievement({
+        Team: team._id,
+        Achievement: achievementData._id, 
+      });
+      await newTachievement.save();
 }
 
-return res.json("sucess");
+return res.json({status:true});
 }catch (error) {
     console.error("Error adding achivement:", error);
     res.status(500).json( "Internal server error" );
@@ -41,7 +49,7 @@ const { Name } = req.body;
 try {   
 const existingAchievement = await Achievement.findOne({Name});
 if (existingAchievement) {
-    return res.json(false);
+    return res.json({status : false});
 }     
 const AchievementData = await Achievement.findById(req.params.id);
 AchievementData.Name = req.body.Name;
@@ -52,7 +60,7 @@ AchievementData.MileStone = req.body.MileStone;
 AchievementData.Reward = req.body.Reward;
 AchievementData.Status = req.body.Status;
 await AchievementData.save()
-return res.json(true);
+return res.json({status: true});
 }catch (error) {
     console.error("Error updating achievement a:", error);
     res.status(500).json( "Internal server error" );

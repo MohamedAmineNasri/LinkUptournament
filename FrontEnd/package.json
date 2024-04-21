@@ -46,6 +46,7 @@
     "react-qr-code": "^2.0.12",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
+    "react-toastify": "^10.0.5",
     "react-tooltip": "^5.26.3",
     "react-tournament-bracket": "^0.2.4",
     "react-whatsapp": "^0.3.0",

@@ -15,7 +15,7 @@ const AchievementsSchema = new mongoose.Schema(
       type: String,  
     },
     Type: {
-      type: [String],
+      type: String,
             enum: [
                 "TOURNEMENT_RANK_1",
                 "TOURNEMENT_RANK_2",
@@ -33,7 +33,7 @@ const AchievementsSchema = new mongoose.Schema(
       default: 0
     },
     Reward: {
-      type: [String],
+      type: String,
             enum: [
                 "NOTHING",
                 "DISCOUNT_10%",
@@ -42,14 +42,14 @@ const AchievementsSchema = new mongoose.Schema(
             ],
       default: "NOTHING"
     },
-    Status: {
-      type: [String],
-            enum: [
-                "ACTIVE",
-                "NOTACTIVE",
-            ],
-      default: 'NOTACTIVE'
-    },
+    // Status: {
+    //   type: [String],
+    //         enum: [
+    //             "ACTIVE",
+    //             "NOTACTIVE",
+    //         ],
+    //   default: 'NOTACTIVE'
+    // },
   },
 );
 

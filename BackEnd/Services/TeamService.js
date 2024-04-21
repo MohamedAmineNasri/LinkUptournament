@@ -4,6 +4,8 @@ const Player = require("../Models/Player");
 const Team =require('../Models/Team')
 const Academy =require('../Models/Academy')
 const academyService = require('../Services/AcademyService')
+const Achievement =require('../Models/Achievement');
+const Tachievement = require("../Models/Tachievement");
 
 const getAllTeams = async (req, res, next) => {
         const teams = await Team.find();
@@ -56,8 +58,22 @@ const addTeamAndAssaignToAcademy = async (req, res, next) => {
         if (existingTeam) {
             return res.json(false);
         }     
+        //creating team
         const TeamData = new Team({ TeamName,TeamLogo,academy });
+        //assagin all NOTACTIVE existing achivements to the new team created
+        const Achievements = await Achievement.find();
+        if(Achievements !== null){
+            TeamData.Achievements = Achievements;
+    }
         await TeamData.save();
+        //create tachievement table of THIS team so we can handle each achivement separtly 
+        if(Achievements !== null){
+            //every achivement => tachievement ligne db mesh najmou nbadlou status mta kol wa7da wa7deha
+        for (const a of Achievements) {
+            const TeamAchievement = new Tachievement({ Team: TeamData._id , Achievement: a._id });
+            await TeamAchievement.save();
+        }}
+
         const targetAcademy = await academyService.getAcademyByIdParam(academy)
         targetAcademy.teams.push(TeamData);
         await targetAcademy.save();
@@ -123,10 +139,15 @@ const deleteTeamByIdandFromAcademy =  async (req,res,next)=>{
         // Updating the corresponding academy's list of team IDs
         const academy = await Academy.findOneAndUpdate(
           { _id: team.academy },
-          { $pull: { teams: team._id } },
+          { $pull: { teams: team._id } }, // we remove the id of team from academy teams list
           { new: true }
         );
-    
+
+        // deleting all achivements from db when team is deleted
+        const tchievementData = await Tachievement.find({Team : req.params.id });
+        for (const tad of tchievementData) {
+            await Tachievement.findByIdAndDelete(tad._id)
+        }
         res.status(200).send('Team deleted successfully');
       } catch (error) {
         console.error('Error deleting team:', error);

@@ -13,6 +13,7 @@ import nightFeildImage from "../../assets/Mi-imgs/nightFeild.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
+import { updatetachievementStatus } from "../../redux/slice/tachievementSlice";
 
 export const CheckSelectedTeam = () => {
   const { idTeam } = useParams();
@@ -43,6 +44,15 @@ export const CheckSelectedTeam = () => {
     );
     console.log(players);
   }, [dispatch, idTeam]);
+
+  //unlocked team achievements if milestone is hit.
+  useEffect(() => {
+    dispatch(
+      updatetachievementStatus({
+        idTeam: idTeam,
+      })
+    );
+  }, [dispatch]);
 
   // delete logic
 

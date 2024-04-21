@@ -3,11 +3,12 @@ import "./yasser.css";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
+import { useParams } from 'react-router-dom';
 
 function Payment() {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
-
+  const { id } = useParams();
   useEffect(() => {
     fetch("http://localhost:8000/config").then(async (r) => {
       const { publishableKey } = await r.json();
@@ -16,7 +17,7 @@ function Payment() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8000/create-payment-intent", {
+    fetch("http://localhost:8000/create-payment-intent/"+id, {
       method: "POST",
       body: JSON.stringify({}),
     }).then(async (result) => {

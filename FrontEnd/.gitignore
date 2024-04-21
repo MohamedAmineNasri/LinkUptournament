@@ -3,3 +3,6 @@ node_modules/
 node_modules 
 uploads
 
+
+# Sentry Config File
+.env.sentry-build-plugin

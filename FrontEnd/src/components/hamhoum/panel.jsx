@@ -308,7 +308,7 @@ export const fetchtour = (props) => {
                     </div>
                     
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-  <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
+  <Button variant="primary" onClick={handleSaveChanges} disabled={Matchstatus =="Finished"}>Save Changes</Button>
   <Button variant="primary" onClick={handleEndMatch} disabled={Matchstatus =="Finished"}>end match</Button>
 </div>
                   </div>

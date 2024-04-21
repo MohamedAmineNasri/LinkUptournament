@@ -13,6 +13,7 @@ const groupRoutes = require('./Routes/Group');
 const staduimRoutes = require('./Routes/Staduim');
 const tournamentRoutes = require('./Routes/Tournament');
 const match= require("./Routes/match")
+const m = require("./Models/match")
 
 
 
@@ -134,17 +135,31 @@ app.get("/config", (req, res) => {
   });
 });
 
-app.post("/create-payment-intent", async (req, res) => {
+app.post("/create-payment-intent/:id", async (req, res) => {
   try {
+    const matchet = await m.findById(req.params.id);
+    
+    // Check if ticket number is greater than 0
+    if (matchet.ticketNumber <= 0) {
+      throw new Error("No more tickets available");
+    }
+    
+    // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "EUR",
-      amount: 4000,
+      amount: matchet.price,
       automatic_payment_methods: { enabled: true },
     });
 
-    // Send publishable key and PaymentIntent details to client
+    // Update match details
+    matchet.price += 5;
+    matchet.ticketNumber -= 1;
+    await matchet.save();
+
+    // Send publishable key, PaymentIntent details, and updated match details to client
     res.send({
       clientSecret: paymentIntent.client_secret,
+      match: matchet
     });
   } catch (e) {
     return res.status(400).send({

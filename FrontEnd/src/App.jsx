@@ -1,4 +1,4 @@
-
+import * as Sentry from "@sentry/react"
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -75,6 +75,7 @@ import {Elements,PaymentElement} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 
 function App() {
+  // animeaa
   const [fixtures, setFixtures] = useState(data);
   
   // console.log(fixtures);
@@ -82,9 +83,9 @@ function App() {
   // const refresh = () => window.location.reload(true);
   return (
     <Routes>
-      <Route path="/buy" element={<Buy />} />
+      <Route path="/buy/" element={<Buy />} />
         <Route path="/pdf" element={<Pdf />} />
-     <Route path="/payment" element={<Payment />} />
+     <Route path="/payment/:id" element={<Payment />} />
     <Route path="/completion" element={<Completiont />} /> 
       <Route path="/panel/:match" element={<Panel/>}/>     
       	<Route path="/fetchalltour" element={<Fetchalltour />} />
@@ -196,4 +197,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.withProfiler(App);

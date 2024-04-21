@@ -29,6 +29,9 @@ export const fetchtour = () => {
         
       
         const response = await axios.get('http://localhost:8000/match/');
+        console.log(response.data.filter(
+          (match) => match.matchstatus === "Starting Soon"
+        ))
         setTournementId(response.data.filter(
     (match) => match.matchstatus === "Starting Soon"
   ));
@@ -150,7 +153,7 @@ if (TournementId.length ==0) {
         .map((match, index) => (
           
                 <div className="col-lg-6 mb-4" >
-                  <Link to ={`/payment`}>
+                  <Link to ={`/payment/`+match._id}>
                   <div className="bg-light p-4 rounded" >
                     <div className="widget-body">
                       <div className="widget-vs">

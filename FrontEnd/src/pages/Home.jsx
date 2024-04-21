@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+
+import FootballNews from "../components/FootballNews";
+import HomeHeader from "../components/HomeHeader";
 import Fetchmatchforview from "../components/hamhoum/fetchmatchesforvuews"
 
 export class Home extends Component {
@@ -7,77 +9,7 @@ export class Home extends Component {
     return (
       <div>
         <div className="site-wrap">
-          <div className="site-mobile-menu site-navbar-target">
-            <div className="site-mobile-menu-header">
-              <div className="site-mobile-menu-close">
-                <span className="icon-close2 js-menu-toggle"></span>
-              </div>
-            </div>
-            <div className="site-mobile-menu-body"></div>
-          </div>
-
-          <header className="site-navbar py-4" role="banner">
-            <div className="container">
-              <div className="d-flex align-items-center">
-                <div className="site-logo">
-                  <a href="index.html">
-                    <img src="./public/assets/images/logo.png" alt="Logo" />
-                  </a>
-                </div> 
-                <div className="ml-auto">
-                  <nav
-                    className="site-navigation position-relative text-right"
-                    role="navigation"
-                  >
-                    <ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                      <li>
-                        <Link to="/" className="nav-link">
-                          Home
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/fetchmatchforview" className="nav-link">
-                          Match Cards
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/a" className="nav-link">
-                          Match Time
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/addAcademy" className="nav-link">
-                          Academy Creation 
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/Academy" className="nav-link">
-                          Academies
-                        </Link>
-                      </li>
-                      <li className="active">
-                        <Link to="/signin" className="nav-link">
-                          Signup
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/profile" className="nav-link">
-                          Profile
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-
-                  <a
-                    href="#"
-                    className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
-                  >
-                    <span className="icon-menu h3 text-white"></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </header>
+          <HomeHeader />
 
           <div
             className="hero overlay"
@@ -106,108 +38,55 @@ export class Home extends Component {
               </div>
             </div>
           </div>
-<Fetchmatchforview></Fetchmatchforview>
-         
+          <Fetchmatchforview></Fetchmatchforview>
 
-          {/* <div className="latest-news">
-            <div className="container">
-              <div className="row">
-                <div className="col-12 title-section">
-                  <h2 className="heading">Latest News</h2>
-                </div>
-              </div>
-              <div className="row no-gutters">
-                <div className="col-md-4">
-                  <div className="post-entry">
-                    <a href="#">
+          <div className="bg-[#0D0F12] p-20 h-36">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="d-flex team-vs relative top-[-80px]">
+                  <span className="score">4-1</span>
+                  <div className="team-1 w-50">
+                    <div className="team-details w-100 text-center">
                       <img
-                        src="./public/assets/images/img_1.jpg"
+                        src="./public/assets/images/logo_1.png"
                         alt="Image"
                         className="img-fluid"
                       />
-                    </a>
-                    <div className="caption">
-                      <div className="caption-inner">
-                        <h3 className="mb-3">Romolu to stay at Real Nadrid?</h3>
-                        <div className="author d-flex align-items-center">
-                          <div className="img mb-2 mr-3">
-                            <img
-                              src="./public/assets/images/person_1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text">
-                            <h4>Mellissa Allison</h4>
-                            <span>May 19, 2020 &bullet; Sports</span>
-                          </div>
-                        </div>
-                      </div>
+                      <h3>
+                        LA LEGA <span>(win)</span>
+                      </h3>
+                      <ul className="list-unstyled">
+                        <li>Anja Landry (7)</li>
+                        <li>Eadie Salinas (12)</li>
+                        <li>Ashton Allen (10)</li>
+                        <li>Baxter Metcalfe (5)</li>
+                      </ul>
                     </div>
                   </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="post-entry">
-                    <a href="#">
+                  <div className="team-2 w-50">
+                    <div className="team-details w-100 text-center">
                       <img
-                        src="./public/assets/images/img_3.jpg"
+                        src="./public/assets/images/logo_2.png"
                         alt="Image"
                         className="img-fluid"
                       />
-                    </a>
-                    <div className="caption">
-                      <div className="caption-inner">
-                        <h3 className="mb-3">
-                          Kai Nets Double To Secure Comfortable Away Win
-                        </h3>
-                        <div className="author d-flex align-items-center">
-                          <div className="img mb-2 mr-3">
-                            <img
-                              src="./public/assets/images/person_1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text">
-                            <h4>Mellissa Allison</h4>
-                            <span>May 19, 2020 &bullet; Sports</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="post-entry">
-                    <a href="#">
-                      <img
-                        src="./public/assets/images/img_2.jpg"
-                        alt="Image"
-                        className="img-fluid"
-                      />
-                    </a>
-                    <div className="caption">
-                      <div className="caption-inner">
-                        <h3 className="mb-3">Dogba set for Juvendu return?</h3>
-                        <div className="author d-flex align-items-center">
-                          <div className="img mb-2 mr-3">
-                            <img
-                              src="./public/assets/images/person_1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text">
-                            <h4>Mellissa Allison</h4>
-                            <span>May 19, 2020 &bullet; Sports</span>
-                          </div>
-                        </div>
-                      </div>
+                      <h3>
+                        JUVENDU <span>(loss)</span>
+                      </h3>
+                      <ul className="list-unstyled">
+                        <li>Macauly Green (3)</li>
+                        <li>Arham Stark (8)</li>
+                        <li>Stephan Murillo (9)</li>
+                        <li>Ned Ritter (5)</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
 
-         
+          {<FootballNews source={"espn"} />}
 
           {/* <div className="site-section">
             <div className="container">
@@ -518,9 +397,7 @@ export class Home extends Component {
                   <div className=" pt-5">
                     <p>
                       Copyright &copy;
-                      <script>
-                        document.write(new Date().getFullYear());
-                      </script>{" "}
+                      <script>document.write(new Date().getFullYear());</script>
                       All rights reserved | This template is made with{" "}
                       <i className="icon-heart" aria-hidden="true"></i> by{" "}
                       <a href="https://colorlib.com" target="_blank">

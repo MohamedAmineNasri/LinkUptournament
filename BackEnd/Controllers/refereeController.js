@@ -63,10 +63,32 @@ async function deleteRefereeById(req, res) {
   }
 }
 
+
+async function searchReferees(req, res){
+    try {
+      const { name, country, location, availability, role } = req.query;
+
+      const query = {};
+      if (name) query.name = { $regex: new RegExp(name, "i") };
+      if (country) query.country = { $regex: new RegExp(country, "i") };
+      if (location) query.location = { $regex: new RegExp(location, "i") };
+      if (availability) query.availability = { $regex: new RegExp(availability, "i") };
+      if (role) query.role = role;
+
+      const referees = await Referee.find(query);
+
+      res.json(referees);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+}
+
+
 module.exports = {
   createReferee,
   getAllReferees,
   getRefereeById,
   updateRefereeById,
   deleteRefereeById,
+  searchReferees
 };

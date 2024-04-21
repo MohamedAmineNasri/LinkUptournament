@@ -1,9 +1,9 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import teamReducer from './slice/teamSlice';
-import academyReducer from './slice/academySlice'
-import groupReducer from './slice/groupSlice';
-import tournamentReducer from './slice/tournamentSlice';
-import matchReducer from './slice/matchSlice';
+import { combineReducers } from "@reduxjs/toolkit";
+import teamReducer from "./slice/teamSlice";
+import academyReducer from "./slice/academySlice";
+import groupReducer from "./slice/groupSlice";
+import tournamentReducer from "./slice/tournamentSlice";
+import matchReducer from "./slice/matchSlice";
 
 import addPlayerSlice from "./playerReducers/addPlayerSlice";
 import fetchPlayerSlice from "./playerReducers/fetchPlayerSlice";
@@ -13,24 +13,25 @@ import addRefereeSlice from "./refereeReducers/addRefereeSlice";
 import fetchRefereeSlice from "./refereeReducers/fetchRefereeSlice";
 import updateRefereeSlice from "./refereeReducers/updateRefereeSlice";
 import deleteRefereeSlice from "./refereeReducers/deleteRefereeSlice";
+import searchPlayerSlice from "./playerReducers/searchPlayerSlice";
+import searchRefereeSlice from "./refereeReducers/searchRefereeSlice";
 
 export const rootReducer = combineReducers({
   team: teamReducer,
-  academy : academyReducer ,
-  tournament : tournamentReducer ,
-  group : groupReducer , 
-  match: matchReducer , 
+  academy: academyReducer,
+  tournament: tournamentReducer,
+  group: groupReducer,
+  match: matchReducer,
   createPlayer: addPlayerSlice,
   fetchPlayers: fetchPlayerSlice,
+  searchPlayers: searchPlayerSlice,
   updatePlayer: updatePlayerSlice,
   deletePlayer: deletePlayerSlice,
   createReferee: addRefereeSlice,
   fetchReferees: fetchRefereeSlice,
   updateReferee: updateRefereeSlice,
   deleteReferee: deleteRefereeSlice,
+  searchReferee: searchRefereeSlice,
 });
 
 export default rootReducer;
-
-
-

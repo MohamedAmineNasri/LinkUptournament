@@ -78,23 +78,7 @@
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
-.score {
-  font-size: 11px;
-  text-transform: uppercase;
-  float: right;
-  color: black;
-  font-weight: bold;
-  padding-left: 10px;
-  position: absolute;
-  right: -5px;
-  background: #8bc34a;
-  width: 35px;
-  height: 100%;
-  transform: skew(-20deg);
-}
-.score-text{
-    transform: skew(20deg);
-}
+
 .team {
   padding: 0 5px;
   margin: 3px 0;

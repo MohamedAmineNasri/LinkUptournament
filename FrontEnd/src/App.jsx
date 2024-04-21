@@ -43,12 +43,14 @@ import ManageTournamentFormat from "./components/TournamentManagementComponenets
 import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
 import FormatSelect from "./components/Tournament/FormatSelect";
 
+// import TournamentBracket  from "./components/TournamentBracket";
+
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
 import Table from "./components/TestWitheDummyData/Matchhhhes";
 import { data } from "./components/TestWitheDummyData/dummy-data";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
 import VideoPodcast from "./pages/Podcast/VideoPodcast";
 import ViewerLiveStream from "./pages/LiveStream/ViewerLiveStream";
 import VideoLiveStream from "./pages/LiveStream/VideoLiveStream";
@@ -56,10 +58,11 @@ import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 import Panel from "./components/hamhoum/panel";
 import Fetchonematch from "./components/hamhoum/fetchOneMatchByID";
 import Fetchalltour from "./components/hamhoum/getAllTournement";
-import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
-import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
+import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
+import TeamLineUp from "./pages/TeamLineUp";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
@@ -87,10 +90,9 @@ function App() {
         {/* <Route path="/page" element={<LandingPage />} /> */}
         <Route path="/manage" element={<TournamentLayout />}>
           <Route index element={<ManageTournament />} />
-          <Route path="edit/:tournamentId" element={<EditTournament />} />
+          <Route path="editt/:tournamentId" element={<Edit />} />
           <Route path="tournament/:tournamentId" element={<Tournament />} />
-
-          <Route path="addtournament" element={<AddTournament />} />
+          <Route path="addT" element={<AddTour />} />
           <Route path="format" element={<FormatSelect />}>
             <Route path="bracket" element={<ManageTournamentFormat />} />
             <Route path="group" element={<ManageTournamentGroup />} />
@@ -105,29 +107,6 @@ function App() {
 
         {/**YASSINE_ROUTES*/}
 
-          {/**YASSINE_ROUTES*/}
-      {/* <Route path="/page" element={<LandingPage />} /> */}
-      <Route path="/manage" element={<TournamentLayout />}>
-        
-        <Route index element={<ManageTournament />} />
-        <Route path="editt/:tournamentId" element={<Edit/>} />
-        <Route path="tournament/:tournamentId" element={<Tournament/>}/>
-        <Route path="addT" element={<AddTour/>} />
-        {/* <Route path="addtournament" element={<AddTournament/>}/> */}
-        <Route path="format" element={<FormatSelect />}>
-          <Route path="bracket" element={<ManageTournamentFormat />} />
-          <Route path="group" element={<ManageTournamentGroup />} />
-        </Route>
-        <Route path="participant" element={<ManageParticipant />}>
-          <Route path="team" element={<ManageTeam />} />
-          <Route path="team/consult" element={<ConsultTeam />} />
-          <Route path="player" element={<ManagePlayer />} />
-          <Route path="player/consult" element={<ConsultPlayer />} />
-          <Route path="referee" element={<ManageReferees />} />
-          <Route path="referee/consult" element={<ConsultReferee />} />
-        </Route>
-      </Route>
-     
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/matches" element={<Matches />} />

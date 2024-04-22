@@ -6,6 +6,8 @@ router.get("/", tachievementService.getAllTeamsAchivements);
 
 router.get("/teamAchievs/:idTeam", tachievementService.getTeamAchivementsByTeamId);
 
+router.get("/DefaultteamAchievs/:idTeam", tachievementService.getDefaultAchivementsOfTeamByTeamId);
+
 router.post("/addtachievement", tachievementService.addTeamAchiv);
 
 router.put("/updateTeamAchievementStatus/:idTeam", tachievementService.updateTeamAchievementStatus);

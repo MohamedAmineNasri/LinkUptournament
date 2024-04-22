@@ -12,19 +12,29 @@ import axios from 'axios';
 //     }
 //   }
 // );
+export const fetchTAchievementByTeamId = createAsyncThunk(
+  'tachievement/fetchtAchievementsTeamId', 
+  async ({idTeam}) => {
+    try {
+      const response = await axios.get('http://localhost:8000/tachievement/teamAchievs/'+idTeam);
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching achievement: ' + error.message);
+    }
+  }
+);
+export const fetchDefaultAchievementOfTeamByTeamId = createAsyncThunk(
+  'tachievement/fetchDefaultAchievementOfTeamByTeamId', 
+  async ({idTeam}) => {
+    try {
+      const response = await axios.get('http://localhost:8000/tachievement/DefaultteamAchievs/'+idTeam);
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching achievement: ' + error.message);
+    }
+  }
+);
 
-
-// export const fetchAchievementById = createAsyncThunk(
-//   'achievement/fetchAchievementsId', 
-//   async ({Id}) => {
-//     try {
-//       const response = await axios.get('http://localhost:8000/achievement/getAchievementByID/'+Id);
-//       return response.data;
-//     } catch (error) {
-//       throw Error('Error fetching achievement: ' + error.message);
-//     }
-//   }
-// );
 
 
 // export const deleteAchievement = createAsyncThunk(
@@ -86,41 +96,30 @@ export const updatetachievementStatus = createAsyncThunk(
 );
 
 
-// const tachievementSlice = createSlice({
-//   name: 'tachievement',
-//   initialState: {
-//     AchievementData: [],
-//     loading: false,
-//     error: null
-//   },
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(fetchAchievements.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(fetchAchievements.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.AchievementData = action.payload;
-//       })
-//       .addCase(fetchAchievements.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.error.message;
-//       })  
-//       .addCase(fetchAchievementById.pending, (state) => {
-//         state.status = 'loading';
-//         state.error = null;
-//       })
-//       .addCase(fetchAchievementById.fulfilled, (state, action) => {
-//         state.status = 'succeeded';
-//         state.AchievementData = action.payload;
-//       })
-//       .addCase(fetchAchievementById.rejected, (state, action) => {
-//         state.status = 'failed';
-//         state.error = action.error.message;
-//       })
-//   }
-// });
+const tachievementSlice = createSlice({
+  name: 'tachievement',
+  initialState: {
+    AchievementData: [],
+    loading: false,
+    error: null
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchDefaultAchievementOfTeamByTeamId.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchDefaultAchievementOfTeamByTeamId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.AchievementData = action.payload;
+      })
+      .addCase(fetchDefaultAchievementOfTeamByTeamId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })  
+      
+  }
+});
 
-// export default tachievementSlice.reducer;
+export default tachievementSlice.reducer;

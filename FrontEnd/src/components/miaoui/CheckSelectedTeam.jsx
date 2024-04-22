@@ -20,15 +20,27 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 import { updatetachievementStatus } from "../../redux/slice/tachievementSlice";
+import { fetchDefaultAchievementOfTeamByTeamId } from "../../redux/slice/tachievementSlice";
+import Modal from "react-bootstrap/Modal";
 
 export const CheckSelectedTeam = () => {
   const { idTeam } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //modal logic
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const { SelectedteamDataById, loading, error } = useSelector(
     (state) => state.root.team
   );
+  // tachivement redux
+  const { AchievementData } = useSelector((state) => state.root.tachievement);
+
+  //player redux
   const { players } = useSelector((state) => state.root.team);
   // get team Data
   useEffect(() => {
@@ -59,6 +71,31 @@ export const CheckSelectedTeam = () => {
       })
     );
   }, [dispatch]);
+  //get default achivements of the team
+  useEffect(() => {
+    dispatch(
+      fetchDefaultAchievementOfTeamByTeamId({
+        idTeam: idTeam,
+      })
+    );
+  }, [dispatch]);
+
+  //locked or unlocked effect
+  // const getRowStyle = (status) => {
+  //   // Define a default style
+  //   let style = {
+  //     opacity: 1,
+  //     transition: "all 0.3s ease-in-out",
+  //   };
+
+  //   // Apply a darker style if status is not "Active"
+  //   if (status !== "NOTActive") {
+  //     style.opacity = 0.5; // Make the row semi-transparent
+  //     style.backgroundColor = "#e0e0e0"; // Optional: apply a light gray background
+  //   }
+
+  //   return style;
+  // };
 
   // delete logic
 
@@ -118,7 +155,7 @@ export const CheckSelectedTeam = () => {
                 <div className=" row teamBox">
                   {/* --------------------------------------------------------------------------------- */}
                   <div className="col-lg-4 col-md-3">
-                    {/* trophies button ---------------------------------------------- */}
+                    {/* trophies button MODAL ---------------------------------------------- */}
                     <div style={{ textAlign: "left" }}>
                       <Button
                         className="mb-3"
@@ -129,12 +166,80 @@ export const CheckSelectedTeam = () => {
                           flexDirection: "column",
                           alignItems: "center",
                         }}
-                        // onClick={() => navigate(`/player/${idTeam}`)}
+                        onClick={handleShow}
                       >
                         <FontAwesomeIcon fontSize="25px" icon={faTrophy} />
                         <span style={{ marginTop: "10px" }}>Achievements</span>
                       </Button>
+
+                      <Modal size="lg" show={show} onHide={handleClose}>
+                        <Modal.Header
+                          closeButton
+                          style={{
+                            backgroundColor: "#1d2631",
+                            border: "solid thin",
+                            borderBottom: "none",
+                          }}
+                        >
+                          <Modal.Title>Achievements</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body
+                          style={{
+                            backgroundColor: "#1d2631",
+                            padding: "0px",
+                            border: "solid thin",
+                            borderTop: "none",
+                          }}
+                        >
+                          <div>
+                            <Table hover responsive="xl">
+                              <thead>
+                                <tr>
+                                  <th>Title</th>
+                                  <th>Description</th>
+                                  <th>Type</th>
+                                  <th>MileStone</th>
+                                </tr>
+                              </thead>
+                              {AchievementData.map((achi) => (
+                                <tbody
+                                  style={{
+                                    borderTop: "none",
+                                  }}
+                                >
+                                  {AchievementData && (
+                                    // <tr style={getRowStyle(achi.Status)}>
+                                    <tr>
+                                      <td className="tableTDwordwrap">
+                                        <img
+                                          style={{
+                                            maxWidth: "60px",
+                                            opacity: "0.6",
+                                          }}
+                                          src={trohy}
+                                        ></img>
+                                        {achi.Name}
+                                      </td>
+
+                                      <td className="tableTDwordwrap">
+                                        {achi.Description}
+                                      </td>
+                                      <td className="tableTDwordwrap">
+                                        {achi.Type}
+                                      </td>
+                                      <td className="tableTDwordwrap">
+                                        {achi.MileStone}
+                                      </td>
+                                    </tr>
+                                  )}
+                                </tbody>
+                              ))}
+                            </Table>
+                          </div>
+                        </Modal.Body>
+                      </Modal>
                     </div>
+                    {/* -------------------------------------------------------- */}
                     <img
                       src={SelectedteamDataById.TeamLogo}
                       alt="Logo"
@@ -277,27 +382,34 @@ export const CheckSelectedTeam = () => {
                               <th>Player Image</th>
                               <th>Player Name</th>
                               <th>Player Number</th>
-                              <th>academic membership</th>
-                              <th>legal guardian</th>
+                              <th>Position</th>
                               <th>Actions</th>
                             </tr>
                           </thead>
                           {players.map((player) => (
-                            <tbody style={{ borderTop: "none" }}>
+                            <tbody
+                              style={{
+                                borderTop: "none",
+                              }}
+                            >
                               {SelectedteamDataById.Players &&
                                 SelectedteamDataById.Players.length > 0 && (
-                                  <tr>
+                                  <tr style={{}}>
                                     <td>
                                       <img
                                         style={{ maxWidth: "80px" }}
                                         src={logo}
                                       ></img>
                                     </td>
-                                    <td>{player.name}</td>
-                                    <td>{player.number}</td>
-                                    <td>{player.academic_membership}</td>
-                                    <td>{player.legal_guardian}</td>
-                                    <td>Table cell</td>
+                                    <td className="tableTDwordwrap">
+                                      {player.name}
+                                    </td>
+                                    <td className="tableTDwordwrap">
+                                      {player.number}
+                                    </td>
+                                    <td className="tableTDwordwrap">
+                                      {player.position}
+                                    </td>
                                     <td>
                                       <button className="hover:text-warning px-3">
                                         <FontAwesomeIcon icon={faEdit} />

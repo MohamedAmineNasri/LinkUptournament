@@ -20,6 +20,17 @@ const getTeamAchivementsByTeamId = async (req, res, next) => {
     res.json(Achievements);  
 };
 
+const getDefaultAchivementsOfTeamByTeamId = async (req, res, next) => {
+    var achievements =[]
+    const TeamData = await Team.findById(req.params.idTeam);
+    const TeamAchievementData =await Tachievement.find({ Team : req.params.idTeam });
+    for (const tachievement of TeamAchievementData) {
+        const DefaultAchivement = await Achievement.findById(tachievement.Achievement)
+        achievements.push(DefaultAchivement)
+    }
+    return res.json(achievements)
+};
+
 const updateTeamAchievementStatus = async (req,res,next)=>{
 //we get the team by its id 
 const TeamData = await Team.findById(req.params.idTeam);   
@@ -66,4 +77,4 @@ return res.json("executed with no probleme")
 
 
 
-module.exports = {getAllTeamsAchivements,getTeamAchivementsByTeamId,addTeamAchiv,updateTeamAchievementStatus};
+module.exports = {getAllTeamsAchivements,getTeamAchivementsByTeamId,addTeamAchiv,updateTeamAchievementStatus,getDefaultAchivementsOfTeamByTeamId};

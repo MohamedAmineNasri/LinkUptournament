@@ -33,37 +33,30 @@ const DefaultAchivement = await Achievement.findById(tachievement.Achievement)
     if(DefaultAchivement.Type === "GOAL" && TeamData.Total_Goals_scored >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE" ){
         tachievement.Status = "ACTIVE"
         await tachievement.save();
-        // return res.json(tachievement);
     }
     if(DefaultAchivement.Type === "WIN" && TeamData.Total_MatchesWon >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE"){
         tachievement.Status = "ACTIVE"
         await tachievement.save();
-        // return res.json(tachievement);
     }
     if(DefaultAchivement.Type === "LOSE" && TeamData.Total_MatchesLost >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE"){
         tachievement.Status = "ACTIVE"
         await tachievement.save();
-        // return res.json(tachievement);
     }
     if(DefaultAchivement.Type === "DRAW" && TeamData.Total_MatchesDrawn >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE"){
         tachievement.Status = "ACTIVE"
         await tachievement.save();
-        // return res.json(tachievement);
     }
     if(DefaultAchivement.Type === "TOURNEMENT_RANK_1" && TeamData.Total_Tournement_win_1 >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE"){
         tachievement.Status = "ACTIVE"
         await tachievement.save();
-        // return res.json(tachievement);
     }
     if(DefaultAchivement.Type === "TOURNEMENT_RANK_2" && TeamData.Total_Tournement_second_2 >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE"){
         tachievement.Status = "ACTIVE"
         await tachievement.save();
-        // return res.json(tachievement);
     }
     if(DefaultAchivement.Type === "TOURNEMENT_RANK_3" && TeamData.Total_Tournement_third_3 >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE"){
         tachievement.Status = "ACTIVE"
         await tachievement.save();
-        // return res.json(tachievement);
     }
 }
 console.log("executed from REDUX ")

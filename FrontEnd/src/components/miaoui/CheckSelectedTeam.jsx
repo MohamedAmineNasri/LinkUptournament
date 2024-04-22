@@ -8,10 +8,16 @@ import video from "../../assets/Mi-imgs/teamV.mp4";
 import HeaderNavBar from "./HeaderNavBar";
 import Table from "react-bootstrap/Table";
 import logo from "../../assets/Mi-imgs/personpng.png";
+import trohy from "../../assets/Mi-imgs/trophy.png";
 import { fetchplayerByTeamId } from "../../redux/slice/teamSlice";
 import nightFeildImage from "../../assets/Mi-imgs/nightFeild.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faEdit,
+  faPlus,
+  faTrophy,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 import { updatetachievementStatus } from "../../redux/slice/tachievementSlice";
 
@@ -102,7 +108,7 @@ export const CheckSelectedTeam = () => {
               }}
             >
               <div
-                className="col-lg-12 col-md-8  word-wrap-break"
+                className="col-lg-12 col-md-12  word-wrap-break"
                 style={{
                   textAlign: "-webkit-center",
                   backgroundColor: "#228b221c",
@@ -112,6 +118,23 @@ export const CheckSelectedTeam = () => {
                 <div className=" row teamBox">
                   {/* --------------------------------------------------------------------------------- */}
                   <div className="col-lg-4 col-md-3">
+                    {/* trophies button ---------------------------------------------- */}
+                    <div style={{ textAlign: "left" }}>
+                      <Button
+                        className="mb-3"
+                        variant="success"
+                        style={{
+                          backgroundColor: "rgba(139, 195, 74, 0.2)",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                        // onClick={() => navigate(`/player/${idTeam}`)}
+                      >
+                        <FontAwesomeIcon fontSize="25px" icon={faTrophy} />
+                        <span style={{ marginTop: "10px" }}>Achievements</span>
+                      </Button>
+                    </div>
                     <img
                       src={SelectedteamDataById.TeamLogo}
                       alt="Logo"
@@ -150,7 +173,30 @@ export const CheckSelectedTeam = () => {
                         alignContent: "center",
                         fontSize: "16px",
                       }}
-                      className=" pl-5 col-lg-6"
+                      className=" col-lg-4"
+                    >
+                      <h1 className=" mb-4 ">
+                        Tourenement_Rank_1 :{" "}
+                        {SelectedteamDataById.Total_Tournement_win_1}
+                      </h1>
+                      <h1 className=" mb-4 ">
+                        Tourenement_Rank_2 :{" "}
+                        {SelectedteamDataById.Total_Tournement_second_2}
+                      </h1>
+
+                      <h1 className=" mb-4 ">
+                        Tourenement_Rank_3 :{" "}
+                        {SelectedteamDataById.Total_Tournement_third_3}
+                      </h1>
+                    </div>
+                    {/* --------------------------------------------------------------------------------- */}
+                    <div
+                      style={{
+                        textAlignLast: "start",
+                        alignContent: "center",
+                        fontSize: "16px",
+                      }}
+                      className=" col-lg-4"
                     >
                       <h1 className=" mb-4 ">
                         Total_MatchesPlayed :{" "}
@@ -173,7 +219,7 @@ export const CheckSelectedTeam = () => {
                         alignContent: "center",
                         fontSize: "16px",
                       }}
-                      className=" pl-5 col-lg-6 "
+                      className="  col-lg-4 "
                     >
                       <h1 className=" mb-4 ">
                         Total_MatchesLost :{" "}

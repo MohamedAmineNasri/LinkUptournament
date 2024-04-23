@@ -1,6 +1,6 @@
 import React from "react";
 import ModalVideo from "./ModalVideo";
-import VideoThumb from '../../../public/images/hero-image.png'
+import VideoThumb from "../../../public/images/hero-image.png";
 const Hero = () => {
   return (
     <section className="relative">

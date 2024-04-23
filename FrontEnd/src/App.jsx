@@ -62,20 +62,23 @@ import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
-
 import TeamLineUp from "./pages/TeamLineUp";
-
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
+import HomeLandingPage from "./landingPage/HomeLandingPage";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function App() {
   const [fixtures, setFixtures] = useState(data);
-
-  //console.log(fixtures);
-
-  // const refresh = () => window.location.reload(true);
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Change the animation duration as per your preference
+    });
+  }, []);
   return (
     <Routes>
+      <Route path="/landingpage" element={<HomeLandingPage />} />
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
@@ -170,7 +173,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/videopodcast" element={<VideoPodcast />} />
             <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
-            <Route path="/viewerlivestreamui" element={<ViewerLiveStreamUi />} />
+            <Route
+              path="/viewerlivestreamui"
+              element={<ViewerLiveStreamUi />}
+            />
             <Route path="/videolivestream" element={<VideoLiveStream />} />
             <Route path="/videolivestreamui" element={<VideoLiveStreamUi />} />
             <Route path="/chat" element={<Chat />} />

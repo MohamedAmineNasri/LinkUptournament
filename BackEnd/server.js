@@ -12,6 +12,7 @@ mongoose.connection.on("error", (err) => {
   console.log("Mongoose Connection ERROR: " + err.message);
 });
 
+
 mongoose.connection.once("open", () => {
   console.log("MongoDB Connected!");
 });
@@ -115,3 +116,4 @@ io.on("connection", async (socket) => {
   
 
 });
+module.exports = mongoose.connection;

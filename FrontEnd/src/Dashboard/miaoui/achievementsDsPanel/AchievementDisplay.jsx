@@ -3,7 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { fetchAchievements } from "../../../redux/slice/achievementSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChain,
+  faCheck,
+  faEdit,
+  faPlus,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "react-bootstrap/Pagination";
 import DropDownMwonFilter from "./DropDownAchName";
 import logo from "../../../assets/Mi-imgs/trophy.png";
@@ -269,7 +275,7 @@ const AchievementDisplay = () => {
                   <td className="border-b border-[#eee] py-2 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
                       <button className="hover:text-success">
-                        <FontAwesomeIcon icon={faCheck} />
+                        <FontAwesomeIcon icon={faEdit} />
                       </button>
                       <button
                         className="hover:text-danger"

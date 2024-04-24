@@ -213,47 +213,6 @@ const AddAchivementDS = () => {
                   )}
                 </div>
               </div>
-
-              {/* Icon Upload */}
-              <div className="flex flex-col gap-5.5 p-6.5">
-                <div>
-                  <label className="mb-3 block text-black dark:text-white">
-                    Attach Icon
-                  </label>
-                  <input
-                    type="file"
-                    onChange={(e) => handleIconChange(e)}
-                    className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:border-0 file:border-r file:border-solid file:border-stroke file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right column */}
-          <div className="flex flex-col gap-9">
-            {/* Milestone */}
-            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-              <div className="flex flex-col gap-5.5 p-6.5">
-                <div>
-                  <label className="mb-3 block text-black dark:text-white">
-                    MileStone
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="Add Achievement Milestone"
-                    value={MileStone}
-                    onChange={(e) => handleMilestoneChange(e)}
-                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-white outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
-                      milestoneError ? "border-red-500" : ""
-                    }`}
-                  />
-                  {milestoneError && (
-                    <p className="text-red-500">{milestoneError}</p>
-                  )}
-                </div>
-              </div>
-
               {/* Type Selector */}
               <div className="flex flex-col gap-5.5 p-6.5">
                 <label className="mb-3 block text-black dark:text-white">
@@ -274,6 +233,46 @@ const AddAchivementDS = () => {
                   ))}
                 </select>
                 {typeError && <p className="text-red-500">{typeError}</p>}
+              </div>
+
+              {/* Icon Upload */}
+              {/* <div className="flex flex-col gap-5.5 p-6.5">
+                <div>
+                  <label className="mb-3 block text-black dark:text-white">
+                    Attach Icon
+                  </label>
+                  <input
+                    type="file"
+                    onChange={(e) => handleIconChange(e)}
+                    className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:border-0 file:border-r file:border-solid file:border-stroke file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                  />
+                </div>
+              </div> */}
+            </div>
+          </div>
+
+          {/* Right column */}
+          <div className="flex flex-col gap-9">
+            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+              {/* Milestone */}
+              <div className="flex flex-col gap-5.5 p-6.5">
+                <div>
+                  <label className="mb-3 block text-black dark:text-white">
+                    MileStone
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Add Achievement Milestone"
+                    value={MileStone}
+                    onChange={(e) => handleMilestoneChange(e)}
+                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-white outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                      milestoneError ? "border-red-500" : ""
+                    }`}
+                  />
+                  {milestoneError && (
+                    <p className="text-red-500">{milestoneError}</p>
+                  )}
+                </div>
               </div>
 
               {/* Reward Selector */}
@@ -298,16 +297,15 @@ const AddAchivementDS = () => {
                 {rewardError && <p className="text-red-500">{rewardError}</p>}
               </div>
             </div>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="mt-2 inline-flex items-center justify-center rounded-lg bg-primary py-4 px-6 text-white transition duration-300 ease-in-out hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              Add Achievement
+            </button>
           </div>
         </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="mt-6 inline-flex items-center justify-center rounded-lg bg-primary py-4 px-6 text-white transition duration-300 ease-in-out hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-        >
-          Save Changes
-        </button>
       </form>
     </DefaultLayout>
   );

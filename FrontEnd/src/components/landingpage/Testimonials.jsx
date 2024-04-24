@@ -126,7 +126,7 @@ export default function Testimonials() {
               <div className="text-center px-12 py-8 pt-20 mx-4 md:mx-0">
                 <div className="absolute top-0 -mt-8 left-1/2 transform -translate-x-1/2">
                   <svg
-                    className="absolute top-0 right-0 -mt-3 -mr-8 w-16 h-16 fill-current text-blue-500"
+                    className="absolute top-0 right-0 -mt-3 -mr-8 w-16 h-16 fill-current text-green-600"
                     viewBox="0 0 64 64"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +151,7 @@ export default function Testimonials() {
                 </cite>
                 <div className="text-gray-600">
                   <span>CEO & Co-Founder</span>{" "}
-                  <a className="text-blue-600 hover:underline" href="#0">
+                  <a className="text-green-600 hover:underline" href="#0">
                     @Dropbox
                   </a>
                 </div>

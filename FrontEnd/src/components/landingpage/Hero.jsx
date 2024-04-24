@@ -45,7 +45,7 @@ const Hero = () => {
               data-aos="zoom-y-out"
             >
               Make your website{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-200">
                 wonderful
               </span>
             </h1>
@@ -65,7 +65,7 @@ const Hero = () => {
               >
                 <div>
                   <a
-                    className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0"
+                    className="btn text-white bg-green-600 w-full mb-4 sm:w-auto sm:mb-0"
                     href="#0"
                   >
                     Start free trial

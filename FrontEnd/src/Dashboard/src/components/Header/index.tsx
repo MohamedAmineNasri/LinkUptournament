@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import DropdownMessage from "./DropdownMessage";
 import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
-import LogoIcon from "../../images/logo/logo-icon.svg";
+import LogoIcon from "../../../../../public/images/logo_vector.svg";
 import DarkModeSwitcher from "./DarkModeSwitcher";
 import { searchPlayers } from "../../../../redux/playerReducers/searchPlayerSlice.js";
 import { searchReferees } from "../../../../redux/refereeReducers/searchRefereeSlice.js";
@@ -115,7 +115,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
+            <img src={LogoIcon} alt="Logo" className="h-10" />
           </Link>
         </div>
 

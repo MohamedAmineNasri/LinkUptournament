@@ -78,7 +78,6 @@ function App() {
   }, []);
   return (
     <Routes>
-      <Route path="/landingpage" element={<HomeLandingPage />} />
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
@@ -88,10 +87,9 @@ function App() {
       />
       <Route path="/testtt" element={<AddMatchPopUpWindow />} />
       <Route path="/fetchonematch/:tournamentId" element={<Fetchonematch />} />
-
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
-        <Route index element={<Home />} />
+        <Route index element={<HomeLandingPage />} />
         <Route path="/lineup" element={<TeamLineUp />} />
         {/**YASSINE_ROUTES*/}
         {/* <Route path="/page" element={<LandingPage />} /> */}
@@ -147,8 +145,8 @@ function App() {
         ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+       
+        
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />

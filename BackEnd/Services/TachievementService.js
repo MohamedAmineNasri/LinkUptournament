@@ -76,6 +76,10 @@ const DefaultAchivement = await Achievement.findById(tachievement.Achievement)
         tachievement.Status = "ACTIVE"
         await tachievement.save();
     }
+    if(DefaultAchivement.Type === "GAME" && TeamData.Total_MatchesPlayed >= DefaultAchivement.MileStone && tachievement.Status === "NOTACTIVE"){
+        tachievement.Status = "ACTIVE"
+        await tachievement.save();
+    }
 }
 console.log("executed from REDUX ")
 return res.json("executed with no probleme")

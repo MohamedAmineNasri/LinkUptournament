@@ -85,6 +85,18 @@ return AchievementData;
 
 const deleteAchievementById =  async (req,res,next)=>{
 const AchievementData = await Achievement.findByIdAndDelete(req.params.id);
+const allTeams = await Team.find();
+for (const team of allTeams) {
+    team.Achievements = team.Achievements.filter(
+        (aid) => aid.toString() !== req.params.id
+      );
+      await team.save(); 
+    
+}
+// deleting all tachivements from db when achivement is deleted
+const deletedTachievements = await Tachievement.deleteMany({
+    Achievement: req.params.id,
+  });
 res.json("deleted sucessfully" + AchievementData);
 }
 

@@ -3,11 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { fetchAchievements } from "../../../redux/slice/achievementSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "react-bootstrap/Pagination";
 import DropDownMwonFilter from "./DropDownAchName";
 import logo from "../../../assets/Mi-imgs/trophy.png";
+import { deleteAchievement } from "../../../redux/slice/achievementSlice";
+import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
+
 const AchievementDisplay = () => {
+  const navigate = useNavigate();
   //fetch
   const dispatch = useDispatch();
 
@@ -17,6 +21,12 @@ const AchievementDisplay = () => {
   useEffect(() => {
     dispatch(fetchAchievements());
   }, [dispatch]);
+
+  // delete logic
+  const handledeleteChanges = (id) => {
+    console.log(id);
+    dispatch(deleteAchievement({ id: id }));
+  };
 
   //  name filter
   const [selectedOrder, setSelectedOrder] = useState("asc");
@@ -149,17 +159,28 @@ const AchievementDisplay = () => {
   return (
     <DefaultLayout>
       {/* search name  input  */}
-      <div className="w-full xl:w-1/2 py-3">
-        <label className="mb-2.5 block text-black dark:text-white">
-          Search
-        </label>
-        <input
-          onChange={(e) => setSearch(e.target.value)}
-          type="text"
-          placeholder="Search By Academy Name"
-          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-        />
+      <label className="mb-2.5 block text-black dark:text-white">Search</label>
+      <div className="flex w-full py-3 items-center">
+        <div className=" xl:w-2/3 ">
+          <input
+            onChange={(e) => setSearch(e.target.value)}
+            type="text"
+            placeholder="Search By Academy Name"
+            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+          />
+        </div>
+        <div className="ml-4 xl:w-1/3 ">
+          <button
+            className="flex items-center hover:text-success"
+            style={{ border: "solid thin", padding: "13px", color: "#ee1e46" }}
+            onClick={() => navigate(`/dashboardAdmin/AddAchivementDS`)}
+          >
+            <span>Add Achievement</span>
+            <FontAwesomeIcon fontSize="15px" icon={faPlus} className="ml-2" />
+          </button>
+        </div>
       </div>
+
       {/* Table */}
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
@@ -250,7 +271,10 @@ const AchievementDisplay = () => {
                       <button className="hover:text-success">
                         <FontAwesomeIcon icon={faCheck} />
                       </button>
-                      <button className="hover:text-danger">
+                      <button
+                        className="hover:text-danger"
+                        onClick={() => handledeleteChanges(ach._id)}
+                      >
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
                     </div>

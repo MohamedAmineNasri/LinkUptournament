@@ -29,9 +29,8 @@ export const fetchAchievementById = createAsyncThunk(
 
 export const deleteAchievement = createAsyncThunk(
   'achievement/deleteachievement',
-  async (id) => {
+  async ({id}) => {
     try {
-      console.log(teamid)
       const response = await axios.delete('http://localhost:8000/achievement/deleteAchievement/'+id);
       return response.data;
     } catch (error) {

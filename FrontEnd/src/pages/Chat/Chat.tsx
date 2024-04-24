@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import { TextField, Button, Typography, Container, Grid, Card, CardContent, CardActions, CardMedia } from '@mui/material';
 import Challenges from './challenge.js';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 const defaultImages = [
     "https://media.gettyimages.com/id/517395905/fr/photo/stade-de-football.jpg?s=2048x2048&w=gi&k=20&c=NxVUwJ0zEeApcUGjS8_PZ3i--ULs-1wMb8L59EoGvpU=",
@@ -79,9 +80,56 @@ const Chat = () => {
         getChatrooms();
     }, []);
 
+    // State for opening and closing the form dialog
+    const [openDialog, setOpenDialog] = useState(false);
+
+
+    // Function to handle opening the form dialog
+    const handleClickOpen = () => {
+        setOpenDialog(true);
+    };
+
+    // Function to handle closing the form dialog
+    const handleClose = () => {
+        setOpenDialog(false);
+    };
+
+    // Function to handle creating a new chatroom
+    const handleCreateChatroom = () => {
+        // if (validateChatroomName()) {
+        //     // Implement your logic to create a new chatroom here
+        //     console.log("Creating chatroom:", chatroomName);
+        //     // Reset the chatroom name field and close the dialog
+        //     setChatroomName("");
+        //     handleClose();
+        // }
+        if (validateChatroomName()) {
+            axios
+                .post(
+                    "http://localhost:8000/chatroom",
+                    { name: chatroomName }, 
+                    {
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("token"),
+                        },
+                    }
+                )
+                .then((response) => {
+                    getChatrooms();
+                    setChatroomName("");
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+                setChatroomName("");
+                handleClose();
+        }
+    };
+
+
     return (
         <DefaultLayout>
-            <Container maxWidth="lg">
+            {/* <Container maxWidth="lg">
                 <Breadcrumb pageName="Chat" />
                 <Typography variant="h4" style={{ marginBottom: '20px' }}>Chatrooms</Typography>
                 {userRole.includes('Admin') && (
@@ -113,41 +161,15 @@ const Chat = () => {
                     </Card>
                 )}
 
-                <Grid container spacing={2}>
-                    {chatrooms.map((chatroom, index) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={chatroom._id}>
-                            <Card variant="outlined">
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={defaultImages[index % defaultImages.length]} 
-                                    alt="Default Image"
-                                />
-                                <CardContent>
-                                    <Typography variant="h6">{chatroom.name}</Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Link to={"/chatroom/" + chatroom._id} style={{ textDecoration: 'none' }}>
-                                        <Button
-                                            variant="contained"
-                                            style={{ backgroundColor: '#4CAF50', color: '#fff', borderRadius: '5px' }}
-                                        >
-                                            Join
-                                        </Button>
-                                    </Link>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Container>
+            </Container> */}
                 <main className="flex-grow container mx-auto space-y-12">
-                    <div className="pt-36">
+                    <div >
                         <div className="px-4 md:px-8">
-                            <h1 className="text-3xl font-bold text-left mb-6">Browse Challenges :</h1>
+                            <h1 className="text-3xl font-bold text-left mb-6 mb-1.5 text-2xl font-semibold text-black dark:text-white">Browse ChatRooms :</h1>
                         </div>
                     </div>
                     {/*search */}
+                    {userRole.includes('Admin') && (
                     <div className="max-w-screen-xl px-4 mx-auto lg:px-12 w-full">
                         <div className="relative shadow-sm sm:rounded-lg">
                             <div className="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
@@ -155,7 +177,7 @@ const Chat = () => {
                                     <form className="flex items-center">
                                         <label htmlFor="simple-search" className="sr-only">Search</label>
                                         <div className="relative w-full">
-                                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                                                 <svg aria-hidden="true"
                                                     className="w-5 h-5 text-gray-500 dark:text-gray-400"
                                                     fill="currentColor" viewBox="0 0 20 20"
@@ -173,25 +195,29 @@ const Chat = () => {
                                 </div>
                                 {/* Button to create challenge */}
                                 {/* {isLoggedIn() && userRole === "company" && ( */}
-                                    <div className="flex items-center mb-4">
-                                        <Link to="/challenges/new" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
-                                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                            </svg>
-                                            Create Challenge
-                                        </Link>
-                                    </div>
+                                <div className="flex items-center mb-4">
+    <Button
+        onClick={handleClickOpen}
+        style={{ backgroundColor: '#007bff', color: 'white' }} // Inline style for background color
+        className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
+        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        Create ChatRoom
+    </Button>
+</div>
+
                                 {/* )} */}
 
                             
                             </div>
                         </div>
                     </div>
-
+                    )}
                     {/* Tabs */}
                     <div>
                         <div className="flex space-x-4 mb-4">
-                            <button
+                            {/* <button
                                 className={`px-4 py-2 rounded-md focus:outline-none ${activeTab === 'Ongoing' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                                 // onClick={() => handleTabClick('Ongoing')}
                             >
@@ -208,11 +234,11 @@ const Chat = () => {
                                 // onClick={() => handleTabClick('Upcoming')}
                             >
                                 Upcoming
-                            </button>
+                            </button> */}
                         </div>
 
                         <div>
-                    {activeTab === 'Ongoing' && <div><h1 className="text-xl font-bold my-4">Ongoing Challenges</h1> <Challenges status="Ongoing"  /></div>}
+                    {activeTab === 'Ongoing' && <div><h1 className="text-xl font-bold my-4"></h1> <Challenges status="Ongoing"  /></div>}
                             {activeTab === 'Completed' && <div><h1 className="text-xl font-bold my-4">Completed Challenges</h1> <Challenges status="Completed" /></div>}
                             {activeTab === 'Upcoming' && <div><h1 className="text-xl font-bold my-4">Upcoming Challenges</h1> <Challenges status="Upcoming" /></div>}
                         </div>
@@ -226,6 +252,30 @@ const Chat = () => {
                     </div>
 
                 </main> 
+                <Dialog open={openDialog} onClose={handleClose}>
+                <DialogTitle>Create New Chatroom</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Enter the name for the new chatroom:
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="chatroomName"
+                        label="Chatroom Name"
+                        type="text"
+                        fullWidth
+                        value={chatroomName}
+                        onChange={(e) => setChatroomName(e.target.value)}
+                        error={!!chatroomNameError}
+                        helperText={chatroomNameError}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleCreateChatroom} variant="contained" color="primary">Create</Button>
+                </DialogActions>
+            </Dialog>
         </DefaultLayout>
     );
 };

@@ -28,7 +28,11 @@ export const fetchDefaultAchievementOfTeamByTeamId = createAsyncThunk(
   async ({idTeam}) => {
     try {
       const response = await axios.get('http://localhost:8000/tachievement/DefaultteamAchievs/'+idTeam);
-      return response.data;
+      //we have 2 data list types
+      return {
+        Active: response.data.Active,
+        NonActive: response.data.NonActive
+      };
     } catch (error) {
       throw Error('Error fetching achievement: ' + error.message);
     }
@@ -99,7 +103,8 @@ export const updatetachievementStatus = createAsyncThunk(
 const tachievementSlice = createSlice({
   name: 'tachievement',
   initialState: {
-    AchievementData: [],
+    ActiveAchievementData: [],
+    NonActiveAchievementData: [],
     loading: false,
     error: null
   },
@@ -112,7 +117,8 @@ const tachievementSlice = createSlice({
       })
       .addCase(fetchDefaultAchievementOfTeamByTeamId.fulfilled, (state, action) => {
         state.loading = false;
-        state.AchievementData = action.payload;
+        state.ActiveAchievementData = action.payload.Active;
+        state.NonActiveAchievementData = action.payload.NonActive;
       })
       .addCase(fetchDefaultAchievementOfTeamByTeamId.rejected, (state, action) => {
         state.loading = false;

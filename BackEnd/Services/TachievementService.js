@@ -21,14 +21,21 @@ const getTeamAchivementsByTeamId = async (req, res, next) => {
 };
 
 const getDefaultAchivementsOfTeamByTeamId = async (req, res, next) => {
-    var achievements =[]
+    var Activeachievements =[]
+    var NonActiveachievements =[]
     const TeamData = await Team.findById(req.params.idTeam);
     const TeamAchievementData =await Tachievement.find({ Team : req.params.idTeam });
     for (const tachievement of TeamAchievementData) {
-        const DefaultAchivement = await Achievement.findById(tachievement.Achievement)
-        achievements.push(DefaultAchivement)
+        if (tachievement.Status === "ACTIVE"){
+            const DefaultAchivement = await Achievement.findById(tachievement.Achievement)
+            Activeachievements.push(DefaultAchivement)
+        }
+        if (tachievement.Status === "NOTACTIVE"){
+            const DefaultAchivement = await Achievement.findById(tachievement.Achievement)
+            NonActiveachievements.push(DefaultAchivement)
+        }
     }
-    return res.json(achievements)
+    return res.json({"Active" :Activeachievements,"NonActive" : NonActiveachievements})
 };
 
 const updateTeamAchievementStatus = async (req,res,next)=>{

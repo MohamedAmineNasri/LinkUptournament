@@ -17,6 +17,7 @@ import {
   faEdit,
   faPlus,
   faTrophy,
+  faArrowAltCircleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 import { updatetachievementStatus } from "../../redux/slice/tachievementSlice";
@@ -34,11 +35,21 @@ export const CheckSelectedTeam = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // Step 1: Create a state variable for the active achievement type
+  const [achievementType, setAchievementType] = useState("active");
+
+  // Step 2: Create a toggle function to switch between achievement types
+  const toggleAchievementType = (type) => {
+    setAchievementType(type);
+  };
+
   const { SelectedteamDataById, loading, error } = useSelector(
     (state) => state.root.team
   );
   // tachivement redux
-  const { AchievementData } = useSelector((state) => state.root.tachievement);
+  const { ActiveAchievementData, NonActiveAchievementData } = useSelector(
+    (state) => state.root.tachievement
+  );
 
   //player redux
   const { players } = useSelector((state) => state.root.team);
@@ -152,94 +163,212 @@ export const CheckSelectedTeam = () => {
                   borderRadius: "20px",
                 }}
               >
-                <div className=" row teamBox">
-                  {/* --------------------------------------------------------------------------------- */}
-                  <div className="col-lg-4 col-md-3">
-                    {/* trophies button MODAL ---------------------------------------------- */}
-                    <div style={{ textAlign: "left" }}>
-                      <Button
-                        className="mb-3"
-                        variant="success"
-                        style={{
-                          backgroundColor: "rgba(139, 195, 74, 0.2)",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                        }}
-                        onClick={handleShow}
-                      >
-                        <FontAwesomeIcon fontSize="25px" icon={faTrophy} />
-                        <span style={{ marginTop: "10px" }}>Achievements</span>
-                      </Button>
+                {/* trophies button MODAL ---------------------------------------------- */}
+                <div
+                  style={{
+                    display: "flex", //Flexbox for alignment
+                    justifyContent: "space-between", // Place items at opposite ends
+                    paddingTop: "20px",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    paddingBottom: "10px",
+                  }}
+                >
+                  {/* Back button ---------------------------------------------------------- */}
+                  <Button
+                    variant="success"
+                    style={{
+                      border: "none",
+                      backgroundColor: "rgba(255, 255, 255, 0)",
+                    }}
+                    onClick={() => navigate(`/Academy/`)}
+                  >
+                    <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+                    <span className="pl-2">Back</span>
+                  </Button>
+                  {/* Back button End ---------------------------------------------------------- */}
+                  <Button
+                    variant="success"
+                    style={{
+                      backgroundColor: "rgba(139, 195, 74, 0.2)",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                    onClick={handleShow}
+                  >
+                    <FontAwesomeIcon fontSize="25px" icon={faTrophy} />
+                    <span style={{ marginTop: "10px" }}>Achievements</span>
+                  </Button>
 
-                      <Modal size="lg" show={show} onHide={handleClose}>
-                        <Modal.Header
-                          closeButton
+                  <Modal size="lg" show={show} onHide={handleClose}>
+                    <Modal.Header
+                      closeButton
+                      style={{
+                        backgroundColor: "#1d2631",
+                        border: "solid thin",
+                        borderBottom: "none",
+                      }}
+                    >
+                      <Modal.Title>Achievements</Modal.Title>
+                      {/* button toggle , active / non active --------------------- */}
+                      <div
+                        style={{ display: "inline-block", marginLeft: "auto" }}
+                      >
+                        <Button
+                          variant={
+                            achievementType === "active"
+                              ? "success"
+                              : "secondary"
+                          }
+                          onClick={() => toggleAchievementType("active")}
                           style={{
-                            backgroundColor: "#1d2631",
-                            border: "solid thin",
-                            borderBottom: "none",
+                            marginRight: "2px",
+                            backgroundColor: "transparent",
                           }}
                         >
-                          <Modal.Title>Achievements</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body
-                          style={{
-                            backgroundColor: "#1d2631",
-                            padding: "0px",
-                            border: "solid thin",
-                            borderTop: "none",
-                          }}
+                          Unlocked
+                        </Button>
+                        <Button
+                          variant={
+                            achievementType === "non-active"
+                              ? "primary"
+                              : "secondary"
+                          }
+                          onClick={() => toggleAchievementType("non-active")}
+                          style={{ backgroundColor: "transparent" }}
                         >
-                          <div>
-                            <Table hover responsive="xl">
-                              <thead>
+                          Locked
+                        </Button>
+                      </div>
+                      {/* ----------------------------------------------------- */}
+                    </Modal.Header>
+                    <Modal.Body
+                      style={{
+                        backgroundColor: "#1d2631",
+                        padding: "0px",
+                        border: "solid thin",
+                        borderTop: "none",
+                      }}
+                    >
+                      <div>
+                        <Table hover responsive="xl">
+                          <thead>
+                            <tr>
+                              <th>Title</th>
+                              <th>Description</th>
+                              <th>Type</th>
+                              <th>MileStone</th>
+                              <th>Reward</th>
+                            </tr>
+                          </thead>
+                          {/* Achivements active /non active condition ----------------- */}
+                          {achievementType === "active" ? (
+                            // Display a message if ActiveAchievementData is empty
+                            ActiveAchievementData.length === 0 ? (
+                              <tbody>
                                 <tr>
-                                  <th>Title</th>
-                                  <th>Description</th>
-                                  <th>Type</th>
-                                  <th>MileStone</th>
+                                  <td
+                                    colSpan="5"
+                                    style={{
+                                      textAlign: "center",
+                                      padding: "20px",
+                                    }}
+                                  >
+                                    You did not unlock any achievements
+                                  </td>
                                 </tr>
-                              </thead>
-                              {AchievementData.map((achi) => (
+                              </tbody>
+                            ) : (
+                              ActiveAchievementData.map((achi) => (
                                 <tbody
+                                  key={achi.id}
+                                  style={{ borderTop: "none" }}
+                                >
+                                  <tr>
+                                    <td className="tableTDwordwrap">
+                                      <img
+                                        style={{
+                                          maxWidth: "60px",
+                                          opacity: "0.6",
+                                        }}
+                                        src={trohy}
+                                      />
+                                      {achi.Name}
+                                    </td>
+                                    <td className="tableTDwordwrap">
+                                      {achi.Description}
+                                    </td>
+                                    <td className="tableTDwordwrap">
+                                      {achi.Type}
+                                    </td>
+                                    <td className="tableTDwordwrap">
+                                      {achi.MileStone}
+                                    </td>
+                                    <td className="tableTDwordwrap">
+                                      {achi.Reward}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              ))
+                            )
+                          ) : // Display a message if NonActiveAchievementData is empty
+                          NonActiveAchievementData.length === 0 ? (
+                            <tbody>
+                              <tr>
+                                <td
+                                  colSpan="5"
                                   style={{
-                                    borderTop: "none",
+                                    textAlign: "center",
+                                    padding: "20px",
                                   }}
                                 >
-                                  {AchievementData && (
-                                    // <tr style={getRowStyle(achi.Status)}>
-                                    <tr>
-                                      <td className="tableTDwordwrap">
-                                        <img
-                                          style={{
-                                            maxWidth: "60px",
-                                            opacity: "0.6",
-                                          }}
-                                          src={trohy}
-                                        ></img>
-                                        {achi.Name}
-                                      </td>
-
-                                      <td className="tableTDwordwrap">
-                                        {achi.Description}
-                                      </td>
-                                      <td className="tableTDwordwrap">
-                                        {achi.Type}
-                                      </td>
-                                      <td className="tableTDwordwrap">
-                                        {achi.MileStone}
-                                      </td>
-                                    </tr>
-                                  )}
-                                </tbody>
-                              ))}
-                            </Table>
-                          </div>
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                    {/* -------------------------------------------------------- */}
+                                  You unlocked all achievements !
+                                </td>
+                              </tr>
+                            </tbody>
+                          ) : (
+                            NonActiveAchievementData.map((achi) => (
+                              <tbody
+                                key={achi.id}
+                                style={{ borderTop: "none" }}
+                              >
+                                <tr>
+                                  <td className="tableTDwordwrap">
+                                    <img
+                                      style={{
+                                        maxWidth: "60px",
+                                        opacity: "0.6",
+                                      }}
+                                      src={trohy}
+                                    />
+                                    {achi.Name}
+                                  </td>
+                                  <td className="tableTDwordwrap">
+                                    {achi.Description}
+                                  </td>
+                                  <td className="tableTDwordwrap">
+                                    {achi.Type}
+                                  </td>
+                                  <td className="tableTDwordwrap">
+                                    {achi.MileStone}
+                                  </td>
+                                  <td className="tableTDwordwrap">
+                                    {achi.Reward}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            ))
+                          )}
+                        </Table>
+                      </div>
+                    </Modal.Body>
+                  </Modal>
+                </div>
+                {/* -------------------------------------------------------- */}
+                <div className=" row ">
+                  {/* --------------------------------------------------------------------------------- */}
+                  <div className="col-lg-4 col-md-3">
                     <img
                       src={SelectedteamDataById.TeamLogo}
                       alt="Logo"

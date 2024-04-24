@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, AppBar, styled } from '@mui/material';
 import VideoPlayer from './VideoPlayer';
 import Options from './Options';
@@ -7,6 +7,7 @@ import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 import Breadcrumb from '../../Dashboard/src/components/Breadcrumbs/Breadcrumb';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from "../../../Features/auth/authSlice.js"; 
+import '../LiveStream/ViewerLiveStreamUi.css'
 
 const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -31,21 +32,44 @@ const VideoPodcast = () => {
   const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
   const userRole = user ? `Role : ${user.roles}` : 'Welcome';
   const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
-  console.log('user'+ user)
-  console.log('role'+ userRole)
+  const [darkMode, setDarkMode] = useState(false);
+  const [rightSideVisible, setRightSideVisible] = useState(false);
+
+    // Toggle dark mode
+    const toggleDarkMode = () => {
+        console.log("ddd")
+        setDarkMode(!darkMode);
+        if (!darkMode) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    };
+
+    // Close right side panel
+    const closeRightSide = () => {
+        setRightSideVisible(false);
+    };
+
+    // Expand right side panel
+    const expandRightSide = () => {
+        setRightSideVisible(true);
+    };
+
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="VideoPodcast" />
-      <Wrapper>
-        <StyledAppBar position='static'>
-          <Typography variant='h2' align='center' style={{ color: 'white' }}>Video Chat</Typography>
-        </StyledAppBar>
+
+      {/* <Wrapper> */}
+      <div className={`app-container ${darkMode ? 'dark' : ''}`}>
+      <div className="app-main"> 
         <VideoPlayer />
         <Options >
           <Notifications />
         </Options>
-      </Wrapper>
+        </div>
+      {/* </Wrapper> */}
+      </div>
     </DefaultLayout>
   );
 };

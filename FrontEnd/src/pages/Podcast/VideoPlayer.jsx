@@ -31,9 +31,9 @@ const VideoPlayer = () => {
   return (
     <Grid container justifyContent="center">
       {stream && (
-        <StyledPaper>
+        // <StyledPaper>
           <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography>
+            {/* <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography> */}
             {stream.cameraStream && (
               <StyledVideo playsInline muted ref={myVideo} autoPlay />
             )}
@@ -41,15 +41,15 @@ const VideoPlayer = () => {
               <StyledVideo playsInline ref={userVideo} autoPlay />
             )}
           </Grid>
-        </StyledPaper>
+        // </StyledPaper>
       )}
       {callAccepted && !callEnded && (
-        <StyledPaper>
+        // <StyledPaper>
           <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>{call.name || 'Name'}</Typography>
+            {/* <Typography variant="h5" gutterBottom>{call.name || 'Name'}</Typography> */}
             <StyledVideo playsInline ref={userVideo} autoPlay />
           </Grid>
-        </StyledPaper>
+        // </StyledPaper>
       )}
     </Grid>
   );

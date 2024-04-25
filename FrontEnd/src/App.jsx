@@ -1,5 +1,7 @@
+
 import * as Sentry from "@sentry/react"
 import "./App.css";
+
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -26,7 +28,9 @@ import Register from "./pages/Authentication Pages/SignUp";
 import Tables from "./pages/User Tables/Tables";
 import Profile from "./pages/Profile Pages/Profile";
 import Chat from "./pages/Chat/Chat";
+import FrontUserChat from "./pages/Chat/FrontUserChat";
 import ChatroomPage from "./pages/Chat/ChatroomPage";
+import ChatroomFrontPage from "./pages/Chat/ChatroomFrontPage";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
@@ -43,7 +47,7 @@ import ConsultReferee from "./components/TournamentManagementComponenets/Consult
 import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
 import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
 import FormatSelect from "./components/Tournament/FormatSelect";
-import Pdf from  "./components/hamhoum/justpdf"
+import Pdf from "./components/hamhoum/justpdf";
 // import TournamentBracket  from "./components/TournamentBracket";
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
@@ -58,39 +62,55 @@ import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 import Panel from "./components/hamhoum/panel";
 import Fetchonematch from "./components/hamhoum/fetchOneMatchByID";
 import Fetchalltour from "./components/hamhoum/getAllTournement";
-import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
-import Buy from "./components/hamhoum/buyticket"
-import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
+import Buy from "./components/hamhoum/buyticket";
+import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
+
 import Payment from "./components/hamhoum/Payments"
 import Completiont from "./components/hamhoum/Completion"
 import {Elements,PaymentElement} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import QrCode from "./components/hamhoum/QrCode"
 
-import TeamLineUp from "./pages/TeamLineUp";
 
+import Payment from "./components/hamhoum/Payments";
+import Completiont from "./components/hamhoum/Completion";
+import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
+import HomeLandingPage from "./landingPage/HomeLandingPage";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function App() {
   // animeaa
   const [fixtures, setFixtures] = useState(data);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Change the animation duration as per your preference
+    });
+  }, []);
 
   //console.log(fixtures);
 
-
   // const refresh = () => window.location.reload(true);
+
   return (
     <Routes>
+
       <Route path="/qr" element={<QrCode />} />
 
            <Route path="/payment/:id" element={<Payment />} />
     <Route path="/completion/:id" element={<Completiont />} /> 
       <Route path="/pdf/:id" element={<Pdf />} />
           <Route path="/buy/" element={<Buy />} />
+
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
@@ -101,11 +121,11 @@ function App() {
       <Route path="/testtt" element={<AddMatchPopUpWindow />} />
       <Route path="/fetchonematch/:tournamentId" element={<Fetchonematch />} />
 
-
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
-        <Route index element={<Home />} />
+        <Route index element={<HomeLandingPage />} />
         <Route path="/lineup" element={<TeamLineUp />} />
+        <Route path="/ChatFront" element={<FrontUserChat />} />
         {/**YASSINE_ROUTES*/}
         {/* <Route path="/page" element={<LandingPage />} /> */}
         <Route path="/manage" element={<TournamentLayout />}>
@@ -160,8 +180,7 @@ function App() {
         ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
@@ -186,11 +205,15 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/videopodcast" element={<VideoPodcast />} />
             <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
-            <Route path="/viewerlivestreamui" element={<ViewerLiveStreamUi />} />
+            <Route
+              path="/viewerlivestreamui"
+              element={<ViewerLiveStreamUi />}
+            />
             <Route path="/videolivestream" element={<VideoLiveStream />} />
             <Route path="/videolivestreamui" element={<VideoLiveStreamUi />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/chatroom/:id" element={<ChatroomPage />} />
+            <Route path="/chatroomFront/:id" element={<ChatroomFrontPage />} />
             <Route path="/userstable" element={<Tables />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

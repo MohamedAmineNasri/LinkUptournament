@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import SidebarLinkGroup from "./SidebarLinkGroup";
-import Logo from "../../images/logo/logo.svg";
+import Logo from "../../../../../public/images/logo_vector.svg";
 import {
   selectCurrentToken,
   selectCurrentUser,
@@ -13,6 +13,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const navigate = useNavigate() 
   const user = useSelector(selectCurrentUser);
   const userRole = user ? `Role : ${user.roles}` : "Welcome";
 
@@ -71,9 +72,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/">
-          <img src={Logo} alt="Logo" />
-        </NavLink>
+        <div className={"flex gap-4 cursor-pointer"} onClick={()=> navigate("/")}>
+          <img src={Logo} alt="Logo" className="h-12" />
+          <span className="uppercase font-bold items-center justify-center text-white">
+            Linkup <br />
+            <span className="text-primary">tournament</span> 
+          </span>
+        </div>
 
         <button
           ref={trigger}
@@ -468,8 +473,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/manage"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('settings') &&
-                    'bg-graydark dark:bg-meta-4'
+                    pathname.includes("settings") &&
+                    "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <svg

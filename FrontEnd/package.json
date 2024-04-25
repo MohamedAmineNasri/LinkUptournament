@@ -66,6 +66,7 @@
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.26.3",
     "react-tournament-bracket": "^0.2.4",
+    "react-type-animation": "^3.2.0",
     "react-whatsapp": "^0.3.0",
     "reactjs-popup": "^2.0.6",
     "redux": "^5.0.1",

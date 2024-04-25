@@ -25,6 +25,7 @@ import Register from "./pages/Authentication Pages/SignUp";
 import Tables from "./pages/User Tables/Tables";
 import Profile from "./pages/Profile Pages/Profile";
 import Chat from "./pages/Chat/Chat";
+import FrontUserChat from "./pages/Chat/FrontUserChat";
 import ChatroomPage from "./pages/Chat/ChatroomPage";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
@@ -109,6 +110,7 @@ function App() {
         {/* Public Routes  */}
         <Route index element={<HomeLandingPage />} />
         <Route path="/lineup" element={<TeamLineUp />} />
+        <Route path="/ChatFront" element={<FrontUserChat />} />
         {/**YASSINE_ROUTES*/}
         {/* <Route path="/page" element={<LandingPage />} /> */}
         <Route path="/manage" element={<TournamentLayout />}>

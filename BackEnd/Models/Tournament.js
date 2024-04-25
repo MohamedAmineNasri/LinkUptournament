@@ -7,7 +7,7 @@ const TournamentSchema = new mongoose.Schema({
   },
   logo: {
     type: String,
-   // require: "Logo is required !!",
+    require: "Logo is required !!",
   },
   type: {
     type: String,
@@ -17,8 +17,8 @@ const TournamentSchema = new mongoose.Schema({
   rules: {
     type: String,
    
-  },  
-  status: {
+   },  
+   status: {
     type: String,
   
   },

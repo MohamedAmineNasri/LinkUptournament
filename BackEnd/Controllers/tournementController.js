@@ -1,4 +1,5 @@
-const Tournement = require("../Models/Tournement.js");
+const Tournement = require("../Models/Tournament");
+const team = require("../Models/Team")
 
 // Create a tournament
 async function createTournament(req, res) {
@@ -10,6 +11,10 @@ async function createTournament(req, res) {
     res.status(400).send(error);
   }
 }
+//get all tournement and get teamp and return team name 
+async function getAllTournamentsTeamName(req, res){}
+const tournaments = await Tournement.find();
+tournaments.team.map()
 
 // Get all tournaments
 async function getAllTournaments(req, res) {
@@ -70,4 +75,5 @@ module.exports = {
   getTournamentById,
   updateTournamentById,
   deleteTournamentById,
+  getAllTournamentsTeamName,
 };

@@ -13,7 +13,7 @@ export default function Fixture() {
   const matchID = params.matchID;
 
   const results = data.response.filter((match) => {
-    console.log(match);
+    // console.log(match);
     return match.fixture.id == matchID;
   });
 
@@ -38,9 +38,9 @@ export default function Fixture() {
 
   return (
     
-    <div  className="pb-10 bg-white  ">
+    <div  className="pb-10 bg-white text-black ">
       
-      <div key={fixture.fixture.id} className="bg-white py-2">
+      <div key={fixture.fixture.id} className="bg-white py-2 text-black">
         <div align="center">
           <img src={fixture.league.logo} width={25} alt="logo" />
           {fixture.league.name}
@@ -72,7 +72,7 @@ export default function Fixture() {
       </div>
 
       <div align="center" className="grid grid-cols-1 divide-y">
-        <h1 className=" bg-gray-700 p-1 text-gray-300 text-xl">Events</h1>
+        <h1 className=" bg-gray-700 p-1 text-gray-300 text-xl text-black">Events</h1>
 
         {!fixture.events
           ? null
@@ -94,7 +94,7 @@ export default function Fixture() {
       </div>
 
       <div align="center" className="grid grid-cols-1 divide-y">
-        <h1 className=" bg-gray-700 p-1 text-gray-300 text-xl">Score</h1>
+        <h1 className=" bg-gray-700 p-1 text-gray-300 text-xl text-black">Score</h1>
 
         <div className="p-2">
           First Half

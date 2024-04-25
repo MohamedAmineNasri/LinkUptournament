@@ -9,6 +9,25 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider.jsx";
 import { ContextProvider } from "./pages/Podcast/SocketContext.jsx";
 
+//...
+import * as Sentry from "@sentry/react";
+
+Sentry.init({
+  dsn: "https://675a463797dc0e1c1afacf4b3eb9abd2@o4507119370108928.ingest.de.sentry.io/4507119372402768",
+  integrations: [
+    Sentry.metrics.metricsAggregatorIntegration(),
+    Sentry.reactRouterV3BrowserTracingIntegration({useEffect: React.useEffect,}),
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration(),
+  ],
+  tracesSampleRate: 1.0, 
+  tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+  replaysSessionSampleRate: 0.1, 
+  replaysOnErrorSampleRate: 1.0, 
+});
+
+
+
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

@@ -1,13 +1,23 @@
 const express = require("express");
 const cors = require("cors");
-
+const { resolve } = require("path");
+const env = require("dotenv").config({ path: "./.env" });
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2022-08-01",
+  });
 //-
+
 var AcademyRouter = require("./Routes/Academy");
 var TeamRouter = require("./Routes/Team");
 const groupRoutes = require("./Routes/Group");
 const staduimRoutes = require("./Routes/Staduim");
 const tournamentRoutes = require("./Routes/Tournament");
 const match = require("./Routes/match");
+
+const m = require("./Models/match")
+
+
+
 
 const app = express();
 
@@ -60,7 +70,8 @@ const upload = multer({ storage });
 // app.use(cors());
 // app.use(express.json());
 
-const cookieParser = require("cookie-parser");
+const cookieParser = require('cookie-parser')
+
 
 // i added the {limit: '50mb'} so i can upolad files larger than 100kb
 app.use(express.json({ limit: "50mb" }));
@@ -146,82 +157,80 @@ app.get("/images", async (req, res) => {
       allImages.push(item);
     });
 
+
     res.send({ files: allImages });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       message: "Error Something went wrong",
       error,
+     });
+    }
+    });
+//stripe
+app.use(express.static(process.env.STATIC_DIR));
+
+app.get("/", (req, res) => {
+  const path = resolve(process.env.STATIC_DIR + "/index.html");
+  res.sendFile(path);
+});
+
+app.get("/config", (req, res) => {
+  res.send({
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  });
+});
+
+app.post("/create-payment-intent/:id", async (req, res) => {
+  try {
+    const matchet = await m.findById(req.params.id);
+    
+    // Check if ticket number is greater than 0
+    if (matchet.ticketNumber <= 0) {
+      throw new Error("No more tickets available");
+    }
+    
+    // Create payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      currency: "EUR",
+      amount: matchet.price,
+      automatic_payment_methods: { enabled: true },
+    });
+
+    // Update match details
+    matchet.price += 5;
+    matchet.ticketNumber -= 1;
+    await matchet.save();
+
+    // Send publishable key, PaymentIntent details, and updated match details to client
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+      match: matchet
+    });
+  } catch (e) {
+    return res.status(400).send({
+      error: {
+        message: e.message,
+      },
     });
   }
 });
 
-app.get("/download/:filename", async (req, res) => {
-  try {
-    await mongoClient.connect();
 
-    const database = mongoClient.db("LinkUptournament");
 
-    const imageBucket = new GridFSBucket(database, {
-      bucketName: "photos",
-    });
+// WebRTC endpoints
+app.post("/consumer", async (req, res) => {
+    const peer = new webrtc.RTCPeerConnection({
+        iceServers: [
+            {
+                urls: "stun:stun.stunprotocol.org"
+            }
+        ]
 
-    let downloadStream = imageBucket.openDownloadStreamByName(
-      req.params.filename
-    );
-
-    downloadStream.on("data", function (data) {
-      return res.status(200).write(data);
-    });
-
-    downloadStream.on("error", function (data) {
-      return res.status(404).send({ error: "Image not found" });
-    });
-
-    downloadStream.on("end", () => {
-      return res.end();
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Error Something went wrong",
-      error,
     });
   }
 });
-app.get("/download/:filename", async (req, res) => {
-  try {
-    await mongoClient.connect()
 
-    const database = mongoClient.db("images")
-
-    const imageBucket = new GridFSBucket(database, {
-      bucketName: "photos",
-    })
-
-    let downloadStream = imageBucket.openDownloadStreamByName(
-      req.params.filename
-    )
-
-    downloadStream.on("data", function (data) {
-      return res.status(200).write(data)
-    })
-
-    downloadStream.on("error", function (data) {
-      return res.status(404).send({ error: "Image not found" })
-    })
-
-    downloadStream.on("end", () => {
-      return res.end()
-    })
-  } catch (error) {
-    console.log(error)
-    res.status(500).send({
-      message: "Error Something went wrong",
-      error,
-    })
-  }
-})
 //YASSINE
 app.use("/player", playerRouter);
 app.use("/referee", refereeRouter);

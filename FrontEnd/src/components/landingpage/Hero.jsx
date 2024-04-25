@@ -101,7 +101,7 @@ const Hero = () => {
                     className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"
                 />
             </div>
-          <ModalVideo
+          {/* <ModalVideo
             thumb={VideoThumb}
             thumbWidth={768}
             thumbHeight={432}
@@ -109,7 +109,14 @@ const Hero = () => {
             video="/videos/video.mp4"
             videoWidth={1920}
             videoHeight={1080}
-          />
+          /> */}
+          <img
+          src="https://i.pinimg.com/originals/7c/b0/78/7cb078025327e99122aecb116efb279d.gif"
+          alt="Modal video thumbnail"
+          width={1920}
+          height={1080}
+        />
+
         </div>
       </div>
     </section>

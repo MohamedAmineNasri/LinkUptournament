@@ -7,10 +7,11 @@ import Features from "../../components/landingpage/Features";
 import Testimonials from "../../components/landingpage/Testimonials";
 import Newsletter from "../../components/landingpage/Newsletter";
 import Footer from "../../components/landingpage/Footer";
-import Challenges from "./challenge";
+import Challenges from "./challengeFrontUser";
 import { Link } from "react-router-dom";
 const FrontUserChat = () => {
     const [activeTab, setActiveTab] = useState('Ongoing');
+    
 
     return (
         <>
@@ -28,13 +29,13 @@ const FrontUserChat = () => {
                 <main className="flex-grow container mx-auto space-y-12">
                     <div className="pt-36">
                         <div className="px-4 md:px-8">
-                            <h1 className="text-3xl font-bold text-left mb-6">Browse Challenges :</h1>
+                            <h1 className="text-3xl font-bold text-left mb-6 mb-1.5 text-2xl font-semibold text-black dark:text-white">Browse ChatRooms :</h1>
                         </div>
                     </div>
                     {/*search */}
                     <div className="max-w-screen-xl px-4 mx-auto lg:px-12 w-full">
                         <div className="relative shadow-sm sm:rounded-lg">
-                            <div className="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
+                            <div className="flex flex-col items-center justify-center p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
                                 <div className="w-full md:w-1/2">
                                     <form className="flex items-center">
                                         <label htmlFor="simple-search" className="sr-only">Search</label>
@@ -58,12 +59,12 @@ const FrontUserChat = () => {
                                 {/* Button to create challenge */}
                                 {/* {isLoggedIn() && userRole === "company" && ( */}
                                     <div className="flex items-center mb-4">
-                                        <Link to="/challenges/new" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                                        {/* <Link to="/challenges/new" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
                                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                             </svg>
                                             Create Challenge
-                                        </Link>
+                                        </Link> */}
                                     </div>
                                 {/* )} */}
 

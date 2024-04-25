@@ -27,6 +27,7 @@ import Profile from "./pages/Profile Pages/Profile";
 import Chat from "./pages/Chat/Chat";
 import FrontUserChat from "./pages/Chat/FrontUserChat";
 import ChatroomPage from "./pages/Chat/ChatroomPage";
+import ChatroomFrontPage from "./pages/Chat/ChatroomFrontPage";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
@@ -198,6 +199,7 @@ function App() {
             <Route path="/videolivestreamui" element={<VideoLiveStreamUi />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/chatroom/:id" element={<ChatroomPage />} />
+            <Route path="/chatroomFront/:id" element={<ChatroomFrontPage />} />
             <Route path="/userstable" element={<Tables />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

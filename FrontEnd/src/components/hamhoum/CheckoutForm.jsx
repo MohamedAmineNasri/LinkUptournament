@@ -2,7 +2,7 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 
-import "./yasser.css";
+import "./yasserr.css";
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/complation/${id}`,
+        return_url: `${window.location.origin}/c/${id}`,
       },
     });
 

@@ -15,5 +15,6 @@ router.put(":id/score1/", matchController.updatescoreById);
 router.put("/:id/score2", matchController.updatescore2ById);
 router.put("/:id/score1min", matchController.updatescore2_ById);
 router.put("/:id/score2min", matchController.updatescore_ById);
+router.get("/verif/:id/:ticket",matchController.verifyTicket)
 
 module.exports = router;

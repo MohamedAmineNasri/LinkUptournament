@@ -196,6 +196,7 @@ app.get("/download/:filename", async (req, res) => {
   }
 });
 //YASSINE
+
 //stripe
 app.use(express.static(process.env.STATIC_DIR));
 
@@ -245,16 +246,18 @@ app.post("/create-payment-intent/:id", async (req, res) => {
   }
 });
 
+
+
 // WebRTC endpoints
-app.post("/consumer", async (req, res) => {
-  const peer = new webrtc.RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.stunprotocol.org",
-      },
-    ],
-  });
-});
+// app.post("/consumer", async (req, res) => {
+//   const peer = new webrtc.RTCPeerConnection({
+//     iceServers: [
+//       {
+//         urls: "stun:stun.stunprotocol.org",
+//       },
+//     ],
+//   });
+// });
 
 //YASSINE
 app.use("/player", playerRouter);
@@ -272,33 +275,31 @@ app.use("/uploads", express.static("uploads"));
 // WebRTC endpoints
 app.post("/consumer", async (req, res) => {
   const peer = new webrtc.RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.stunprotocol.org",
-      },
-    ],
+      iceServers: [
+          {
+              urls: "stun:stun.stunprotocol.org"
+          }
+      ]
   });
   const desc = new webrtc.RTCSessionDescription(req.body.sdp);
   await peer.setRemoteDescription(desc);
-  senderStream
-    .getTracks()
-    .forEach((track) => peer.addTrack(track, senderStream));
+  senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
   const payload = {
-    sdp: peer.localDescription,
-  };
+      sdp: peer.localDescription
+  } 
 
   res.json(payload);
 });
 
-app.post("/broadcast", async (req, res) => {
+app.post('/broadcast', async (req, res) => { 
   const peer = new webrtc.RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.stunprotocol.org",
-      },
-    ],
+      iceServers: [
+          {
+              urls: "stun:stun.stunprotocol.org"
+          }
+      ]
   });
   peer.ontrack = (e) => handleTrackEvent(e, peer);
   const desc = new webrtc.RTCSessionDescription(req.body.sdp);
@@ -306,14 +307,16 @@ app.post("/broadcast", async (req, res) => {
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
   const payload = {
-    sdp: peer.localDescription,
-  };
+      sdp: peer.localDescription
+  }
 
   res.json(payload);
 });
 
+
 function handleTrackEvent(e, peer) {
   senderStream = e.streams[0];
 }
+
 
 module.exports = app;

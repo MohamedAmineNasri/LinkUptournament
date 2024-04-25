@@ -1,4 +1,7 @@
-import * as Sentry from "@sentry/react";
+
+import * as Sentry from "@sentry/react"
+import "./App.css";
+
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -25,7 +28,9 @@ import Register from "./pages/Authentication Pages/SignUp";
 import Tables from "./pages/User Tables/Tables";
 import Profile from "./pages/Profile Pages/Profile";
 import Chat from "./pages/Chat/Chat";
+import FrontUserChat from "./pages/Chat/FrontUserChat";
 import ChatroomPage from "./pages/Chat/ChatroomPage";
+import ChatroomFrontPage from "./pages/Chat/ChatroomFrontPage";
 import RequireAuth from "./pages/RequireAuth";
 import PersistLogin from "./pages/PersistLogin";
 import UserList from "../Features/users/UserList";
@@ -63,10 +68,16 @@ import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
 
-import Payment from "./components/hamhoum/Payments";
-import Completiont from "./components/hamhoum/Completion";
-import { Elements, PaymentElement } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import Payment from "./components/hamhoum/Payments"
+import Completiont from "./components/hamhoum/Completion"
+import {loadStripe} from '@stripe/stripe-js';
+import QrCode from "./components/hamhoum/QrCode"
+
+
+// import Payment from "./components/hamhoum/Payments";
+// import Completiont from "./components/hamhoum/Completion";
+// import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 
 import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
@@ -91,10 +102,14 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/payment/:id" element={<Payment />} />
-      <Route path="/completion" element={<Completiont />} />
-      <Route path="/pdf" element={<Pdf />} />
-      <Route path="/buy/" element={<Buy />} />
+
+      <Route path="/qr" element={<QrCode />} />
+
+           <Route path="/payment/:id" element={<Payment />} />
+    <Route path="/c/:id" element={<Completiont />} /> 
+      <Route path="/pdf/:id" element={<Pdf />} />
+          <Route path="/buy/" element={<Buy />} />
+
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
@@ -109,6 +124,7 @@ function App() {
         {/* Public Routes  */}
         <Route index element={<HomeLandingPage />} />
         <Route path="/lineup" element={<TeamLineUp />} />
+        <Route path="/ChatFront" element={<FrontUserChat />} />
         {/**YASSINE_ROUTES*/}
         {/* <Route path="/page" element={<LandingPage />} /> */}
         <Route path="/manage" element={<TournamentLayout />}>
@@ -196,6 +212,7 @@ function App() {
             <Route path="/videolivestreamui" element={<VideoLiveStreamUi />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/chatroom/:id" element={<ChatroomPage />} />
+            <Route path="/chatroomFront/:id" element={<ChatroomFrontPage />} />
             <Route path="/userstable" element={<Tables />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

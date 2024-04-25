@@ -30,11 +30,9 @@ const Features = () => {
         <div className="pt-12 md:pt-20">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h2 mb-4 text-black-2 font-inter">Explore the solutions</h1>
+            <h1 className="h2 mb-4 text-black-2 font-inter">Explore LinkUptournament</h1>
             <p className="text-xl text-gray-600">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur excepteur sint occaecat
-              cupidatat.
+              Revolutionizing football tournaments for academies, LinkUpTournament streamlines every aspect from planning to results. Tailor-made for your needs.
             </p>
           </div>
 
@@ -46,11 +44,9 @@ const Features = () => {
               data-aos="fade-right"
             >
               <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                <h3 className="h3 mb-3 text-black-2">Powerful suite of tools</h3>
+                <h3 className="h3 mb-3 text-black-2">Robust Set of Features</h3>
                 <p className="text-xl text-gray-600">
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa.
+                  Elevate your tournament experience with our robust feature set, tailored for seamless management and real-time updates.
                 </p>
               </div>
               {/* Tabs buttons */}
@@ -65,11 +61,10 @@ const Features = () => {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">
-                      Building the Simple ecosystem
+                    Building football tournaments
                     </div>
                     <div className="text-gray-600">
-                      Take collaboration to the next level with security and
-                      administrative features built for teams.
+                      Crafting dynamic football tournaments for enthusiasts.
                     </div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -92,11 +87,10 @@ const Features = () => {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">
-                      Building the Simple ecosystem
+                      Streaming live football tournaments
                     </div>
                     <div className="text-gray-600">
-                      Take collaboration to the next level with security and
-                      administrative features built for teams.
+                      Delivering real-time commentary to elevate your live football experience.
                     </div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -122,11 +116,10 @@ const Features = () => {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">
-                      Building the Simple ecosystem
+                      Empowering Community
                     </div>
                     <div className="text-gray-600">
-                      Take collaboration to the next level with security and
-                      administrative features built for teams.
+                      Fostering engaging conversations in the heart of your chatroom experience.
                     </div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -168,23 +161,17 @@ const Features = () => {
                     beforeEnter={() => heightFix()}
                     unmount={false}
                   >
-                    <div className="relative inline-flex flex-col">
-                      <img
-                        className="md:max-w-none mx-auto rounded"
-                        src={FeaturesBg}
-                        width={500}
-                        height="462"
-                        alt="Features bg"
-                      />
-                      <img
-                        className="md:max-w-none absolute w-full left-0 transform animate-float"
-                        src={FeaturesElement}
-                        width={500}
-                        height="44"
-                        alt="Element"
-                        style={{ top: "30%" }}
-                      />
-                    </div>
+                  <div className="relative inline-flex flex-col" style={{ width: '500px', height: '462px' }}>
+                    <img
+                      className="md:max-w-none absolute w-full left-0 transform animate-float"
+                      src="https://scontent.ftun14-1.fna.fbcdn.net/v/t1.15752-9/439451765_400396589582249_1204692948231104994_n.png?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=KXecwuFBaZ8Q7kNvgHKalAs&_nc_ht=scontent.ftun14-1.fna&oh=03_Q7cD1QFaJCFaQirJcbSYUTnlTzN4Yec2ZtnvCfMgMcvUSmHRKw&oe=66522A19"
+                      width={500}
+                      height="44"
+                      alt="Element"
+                      style={{ top: "30%" }}
+                    />
+                  </div>
+
                   </Transition>
                   {/* Item 2 */}
                   <Transition
@@ -200,23 +187,17 @@ const Features = () => {
                     beforeEnter={() => heightFix()}
                     unmount={false}
                   >
-                    <div className="relative inline-flex flex-col">
-                      <img
-                        className="md:max-w-none mx-auto rounded"
-                        src={FeaturesBg}
-                        width={500}
-                        height="462"
-                        alt="Features bg"
-                      />
-                      <img
-                        className="md:max-w-none absolute w-full left-0 transform animate-float"
-                        src={FeaturesElement}
-                        width={500}
-                        height="44"
-                        alt="Element"
-                        style={{ top: "30%" }}
-                      />
-                    </div>
+                  <div className="relative inline-flex flex-col" style={{ width: '500px', height: '462px' }}>
+                  <img
+                    className="md:max-w-none absolute w-full left-0 transform animate-float"
+                    src="https://scontent.ftun14-1.fna.fbcdn.net/v/t1.15752-9/440069515_7268389469877540_7781711570576984644_n.png?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=fc7trAOhUcQAb4cl24b&_nc_ht=scontent.ftun14-1.fna&oh=03_Q7cD1QEmxvccR9a1GIOYfC4YGYR6ppByxkVpk_yBLXZIKTrPRA&oe=66521FB3"
+                    width={500}
+                    height="44"
+                    alt="Element"
+                    style={{ top: "30%" }}
+                  />
+                </div>
+
                   </Transition>
                   {/* Item 3 */}
                   <Transition
@@ -232,22 +213,15 @@ const Features = () => {
                     beforeEnter={() => heightFix()}
                     unmount={false}
                   >
-                    <div className="relative inline-flex flex-col">
-                      <img
-                        className="md:max-w-none mx-auto rounded"
-                        src={FeaturesBg}
-                        width={500}
-                        height="462"
-                        alt="Features bg"
-                      />
-                      <img
-                        className="md:max-w-none absolute w-full left-0 transform animate-float"
-                        src={FeaturesElement}
-                        width={500}
-                        height="44"
-                        alt="Element"
-                        style={{ top: "30%" }}
-                      />
+                    <div className="relative inline-flex flex-col" style={{ width: '500px', height: '462px' }}>
+                    <img
+                      className="md:max-w-none absolute w-full left-0 transform animate-float"
+                      src="https://scontent.ftun14-1.fna.fbcdn.net/v/t1.15752-9/435134743_1203417567307276_1387491588653900397_n.png?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=dkxUG9Pjx-AQ7kNvgGDFekU&_nc_ht=scontent.ftun14-1.fna&oh=03_Q7cD1QHhEUSPQQ2MLmrp7Rzh7_h3xOcg0ULQPwgfw5siuI82TQ&oe=66522AE5"
+                      width={500}
+                      height="44"
+                      alt="Element"
+                      style={{ top: "30%" }}
+                    />
                     </div>
                   </Transition>
                 </div>

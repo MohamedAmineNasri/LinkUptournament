@@ -1,6 +1,8 @@
 import React from "react";
 import ModalVideo from "./ModalVideo";
 import VideoThumb from "../../../public/images/hero-image.png";
+import { TypeAnimation } from 'react-type-animation';
+
 const Hero = () => {
   return (
     <section className="relative">
@@ -39,7 +41,7 @@ const Hero = () => {
         {/* Hero content */}
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Section header */}
-          <div className="text-center pb-12 md:pb-16">
+          {/* <div className="text-center pb-12 md:pb-16">
             <h1
               className="text-black-2 text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4 z-50"
               data-aos="zoom-y-out"
@@ -81,8 +83,24 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+    <div className="flex justify-center items-center gap-x-2 text-[32px] sm:text-[64px] lg:text-[72px]">For
+                <TypeAnimation
 
+                    sequence={[
+                        // Same substring at the start will only be typed once, initially
+                        'Academies',
+                        2000,
+                        'Footballer',
+                        2000,
+
+                    ]}
+                    speed={50}
+                    style={{ fontSize: '1.5em' }}
+                    repeat={Infinity}
+                    className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"
+                />
+            </div>
           <ModalVideo
             thumb={VideoThumb}
             thumbWidth={768}

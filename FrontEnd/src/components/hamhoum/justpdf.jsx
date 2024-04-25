@@ -4,14 +4,20 @@ import download from 'downloadjs';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import QRCode from 'qrcode';
+import { useEffect, useState } from "react";
 
 const PdfGenerator = ({ id }) => {
+  const [ticket, setTicket] = useState(null);
   const createPdf = async (id) => {
+    
     try {
+      
       // Fetch match data from the server
       const response = await axios.get(`http://localhost:8000/match/${id}`);
       const matchData = response.data;
+      setTicket(response.data.ticketId.length)
       console.log(response.data);
+      console.log(response.data.ticketId.length);
 
       // Fetch team data from the server
       const teamPromises1 = await axios.get(`http://localhost:8000/team/getTeam/${matchData.team1}`);
@@ -107,7 +113,7 @@ const PdfGenerator = ({ id }) => {
           width: 100,
           height: 150,
         });
-        const qrCodeDataUrl = await QRCode.toDataURL(`http://localhost:8000/match/verif/${id}/8`);
+        const qrCodeDataUrl = await QRCode.toDataURL(`http://localhost:8000/match/verif/${id}/${ticket}`);
 
       // Embed the QR code image into the PDF document
       const qrCodeImage = await pdfDoc.embedPng(qrCodeDataUrl);

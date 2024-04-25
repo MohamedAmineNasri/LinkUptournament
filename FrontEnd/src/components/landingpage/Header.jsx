@@ -43,6 +43,14 @@ const Header = () => {
                 Chatrooms
             </button>
         </li>
+        <li>
+            <button
+                onClick={() => navigate("/fetchmatchforview")}
+                className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+            >
+                Matches
+            </button>
+        </li>
         
         {/* User authentication links */}
         {user ? (

@@ -2,7 +2,7 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 
-import "./yasserr.css";
+// import "./yasserr.css";
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 

@@ -148,64 +148,62 @@ if (TournementId.length ==0) {
               <div className="row">
                 <div className="col-12 title-section">
                 <div style={containerStyle}>
-      <h2 className="heading">Matches</h2>
+      <h2 className="heading ">Matches</h2>
       <Link to="/buy"> {/* Use Link to wrap the button */}
         <button>Buy Ticket</button>
       </Link>
     </div>
                 </div>
-                {TournementId
-        .slice()
-        .reverse()
-        .map((match, index) => (
-          
-                <div className="col-lg-6 mb-4" >
-                  <Link to ={`/fetchonematch/${match._id}`}>
-                  <div className="bg-light p-4 rounded" >
-                    <div className="widget-body">
-                      <div className="widget-vs">
-                        <div className="d-flex align-items-center justify-content-around justify-content-between w-100">
-                          <div className="team-1 text-center">
-                           
-                            <img
-                              src={Team1logo.slice().reverse()[index]}
-                              alt="Image"
-                            />
-                            <h3>{Team1name.slice().reverse()[index]}</h3>
-                          </div>
-                          <div>
-                            <span className="vs" >
-                              <span style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>VS</span>
-                              
-                            </span>
-                            <span  >
-                              <span style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}>{match.goal1.length}:{match.goal2.length}</span>
-                              
-                            </span>
-                          </div>
-                          <div className="team-2 text-center">
-                            <img
-                              src={Team2logo.slice().reverse()[index]} 
-                              alt="Image"
-                            />
-                            <h3>{Team2name.slice().reverse()[index]}</h3>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-4">
+  {TournementId
+    .slice()
+    .reverse()
+    .map((match, index) => (
+      <div key={match._id} className="col-lg-6 mb-4">
+        <Link to={`/fetchonematch/${match._id}`}>
+          <div className="bg-light p-4 rounded">
+            <div className="widget-body">
+              <div className="widget-vs">
+                <div className="flex justify-between items-center">
+                  <div className="team-1 text-center">
+                    <img
+                      src={Team1logo.slice().reverse()[index]}
+                      alt="Team 1 Image"
+                    />
+                    <h3>{Team1name.slice().reverse()[index]}</h3>
+                  </div>
+                  <div>
+                    <span className="vs">
+                      <span className="flex items-center justify-center">VS</span>
+                    </span>
+                    <span>
+                      <span className="flex items-center justify-center">{match.goal1.length}:{match.goal2.length}</span>
+                    </span>
+                  </div>
+                  <div className="team-2 text-center">
+                    <img
+                      src={Team2logo.slice().reverse()[index]}
+                      alt="Team 2 Image"
+                    />
+                    <h3>{Team2name.slice().reverse()[index]}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                    <div className="text-center widget-vs-contents mb-4">
-                      <h4>{match.matchstatus}</h4>
-                      <p className="mb-5">
-                        <span className="d-block">{match.date}</span>
-                        <span className="d-block">{match.startingtime}</span>
-                        <strong className="text-primary">{match.tournamentName}</strong>
-                      </p>
-                    </div>
-                    
-               
-                  </div> </Link>
-                </div>   ))}
+            <div className="text-center widget-vs-contents mb-4">
+              <h4>{match.matchstatus}</h4>
+              <p className="mb-5">
+                <span className="block">{match.date}</span>
+                <span className="block">{match.startingtime}</span>
+                <strong className="text-primary">{match.tournamentName}</strong>
+              </p>
+            </div>
+          </div>
+        </Link>
+      </div>
+    ))}
+</div>
                
                 
               </div>

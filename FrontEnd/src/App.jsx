@@ -74,7 +74,11 @@ import {loadStripe} from '@stripe/stripe-js';
 import QrCode from "./components/hamhoum/QrCode"
 
 
-import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+// import Payment from "./components/hamhoum/Payments";
+// import Completiont from "./components/hamhoum/Completion";
+// import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
+
 import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
@@ -102,7 +106,7 @@ function App() {
       <Route path="/qr" element={<QrCode />} />
 
            <Route path="/payment/:id" element={<Payment />} />
-    <Route path="/completion/:id" element={<Completiont />} /> 
+    <Route path="/c/:id" element={<Completiont />} /> 
       <Route path="/pdf/:id" element={<Pdf />} />
           <Route path="/buy/" element={<Buy />} />
 

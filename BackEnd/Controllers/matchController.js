@@ -27,14 +27,14 @@ async function verifyTicket(req, res) {
     }
 
     // Check if the ticket ID is already in the ticketID array
-    if (matchh.ticketID.includes(req.params.ticket)) {
-      console.log(matchh.ticketID.includes(req.params.ticket));
+    if (matchh.ticketId.includes(req.params.ticket)) {
+      console.log(matchh.ticketId.includes(req.params.ticket));
       return res.json("Ticket already used");
     }
-    console.log(matchh.ticketID.includes(req.params.ticket));
+    console.log(matchh.ticketId.includes(req.params.ticket));
 
     // Add the ticket ID to the ticketID array
-     matchh.ticketID.push(req.params.ticket);
+     matchh.ticketId.push(req.params.ticket);
    
     // Save the match
     await matchh.save();

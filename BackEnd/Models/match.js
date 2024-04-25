@@ -23,7 +23,7 @@ var match = new Schema({
     card:[{player: {type: mongoose.Schema.Types.ObjectId, ref: 'Player'},name:String,number:Number,yellow:Number,red:Number}],
     price:Number,
     ticketNumber:Number,
-    ticketID:[Number],
+    ticketId:[Number],
     w:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
     group: {
         type: mongoose.Schema.Types.ObjectId,

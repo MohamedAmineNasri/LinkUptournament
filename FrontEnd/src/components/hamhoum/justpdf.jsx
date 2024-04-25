@@ -3,6 +3,7 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import download from 'downloadjs';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import QRCode from 'qrcode';
 
 const PdfGenerator = ({ id }) => {
   const createPdf = async (id) => {
@@ -92,8 +93,8 @@ const PdfGenerator = ({ id }) => {
        page.drawImage(logoImage, {
          x: 55, // Adjust the x-coordinate as needed
          y: height - 500, // Adjust the y-coordinate as needed
-         width: imageDims.width,
-         height: imageDims.height,
+         width: 100,
+         height: 150,
        });
         // Embed the team1 logo image
         const logoImage2 = await pdfDoc.embedPng(team2logo); // Assuming team1logo is image data
@@ -103,9 +104,20 @@ const PdfGenerator = ({ id }) => {
         page.drawImage(logoImage2, {
           x: 110*4, // Adjust the x-coordinate as needed
           y: height - 500, // Adjust the y-coordinate as needed
-          width: imageDims.width,
-          height: imageDims.height,
+          width: 100,
+          height: 150,
         });
+        const qrCodeDataUrl = await QRCode.toDataURL(`http://localhost:8000/match/verif/${id}/8`);
+
+      // Embed the QR code image into the PDF document
+      const qrCodeImage = await pdfDoc.embedPng(qrCodeDataUrl);
+      const qrCodeDims = qrCodeImage.scale(0.5); // Adjust the scale as needed
+      page.drawImage(qrCodeImage, {
+        x: 10,
+        y: -1,
+        width: qrCodeDims.width,
+        height: qrCodeDims.height,
+      });
 
       // Serialize the PDFDocument to bytes (a Uint8Array)
       const pdfBytes = await pdfDoc.save();

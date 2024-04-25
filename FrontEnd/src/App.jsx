@@ -1,4 +1,7 @@
-import * as Sentry from "@sentry/react";
+
+import * as Sentry from "@sentry/react"
+import "./App.css";
+
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -65,6 +68,13 @@ import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
 
+import Payment from "./components/hamhoum/Payments"
+import Completiont from "./components/hamhoum/Completion"
+import {Elements,PaymentElement} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import QrCode from "./components/hamhoum/QrCode"
+
+
 import Payment from "./components/hamhoum/Payments";
 import Completiont from "./components/hamhoum/Completion";
 import { Elements, PaymentElement } from "@stripe/react-stripe-js";
@@ -93,10 +103,14 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/payment/:id" element={<Payment />} />
-      <Route path="/completion" element={<Completiont />} />
-      <Route path="/pdf" element={<Pdf />} />
-      <Route path="/buy/" element={<Buy />} />
+
+      <Route path="/qr" element={<QrCode />} />
+
+           <Route path="/payment/:id" element={<Payment />} />
+    <Route path="/completion/:id" element={<Completiont />} /> 
+      <Route path="/pdf/:id" element={<Pdf />} />
+          <Route path="/buy/" element={<Buy />} />
+
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />

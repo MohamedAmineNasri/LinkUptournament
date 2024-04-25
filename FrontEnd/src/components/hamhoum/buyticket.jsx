@@ -153,7 +153,7 @@ if (TournementId.length ==0) {
         .map((match, index) => (
           
                 <div className="col-lg-6 mb-4" >
-                  <Link to ={`/payment/`+match._id}>
+                  <Link to ={`/payment/`+match._id} disabled={match.ticketNumber === 0}>
                   <div className="bg-light p-4 rounded" >
                     <div className="widget-body">
                       <div className="widget-vs">

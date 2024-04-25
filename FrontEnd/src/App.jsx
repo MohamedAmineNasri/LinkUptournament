@@ -70,7 +70,6 @@ import Edit from "./components/Tournament/Edit";
 
 import Payment from "./components/hamhoum/Payments"
 import Completiont from "./components/hamhoum/Completion"
-import {Elements,PaymentElement} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import QrCode from "./components/hamhoum/QrCode"
 

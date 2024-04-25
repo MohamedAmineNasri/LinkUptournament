@@ -99,8 +99,7 @@ export default function Newsletter() {
                   Want more tutorials & guides?
                 </h3>
                 <p className="text-gray-300 text-lg mb-6">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit nemo
-                  expedita voluptas culpa sapiente.
+                  Explore our tutorials & guides for LinkUpTournament. Get expert insights to optimize your football tournaments
                 </p>
 
                 {/* CTA form */}

@@ -27,7 +27,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/completion/${id}`,
+        return_url: `${window.location.origin}/complation/${id}`,
       },
     });
 
@@ -50,7 +50,7 @@ export default function CheckoutForm() {
         <span id="button-text">
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>
-      </button><Link to ={`/completion/`+id} ></Link>
+      </button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form> </body>

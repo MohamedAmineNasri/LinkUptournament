@@ -13,6 +13,41 @@ async function getAllematch(req, res) {
     const matchet = await match.find({tournementId:id})
      res.json(matchet)
   }
+//get ticket id 
+
+
+async function verifyTicket(req, res) {
+  try {
+    // Find the match by its ID
+    const matchh = await match.findById(req.params.id);
+
+    // Check if the match exists
+    if (!matchh) {
+      return { success: false, message: 'Match not found' };
+    }
+
+    // Check if the ticket ID is already in the ticketID array
+    if (matchh.ticketID.includes(req.params.ticket)) {
+      console.log(matchh.ticketID.includes(req.params.ticket));
+      return res.json("Ticket already used");
+    }
+    console.log(matchh.ticketID.includes(req.params.ticket));
+
+    // Add the ticket ID to the ticketID array
+     matchh.ticketID.push(req.params.ticket);
+   
+    // Save the match
+    await matchh.save();
+
+    return res.json("Ticket verified and added successfully");
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: 'An error occurred while verifying the ticket' };
+  }
+}
+
+
+
 
   //get by id 
   async function getmatchById(req, res) {
@@ -138,7 +173,8 @@ async function updatescoreById(req, res) {
     updatescore2ById,
     updatescore2_ById,
     updatescore_ById,
-    getmatchByTouernement
+    getmatchByTouernement,
+    verifyTicket
   };
 
 

@@ -2,9 +2,17 @@
 import "./yasser.css";
 import { useParams } from 'react-router-dom';
 import Pdf from  "./justpdf"
-function Completion(props) {
+import QRCode from 'qrcode.react';
+import axios from 'axios';
+import { useState } from "react";
+ function Completion() {
   const { id } = useParams();
-  console.log(id)
+  
+   const [ticket, setticket] = useState(null);
+  
+  const response =  axios.get(`http://localhost:8000/match/${id}`);
+  // setticket(response.data.ticketID.length)
+   console.log(response)
   const centerScreen = {
     display: "flex",
     flexDirection: "column",
@@ -13,12 +21,14 @@ function Completion(props) {
     minHeight: "100vh", // Set minimum height to take up the entire viewport height
   };
 
-  return (
+  return (<>
     <div style={centerScreen}>
       <h1 style={{ color: "black" }}>Thank you! 🎉</h1>
       <h2 style={{ color: "black" }}>You can download your ticket</h2>
-      <Pdf/> {/* Render Pdf component */}
+      <QRCode value={"http://localhost:8000/match/verif/"+id+"/"+"8"} />
+      <Pdf/> 
     </div>
+    </>
   );
 }
 

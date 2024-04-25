@@ -121,6 +121,7 @@ app.use('/uploads', express.static('uploads'));
 
 
 
+
 //stripe
 app.use(express.static(process.env.STATIC_DIR));
 

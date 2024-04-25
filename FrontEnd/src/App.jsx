@@ -62,25 +62,37 @@ import Buy from "./components/hamhoum/buyticket"
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
+
 import Payment from "./components/hamhoum/Payments"
 import Completiont from "./components/hamhoum/Completion"
 import {Elements,PaymentElement} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 
-import TeamLineUp from "./pages/TeamLineUp";
 
+import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
+import HomeLandingPage from "./landingPage/HomeLandingPage";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function App() {
   // animeaa
   const [fixtures, setFixtures] = useState(data);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Change the animation duration as per your preference
+    });
+  }, []);
+
 
 
   //console.log(fixtures);
 
 
   // const refresh = () => window.location.reload(true);
+
   return (
     <Routes>
 
@@ -98,10 +110,9 @@ function App() {
       <Route path="/testtt" element={<AddMatchPopUpWindow />} />
       <Route path="/fetchonematch/:tournamentId" element={<Fetchonematch />} />
 
-
       <Route path="/" element={<Layout />}>
         {/* Public Routes  */}
-        <Route index element={<Home />} />
+        <Route index element={<HomeLandingPage />} />
         <Route path="/lineup" element={<TeamLineUp />} />
         {/**YASSINE_ROUTES*/}
         {/* <Route path="/page" element={<LandingPage />} /> */}
@@ -157,8 +168,8 @@ function App() {
         ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+       
+        
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
@@ -183,7 +194,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/videopodcast" element={<VideoPodcast />} />
             <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
-            <Route path="/viewerlivestreamui" element={<ViewerLiveStreamUi />} />
+            <Route
+              path="/viewerlivestreamui"
+              element={<ViewerLiveStreamUi />}
+            />
             <Route path="/videolivestream" element={<VideoLiveStream />} />
             <Route path="/videolivestreamui" element={<VideoLiveStreamUi />} />
             <Route path="/chat" element={<Chat />} />

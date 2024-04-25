@@ -31,7 +31,7 @@ export const Academy = () => {
       );
       localStorage.setItem("AcademyStatus", academyData.Status);
       if (academyData !== null) {
-        //hide the add academy  page if the manger already have one
+        //hide the add academy  page if the manger already have one mesh tethaz lel home page or login
         localStorage.setItem("hideAddAcademy", true);
       }
     }

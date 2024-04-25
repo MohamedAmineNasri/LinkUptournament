@@ -43,7 +43,6 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     //If it is an image, save to photos bucket
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-      console.log(file);
       return {
         bucketName: "photos",
         filename: `${Date.now()}_${file.originalname}`,
@@ -163,40 +162,39 @@ app.get("/images", async (req, res) => {
   }
 });
 
-
 app.get("/download/:filename", async (req, res) => {
   try {
-    await mongoClient.connect()
+    await mongoClient.connect();
 
-    const database = mongoClient.db("LinkUptournament")
+    const database = mongoClient.db("LinkUptournament");
 
     const imageBucket = new GridFSBucket(database, {
       bucketName: "photos",
-    })
+    });
 
     let downloadStream = imageBucket.openDownloadStreamByName(
       req.params.filename
-    )
+    );
 
     downloadStream.on("data", function (data) {
-      return res.status(200).write(data)
-    })
+      return res.status(200).write(data);
+    });
 
     downloadStream.on("error", function (data) {
-      return res.status(404).send({ error: "Image not found" })
-    })
+      return res.status(404).send({ error: "Image not found" });
+    });
 
     downloadStream.on("end", () => {
-      return res.end()
-    })
+      return res.end();
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
       message: "Error Something went wrong",
       error,
-    })
+    });
   }
-})
+});
 //YASSINE
 //stripe
 app.use(express.static(process.env.STATIC_DIR));

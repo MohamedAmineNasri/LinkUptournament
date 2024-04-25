@@ -1,4 +1,4 @@
-import * as Sentry from "@sentry/react"
+import * as Sentry from "@sentry/react";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
@@ -42,7 +42,7 @@ import ConsultReferee from "./components/TournamentManagementComponenets/Consult
 import ManageTournamentFormat from "./components/TournamentManagementComponenets/ManageTournamentFormat";
 import ManageTournamentGroup from "./components/TournamentManagementComponenets/ManageTournamentGroup";
 import FormatSelect from "./components/Tournament/FormatSelect";
-import Pdf from  "./components/hamhoum/justpdf"
+import Pdf from "./components/hamhoum/justpdf";
 // import TournamentBracket  from "./components/TournamentBracket";
 import MatchCard from "./components/hamhoum/match";
 import Fixture from "./components/TestWitheDummyData/matchhhh";
@@ -57,17 +57,16 @@ import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 import Panel from "./components/hamhoum/panel";
 import Fetchonematch from "./components/hamhoum/fetchOneMatchByID";
 import Fetchalltour from "./components/hamhoum/getAllTournement";
-import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId"
-import Buy from "./components/hamhoum/buyticket"
-import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews"
+import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
+import Buy from "./components/hamhoum/buyticket";
+import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
 
-import Payment from "./components/hamhoum/Payments"
-import Completiont from "./components/hamhoum/Completion"
-import {Elements,PaymentElement} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
-
+import Payment from "./components/hamhoum/Payments";
+import Completiont from "./components/hamhoum/Completion";
+import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
@@ -86,20 +85,16 @@ function App() {
     });
   }, []);
 
-
-
   //console.log(fixtures);
-
 
   // const refresh = () => window.location.reload(true);
 
   return (
     <Routes>
-
-           <Route path="/payment/:id" element={<Payment />} />
-    <Route path="/completion" element={<Completiont />} /> 
+      <Route path="/payment/:id" element={<Payment />} />
+      <Route path="/completion" element={<Completiont />} />
       <Route path="/pdf" element={<Pdf />} />
-          <Route path="/buy/" element={<Buy />} />
+      <Route path="/buy/" element={<Buy />} />
       <Route path="/panel/:match" element={<Panel />} />
       <Route path="/fetchalltour" element={<Fetchalltour />} />
       <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
@@ -168,8 +163,7 @@ function App() {
         ></Route>
         <Route path="/testtt" element={<AddMatchPopUpWindow />} />
         <Route path="/testt" element={<AddMatch />} />
-       
-        
+
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />

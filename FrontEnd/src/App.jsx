@@ -70,16 +70,11 @@ import Edit from "./components/Tournament/Edit";
 
 import Payment from "./components/hamhoum/Payments"
 import Completiont from "./components/hamhoum/Completion"
-import {Elements,PaymentElement} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import QrCode from "./components/hamhoum/QrCode"
 
 
-import Payment from "./components/hamhoum/Payments";
-import Completiont from "./components/hamhoum/Completion";
 import { Elements, PaymentElement } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-
 import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";

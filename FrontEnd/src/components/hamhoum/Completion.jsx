@@ -1,5 +1,5 @@
 
-import "./yasser.css";
+// import "./yasserr.css";
 import { useParams } from 'react-router-dom';
 
 import Pdf from  "./justpdf"

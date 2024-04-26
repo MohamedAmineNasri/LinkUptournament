@@ -136,63 +136,68 @@ export const Academy = () => {
                       textAlign: "-webkit-center",
                     }}
                   >
-                    <div className="academyBox">
-                      <img
-                        src={academyData.Logo}
-                        alt="Logo"
-                        className="img-fluid academyLogoMwidth "
-                        style={{ maxWidth: "250px" }}
-                      />
+                    <div className="row academyBox">
+                      <div className="col-lg-6">
+                        <img
+                          src={academyData.Logo}
+                          alt="Logo"
+                          className="img-fluid academyLogoMwidth "
+                          style={{ maxWidth: "200px" }}
+                        />
 
-                      <h3
-                        className="mb-4 mt-3 notranslate "
-                        style={{ fontWeight: "bold", fontSize: "62px" }}
-                      >
-                        <strong>{academyData.AcademyName}</strong>
-                      </h3>
-                      <p className=" mb-4 ">
-                        Location :
-                        <span className="text-muted notranslate">
-                          {academyData.Location}
-                        </span>
-                      </p>
-                      <p className=" mb-4 ">
-                        Creating Date :{" "}
-                        <span className="text-muted">{formattedDate}</span>
-                      </p>
-                      <p className="mb-2 ">
-                        Status :{" "}
-                        <span>
-                          <Badge
-                            className=" p-2 notranslate"
-                            bg={getStatusColor(academyData.Status)}
-                          >
-                            {academyData.Status}
-                          </Badge>
-                        </span>
-                      </p>
-                      {academyData.Status === "Approved" && (
-                        <p className="text-success mb-4">
-                          This academy is approved, You can particpate in
-                          tournements.
+                        <h3
+                          className="mb-4 mt-3 notranslate word-wrap-break "
+                          style={{ fontWeight: "bold", fontSize: "40px" }}
+                        >
+                          <strong>{academyData.AcademyName}</strong>
+                        </h3>
+                      </div>
+                      <div className="col-lg-6" style={{ alignSelf: "center" }}>
+                        <p className=" mb-4 ">
+                          Location :
+                          <span className="text-muted notranslate">
+                            {academyData.Location}
+                          </span>
                         </p>
-                      )}
-                      {academyData.Status === "Pending" && (
-                        <p className="text-warning mb-4">
-                          This academy is still pending approval.
+                        <p className=" mb-4 ">
+                          Creating Date :{" "}
+                          <span className="text-muted">{formattedDate}</span>
                         </p>
-                      )}
-                      {academyData.Status === "Rejected" && (
-                        <p className="text-danger mb-4">
-                          This academy has been rejected, You must provide
-                          convencing Documents!
+                        <p className="mb-2 ">
+                          Status :{" "}
+                          <span>
+                            <Badge
+                              style={{ color: "white" }}
+                              className=" p-2 notranslate "
+                              bg={getStatusColor(academyData.Status)}
+                            >
+                              {academyData.Status}
+                            </Badge>
+                          </span>
                         </p>
-                      )}
-                      <DropDownAcademy
-                        id={academyData._id}
-                        academyLogo={academyData.Logo}
-                        academyname={academyData.AcademyName}
-                      />
+                        {academyData.Status === "Approved" && (
+                          <p className="text-success mb-4">
+                            This academy is approved, You can particpate in
+                            tournements.
+                          </p>
+                        )}
+                        {academyData.Status === "Pending" && (
+                          <p className="text-warning mb-4">
+                            This academy is still pending approval.
+                          </p>
+                        )}
+                        {academyData.Status === "Rejected" && (
+                          <p className="text-danger mb-4">
+                            This academy has been rejected, You must provide
+                            convencing Documents!
+                          </p>
+                        )}
+                        <DropDownAcademy
+                          id={academyData._id}
+                          academyLogo={academyData.Logo}
+                          academyname={academyData.AcademyName}
+                        />
+                      </div>
                     </div>
                   </div>
                   {/* Academy teams */}

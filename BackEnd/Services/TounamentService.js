@@ -34,11 +34,8 @@ const updateTournament = async (req, res, next) => {
   
   // Get all tournaments
   const getAllTournaments = async (req, res, next) => {
-    const tournaments = await Tournament.find({});
-    res.json({
-      message: "Successfully retrieved all tournaments!",
-      tournaments: tournaments
-    });
+    const tournaments = await Tournament.find();
+    res.json(tournaments);
   };
   
   // Get a tournament by ID
@@ -51,6 +48,19 @@ const updateTournament = async (req, res, next) => {
       tournament: tournament
     });
   };
+
+  const getTournamentByName = async (req, res, next) => {
+    const searchString = req.params.searchString; // Get the search string from request parameters
+    try {
+        // Use a regular expression to search for teams by name containing the provided string
+        const tournaments = await Tournament.find({ name: { $regex: searchString, $options: 'i' } });
+        res.json(tournaments);
+    } catch (error) {
+        console.error("Error getting tournaments by name:", error);
+        res.status(500).json("Internal server error");
+    }
+};
+
   
-  module.exports = { addTournament, updateTournament, deleteTournament, getAllTournaments, getTournamentById };
+  module.exports = { getTournamentByName ,addTournament, updateTournament, deleteTournament, getAllTournaments, getTournamentById };
   

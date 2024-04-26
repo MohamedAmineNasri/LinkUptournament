@@ -6,13 +6,23 @@ import {  fetchteams } from "../redux/slice/teamSlice";
  import { createGroupsThunk } from "../redux/slice/groupSlice" ; 
 import axios from "axios";
 import addformstadiumImage from "../assets/Mi-imgs/2.jpg";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 // import Group from "./Group";
 
 export const AddTournament = () => {
-  
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [type, setType] = useState("default_type");
+  const [nbG, setNbG] = useState("default_type");
+  const [nbT, setNbT] = useState("default_type");
+  const [nbP, setNbP] = useState("default_type");
   const [name, setName] = useState("");
   const [logo, setLogo] = useState(null);
-  const [type, setType] = useState("");
+
+
   const [rules, setRules] = useState("");
   const [status, setStatus] = useState("");
   const [winner, setWinner] = useState(null);
@@ -21,7 +31,6 @@ export const AddTournament = () => {
   
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [nameError, setNameError] = useState("Tournament Name is required");
-  const [typeError, setTypeError] = useState("Type is required");
   const [dateDebutError, setDateDebutError] = useState("Start Date is required");
   const [dateFinError, setDateFinError] = useState("End Date is required");
   const [selectedTeams, setSelectedTeams] = useState([]);
@@ -41,6 +50,19 @@ export const AddTournament = () => {
     fetchTeams();
   }, [dispatch]) ;
   
+  useEffect(() => {
+    if (location.state ) {
+      setType(location.state.type);
+      setNbG(location.state.nbG) ;
+      setNbT(location.state.nbT);
+      setNbP(location.state.nbP);
+    }
+  }, [location.state]);
+
+  console.log("Updated type:", type);
+  console.log("nb groupe:", nbG);
+  console.log("nb teams:", nbT);
+  console.log("nbPhase:", nbP);
 
   const handleTeamSelection = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
@@ -55,11 +77,11 @@ export const AddTournament = () => {
     e.preventDefault();
   
     validateName(name);
-    validateType(type);
+    // validateType(type);
     validateDateDebut(dateDebut);
     validateDateFin(dateFin);
   
-    if (!nameError && !typeError && !dateDebutError && !dateFinError) {
+    if (!nameError && !dateDebutError && !dateFinError) {
       try {
         const formData = new FormData();
         formData.append("logo", logo);
@@ -84,20 +106,24 @@ export const AddTournament = () => {
         };
   
         const addTournamentResponse = await dispatch(addTournament(tournamentData));
+        
   
         if (addTournamentResponse.payload) {
-          setSubmitSuccess(true);
-          setName("");
-          setLogo(null);
-          setType("");
-          setRules("");
-          setStatus("");
-          setWinner(null);
-          setDateDebut("");
-          setDateFin("");
-          setSelectedTeams([]);
-  
-          await dispatch(createGroupsThunk(addTournamentResponse.payload._id)); // Pass the tournament ID here
+          // setSubmitSuccess(true);
+          // setName("");
+          // setLogo(null);
+          // setType("");
+          // setRules("");
+           setStatus("");
+          // setWinner(null);
+          // setDateDebut("");
+          // setDateFin("");
+          // setSelectedTeams([]);
+          
+          console.log("im here just before create groups" ,addTournamentResponse.payload._id, nbG , nbT )  ;
+
+          await dispatch(createGroupsThunk({ id: addTournamentResponse.payload._id, nbG, nbT }));
+          navigate(`/tournament/${addTournamentResponse.payload._id}`);
         }
       } catch (error) {
         console.error("Error adding tournament:", error);
@@ -121,13 +147,13 @@ export const AddTournament = () => {
     }
   };
 
-  const validateType = (value) => {
-    if (!value.trim()) {
-      setTypeError("Type is required");
-    } else {
-      setTypeError(null);
-    }
-  };
+  // const validateType = (value) => {
+  //   if (!value.trim()) {
+  //     setTypeError("Type is required");
+  //   } else {
+  //     setTypeError(null);
+  //   }
+  // };
 
   const validateDateDebut = (value) => {
     if (!value) {
@@ -256,27 +282,24 @@ export const AddTournament = () => {
                       />
                     </div>
 
-                    <div className="col-md-12 form-group pb-2">
-                      <label htmlFor="tournamentType">Tournament Type</label>
+                   <div className="col-md-12 form-group pb-2">
+                      <label htmlFor="tournamentStatus">Tournament Status</label>
                       <select
                         style={{height: "60px"}}
                         className="form-control custom-placeholder"
-                        id="tournamentType"
-                        value={type}
-                        onChange={(e) => {
-                          setType(e.target.value);
-                          validateType(e.target.value);
-                        }}
+                         id="tournamentStatus"
+                         value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        
                       >
-                        <option value="">Select Tournament Type</option>
-                        <option value="Group Stage Tournament">Group Stage Tournament</option>
-                        <option value="Knockout Tournament">Knockout Tournament</option>
-                        <option value="Round Robin Tournament">Round Robin Tournament</option>
+                        <option value="">Select Tournament status</option>
+                        <option value="comming soon">comming soon</option>
+                        <option value="ended">ended</option>
+                        <option value="started">started</option>
                       </select>
-                      {typeError && <p className="text-danger">{typeError}</p>}
+                     
                     </div>
 
-                    {/* Add other fields with validation errors rendering */}
                     {/* Règles du tournoi */}
                     <div className="col-md-12 form-group pb-2">
                       <label htmlFor="tournamentRules">Tournament Rules</label>
@@ -291,7 +314,7 @@ export const AddTournament = () => {
                       />
                     </div>
 
-                    {/* Statut du tournoi */}
+                    {/* Statut du tournoi
                     <div className="col-md-12 form-group pb-2">
                       <label htmlFor="tournamentStatus">Tournament Status</label>
                       <input
@@ -303,7 +326,7 @@ export const AddTournament = () => {
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
                       />
-                    </div>
+                    </div> */}
 
                     {/* Start Date */}
                     <div className="col-md-12 form-group pb-2">
@@ -378,5 +401,6 @@ export const AddTournament = () => {
     </div>
   );
 };
+
 
 export default AddTournament;

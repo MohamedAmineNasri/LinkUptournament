@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
+
 export const addTournament = createAsyncThunk(
   'tournament/addTournament',
   async (tournamentData) => {
@@ -40,6 +41,7 @@ export const deleteTournament = createAsyncThunk(
 export const updateTournament = createAsyncThunk(
     'tournament/updateTournament',
     async ({ id, ...tournamentData }) => {
+      console.log(tournamentData)
       const response = await axios.put(`http://localhost:8000/tournament/update/${id}`, tournamentData);
       return response.data;
     }
@@ -54,6 +56,28 @@ export const fetchTournaments = createAsyncThunk(
     }
   );
 
+  export const sendSMSToPlayer = createAsyncThunk(
+    'tournament/sendSMSToPlayer',
+    async ({ tournamentId, playerId }) => {
+      try {
+        const response = await axios.post(`http://localhost:8000/tournament/sendSMS/${tournamentId}/${playerId}`);
+        return response.data;
+      } catch (error) {
+        throw Error(error.response.data);
+      }
+    }
+  );
+  export const fetchTournamentsByName = createAsyncThunk(
+    'tournament/fetchTournamentsByName',
+    async (searchString) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/tournament/search/${searchString}`);
+        return response.data;
+      } catch (error) {
+        throw new Error('Error fetching tournaments by name: ' + error.message);
+      }
+    }
+  );
 
   const tournamentSlice = createSlice({
     name: 'tournament',
@@ -100,6 +124,59 @@ export const fetchTournaments = createAsyncThunk(
       .addCase(fetchtournamentByIdThunk.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload ? action.payload.message : action.error.message;
+      })
+      // Delete Tournament
+      .addCase(deleteTournament.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(deleteTournament.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.tournaments = state.tournaments.filter(tournament => tournament.id !== action.payload);
+      })
+      .addCase(deleteTournament.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      // Update Tournament
+      .addCase(updateTournament.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(updateTournament.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        const index = state.tournaments.findIndex(tournament => tournament.id === action.payload.id);
+        if (index !== -1) {
+          state.tournaments[index] = action.payload;
+        }
+      })
+      .addCase(updateTournament.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(sendSMSToPlayer.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(sendSMSToPlayer.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        console.log('SMS sent successfully:', action.payload);
+      })
+      .addCase(sendSMSToPlayer.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchTournamentsByName.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTournamentsByName.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tournamentData = action.payload;
+      })
+      .addCase(fetchTournamentsByName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
   });

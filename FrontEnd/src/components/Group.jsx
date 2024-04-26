@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Win, Draw, Lose } from "../components/GroupStageLogo";
 
 export const Group = ({ groupId }) => { 
   
@@ -18,13 +19,13 @@ export const Group = ({ groupId }) => {
   if (!group) {
     return <div>Loading...</div>;
   }
-
+ 
 
   return (
     <div className="col-lg-6">
       <div className="widget-next-match">
-        <div className="widget-title" style={{ textAlign: 'center', backgroundColor: "#ee1e46" }}>
-          <h3>{group.name}</h3> {/* Render the group name */}
+        <div className="widget-title text-center bg-red-500 p-2">
+          <h3>{group.name}</h3>
         </div>
         <table className="table custom-table">
           <thead>
@@ -39,16 +40,15 @@ export const Group = ({ groupId }) => {
               <th>BC</th>
               <th>DB</th>
               <th>PTS</th>
+              <th colSpan="4">FORM</th>
             </tr>
           </thead>
           <tbody>
-            {group.teams.map((team, index) => ( // Render a row for each team in the group
+            {group.teams.map((team, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
-                  <strong className="text-white">
-                    {team.TeamName} {/* Render the team name */}
-                  </strong>
+                  <strong>{team.TeamName}</strong>
                 </td>
                 <td>{team.MJ}</td>
                 <td>{team.G}</td>
@@ -58,6 +58,13 @@ export const Group = ({ groupId }) => {
                 <td>{team.BC}</td>
                 <td>{team.DB}</td>
                 <td>{team.PTS}</td>
+                <td colSpan="4" className="flex justify-start pl-4 space-x-2">
+                  <Win />
+                  <Lose />
+                  <Win />
+                  <Draw />
+                  <Draw />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -65,6 +72,7 @@ export const Group = ({ groupId }) => {
       </div>
     </div>
   );
+  
 };
 
 export default Group;

@@ -49,6 +49,11 @@ export const HeaderNavBar = () => {
                       Academy
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/lineup" className="nav-link">
+                      LineUp Builder
+                    </Link>
+                  </li>
                   <li className="active">
                     <Link to="/signin" className="nav-link">
                       Signup

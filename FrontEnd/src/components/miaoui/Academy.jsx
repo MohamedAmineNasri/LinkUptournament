@@ -71,48 +71,7 @@ export const Academy = () => {
       </div>
       <div className="pt-13">
         <div>
-          {/* <div className="site-wrap"> */}
-          {/* <HeaderNavBar></HeaderNavBar> */}
-          {/* header/overlay image */}
-          {/* <div className="hero overlay2" style={{ position: "relative" }}>
-            <video
-              className="video-background"
-              src={video}
-              autoPlay
-              loop
-              muted
-            ></video>
-            <div className="container">
-              <div className="row align-items-center">
-                <div
-                  className="col-lg-12 mx-auto"
-                  style={{ textAlign: "-webkit-center", opacity: 0.8 }}
-                >
-                  <img
-                    src={academyData.Logo}
-                    alt="Logo"
-                    className="img-fluid academyLogosizeInHero"
-                    style={{ opacity: 0.8 }}
-                  />
-                  <h1 className="text-white notranslate">
-                    {academyData.AcademyName}
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          {/* separator */}
-
-          {/* Academy */}
-
-          <div
-          // className="hero backImgAcademyandTeam"
-          // style={{
-          //   backgroundImage: `url(${academyImageteam})`,
-          // }}
-          >
-            {/* <div className="site-section "> */}
+          <div>
             <div>
               <div
                 style={{
@@ -120,55 +79,42 @@ export const Academy = () => {
                   paddingLeft: "20px",
                   paddingBottom: "80px",
                 }}
+                className="p-4 border border-gray-300 bg-opacity-25 bg-gray-900"
               >
-                <div
-                  className="justify-content-center align-items-top  "
-                  style={{
-                    border: "solid thin",
-                    borderRadius: "20px",
-                    backgroundColor: "#212529c4",
-                  }}
-                >
-                  {/* <div className="row  justify-content-center align-items-top AcademyandTeamsBox "> */}
-                  <div
-                    className="col-md-12 col-lg-12 word-wrap-break border-b pb-6"
-                    style={{
-                      textAlign: "-webkit-center",
-                    }}
-                  >
-                    <div className="row academyBox">
-                      <div className="col-lg-6">
+                <div className="flex justify-center items-top">
+                  <div className="col-md-12 col-lg-12 word-wrap-break border-b pb-6 text-center">
+                    <div className="flex flex-col sm:flex-row">
+                      <div className="sm:w-1/2">
                         <img
                           src={academyData.Logo}
                           alt="Logo"
-                          className="img-fluid academyLogoMwidth "
+                          className="img-fluid max-w-sm sm:max-w-none m-auto mb-4"
                           style={{ maxWidth: "200px" }}
                         />
-
                         <h3
-                          className="mb-4 mt-3 notranslate word-wrap-break "
+                          className="mb-4 mt-3 text-white font-bold text-3xl"
                           style={{ fontWeight: "bold", fontSize: "40px" }}
                         >
                           <strong>{academyData.AcademyName}</strong>
                         </h3>
                       </div>
-                      <div className="col-lg-6" style={{ alignSelf: "center" }}>
-                        <p className=" mb-4 ">
-                          Location :
-                          <span className="text-muted notranslate">
+                      <div className="sm:w-1/2 sm:self-center text-white">
+                        <p className="mb-4">
+                          Location :{" "}
+                          <span className="text-gray-400 notranslate">
                             {academyData.Location}
                           </span>
                         </p>
-                        <p className=" mb-4 ">
+                        <p className="mb-4">
                           Creating Date :{" "}
-                          <span className="text-muted">{formattedDate}</span>
+                          <span className="text-gray-400">{formattedDate}</span>
                         </p>
-                        <p className="mb-2 ">
+                        <p className="mb-2">
                           Status :{" "}
                           <span>
                             <Badge
                               style={{ color: "white" }}
-                              className=" p-2 notranslate "
+                              className="p-2 notranslate"
                               bg={getStatusColor(academyData.Status)}
                             >
                               {academyData.Status}
@@ -176,20 +122,20 @@ export const Academy = () => {
                           </span>
                         </p>
                         {academyData.Status === "Approved" && (
-                          <p className="text-success mb-4">
-                            This academy is approved, You can particpate in
-                            tournements.
+                          <p className="text-green-500 mb-4">
+                            This academy is approved, You can participate in
+                            tournaments.
                           </p>
                         )}
                         {academyData.Status === "Pending" && (
-                          <p className="text-warning mb-4">
+                          <p className="text-yellow-500 mb-4">
                             This academy is still pending approval.
                           </p>
                         )}
                         {academyData.Status === "Rejected" && (
-                          <p className="text-danger mb-4">
+                          <p className="text-red-500 mb-4">
                             This academy has been rejected, You must provide
-                            convencing Documents!
+                            convincing Documents!
                           </p>
                         )}
                         <DropDownAcademy
@@ -201,127 +147,25 @@ export const Academy = () => {
                     </div>
                   </div>
                   {/* Academy teams */}
-                  <div className="col-md-12 col-lg-12">
-                    <div className="widget-body mb-3 teamsBorderBox ">
-                      <div className="p-4">
-                        <TeamCard idacademy={academyData._id} />
-                      </div>
-                    </div>
-                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-12 col-lg-12">
+              <div
+                className="widget-body mb-3  teamsBorderBox"
+                style={{
+                  borderRight: "solid thin",
+                  borderLeft: "solid thin",
+                  borderBottom: "solid thin",
+                  borderRadius: "0px",
+                }}
+              >
+                <div className="p-4">
+                  <TeamCard idacademy={academyData._id} />
                 </div>
               </div>
             </div>
           </div>
-          {/* <footer className="footer-section">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-3">
-                  <div className="widget mb-3">
-                    <h3>News</h3>
-                    <ul className="list-unstyled links">
-                      <li>
-                        <a href="#">All</a>
-                      </li>
-                      <li>
-                        <a href="#">Club News</a>
-                      </li>
-                      <li>
-                        <a href="#">Media Center</a>
-                      </li>
-                      <li>
-                        <a href="#">Video</a>
-                      </li>
-                      <li>
-                        <a href="#">RSS</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="col-lg-3">
-                  <div className="widget mb-3">
-                    <h3>Tickets</h3>
-                    <ul className="list-unstyled links">
-                      <li>
-                        <a href="#">Online Ticket</a>
-                      </li>
-                      <li>
-                        <a href="#">Payment and Prices</a>
-                      </li>
-                      <li>
-                        <a href="#">Contact &amp; Booking</a>
-                      </li>
-                      <li>
-                        <a href="#">Tickets</a>
-                      </li>
-                      <li>
-                        <a href="#">Coupon</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="col-lg-3">
-                  <div className="widget mb-3">
-                    <h3>Matches</h3>
-                    <ul className="list-unstyled links">
-                      <li>
-                        <a href="#">Standings</a>
-                      </li>
-                      <li>
-                        <a href="#">Tournament</a>
-                      </li>
-                      <li>
-                        <a href="#">La Lega</a>
-                      </li>
-                      <li>
-                        <a href="#">Hyper Cup</a>
-                      </li>
-                      <li>
-                        <a href="#">World League</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="col-lg-3">
-                  <div className="widget mb-3">
-                    <h3>Social</h3>
-                    <ul className="list-unstyled links">
-                      <li>
-                        <a href="#">Twitter</a>
-                      </li>
-                      <li>
-                        <a href="#">Facebook</a>
-                      </li>
-                      <li>
-                        <a href="#">Instagram</a>
-                      </li>
-                      <li>
-                        <a href="#">Youtube</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row text-center">
-                <div className="col-md-12">
-                  <div className=" pt-5">
-                    <p>
-                      Copyright &copy;
-                      <script>
-                        document.write(new Date().getFullYear());
-                      </script>{" "}
-                      All rights reserved | This template is made with{" "}
-                      <i className="icon-heart" aria-hidden="true"></i> by{" "}
-                      <a href="https://colorlib.com" target="_blank">
-                        Colorlib
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </footer> */}
         </div>
       </div>
     </DefaultLayout>

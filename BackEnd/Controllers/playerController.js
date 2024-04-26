@@ -15,6 +15,7 @@ async function createPlayerMi(req, res) {
   } catch (error) {
     res.status(400).send(error);
   }}
+
 // Create a player
 async function createPlayer(req, res) {
   try {
@@ -32,10 +33,7 @@ async function createPlayer(req, res) {
 async function getAllPlayers(req, res) {
   try {
     // Find all players and populate their team
-    const players = await Player.find().populate({
-      path: "team",
-      select: "TeamName",
-    });
+    const players = await Player.find();
 
     return res.status(200).json(players);
   } catch (error) {
@@ -91,6 +89,34 @@ async function deletePlayerById(req, res) {
   }
 }
 
+// Route to handle player search
+ async function searchPlayers(req, res) {
+  try {
+    const { name, position, team } = req.query;
+    // Build the query object based on the provided parameters
+    const query = {};
+
+    if (name) {
+      query.name = { $regex: new RegExp(name, 'i') }; // Case-insensitive search for name
+    }
+
+    if (position) {
+      query.position = position; // Case-insensitive search for position
+    }
+
+    if (team) {
+      query.team = team; // Assuming team is the ID of the team
+    }
+
+    const players = await Player.find(query); // Populate team field
+
+    res.json(players);
+  } catch (error) {
+    console.error('Error searching players:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 module.exports = {
   createPlayer,
   getAllPlayers,
@@ -99,5 +125,6 @@ module.exports = {
   deletePlayerById,
   getplayerByteam,
   createPlayer,
-  createPlayerMi
+  createPlayerMi,
+  searchPlayers
 };

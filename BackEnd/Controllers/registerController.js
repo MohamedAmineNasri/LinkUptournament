@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 // Set your SendinBlue API key
-const apiKey = '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';
+const apiKey = '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';
 
 // Configure API key authorization: api-key
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
@@ -101,7 +101,7 @@ const sendWelcomeEmail = async (email, firstName, lastName) => {
             <h1>Welcome to LinkUptournament!</h1>
             <p>Dear <span class="highlight">${firstName} ${lastName}</span>,</p>
             <p>We're thrilled to welcome you to LinkUptournament, your gateway to the exciting world of football tournaments!</p>
-            <img src="https://scontent.ftun14-1.fna.fbcdn.net/v/t39.30808-6/315750420_560650722734070_1942812906744875399_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=CuFXCdhPuG8AX-2ZyoB&_nc_oc=AQmavrjhUd20WAWbsB5qukZm_s7fdpCTBfVCGVHEPa__8HF7VOs6XdH6Z-YM9boSJXQ&_nc_ht=scontent.ftun14-1.fna&oh=00_AfC3o5bhnx3k6YKyVx_ERwaeoMYU9gVopVgFTaMAORBCgw&oe=65F6C9A1" alt="Football Image">
+            <img src="https://imgs.search.brave.com/RNhCKYPRo3vyrxWkc9naCD0GHLT_edhH6ZbalII4bNg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvOTA0/Mzc4MzYvcGhvdG8v/aXRhbGlhbi1mb290/YmFsbC1mYW5zLWNo/ZWVyaW5nLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz16c0s0/dl9kRFhUT2t0cXhG/VkhDdUR2YjFwXzZ5/eWdsQmtZWFBTRDA1/ajBVPQ" alt="Football Image">
             <p>With LinkUptournament, you'll discover a vibrant community of football enthusiasts and opportunities to connect, compete, and enjoy the beautiful game.</p>
             <p>Whether you're a player, coach, supporter, or involved in any other role, we're here to make your tournament experience seamless and enjoyable.</p>
             <p>Get ready to embark on a journey filled with excitement, camaraderie, and unforgettable moments!</p>

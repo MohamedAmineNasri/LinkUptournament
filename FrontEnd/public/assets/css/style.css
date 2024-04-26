@@ -1318,7 +1318,7 @@ h1, h2, h3, h4, h5,
 
 /* Button Styles */
 .btn {
-  background-color: #1976D2;
+  /* background-color: #1976D2; */
   color: #fff;
   cursor: pointer;
 }

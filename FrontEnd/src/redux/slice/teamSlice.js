@@ -12,7 +12,17 @@ export const fetchteams = createAsyncThunk(
     }
   }
 );
-
+export const fetchTeamsByName = createAsyncThunk(
+  'team/fetchTeamsByName',
+  async (searchString) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/team/teams/search/${searchString}`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Error fetching teams by name: ' + error.message);
+    }
+  }
+);
 
 export const fetchteamById = createAsyncThunk(
   'team/fetchTeamById', 
@@ -161,7 +171,7 @@ const teamSlice = createSlice({
       })
       .addCase(fetchteams.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.allteamData = action.payload;
+        state.teams = action.payload;
       })
       .addCase(fetchteams.rejected, (state, action) => {
         state.status = 'failed';
@@ -191,6 +201,18 @@ const teamSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      .addCase(fetchTeamsByName.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTeamsByName.fulfilled, (state, action) => {
+        state.loading = false;
+        state.teamData = action.payload;
+      })
+      .addCase(fetchTeamsByName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   }
 });
 

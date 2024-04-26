@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 
 const playerSchema = new mongoose.Schema(
-  { name:String,
-    number:Number,
+  {
+    avatar: String,
+    name: String,
+    number: Number,
+    age: Number,
     legal_guardian: { type: String },
     academic_membership: { type: String },
     position: { type: String },

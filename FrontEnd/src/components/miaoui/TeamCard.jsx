@@ -5,8 +5,23 @@ import { fetchTeamOfAcademy } from "../../redux/slice/teamSlice";
 import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
 import DropDownTeamSettings from "./DropDownTeamSettings";
 import Spinner from "react-bootstrap/Spinner";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
+import Box from "@mui/material/Box";
+import Button1 from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import { Input } from "@mui/material";
+import EditTeamNew from "./EditTeamNew";
+import DeleteTeamNew from "./DeleteTeamNew";
 
 const TeamCard = (props) => {
+  const navigate = useNavigate();
   const { teamData, loading, error } = useSelector((state) => state.root.team);
   const [loader, setLoading] = useState("false"); //i did not use redux loading cuz alawys the empty message flashs even if i have teams
 
@@ -22,6 +37,26 @@ const TeamCard = (props) => {
       setLoading("true");
     }
   }, [dispatch, props.idacademy, loader]);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [open1, setOpen1] = React.useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 600,
+    // bgcolor: "#f8f8ff",
+    bgcolor: "rgb(36 48 63)",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   return (
     <div>
@@ -63,24 +98,120 @@ const TeamCard = (props) => {
         </div>
       )}
 
-      <div className="row">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2">
         {teamData.map((team) => (
           <div key={team._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
-            <Card className="teamCard">
+            <Card
+              className="teamCard"
+              style={{
+                width: "320px",
+                height: "550px",
+                backgroundColor: "#212529c4",
+              }}
+            >
               {/* setting buttonthat display a drop down for various option */}
-              <DropDownTeamSettings
+              {/* <DropDownTeamSettings
                 idTeam={team._id}
                 teamname={team.TeamName}
                 teamlogo={team.TeamLogo}
-              ></DropDownTeamSettings>
-
+              ></DropDownTeamSettings> */}
+              {/* ---------------------------------------------------------- */}
+              <div className="p-4 flex items-center  gap-10 justify-end">
+                <div className="w-1/2 pb-3">
+                  <FormControl variant="standard" sx={{ width: "100%" }}>
+                    <InputLabel
+                      id="Position"
+                      variant="filled"
+                      sx={{ color: "whitesmoke" }}
+                    >
+                      Settings
+                    </InputLabel>
+                    <Select
+                      labelId="Position"
+                      id="Position"
+                      label="Position"
+                      name="position"
+                    >
+                      <MenuItem value="">
+                        <Button
+                          variant="success"
+                          style={{
+                            width: "-webkit-fill-available",
+                            color: "black",
+                          }}
+                          onClick={() => navigate(`/team/${team._id}`)}
+                        >
+                          Check Team
+                        </Button>
+                      </MenuItem>
+                      <MenuItem value="">
+                        <Button
+                          variant="success"
+                          style={{
+                            width: "-webkit-fill-available",
+                            color: "black",
+                          }}
+                          onClick={handleOpen}
+                        >
+                          Edit Team
+                        </Button>
+                      </MenuItem>
+                      <MenuItem value="">
+                        <Button
+                          variant="success"
+                          style={{
+                            width: "-webkit-fill-available",
+                            color: "black",
+                          }}
+                          onClick={handleOpen1}
+                        >
+                          Delete Team
+                        </Button>
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              {/* modal edit ---------------------------------------------------------- */}
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <EditTeamNew
+                    Tid={team._id}
+                    Tname={team.TeamName}
+                    Tlogo={team.TeamLogo}
+                  ></EditTeamNew>
+                </Box>
+              </Modal>
+              {/* ---------------------------------------------------------- */}
+              {/* modal delete ---------------------------------------------------------- */}
+              <Modal
+                open={open1}
+                onClose={handleClose1}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <DeleteTeamNew
+                    teamid={team._id}
+                    handleClose1={handleClose1}
+                  ></DeleteTeamNew>
+                </Box>
+              </Modal>
+              {/* ---------------------------------------------------------- */}
               {/* <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp> */}
-              <Card.Img
-                className="teamCardImg"
-                variant="top"
-                src={team.TeamLogo}
-              />
-              <Card.Body>
+              <div style={{ textAlign: "-webkit-center" }}>
+                <Card.Img
+                  className="teamCardImg"
+                  variant="top"
+                  src={team.TeamLogo}
+                />
+              </div>
+              <Card.Body style={{ paddingLeft: "20px", paddingTop: "20px" }}>
                 <Card.Title className="pb-3 teamCardTitle">
                   <strong>{team.TeamName}</strong>
                 </Card.Title>
@@ -108,6 +239,66 @@ const TeamCard = (props) => {
         ))}
       </div>
     </div>
+    // <div>
+    //   {loader === "true" && (
+    //     <div className="flex justify-center items-center py-64">
+    //       <Spinner animation="border" role="status">
+    //         <span className="visually-hidden">Loading...</span>
+    //       </Spinner>
+    //     </div>
+    //   )}
+    //   {loader === "false" && teamData.length === 0 && (
+    //     <div className="flex flex-col justify-center items-center py-64">
+    //       <h3 className="text-white text-2xl mb-2">No teams created yet</h3>
+    //       <p className="text-gray-600 text-lg">
+    //         Start by creating a new team to get started!
+    //       </p>
+    //     </div>
+    //   )}
+
+    //   <div className="row">
+    //     {teamData.map((team) => (
+    //       <div key={team._id} className="col-xl-6 col-lg-6 col-md-12 mb-3">
+    //         <Card className="teamCard">
+    //           <DropDownTeamSettings
+    //             idTeam={team._id}
+    //             teamname={team.TeamName}
+    //             teamlogo={team.TeamLogo}
+    //           ></DropDownTeamSettings>
+
+    //           <Card.Img
+    //             className="teamCardImg"
+    //             variant="top"
+    //             src={team.TeamLogo}
+    //           />
+    //           <Card.Body>
+    //             <Card.Title className="pb-3 teamCardTitle">
+    //               <strong>{team.TeamName}</strong>
+    //             </Card.Title>
+    //             <CardSubtitle className="pb-3 teamCardData">
+    //               Total wins : {team.Total_MatchesWon}
+    //             </CardSubtitle>
+    //             <CardSubtitle className="pb-3 teamCardData">
+    //               Total loses : {team.Total_MatchesLost}
+    //             </CardSubtitle>
+    //             <CardSubtitle className="pb-3 teamCardData">
+    //               Total draw : {team.Total_MatchesDrawn}
+    //             </CardSubtitle>
+    //             <CardSubtitle className="pb-3 teamCardData">
+    //               Total matches : {team.Total_MatchesPlayed}
+    //             </CardSubtitle>
+    //             <CardSubtitle className="pb-3 teamCardData">
+    //               Total Goals scored : {team.Total_Goals_scored}
+    //             </CardSubtitle>
+    //             <CardSubtitle className="teamCardData">
+    //               Total Goals received: {team.Total_Goals_received}
+    //             </CardSubtitle>
+    //           </Card.Body>
+    //         </Card>
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
   );
 };
 

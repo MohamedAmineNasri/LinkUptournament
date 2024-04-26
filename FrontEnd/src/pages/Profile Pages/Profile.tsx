@@ -19,9 +19,10 @@
         <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="relative z-20 h-35 md:h-65">
             <img
-                src={CoverOne}
+                // src={CoverOne}
+                src="https://c4.wallpaperflare.com/wallpaper/497/938/519/grass-football-field-green-lawn-wallpaper-preview.jpg"
                 alt="profile cover"
-                className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
+                className="h-full w-full rounded-tl-sm rounded-tr-sm  object-center"
             />
             <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
                 <label

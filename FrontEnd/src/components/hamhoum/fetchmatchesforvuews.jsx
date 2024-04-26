@@ -11,6 +11,8 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
+import Header from '../landingpage/Header';
+import Footer from '../landingpage/Footer';
 
 export const fetchtour = () => {
 
@@ -107,8 +109,13 @@ if (TournementId.length ==0) {
       }
   return (
     <>
-   
-    <div>
+        <main className="grow">
+            <div
+            className={`font-inter antialiased bg-white text-gray-900 tracking-tight`}
+            >
+                <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
+                    <Header />
+                    <div>
         <div className="site-wrap">
           <div className="site-mobile-menu site-navbar-target">
             <div className="site-mobile-menu-header">
@@ -141,11 +148,11 @@ if (TournementId.length ==0) {
 
           
 
-          <div className="site-section bg-dark">
-            <div className="container">
+          <div className="site-section bg-dark flex justify-center">
+            <div className="container ">
               
 
-              <div className="row">
+              <div className="row ">
                 <div className="col-12 title-section">
                 <div style={containerStyle}>
       <h2 className="heading ">Matches</h2>
@@ -154,12 +161,12 @@ if (TournementId.length ==0) {
       </Link>
     </div>
                 </div>
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-4">
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-4   text-black dark:text-white">
   {TournementId
     .slice()
     .reverse()
     .map((match, index) => (
-      <div key={match._id} className="col-lg-6 mb-4">
+      <div key={match._id} className="col-lg-6 mb-4 ">
         <Link to={`/fetchonematch/${match._id}`}>
           <div className="bg-light p-4 rounded">
             <div className="widget-body">
@@ -180,7 +187,7 @@ if (TournementId.length ==0) {
                       <span className="flex items-center justify-center">{match.goal1.length}:{match.goal2.length}</span>
                     </span>
                   </div>
-                  <div className="team-2 text-center">
+                  <div className="team-2 text-center ">
                     <img
                       src={Team2logo.slice().reverse()[index]}
                       alt="Team 2 Image"
@@ -218,12 +225,16 @@ if (TournementId.length ==0) {
         
       </div>
     
+                </div>
+            </div>
+        </main>
+    
     
     
     
     
  
-   
+        <Footer/>
     </>
   );
 };

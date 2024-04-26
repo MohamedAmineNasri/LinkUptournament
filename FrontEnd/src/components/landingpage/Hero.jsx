@@ -84,7 +84,9 @@ const Hero = () => {
               </div>
             </div>
           </div> */}
-    <div className="flex justify-center items-center gap-x-2 text-[32px] sm:text-[64px] lg:text-[72px]">For
+    <div className="flex justify-center items-center uppercase font-semibold gap-x-2 text-[32px] sm:text-[64px] lg:text-[72px]">
+      <span style={{ fontSize: '1.5em'  }} className="pr-4">For</span>
+      
                 <TypeAnimation
 
                     sequence={[

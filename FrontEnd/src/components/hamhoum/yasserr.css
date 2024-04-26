@@ -24,11 +24,11 @@ form > * {
   margin: 10px 0;
 }
 
-button {
+#submit {
   background-color: var(--accent-color);
 }
 
-button {
+#submit {
   background: var(--accent-color);
   border-radius: var(--radius);
   color: white;
@@ -40,14 +40,14 @@ button {
   transition: all 0.2s ease;
   display: block;
 }
-button:hover {
+#submit:hover {
   filter: contrast(115%);
 }
-button:active {
+#submit:active {
   transform: translateY(0px) scale(0.98);
   filter: brightness(0.9);
 }
-button:disabled {
+#submit:disabled {
   opacity: 0.5;
   cursor: none;
 }

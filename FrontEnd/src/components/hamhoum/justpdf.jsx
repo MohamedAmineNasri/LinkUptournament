@@ -136,8 +136,8 @@ const PdfGenerator = ({ id }) => {
   };
 
   return (
-    <div>
-      <button onClick={() => createPdf(id)}>Download PDF</button>
+    <div className=' justify-center'>
+      <button id ="submit"onClick={() => createPdf(id)}>Download PDF</button>
       <p className="small">(Your browser will download the resulting file)</p>
     </div>
   );

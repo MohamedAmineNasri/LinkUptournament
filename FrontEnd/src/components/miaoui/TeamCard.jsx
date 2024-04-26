@@ -38,13 +38,32 @@ const TeamCard = (props) => {
     }
   }, [dispatch, props.idacademy, loader]);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [open, setOpen] = useState(false);
 
-  const [open1, setOpen1] = React.useState(false);
-  const handleOpen1 = () => setOpen1(true);
-  const handleClose1 = () => setOpen1(false);
+  const handleOpen = (team) => {
+    setSelectedTeam(team); // Set the selected team
+    setOpen(true); // Open the modal
+  };
+
+  const handleClose = () => {
+    setSelectedTeam(null); // Clear the selected team
+    setOpen(false); // Close the modal
+  };
+
+  const [selectedTeam1, setSelectedTeam1] = useState(null);
+  const [open1, setOpen1] = useState(false);
+
+  const handleOpen1 = (team) => {
+    setSelectedTeam1(team); // Set the selected team
+    setOpen1(true); // Open the modal
+  };
+
+  const handleClose1 = () => {
+    setSelectedTeam1(null); // Clear the selected team
+    setOpen1(false); // Close the modal
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -116,6 +135,7 @@ const TeamCard = (props) => {
                 teamlogo={team.TeamLogo}
               ></DropDownTeamSettings> */}
               {/* ---------------------------------------------------------- */}
+
               <div className="p-4 flex items-center  gap-10 justify-end">
                 <div className="w-1/2 pb-3">
                   <FormControl variant="standard" sx={{ width: "100%" }}>
@@ -151,7 +171,7 @@ const TeamCard = (props) => {
                             width: "-webkit-fill-available",
                             color: "black",
                           }}
-                          onClick={handleOpen}
+                          onClick={() => handleOpen(team)}
                         >
                           Edit Team
                         </Button>
@@ -163,7 +183,7 @@ const TeamCard = (props) => {
                             width: "-webkit-fill-available",
                             color: "black",
                           }}
-                          onClick={handleOpen1}
+                          onClick={() => handleOpen1(team)}
                         >
                           Delete Team
                         </Button>
@@ -173,36 +193,42 @@ const TeamCard = (props) => {
                 </div>
               </div>
               {/* modal edit ---------------------------------------------------------- */}
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <EditTeamNew
-                    Tid={team._id}
-                    Tname={team.TeamName}
-                    Tlogo={team.TeamLogo}
-                  ></EditTeamNew>
-                </Box>
-              </Modal>
+
+              {selectedTeam && (
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <EditTeamNew
+                      Tid={selectedTeam._id}
+                      Tname={selectedTeam.TeamName}
+                      Tlogo={selectedTeam.TeamLogo}
+                    />
+                  </Box>
+                </Modal>
+              )}
               {/* ---------------------------------------------------------- */}
               {/* modal delete ---------------------------------------------------------- */}
-              <Modal
-                open={open1}
-                onClose={handleClose1}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <DeleteTeamNew
-                    teamid={team._id}
-                    handleClose1={handleClose1}
-                  ></DeleteTeamNew>
-                </Box>
-              </Modal>
+              {selectedTeam1 && (
+                <Modal
+                  open={open1}
+                  onClose={handleClose1}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <DeleteTeamNew
+                      teamid={selectedTeam1._id}
+                      Tname={selectedTeam1.TeamName}
+                    ></DeleteTeamNew>
+                  </Box>
+                </Modal>
+              )}
               {/* ---------------------------------------------------------- */}
+
               {/* <DeleteTeamPopUp teamid={team._id}></DeleteTeamPopUp> */}
               <div style={{ textAlign: "-webkit-center" }}>
                 <Card.Img

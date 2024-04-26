@@ -6,7 +6,7 @@ import { deleteTeam } from "../../redux/slice/teamSlice";
 import { Typography, Box, Stack } from "@mui/material";
 
 //i called this component in team card , propos is  the team id fetched from db as TeamCard compoenet
-export const DeleteTeamNew = (props, { handleClose1 }) => {
+export const DeleteTeamNew = (props) => {
   // delete logic
   const dispatch = useDispatch();
   const handledeleteChanges = () => {
@@ -18,7 +18,7 @@ export const DeleteTeamNew = (props, { handleClose1 }) => {
     <>
       <Box p={3}>
         <Typography variant="h6" gutterBottom>
-          Are you sure you want to delete this team?
+          Are you sure you want to delete this team ? {props.Tname}
         </Typography>
 
         <Stack direction="row" spacing={2} justifyContent="flex-end">

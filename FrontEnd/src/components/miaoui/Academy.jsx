@@ -1,14 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TeamCard from "./TeamCard";
 import DropDownAcademy from "./DropDownAcademy";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAcademybyManagerId } from "../../redux/slice/academySlice";
-import academyImageteam from "../../assets/Mi-imgs/team1.jpg";
-import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
-import HeaderNavBar from "./HeaderNavBar";
 import Badge from "react-bootstrap/Badge";
-import video from "../../assets/Mi-imgs/stadiumvideo.mp4";
 import DefaultLayout from "../../Dashboard/src/layout/DefaultLayout";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { Button } from "@mui/material";
+import EditAcademyNew from "./EditAcademyNew";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import AddTeamNew from "./AddTeamNew";
 
 export const Academy = () => {
   const dispatch = useDispatch();
@@ -62,6 +67,46 @@ export const Academy = () => {
     }
   };
 
+  // name modal logic
+  const [selectedAcademy, setSelectedAcademy] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (academy) => {
+    setSelectedAcademy(academy);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setSelectedAcademy(null);
+    setOpen(false);
+  };
+
+  //logo modal logic
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [open1, setOpen1] = useState(false);
+
+  const handleOpen1 = (team) => {
+    setSelectedTeam(team);
+    setOpen1(true);
+  };
+
+  const handleClose1 = () => {
+    setSelectedTeam(null);
+    setOpen1(false);
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 600,
+    // bgcolor: "#f8f8ff",
+    bgcolor: "rgb(36 48 63)",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 0,
+  };
   return (
     <DefaultLayout>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -77,12 +122,12 @@ export const Academy = () => {
                 style={{
                   paddingRight: "20px",
                   paddingLeft: "20px",
-                  paddingBottom: "80px",
+                  paddingTop: "50px",
                 }}
                 className="p-4 border border-gray-300 bg-opacity-25 bg-gray-900"
               >
                 <div className="flex justify-center items-top">
-                  <div className="col-md-12 col-lg-12 word-wrap-break border-b pb-6 text-center">
+                  <div className="col-md-12 col-lg-12 word-wrap-break  pb-6 text-center">
                     <div className="flex flex-col sm:flex-row">
                       <div className="sm:w-1/2">
                         <img
@@ -138,11 +183,93 @@ export const Academy = () => {
                             convincing Documents!
                           </p>
                         )}
-                        <DropDownAcademy
+                        {/* <DropDownAcademy
                           id={academyData._id}
                           academyLogo={academyData.Logo}
                           academyname={academyData.AcademyName}
-                        />
+                        /> */}
+                        <div className="p-4 flex items-center  gap-10 justify-end">
+                          <div className="w-1/2 pb-3">
+                            <FormControl
+                              variant="standard"
+                              sx={{ width: "100%" }}
+                            >
+                              <InputLabel
+                                id="Position"
+                                variant="filled"
+                                sx={{ color: "whitesmoke" }}
+                              >
+                                Options
+                              </InputLabel>
+                              <Select
+                                labelId="Position"
+                                id="Position"
+                                label="Position"
+                                name="position"
+                              >
+                                <MenuItem value="">
+                                  <Button
+                                    variant="success"
+                                    style={{
+                                      width: "-webkit-fill-available",
+                                      color: "black",
+                                    }}
+                                    onClick={() => handleOpen(academyData)}
+                                  >
+                                    Edit Academy
+                                  </Button>
+                                </MenuItem>
+                                <MenuItem value="">
+                                  <Button
+                                    variant="success"
+                                    style={{
+                                      width: "-webkit-fill-available",
+                                      color: "black",
+                                    }}
+                                    onClick={() => handleOpen1(academyData)}
+                                  >
+                                    Add Team
+                                  </Button>
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </div>
+                        {/* modal edit ---------------------------------------------------------- */}
+
+                        {selectedAcademy && (
+                          <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <EditAcademyNew
+                                id={academyData._id}
+                                academyname={academyData.AcademyName}
+                              />
+                            </Box>
+                          </Modal>
+                        )}
+                        {/* ---------------------------------------------------------- */}
+                        {/* modal delete ---------------------------------------------------------- */}
+                        {selectedTeam && (
+                          <Modal
+                            open={open1}
+                            onClose={handleClose1}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <AddTeamNew
+                                id={academyData._id}
+                                aLogo={academyData.Logo}
+                              ></AddTeamNew>
+                            </Box>
+                          </Modal>
+                        )}
+                        {/* ---------------------------------------------------------- */}
                       </div>
                     </div>
                   </div>
@@ -152,12 +279,13 @@ export const Academy = () => {
             </div>
             <div className="col-md-12 col-lg-12">
               <div
-                className="widget-body mb-3  teamsBorderBox"
+                className=" mb-3  teamsBorderBox"
                 style={{
                   borderRight: "solid thin",
                   borderLeft: "solid thin",
                   borderBottom: "solid thin",
                   borderRadius: "0px",
+                  padding: "10px",
                 }}
               >
                 <div className="p-4">

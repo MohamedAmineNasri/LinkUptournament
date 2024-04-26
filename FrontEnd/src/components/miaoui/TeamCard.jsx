@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTeamOfAcademy } from "../../redux/slice/teamSlice";
 import CardSubtitle from "react-bootstrap/esm/CardSubtitle";
-import DropDownTeamSettings from "./DropDownTeamSettings";
 import Spinner from "react-bootstrap/Spinner";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -12,11 +11,8 @@ import Select from "@mui/material/Select";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 import Box from "@mui/material/Box";
-import Button1 from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
-import { Input } from "@mui/material";
+
 import EditTeamNew from "./EditTeamNew";
 import DeleteTeamNew from "./DeleteTeamNew";
 
@@ -38,30 +34,32 @@ const TeamCard = (props) => {
     }
   }, [dispatch, props.idacademy, loader]);
 
+  // name modal logic
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [open, setOpen] = useState(false);
 
   const handleOpen = (team) => {
-    setSelectedTeam(team); // Set the selected team
-    setOpen(true); // Open the modal
+    setSelectedTeam(team);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setSelectedTeam(null); // Clear the selected team
-    setOpen(false); // Close the modal
+    setSelectedTeam(null);
+    setOpen(false);
   };
 
+  //logo modal logic
   const [selectedTeam1, setSelectedTeam1] = useState(null);
   const [open1, setOpen1] = useState(false);
 
   const handleOpen1 = (team) => {
-    setSelectedTeam1(team); // Set the selected team
-    setOpen1(true); // Open the modal
+    setSelectedTeam1(team);
+    setOpen1(true);
   };
 
   const handleClose1 = () => {
-    setSelectedTeam1(null); // Clear the selected team
-    setOpen1(false); // Close the modal
+    setSelectedTeam1(null);
+    setOpen1(false);
   };
 
   const style = {
@@ -123,19 +121,11 @@ const TeamCard = (props) => {
             <Card
               className="teamCard"
               style={{
-                width: "320px",
-                height: "550px",
+                width: "350px",
+                height: "580px",
                 backgroundColor: "#212529c4",
               }}
             >
-              {/* setting buttonthat display a drop down for various option */}
-              {/* <DropDownTeamSettings
-                idTeam={team._id}
-                teamname={team.TeamName}
-                teamlogo={team.TeamLogo}
-              ></DropDownTeamSettings> */}
-              {/* ---------------------------------------------------------- */}
-
               <div className="p-4 flex items-center  gap-10 justify-end">
                 <div className="w-1/2 pb-3">
                   <FormControl variant="standard" sx={{ width: "100%" }}>
@@ -256,7 +246,7 @@ const TeamCard = (props) => {
                 <CardSubtitle className="pb-3 teamCardData">
                   Total Goals scored : {team.Total_Goals_scored}
                 </CardSubtitle>
-                <CardSubtitle className="teamCardData">
+                <CardSubtitle className="pb-3 teamCardData">
                   Total Goals received: {team.Total_Goals_received}
                 </CardSubtitle>
               </Card.Body>

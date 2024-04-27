@@ -2,6 +2,7 @@
 const Player = require("../Models/Player");
 
 const Team =require('../Models/Team')
+const Match =require('../Models/match')
 const Academy =require('../Models/Academy')
 const academyService = require('../Services/AcademyService')
 const Achievement =require('../Models/Achievement');
@@ -164,9 +165,9 @@ const updateTeamMatchesWon = async (req,res,next)=>{
     TeamMWData.Total_MatchesWon +=  1;
     TeamMWData.Total_MatchesPlayed +=  1;
     //Group stage
-    TeamMWData.GS_MatchesWon += 1 
-    TeamMWData.GS_MatchesPlayed +=1 
-    TeamMWData.GS_Points += 3
+    // TeamMWData.GS_MatchesWon += 1 
+    // TeamMWData.GS_MatchesPlayed +=1 
+    // TeamMWData.GS_Points += 3
     await TeamMWData.save()
     res.json(TeamMWData)
 }
@@ -183,9 +184,9 @@ const cancelTeamMatchesWon = async (req,res,next)=>{
         TeamMWData.Total_MatchesWon -= 1;
         TeamMWData.Total_MatchesPlayed -= 1;
         //Group stage
-        TeamMWData.GS_MatchesWon -= 1 ;
-        TeamMWData.GS_MatchesPlayed -=1 ;
-        TeamMWData.GS_Points -= 3
+        // TeamMWData.GS_MatchesWon -= 1 ;
+        // TeamMWData.GS_MatchesPlayed -=1 ;
+        // TeamMWData.GS_Points -= 3
         await TeamMWData.save()
         res.json(TeamMWData)
     }
@@ -200,9 +201,9 @@ const updateTeamMatchesLost = async (req,res,next)=>{
     TeamMLData.Total_MatchesLost +=  1;
     TeamMLData.Total_MatchesPlayed += 1;
     //Group stage
-    TeamMLData.GS_MatchesLost +=  1;
-    TeamMLData.GS_MatchesPlayed += 1;
-    TeamMLData.GS_Points += 0
+    // TeamMLData.GS_MatchesLost +=  1;
+    // TeamMLData.GS_MatchesPlayed += 1;
+    // TeamMLData.GS_Points += 0
 
     await TeamMLData.save()
     res.json(TeamMLData)
@@ -239,9 +240,9 @@ const updateTeamMatchesDrawn = async (req,res,next)=>{
     TeamMDData.Total_MatchesDrawn += 1;
     TeamMDData.Total_MatchesPlayed += 1;
     //Group stage
-    TeamMDData.GS_MatchesDrawn+= 1;
-    TeamMDData.GS_MatchesPlayed += 1;
-    TeamMDData.GS_Points += 1
+    // TeamMDData.GS_MatchesDrawn+= 1;
+    // TeamMDData.GS_MatchesPlayed += 1;
+    // TeamMDData.GS_Points += 1
     await TeamMDData.save()
     res.json(TeamMDData)
 }
@@ -257,9 +258,9 @@ const cancelTeamMatchesDrawn = async (req,res,next)=>{
         TeamMDData.Total_MatchesDrawn -= 1;
         TeamMDData.Total_MatchesPlayed -= 1;
         //Group stage
-        TeamMDData.GS_MatchesDrawn -= 1;
-        TeamMDData.GS_MatchesPlayed -= 1;
-        TeamMDData.GS_Points -= 1
+        // TeamMDData.GS_MatchesDrawn -= 1;
+        // TeamMDData.GS_MatchesPlayed -= 1;
+        // TeamMDData.GS_Points -= 1
         await TeamMDData.save()
         res.json(TeamMDData)
     }
@@ -273,8 +274,8 @@ const updateGoals_scored = async (req,res, next) => {
         //stats
         TeamData.Total_Goals_scored += 1; 
         //Group Stage
-        TeamData.GS_Goals_scored += 1; 
-        TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received; 
+        // TeamData.GS_Goals_scored += 1; 
+        // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received; 
         await TeamData.save();
         res.json(TeamData)
    
@@ -291,8 +292,8 @@ const cancelGoals_scored = async (req,res, next) => {
         //stats
         TeamData.Total_Goals_scored -= 1;
         //Group Stage
-        TeamData.GS_Goals_scored -= 1; 
-        TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
+        // TeamData.GS_Goals_scored -= 1; 
+        // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
         await TeamData.save();
         res.json(TeamData)
         }
@@ -306,12 +307,91 @@ const updateGoals_received = async (req,res, next) => {
         //stats
         TeamData.Total_Goals_received += 1; 
         //Group stage
-        TeamData.GS_Goals_received += 1; 
-        TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
+        // TeamData.GS_Goals_received += 1; 
+        // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
         await TeamData.save();
         res.json(TeamData)
    
 };
+//-----------------------------------------------------------------------------------------
+
+const updateTeamMatchesWon_P = async (idTeam)=>{
+    
+    const TeamMWData = await Team.findById(idTeam);
+    //stats
+    TeamMWData.Total_MatchesWon +=  1;
+    TeamMWData.Total_MatchesPlayed +=  1;
+    //Group stage
+    // TeamMWData.GS_MatchesWon += 1 
+    // TeamMWData.GS_MatchesPlayed +=1 
+    // TeamMWData.GS_Points += 3
+    await TeamMWData.save()
+}
+const updateTeamMatchesLost_P = async (idTeam)=>{
+   
+    const TeamMLData = await Team.findById(idTeam);
+    //stats
+    TeamMLData.Total_MatchesLost +=  1;
+    TeamMLData.Total_MatchesPlayed += 1;
+    //Group stage
+    // TeamMLData.GS_MatchesLost +=  1;
+    // TeamMLData.GS_MatchesPlayed += 1;
+    // TeamMLData.GS_Points += 0
+
+    await TeamMLData.save()
+}
+
+const updateTeamMatchesDrawn_P = async (idTeam)=>{
+
+    const TeamMDData = await Team.findById(idTeam);
+    //stats
+    TeamMDData.Total_MatchesDrawn += 1;
+    TeamMDData.Total_MatchesPlayed += 1;
+    //Group stage
+    // TeamMDData.GS_MatchesDrawn+= 1;
+    // TeamMDData.GS_MatchesPlayed += 1;
+    // TeamMDData.GS_Points += 1
+    await TeamMDData.save()
+}
+
+const updateGoals_scored_P = async (idTeam,TotalGoals) => {
+    
+    const TeamData = await Team.findById(idTeam);
+    //stats
+    TeamData.Total_Goals_scored += TotalGoals; 
+    //Group Stage
+    // TeamData.GS_Goals_scored += 1; 
+    // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received; 
+    await TeamData.save();
+
+};
+
+const updateGoals_received_P = async (idTeam,TotalGRecieved) => {
+    
+    const TeamData = await Team.findById(idTeam);
+    //stats
+    TeamData.Total_Goals_received += TotalGRecieved; 
+    //Group stage
+    // TeamData.GS_Goals_received += 1; 
+    // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
+    await TeamData.save();
+
+};
+
+const resetData = async (idTeam) => {
+    
+    const TeamData = await Team.findById(idTeam);
+    TeamData.Total_MatchesWon = 0;
+    TeamData.Total_MatchesLost = 0;
+    TeamData.Total_MatchesDrawn = 0;
+    TeamData.Total_MatchesPlayed = 0;
+    TeamData.Total_Goals_received = 0;
+    TeamData.Total_Goals_scored = 0;
+    await TeamData.save();
+    
+    
+  };
+//-------------------------------------------------------------------------------------------------
 
 const deleteTeamById = async (req, res, next) => {
   const teamData = await Team.findByIdAndDelete(req.params.id);
@@ -329,8 +409,8 @@ const cancelGoals_received = async (req,res, next) => {
             //stats
             TeamData.Total_Goals_received -= 1; 
             //Group stage
-            TeamData.GS_Goals_received -= 1;  
-            TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
+            // TeamData.GS_Goals_received -= 1;  
+            // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
         await TeamData.save();
         res.json(TeamData)
         }
@@ -428,6 +508,60 @@ const getTeamsByName = async (req, res, next) => {
 };
 
 
+const UpdateTeamsStatsFromFinishedMatches = async (req, res, next) => {
+    const matches = await Match.find({matchstatus : "Finished"})
+
+    // Reset data for all teams involved in the matches
+    const teamsToReset = new Set();
+    matches.forEach((match) => {
+        teamsToReset.add(match.team1);
+        teamsToReset.add(match.team2);
+    });
+
+    // Reset all teams before starting the loop
+    for (const teamId of teamsToReset) {
+       await resetData(teamId);
+    }
+
+    for (const match of matches) {
+        // resetData(match.team1)
+        // resetData(match.team2)
+        const team1 = await Team.findById(match.team1)
+        const team2 = await Team.findById(match.team2)
+
+        const goalTeam1 = match.goal1.length
+        const goalTeam2 = match.goal2.length
+        if(goalTeam1 > goalTeam2){ //team 1 win
+            updateTeamMatchesWon_P(match.team1)
+            updateGoals_scored_P(match.team1,goalTeam1)
+            updateGoals_received_P(match.team1,goalTeam2)
+            updateTeamMatchesLost_P(match.team2)
+            updateGoals_scored_P(match.team2,goalTeam2)
+            updateGoals_received_P(match.team2,goalTeam1)
+            
+        }
+        else if(goalTeam1 < goalTeam2){ //team 2 win
+            updateTeamMatchesWon_P(match.team2)
+            updateGoals_scored_P(match.team2,goalTeam2)
+            updateGoals_received_P(match.team2,goalTeam1)
+            updateTeamMatchesLost_P(match.team1)
+            updateGoals_scored_P(match.team1,goalTeam1)
+            updateGoals_received_P(match.team1,goalTeam2)
+        }else{//draw
+            updateTeamMatchesDrawn_P(match.team1)
+            updateGoals_scored_P(match.team1,goalTeam1)
+            updateGoals_received_P(match.team1,goalTeam2)
+            updateTeamMatchesDrawn_P(match.team2)
+            updateGoals_scored_P(match.team2,goalTeam2)
+            updateGoals_received_P(match.team2,goalTeam1)
+        }
+        await team1.save()
+        await team2.save()
+    }
+    return res.json("done")
+}
 
 
-module.exports = {getTeamsByName , getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};
+
+
+module.exports = {UpdateTeamsStatsFromFinishedMatches,getTeamsByName , getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};

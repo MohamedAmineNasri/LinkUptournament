@@ -126,6 +126,18 @@ export const editTeamSameName = createAsyncThunk(
   }
 );
 
+export const UpdateTeamsStatsFromFinishedMatches =  createAsyncThunk(
+  'team/UpdateTeamsStatsFromFinishedMatches', 
+  async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/Team/UpdateTeamsStatsFromFinishedMatches');
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching teams: ' + error.message);
+    }
+  }
+);
+
 // ena miaoui i added this for testing dw , hani 9otlk mesh kif barsha ness ---------------------------
 export const fetchplayerByTeamId =  createAsyncThunk(
   'team/fetchplayerByTeamId', 

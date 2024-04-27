@@ -44,4 +44,6 @@ router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandF
 
 router.get('/teams/search/:searchString', teamService.getTeamsByName);
 
+router.post("/UpdateTeamsStatsFromFinishedMatches",teamService.UpdateTeamsStatsFromFinishedMatches);
+
 module.exports = router;

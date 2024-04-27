@@ -103,30 +103,6 @@ export const CheckSelectedTeam = () => {
     );
   }, [dispatch]);
 
-  //locked or unlocked effect
-  // const getRowStyle = (status) => {
-  //   // Define a default style
-  //   let style = {
-  //     opacity: 1,
-  //     transition: "all 0.3s ease-in-out",
-  //   };
-
-  //   // Apply a darker style if status is not "Active"
-  //   if (status !== "NOTActive") {
-  //     style.opacity = 0.5; // Make the row semi-transparent
-  //     style.backgroundColor = "#e0e0e0"; // Optional: apply a light gray background
-  //   }
-
-  //   return style;
-  // };
-
-  // delete logic
-
-  // const handledeletePlayer = () => {
-  //   dispatch(deleteTeam(props.teamid));
-  //   window.location.reload();
-  // };
-
   const style = {
     position: "absolute",
     top: "50%",
@@ -136,8 +112,7 @@ export const CheckSelectedTeam = () => {
     bgcolor: "#1a2635",
     boxShadow: 24,
     p: 4,
-    height: "90vh", // Using a percentage for flexibility
-    overflowY: "auto",
+    height: "100vh",
   };
   return (
     <>
@@ -249,8 +224,9 @@ export const CheckSelectedTeam = () => {
 
                         <TableContainer
                           sx={{
-                            maxHeight: "90%", // Adjust as needed to ensure the table fits within the modal
-                            overflowY: "hidden", // This enables scrolling in the table
+                            maxHeight: "90%",
+                            overflowY: "auto",
+                            overflowX: "hidden",
                           }}
                         >
                           <Table hover responsive="xl">

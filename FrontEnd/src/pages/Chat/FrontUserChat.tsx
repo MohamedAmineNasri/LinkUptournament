@@ -45,14 +45,14 @@ const FrontUserChat = () => {
                                                 </svg>
                                             </div>
                                             <input
-                        type="text"
-                        id="simple-search"
-                        className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500"
-                        placeholder="Search"
-                        value={searchQuery}
-                        onChange={handleSearchInputChange}
-                        required
-                    />
+                                                type="text"
+                                                id="simple-search"
+                                                className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500"
+                                                placeholder="Search"
+                                                value={searchQuery}
+                                                onChange={handleSearchInputChange}
+                                                required
+                                            />
                                         </div>
                                     </form>
                                 </div>

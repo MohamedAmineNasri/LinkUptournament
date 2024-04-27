@@ -1,12 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
-import DropdownMessage from "./DropdownMessage";
+import DropdownMessage from './DropdownMessage';
 import DropdownNotification from "./DropdownNotification";
-import DropdownUser from "./DropdownUser";
+import DropdownUser from './DropdownUser';
 import LogoIcon from "../../../../../public/images/logo_vector.svg";
-import DarkModeSwitcher from "./DarkModeSwitcher";
+import DarkModeSwitcher from './DarkModeSwitcher';
+import Dropdown from "react-bootstrap/Dropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Translate from "../../../../components/miaoui/Apis/Translate .jsx"
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { searchPlayers } from "../../../../redux/playerReducers/searchPlayerSlice.js";
 import { searchReferees } from "../../../../redux/refereeReducers/searchRefereeSlice.js";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -159,6 +162,25 @@ const Header = (props: {
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
+            {/* google translate api call  */}
+            <li>
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        style={{
+                          backgroundColor: "transparent",
+                          border: "none",
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          style={{ fontSize: "24px" }}
+                          icon={faLanguage}
+                        />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Translate />
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </li>
             {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}

@@ -17,10 +17,62 @@ import {
 // import DropDownLocationFilter from "./DropDownLocationFilter";
 import Pagination from "react-bootstrap/Pagination";
 import DropDownMwonFilter from "./DropDownMwonFilter";
+import { fetchAcademybyManagerId } from "../../../redux/slice/academySlice";
+import academyImageteam from "../../../assets/Mi-imgs/team1.jpg";
+import Badge from "react-bootstrap/Badge";
+import TeamCard from "../../../components/miaoui/TeamCard";
+import DropDownAcademy from "../../../components/miaoui/DropDownAcademy";
 
 const TeamDashB = () => {
   //fetch
   const dispatch = useDispatch();
+
+  // academy logic -----------------------------------------------------
+  // const { academyData } = useSelector((state) => state.root.academy);
+  // useEffect(() => {
+  //   //normally hethi nhezeha lel login jsx
+  //   const userId = localStorage.getItem("user");
+  //   const userObject = JSON.parse(userId);
+  //   //Extract the id property from the user object
+  //   const userIdOnly = userObject.id;
+
+  //   if (loading === false && error === null) {
+  //     dispatch(
+  //       fetchAcademybyManagerId({
+  //         idmanger: userIdOnly,
+  //       })
+  //     );
+  //     localStorage.setItem("AcademyStatus", academyData.Status);
+  //     if (academyData !== null) {
+  //       //hide the add academy  page if the manger already have one
+  //       localStorage.setItem("hideAddAcademy", true);
+  //     }
+  //   }
+  // }, [dispatch]);
+
+  // //date correct format
+  // const date = academyData ? new Date(academyData.FoundedYear) : null;
+  // let formattedDate = "";
+  // if (date) {
+  //   const year = date.getFullYear();
+  //   const month = date.getMonth() + 1;
+  //   const day = date.getDate();
+  //   formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+  // } else {
+  //   formattedDate = "N/A";
+  // }
+  // const getStatusColor = (status) => {
+  //   switch (status) {
+  //     case "Pending":
+  //       return "warning";
+  //     case "Rejected":
+  //       return "danger";
+  //     case "Approved":
+  //       return "success";
+  //     default:
+  //       return "text-muted";
+  //   }
+  // };
 
   const { allteamData, loading, error } = useSelector(
     (state) => state.root.team
@@ -147,6 +199,7 @@ const TeamDashB = () => {
 
     return filteredTeams;
   };
+  console.log(filterAcademies());
 
   return (
     <DefaultLayout>
@@ -283,7 +336,7 @@ const TeamDashB = () => {
           </table>
         </div>
       </div>
-      <Pagination className="mt-4 justify-end">
+      <Pagination className="pt-10 pb-10 flex justify-around">
         <Pagination.First onClick={() => handlePageChange(1)} />
         <Pagination.Prev
           onClick={() =>
@@ -295,8 +348,8 @@ const TeamDashB = () => {
             key={index}
             active={index + 1 === currentPage}
             style={{
-              color: "white",
-              backgroundColor: "black",
+              color: "#2b9451",
+              fontWeight: "bold",
             }}
             onClick={() => handlePageChange(index + 1)}
           >

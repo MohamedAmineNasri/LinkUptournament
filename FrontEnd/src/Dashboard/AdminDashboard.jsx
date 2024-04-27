@@ -22,6 +22,8 @@ import "./src/css/satoshi.css";
 // import 'jsvectormap/dist/css/jsvectormap.css';
 import "flatpickr/dist/flatpickr.min.css";
 import TeamDashB from "./miaoui/teamDsPanel/TeamDashB";
+import AchievementDisplay from "./miaoui/achievementsDsPanel/AchievementDisplay";
+import AddAchivementDS from "./miaoui/achievementsDsPanel/AddAchivementDS";
 
 const AdminDashboard = () => {
   // const [loading, setLoading] = useState<boolean>(true);
@@ -112,7 +114,7 @@ const AdminDashboard = () => {
             </>
           }
         />
-        {/* academy dashboard----------------------------------- */}
+        {/* academy dashboard miaoui----------------------------------------------------------------------------------- */}
         <Route
           path="/academyDS"
           element={
@@ -122,8 +124,6 @@ const AdminDashboard = () => {
             </>
           }
         />
-        {/* ----------------------------------- */}
-        {/* academy dashboard----------------------------------- */}
         <Route
           path="/teamDS"
           element={
@@ -133,7 +133,25 @@ const AdminDashboard = () => {
             </>
           }
         />
-        {/* ----------------------------------- */}
+        <Route
+          path="/achievementDS"
+          element={
+            <>
+              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <AchievementDisplay></AchievementDisplay>
+            </>
+          }
+        />
+        <Route
+          path="/AddAchivementDS"
+          element={
+            <>
+              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <AddAchivementDS></AddAchivementDS>
+            </>
+          }
+        />
+        {/* --------------------------------------------------------------------------------------------------------- */}
         <Route
           path="/ui/alerts"
           element={

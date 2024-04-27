@@ -101,7 +101,7 @@ export const fetchtour = () => {
     fetchMatchesWithTeamDetails()
     
 
-  }, [TournementId.map((match, index) => (match.goal1.length))]);
+  }, [TournementId.map((match, index) => (match.goal1.length,match.goal2.length))]);
 if (TournementId.length ==0) {
  
         return <div style={{ backgroundColor:"rgb(35, 79, 30)"}}><br/>Loading tournament...</div>;

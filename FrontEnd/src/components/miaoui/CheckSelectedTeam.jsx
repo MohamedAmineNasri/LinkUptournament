@@ -136,6 +136,7 @@ export const CheckSelectedTeam = () => {
     bgcolor: "#1a2635",
     boxShadow: 24,
     p: 4,
+    height: "90vh", // Using a percentage for flexibility
     overflowY: "auto",
   };
   return (
@@ -246,8 +247,13 @@ export const CheckSelectedTeam = () => {
                           </Button>
                         </div>
 
-                        <TableContainer>
-                          <Table>
+                        <TableContainer
+                          sx={{
+                            maxHeight: "90%", // Adjust as needed to ensure the table fits within the modal
+                            overflowY: "hidden", // This enables scrolling in the table
+                          }}
+                        >
+                          <Table hover responsive="xl">
                             <TableHead>
                               <TableRow>
                                 <TableCell sx={{ color: "white" }}>

@@ -336,89 +336,7 @@ const TeamDashB = () => {
           </table>
         </div>
       </div>
-      {/* ACADEMY display test ------------------------------------ */}
-      {/* <div>
-        <div>
-          <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-            <div className="row  justify-content-center align-items-top AcademyandTeamsBox ">
-              <div
-                className="col-md-5 col-lg-4 word-wrap-break"
-                style={{
-                  textAlign: "-webkit-center",
-                  borderRight: "solid medium",
-                }}
-              >
-                <div className="academyBox">
-                  <img
-                    src={academyData.Logo}
-                    alt="Logo"
-                    className="img-fluid academyLogoMwidth " 
-                  />
-
-                  <h3
-                    className="mb-4 mt-3 notranslate "
-                    style={{ fontWeight: "bold", fontSize: "40px" }}
-                  >
-                    <strong>{academyData.AcademyName}</strong>
-                  </h3>
-                  <p className=" mb-4 ">
-                    Location :
-                    <span className="text-muted notranslate">
-                      {academyData.Location}
-                    </span>
-                  </p>
-                  <p className=" mb-4 ">
-                    Creating Date :{" "}
-                    <span className="text-muted">{formattedDate}</span>
-                  </p>
-                  <p className="mb-2 ">
-                    Status :{" "}
-                    <span>
-                      <Badge
-                        className=" p-2 notranslate"
-                        bg={getStatusColor(academyData.Status)}
-                      >
-                        {academyData.Status}
-                      </Badge>
-                    </span>
-                  </p>
-                  {academyData.Status === "Approved" && (
-                    <p className="text-success mb-4">
-                      This academy is approved, You can particpate in
-                      tournements.
-                    </p>
-                  )}
-                  {academyData.Status === "Pending" && (
-                    <p className="text-warning mb-4">
-                      This academy is still pending approval.
-                    </p>
-                  )}
-                  {academyData.Status === "Rejected" && (
-                    <p className="text-danger mb-4">
-                      This academy has been rejected, You must provide
-                      convencing Documents!
-                    </p>
-                  )}
-                  <DropDownAcademy
-                    id={academyData._id}
-                    academyLogo={academyData.Logo}
-                    academyname={academyData.AcademyName}
-                  />
-                </div>
-              </div>
-              <div className="col-md-7 col-lg-8">
-                <div className="widget-body mb-3 teamsBorderBox ">
-                  <div className="p-4">
-                    <TeamCard idacademy={academyData._id} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* -------------------------------------------------------- */}
-      <Pagination className="mt-4 justify-end">
+      <Pagination className="pt-10 pb-10 flex justify-around">
         <Pagination.First onClick={() => handlePageChange(1)} />
         <Pagination.Prev
           onClick={() =>
@@ -430,8 +348,8 @@ const TeamDashB = () => {
             key={index}
             active={index + 1 === currentPage}
             style={{
-              color: "white",
-              backgroundColor: "black",
+              color: "#2b9451",
+              fontWeight: "bold",
             }}
             onClick={() => handlePageChange(index + 1)}
           >

@@ -291,7 +291,7 @@ const AchievementDisplay = () => {
           </table>
         </div>
       </div>
-      <Pagination className="mt-4 justify-end">
+      <Pagination className="pt-10 pb-10 flex justify-around">
         <Pagination.First onClick={() => handlePageChange(1)} />
         <Pagination.Prev
           onClick={() =>
@@ -303,8 +303,8 @@ const AchievementDisplay = () => {
             key={index}
             active={index + 1 === currentPage}
             style={{
-              color: "white",
-              backgroundColor: "black",
+              color: "#2b9451",
+              fontWeight: "bold",
             }}
             onClick={() => handlePageChange(index + 1)}
           >

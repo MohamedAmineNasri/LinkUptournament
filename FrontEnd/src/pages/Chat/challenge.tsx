@@ -125,9 +125,10 @@ const Challenges = ({ status,searchQuery  }) => {
     const indexOfLastChatroom = currentPage * chatroomsPerPage;
     const indexOfFirstChatroom = indexOfLastChatroom - chatroomsPerPage;
     const currentChatrooms = chatrooms.slice(indexOfFirstChatroom, indexOfLastChatroom);
-    const filteredChatrooms = chatrooms.filter((chatroom) =>
-      chatroom.name && chatroom.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    const filteredChatrooms = chatrooms
+    .filter((chatroom) => chatroom.name && chatroom.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    .slice(indexOfFirstChatroom, indexOfLastChatroom);
+  
     
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);

@@ -9,10 +9,21 @@
         import { useDispatch } from 'react-redux';
         import { setCredentials } from '../../../Features/auth/authSlice'
 
+        import Box from '@mui/material/Box';
+        import Stepper from '@mui/material/Stepper';
+        import Step from '@mui/material/Step';
+        import StepLabel from '@mui/material/StepLabel';
+        import Button from '@mui/material/Button';
+        const steps = [
+            { label: 'Step 1', fields: ['firstName', 'lastName'] },
+            { label: 'Step 2', fields: ['email', 'phoneNumber', 'password'] },
+            { label: 'Step 3', fields: ['birthday', 'bio', 'roles'] },
+        ];
 
         const SignUp: React.FC = () => {
             const dispatch = useDispatch();
             const navigate = useNavigate();
+            const [activeStep, setActiveStep] = React.useState(0);
             const [formData, setFormData] = useState({
                 firstName: '',
                 lastName: '',
@@ -85,6 +96,13 @@
                     console.error('Signup failed:', err);
                 }
             };
+            const handleNext = () => {
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+              };
+            
+              const handleBack = () => {
+                setActiveStep((prevActiveStep) => prevActiveStep - 1);
+              };
         return (
             <AuthLayout>
             <Breadcrumb pageName="" />
@@ -228,150 +246,89 @@
                 </div>
 
                 <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-                    <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-                    <span className="mb-1.5 block font-medium">Start for free</span>
-                    <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                        Sign Up To LinkUptournament
-                    </h2>
-
+                <Box sx={{ width: '100%' }} className="px-4 sm:px-12.5 xl:px-17.5">
+                    
                     <form onSubmit={handleSubmit}>
-                    {errMsg && <p className="text-red-500">{errMsg}</p>}
-            <div className="form-group">
-                <label className='text-black dark:text-white'>First Name:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="First Name"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label className='text-black dark:text-white'>Last Name:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Last Name"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label className='text-black dark:text-white'>Email:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label className='text-black dark:text-white'>Phone Number:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Phone Number"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="form-group">
-                <label className='text-black dark:text-white'>Password:</label>
-                <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            {/* <div className="form-group">
-                <label>Account Image:</label>
-                <input
-                    type="file"
-                    className="form-control"
-                    placeholder="Account Image"
-                    name="accountImage"
-                    value={formData.accountImage}
-                    onChange={handleChange}
-                />
-            </div> */}
-            <div className="form-group">
-                <label className='text-black dark:text-white'>Birthday:</label>
-                <input
-                    type="date"
-                    className="form-control"
-                    placeholder="Birthday"
-                    name="birthday"
-                    value={formData.birthday}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div className="form-group">
-            <label className='text-black dark:text-white'>Bio:</label>
-            <input
-                type="text"
-                className="form-control"
-                placeholder="Bio"
-                name="bio"
-                value={formData.bio}
-                onChange={handleChange}
-                required
-            />
-            </div>
+                        <div className="p-4">
+                            <span className="mb-1.5 block font-medium">Start for free</span>
+                            <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+                                Sign Up To LinkUptournament
+                            </h2>
+                            <Stepper activeStep={activeStep} className="mb-6 " alternativeLabel>
+                                {steps.map(({ label }, index) => (
+                                    <Step key={label} >
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                            {errMsg && <p className="text-red-500">{errMsg}</p>}
+                            {steps[activeStep].fields.map((field) => (
+                                <div className="form-group" key={field}>
+                                    <label className="text-black dark:text-white">{field}</label>
+                                    {field === 'birthday' ? (
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            placeholder={field}
+                                            name={field}
+                                            value={formData[field]}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    ) : (
+                                        <input
+                                            type={field === 'password' ? 'password' : 'text'}
+                                            className="form-control"
+                                            placeholder={field}
+                                            name={field}
+                                            value={formData[field]}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    )}
+                                </div>
+                            ))}
+                            <div className="form-group flex justify-between">
+                                <Button
+                                    variant="contained"
+                                    style={{ backgroundColor: '#2B9451' }}
+                                    onClick={handleBack}
+                                    disabled={activeStep === 0}
+                                >
+                                    Back
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    style={{ backgroundColor: '#2B9451' }}
+                                    onClick={handleNext}
+                                    disabled={activeStep === steps.length - 1}
+                                >
+                                    Next
+                                </Button>
+                                {activeStep === steps.length - 1 && (
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        style={{ backgroundColor: '#2B9451' }}
+                                        disabled={isLoading}
+                                    >
+                                        Create account
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                        <div className="mt-6 text-center">
+                                <p>
+                                    Already have an account?{' '}
+                                    <Link to="/signin" className="text-primary">
+                                        Sign in
+                                    </Link>
+                                </p>
+                            </div>
 
-            <div className="form-group">
-                <label className='text-black dark:text-white'>Roles:</label>
-                <select
-                    className="form-control "
-                    name="roles"
-                    value={formData.roles}
-                    onChange={handleChange}
-                >
-                    <option value="Supporter">Supporter</option>
-                    <option value="Agent">Agent</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Player">Player</option>
-                    <option value="TournamentCoordinator">Tournament Coordinator</option>
-                </select>
+                    </form>
+                </Box>
             </div>
-            <div className="form-group">
-                <input
-                    type="submit"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                    value="Create account"
-                    disabled={isLoading}
-                />
-            </div>
-
-            <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
-                <span>
-                </span>
-                Sign up with Google
-            </button>
-
-            <div className="mt-6 text-center">
-                <p>
-                    Already have an account?{' '}
-                    <Link to="/signin" className="text-primary">
-                        Sign in
-                    </Link>
-                </p>
-            </div>
-        </form>
-                    </div>
-                </div>
                 </div>
             </div>
             </AuthLayout>

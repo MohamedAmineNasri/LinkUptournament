@@ -27,7 +27,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Site branding */}
           <div className="shrink-0 mr-4">
-            <img src={Logo} className="h-10"/>
+            <img src={Logo} className="h-10"  onClick={() => navigate("/")}/>
           </div>
 
           {/* Desktop navigation */}
@@ -49,6 +49,14 @@ const Header = () => {
                 className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
             >
                 Matches
+            </button>
+        </li>
+        <li>
+            <button
+                onClick={() => navigate("/lineup")}
+                className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+            >
+                Lineup
             </button>
         </li>
         

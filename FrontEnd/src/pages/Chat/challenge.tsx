@@ -17,7 +17,7 @@ interface ChatroomData {
 
 const defaultImagePath = 'https://images.unsplash.com/photo-1610465299996-30f240ac2b1c?auto=format&q=75&fit=crop&w=1000';
 
-const Challenges = ({ status }) => {
+const Challenges = ({ status,searchQuery  }) => {
   const [chatrooms, setChatrooms] = useState<ChatroomData[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -125,6 +125,9 @@ const Challenges = ({ status }) => {
     const indexOfLastChatroom = currentPage * chatroomsPerPage;
     const indexOfFirstChatroom = indexOfLastChatroom - chatroomsPerPage;
     const currentChatrooms = chatrooms.slice(indexOfFirstChatroom, indexOfLastChatroom);
+    const filteredChatrooms = chatrooms.filter((chatroom) =>
+      chatroom.name && chatroom.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
     
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -298,9 +301,12 @@ const Challenges = ({ status }) => {
             </div>
           ))
         ) : (
-          currentChatrooms.map((chatroom, index) => (
+          // currentChatrooms.map((chatroom, index) => (
+          //   <Challenge chatroom={chatroom} index={index} key={chatroom._id} />
+          // ))
+          filteredChatrooms.map((chatroom, index) => (
             <Challenge chatroom={chatroom} index={index} key={chatroom._id} />
-          ))
+        ))
         )}
 
         </div>

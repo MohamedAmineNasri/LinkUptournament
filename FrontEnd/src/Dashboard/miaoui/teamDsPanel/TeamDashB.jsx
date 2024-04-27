@@ -199,6 +199,7 @@ const TeamDashB = () => {
 
     return filteredTeams;
   };
+  console.log(filterAcademies());
 
   return (
     <DefaultLayout>

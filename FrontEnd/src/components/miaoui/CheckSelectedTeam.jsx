@@ -4,13 +4,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import { fetchteamById } from "../../redux/slice/teamSlice";
-import video from "../../assets/Mi-imgs/teamV.mp4";
-import HeaderNavBar from "./HeaderNavBar";
 import Table from "react-bootstrap/Table";
 import logo from "../../assets/Mi-imgs/personpng.png";
 import trohy from "../../assets/Mi-imgs/trophy.png";
 import { fetchplayerByTeamId } from "../../redux/slice/teamSlice";
-import nightFeildImage from "../../assets/Mi-imgs/nightFeild.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
@@ -22,19 +19,33 @@ import {
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 import { updatetachievementStatus } from "../../redux/slice/tachievementSlice";
 import { fetchDefaultAchievementOfTeamByTeamId } from "../../redux/slice/tachievementSlice";
-import Modal from "react-bootstrap/Modal";
 import DefaultLayout from "../../Dashboard/src/layout/DefaultLayout";
-
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import {
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 export const CheckSelectedTeam = () => {
   const { idTeam } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //modal logic
-  const [show, setShow] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    // setSelectedTeam(team);
+    setOpen(true);
+  };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    // setSelectedTeam(null);
+    setOpen(false);
+  };
 
   // Step 1: Create a state variable for the active achievement type
   const [achievementType, setAchievementType] = useState("active");
@@ -115,6 +126,18 @@ export const CheckSelectedTeam = () => {
   //   dispatch(deleteTeam(props.teamid));
   //   window.location.reload();
   // };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 700,
+    bgcolor: "#1a2635",
+    boxShadow: 24,
+    p: 4,
+    overflowY: "auto",
+  };
   return (
     <>
       <DefaultLayout>
@@ -138,6 +161,9 @@ export const CheckSelectedTeam = () => {
                     textAlign: "-webkit-center",
                     backgroundColor: "#228b221c",
                     borderRadius: "20px",
+                    borderBottomRightRadius: "0px",
+                    borderBottomLeftRadius: "0px",
+                    paddingBottom: "20px",
                   }}
                 >
                   {/* trophies button MODAL ---------------------------------------------- */}
@@ -172,29 +198,27 @@ export const CheckSelectedTeam = () => {
                         flexDirection: "column",
                         alignItems: "center",
                       }}
-                      onClick={handleShow}
+                      onClick={handleOpen}
                     >
                       <FontAwesomeIcon fontSize="25px" icon={faTrophy} />
                       <span style={{ marginTop: "10px" }}>Achievements</span>
                     </Button>
 
-                    <Modal size="lg" show={show} onHide={handleClose}>
-                      <Modal.Header
-                        closeButton
-                        style={{
-                          backgroundColor: "#1d2631",
-                          border: "solid thin",
-                          borderBottom: "none",
-                        }}
-                      >
-                        <Modal.Title>Achievements</Modal.Title>
-                        {/* button toggle , active / non active --------------------- */}
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-title"
+                      aria-describedby="modal-description"
+                    >
+                      <Box sx={style}>
                         <div
                           style={{
-                            display: "inline-block",
-                            marginLeft: "auto",
+                            textAlign: "center",
+                            marginBottom: "20px",
+                            paddingTop: "10px",
                           }}
                         >
+                          <h2 className="p-2">Achievements</h2>
                           <Button
                             variant={
                               achievementType === "active"
@@ -204,7 +228,7 @@ export const CheckSelectedTeam = () => {
                             onClick={() => toggleAchievementType("active")}
                             style={{
                               marginRight: "2px",
-                              backgroundColor: "transparent",
+                              backgroundColor: "#00800052",
                             }}
                           >
                             Unlocked
@@ -216,239 +240,194 @@ export const CheckSelectedTeam = () => {
                                 : "secondary"
                             }
                             onClick={() => toggleAchievementType("non-active")}
-                            style={{ backgroundColor: "transparent" }}
+                            style={{ backgroundColor: "#ff000073" }}
                           >
                             Locked
                           </Button>
                         </div>
-                        {/* ----------------------------------------------------- */}
-                      </Modal.Header>
-                      <Modal.Body
-                        style={{
-                          backgroundColor: "#1d2631",
-                          padding: "0px",
-                          border: "solid thin",
-                          borderTop: "none",
-                        }}
-                      >
-                        <div>
-                          <Table hover responsive="xl">
-                            <thead>
-                              <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Type</th>
-                                <th>MileStone</th>
-                                <th>Reward</th>
-                              </tr>
-                            </thead>
-                            {/* Achivements active /non active condition ----------------- */}
-                            {achievementType === "active" ? (
-                              // Display a message if ActiveAchievementData is empty
-                              ActiveAchievementData.length === 0 ? (
-                                <tbody>
-                                  <tr>
-                                    <td
-                                      colSpan="5"
-                                      style={{
-                                        textAlign: "center",
-                                        padding: "20px",
-                                      }}
+
+                        <TableContainer>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell sx={{ color: "white" }}>
+                                  Title
+                                </TableCell>
+                                <TableCell sx={{ color: "white" }}>
+                                  Description
+                                </TableCell>
+                                <TableCell sx={{ color: "white" }}>
+                                  Type
+                                </TableCell>
+                                <TableCell sx={{ color: "white" }}>
+                                  MileStone
+                                </TableCell>
+                                <TableCell sx={{ color: "white" }}>
+                                  Reward
+                                </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {achievementType === "active" ? (
+                                ActiveAchievementData.length === 0 ? (
+                                  <TableRow>
+                                    <TableCell
+                                      colSpan={5}
+                                      align="center"
+                                      sx={{ color: "white" }}
                                     >
                                       You did not unlock any achievements
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              ) : (
-                                ActiveAchievementData.map((achi) => (
-                                  <tbody
-                                    key={achi.id}
-                                    style={{ borderTop: "none" }}
-                                  >
-                                    <tr>
-                                      <td className="tableTDwordwrap">
+                                    </TableCell>
+                                  </TableRow>
+                                ) : (
+                                  ActiveAchievementData.map((achi) => (
+                                    <TableRow key={achi.id}>
+                                      <TableCell sx={{ color: "white" }}>
                                         <img
                                           style={{
                                             maxWidth: "60px",
                                             opacity: "0.6",
                                           }}
                                           src={trohy}
+                                          alt="trophy"
                                         />
                                         {achi.Name}
-                                      </td>
-                                      <td className="tableTDwordwrap">
+                                      </TableCell>
+                                      <TableCell sx={{ color: "white" }}>
                                         {achi.Description}
-                                      </td>
-                                      <td className="tableTDwordwrap">
+                                      </TableCell>
+                                      <TableCell sx={{ color: "white" }}>
                                         {achi.Type}
-                                      </td>
-                                      <td className="tableTDwordwrap">
+                                      </TableCell>
+                                      <TableCell sx={{ color: "white" }}>
                                         {achi.MileStone}
-                                      </td>
-                                      <td className="tableTDwordwrap">
+                                      </TableCell>
+                                      <TableCell sx={{ color: "white" }}>
                                         {achi.Reward}
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                ))
-                              )
-                            ) : // Display a message if NonActiveAchievementData is empty
-                            NonActiveAchievementData.length === 0 ? (
-                              <tbody>
-                                <tr>
-                                  <td
-                                    colSpan="5"
-                                    style={{
-                                      textAlign: "center",
-                                      padding: "20px",
-                                    }}
+                                      </TableCell>
+                                    </TableRow>
+                                  ))
+                                )
+                              ) : NonActiveAchievementData.length === 0 ? (
+                                <TableRow>
+                                  <TableCell
+                                    colSpan={5}
+                                    align="center"
+                                    sx={{ color: "white" }}
                                   >
-                                    You unlocked all achievements !
-                                  </td>
-                                </tr>
-                              </tbody>
-                            ) : (
-                              NonActiveAchievementData.map((achi) => (
-                                <tbody
-                                  key={achi.id}
-                                  style={{ borderTop: "none" }}
-                                >
-                                  <tr>
-                                    <td className="tableTDwordwrap">
+                                    You unlocked all achievements!
+                                  </TableCell>
+                                </TableRow>
+                              ) : (
+                                NonActiveAchievementData.map((achi) => (
+                                  <TableRow key={achi.id}>
+                                    <TableCell sx={{ color: "white" }}>
                                       <img
                                         style={{
                                           maxWidth: "60px",
                                           opacity: "0.6",
                                         }}
                                         src={trohy}
+                                        alt="trophy"
                                       />
                                       {achi.Name}
-                                    </td>
-                                    <td className="tableTDwordwrap">
+                                    </TableCell>
+                                    <TableCell sx={{ color: "white" }}>
                                       {achi.Description}
-                                    </td>
-                                    <td className="tableTDwordwrap">
+                                    </TableCell>
+                                    <TableCell sx={{ color: "white" }}>
                                       {achi.Type}
-                                    </td>
-                                    <td className="tableTDwordwrap">
+                                    </TableCell>
+                                    <TableCell sx={{ color: "white" }}>
                                       {achi.MileStone}
-                                    </td>
-                                    <td className="tableTDwordwrap">
+                                    </TableCell>
+                                    <TableCell sx={{ color: "white" }}>
                                       {achi.Reward}
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              ))
-                            )}
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              )}
+                            </TableBody>
                           </Table>
-                        </div>
-                      </Modal.Body>
+                        </TableContainer>
+                      </Box>
                     </Modal>
                   </div>
                   {/* -------------------------------------------------------- */}
-                  <div className=" row ">
-                    {/* --------------------------------------------------------------------------------- */}
-                    <div className="col-lg-4 col-md-3">
+                  <div className="flex flex-wrap">
+                    {/* First Section */}
+                    <div className="w-full lg:w-1/3 md:w-1/4 flex flex-col items-center">
                       <img
                         src={SelectedteamDataById.TeamLogo}
                         alt="Logo"
-                        className="img-fluid teamLogoMwidth " //rounded-circle
+                        className="w-1/2 h-auto" // Adjust width and height as needed
                       />
-                      <h3
-                        className="mb-3 mt-1 "
-                        style={{
-                          fontWeight: "bold",
-                          fontSize: "24px",
-                        }}
-                      >
+                      <h3 className="mt-1 mb-3 font-bold text-2xl">
                         <strong>{SelectedteamDataById.TeamName}</strong>
                       </h3>
-                      {/* add players ----------------------------------------------------- */}
+                      {/* Add Player Button */}
                       <div>
-                        <Button
-                          className="mb-3"
-                          variant="success"
-                          style={{
-                            backgroundColor: "rgba(139, 195, 74, 0.2)",
-                          }}
-                          // onClick={() => navigate(`/player/`)}
-                          onClick={() => navigate(`/player/${idTeam}`)} //need to add id in the route of add player
+                        <button
+                          className="mb-3 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition"
+                          onClick={() => navigate(`/player/${idTeam}`)}
                         >
                           Player <FontAwesomeIcon icon={faPlus} />
-                        </Button>
+                        </button>
                       </div>
                     </div>
-                    {/* --------------------------------------------------------------------------------- */}
-                    <div className="row col-lg-8 col-md-8">
-                      {/* --------------------------------------------------------------------------------- */}
-                      <div
-                        style={{
-                          textAlignLast: "start",
-                          alignContent: "center",
-                          fontSize: "16px",
-                        }}
-                        className=" col-lg-4"
-                      >
-                        <h1 className=" mb-4 ">
-                          Tourenement_Rank_1 :{" "}
+
+                    {/* Second Section */}
+                    <div
+                      className="flex flex-wrap w-full lg:w-2/3 md:w-3/4"
+                      style={{ alignSelf: "center" }}
+                    >
+                      {/* First Column */}
+                      <div className="w-full lg:w-1/3 flex flex-col text-left text-lg">
+                        <h1 className="mb-4">
+                          Tourenement Rank 1:{" "}
                           {SelectedteamDataById.Total_Tournement_win_1}
                         </h1>
-                        <h1 className=" mb-4 ">
-                          Tourenement_Rank_2 :{" "}
+                        <h1 className="mb-4">
+                          Tourenement Rank 2:{" "}
                           {SelectedteamDataById.Total_Tournement_second_2}
                         </h1>
-
-                        <h1 className=" mb-4 ">
-                          Tourenement_Rank_3 :{" "}
+                        <h1 className="mb-4">
+                          Tourenement Rank 3:{" "}
                           {SelectedteamDataById.Total_Tournement_third_3}
                         </h1>
                       </div>
-                      {/* --------------------------------------------------------------------------------- */}
-                      <div
-                        style={{
-                          textAlignLast: "start",
-                          alignContent: "center",
-                          fontSize: "16px",
-                        }}
-                        className=" col-lg-4"
-                      >
-                        <h1 className=" mb-4 ">
-                          Total_MatchesPlayed :{" "}
+
+                      {/* Second Column */}
+                      <div className="w-full lg:w-1/3 flex flex-col text-left text-lg">
+                        <h1 className="mb-4">
+                          Total Matches Played:{" "}
                           {SelectedteamDataById.Total_MatchesPlayed}
                         </h1>
-                        <h1 className=" mb-4 ">
-                          Total_MatchesWon :{" "}
+                        <h1 className="mb-4">
+                          Total Matches Won:{" "}
                           {SelectedteamDataById.Total_MatchesWon}
                         </h1>
-
-                        <h1 className=" mb-4 ">
-                          Total_MatchesDrawn :{" "}
+                        <h1 className="mb-4">
+                          Total Matches Drawn:{" "}
                           {SelectedteamDataById.Total_MatchesDrawn}
                         </h1>
                       </div>
-                      {/* --------------------------------------------------------------------------------- */}
-                      <div
-                        style={{
-                          textAlignLast: "start",
-                          alignContent: "center",
-                          fontSize: "16px",
-                        }}
-                        className="  col-lg-4 "
-                      >
-                        <h1 className=" mb-4 ">
-                          Total_MatchesLost :{" "}
+
+                      {/* Third Column */}
+                      <div className="w-full lg:w-1/3 flex flex-col text-left text-lg">
+                        <h1 className="mb-4">
+                          Total Matches Lost:{" "}
                           {SelectedteamDataById.Total_MatchesLost}
                         </h1>
-                        <h1 className=" mb-4 ">
-                          Total_Goals_scored :{" "}
+                        <h1 className="mb-4">
+                          Total Goals Scored:{" "}
                           {SelectedteamDataById.Total_Goals_scored}
                         </h1>
-                        <h1 className=" mb-4 ">
-                          Total_Goals_received :{" "}
+                        <h1 className="mb-4">
+                          Total Goals Received:{" "}
                           {SelectedteamDataById.Total_Goals_received}
                         </h1>
                       </div>
-                      {/* --------------------------------------------------------------------------------- */}
                     </div>
                   </div>
                 </div>
@@ -485,53 +464,79 @@ export const CheckSelectedTeam = () => {
                       {/* --------------------------------------------------------------------------------- */}
                       {players.length !== 0 && (
                         <div>
-                          <Table hover responsive="xl">
-                            <thead>
-                              <tr>
-                                <th>Player Image</th>
-                                <th>Player Name</th>
-                                <th>Player Number</th>
-                                <th>Position</th>
-                                <th>Actions</th>
-                              </tr>
-                            </thead>
-                            {players.map((player) => (
-                              <tbody
-                                style={{
-                                  borderTop: "none",
-                                }}
-                              >
-                                {SelectedteamDataById.Players &&
-                                  SelectedteamDataById.Players.length > 0 && (
-                                    <tr style={{}}>
-                                      <td>
-                                        <img
-                                          style={{ maxWidth: "80px" }}
-                                          src={logo}
-                                        ></img>
-                                      </td>
-                                      <td className="tableTDwordwrap">
-                                        {player.name}
-                                      </td>
-                                      <td className="tableTDwordwrap">
-                                        {player.number}
-                                      </td>
-                                      <td className="tableTDwordwrap">
-                                        {player.position}
-                                      </td>
-                                      <td>
-                                        <button className="hover:text-warning px-3">
-                                          <FontAwesomeIcon icon={faEdit} />
-                                        </button>
-                                        <button className="hover:text-warning">
-                                          <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                      </td>
+                          <div className="w-full">
+                            <div className=" rounded-2xl ">
+                              {players.length === 0 ? (
+                                <div className="text-center py-20">
+                                  <h3 className="text-white text-xl">
+                                    No Players created yet
+                                  </h3>
+                                  <p className="text-gray-400">
+                                    Start by creating a new Player for this
+                                    Team!
+                                  </p>
+                                </div>
+                              ) : (
+                                <Table
+                                  hover
+                                  responsive="xl"
+                                  className="w-full text-gray-300"
+                                >
+                                  <thead className="bg-gray-900">
+                                    <tr>
+                                      <th>Player Image</th>
+                                      <th>Player Name</th>
+                                      <th>Player Number</th>
+                                      <th>Position</th>
+                                      <th>Actions</th>
                                     </tr>
-                                  )}
-                              </tbody>
-                            ))}
-                          </Table>
+                                  </thead>
+
+                                  {players.map((player) => (
+                                    <tbody
+                                      key={player.id}
+                                      className=" hover:bg-gray-700"
+                                    >
+                                      <tr
+                                        className="leading-8"
+                                        style={{
+                                          textAlign: "-webkit-center",
+                                        }}
+                                      >
+                                        <td>
+                                          <img
+                                            style={{ maxWidth: "100px" }}
+                                            src={logo}
+                                          ></img>
+                                        </td>
+                                        <td>{player.name}</td>
+                                        <td>{player.number}</td>
+                                        <td>{player.position}</td>
+                                        <td>
+                                          <Button
+                                            variant="secondary"
+                                            onClick={() =>
+                                              console.log("Edit Player")
+                                            }
+                                          >
+                                            <FontAwesomeIcon icon={faEdit} />
+                                          </Button>
+                                          <Button
+                                            variant="secondary"
+                                            onClick={() =>
+                                              console.log("Delete Player")
+                                            }
+                                          >
+                                            <FontAwesomeIcon icon={faTrash} />
+                                          </Button>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  ))}
+                                </Table>
+                              )}
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>

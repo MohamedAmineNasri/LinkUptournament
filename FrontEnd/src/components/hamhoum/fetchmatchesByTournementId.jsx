@@ -152,7 +152,7 @@ if (TournementId.length ==0) {
                         <div className="d-flex align-items-center justify-content-around justify-content-between w-100">
                           <div className="team-1 text-center">
                             <img
-                              src={Team1logo.slice().reverse()[index]}
+                              src={`http://localhost:8000/${Team1logo}`}
                               alt="Image"
                             />
                             <h3>{Team1name.slice().reverse()[index]}</h3>
@@ -169,7 +169,7 @@ if (TournementId.length ==0) {
                           </div>
                           <div className="team-2 text-center">
                             <img
-                              src={Team2logo.slice().reverse()[index]} 
+                              src={`http://localhost:8000/${Team2logo}`}
                               alt="Image"
                             />
                             <h3>{Team2name.slice().reverse()[index]}</h3>

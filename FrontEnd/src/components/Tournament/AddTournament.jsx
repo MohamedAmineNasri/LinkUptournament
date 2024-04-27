@@ -19,9 +19,10 @@ const AddTour = () => {
   const [winner] = useState(null);
   const [dateDebut, setDateDebut] = useState("");
   const [dateFin, setDateFin] = useState("");
-  const [nameError, setNameError] = useState("Tournament Name is required");
-  const [dateDebutError, setDateDebutError] = useState("Start Date is required");
-  const [dateFinError, setDateFinError] = useState("End Date is required");
+  const [nameError, setNameError] = useState(null);
+  const [logoError, setlogoError] = useState(null);
+  const [dateDebutError, setDateDebutError] = useState(null);
+  const [dateFinError, setDateFinError] = useState(null);
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [teamSelectionError, setTeamSelectionError] = useState("");
   const [searchInput, setSearchInput] = useState(""); 
@@ -54,7 +55,7 @@ const AddTour = () => {
   }, [location.state]);
  
   const handleTeamSelection = (e, teamid) => {
-     console.log(teamid)
+     
     if (e.target.checked) {
       setSelectedTeams((prevSelectedTeams) => [...prevSelectedTeams, teamid]);
     } else {
@@ -62,12 +63,16 @@ const AddTour = () => {
         prevSelectedTeams.filter((id) => id !== teamid)
       );
     }
+    console.log(selectedTeams.length)
+    setTeamSelectionError(`You have selected only ${selectedTeams.length+1} teams.`);
   };
 
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     setLogo(file);
     setUploadedLogo(URL.createObjectURL(file));
+    
+    
   };
   const teamCount = (nbG !== undefined) ? parseInt(nbT * nbG) : nbT;
 
@@ -76,6 +81,7 @@ const AddTour = () => {
     validateName(name);
     validateDateDebut(dateDebut);
     validateDateFin(dateFin);
+    validateLogo(logo);
 
     if (!nameError && !dateDebutError && !dateFinError) {
       try {
@@ -162,6 +168,13 @@ const AddTour = () => {
       setDateFinError(null);
     }
   };
+  const validateLogo = (value) => {
+    if (!value) {
+      setlogoError("Logo is required");
+    }else{
+      setlogoError(null);
+    }
+  };
   
 
   return (
@@ -204,6 +217,9 @@ const AddTour = () => {
                     onChange={handleLogoChange}
                   />
                 </label>
+                {logoError && (
+                  <p className="text-danger text-sm">{logoError}</p>
+                )}
               </div>
 
               <div className="col-span-4 ">
@@ -341,7 +357,7 @@ const AddTour = () => {
                     <input
   type="text"
   id="table-search"
-  className="bg-gray-50 border border-gray-300 text-slate-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  className="bg-gray-50 border border-gray-300 text-slate-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 pl-10 p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
   placeholder="Search for teams"
   value={searchInput}
   onChange={(e) => setSearchInput(e.target.value)} // Update search input value
@@ -350,13 +366,13 @@ const AddTour = () => {
                   </div>
                 </div>
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50  dark:text-gray-400">
                     <tr>
                       <th scope="col" className="p-4"></th>
-                      <th scope="col" className="px-6 py-3 dark:text-slate-50">
+                      <th scope="col" className="px-6 py-3 text-white dark:text-slate-50">
                         Logo
                       </th>
-                      <th scope="col" className="px-6 py-3 dark:text-slate-50">
+                      <th scope="col" className="px-6 py-3  text-white dark:text-slate-50">
                         Team Name
                       </th>
                       

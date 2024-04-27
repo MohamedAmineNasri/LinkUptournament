@@ -24,7 +24,7 @@ const TeamSchema = new mongoose.Schema(
       default: 0
     },
     Total_MatchesPlayed: {
-      type: Number,
+      type: Number, //  tekhou won/played
       default: 0
     },
     Total_Goals_scored: {

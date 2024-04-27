@@ -229,7 +229,7 @@ app.post("/consumer", async (req, res) => {
 
     });
   }
-});
+);
 
 //YASSINE
 app.use("/player", playerRouter);

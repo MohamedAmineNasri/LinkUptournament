@@ -125,7 +125,7 @@ export const fetchtour = () => {
   
     
 
-  }, []);
+  }, [T2 , T1]);
 
 
   return (

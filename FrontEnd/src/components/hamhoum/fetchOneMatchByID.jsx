@@ -181,46 +181,34 @@ export const fetchtour = () => {
                       </p>
                       <br/>
                       <br/>
-                      <span><div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="d-flex team-vs">
-                  
-                  <div className="team-1 w-50">
-                    <div className="team-details w-100 text-center">
-                    
-                      
-                      <ul className="list-unstyled">
-                        
-                      <ul>
-  {T1go.map((item, index) => (
-    <li key={index}>{item}</li>
-  ))}
-</ul>
-                        
-                        
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="team-2 w-50">
-                    <div className="team-details w-100 text-center">
-                    
-                      
-                      <ul className="list-unstyled">
-                          
-                      <ul>
-  {T2go.map((item, index) => (
-    <li key={index}>{item}</li>
-  ))}
-</ul>
-                        
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                      <span>
+  <div className="container">
+    <div className="row">
+      <div className="col-lg-12">
+        <div className="flex team-vs">
+          <div className="team-1 w-1/2">
+            <div className="team-details w-full text-center">
+              <ul className="list-unstyled">
+                {T1go.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
             </div>
-          </div></span>
+          </div>
+          <div className="team-2 w-1/2">
+            <div className="team-details w-full text-center">
+              <ul className="list-unstyled">
+                {T2go.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</span>
 
                       <div id="date-countdown2" className="pb-1"></div>
                     </div>

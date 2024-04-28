@@ -34,12 +34,14 @@ export const fetchtour = (props) => {
   const[W,setw]=useState();
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
+  const[matchTime,setmatchTime]= useState(0)
 
   
   
   const handleShow = () => MatchCard
   const dispatch = useDispatch();
   const handleSaveChanges = () => {
+    localStorage.setItem('Timer', timeLeft);
     
       dispatch(
         editMatch({
@@ -47,11 +49,12 @@ export const fetchtour = (props) => {
           matchid: match,
           goal1: T1,
           goal2: T2,
+          matchTime:matchTime
           
           
         })
       );
-    
+      
     // window.location.reload();
    
        
@@ -67,8 +70,9 @@ export const fetchtour = (props) => {
       confirmButtonText: "Yes, end it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        setmatchstatus("test")
+       
         // If user clicks "Yes", execute the winer function
+        localStorage.removeItem("Timer")
         winer();
         setmatchstatus("Finished")
       }
@@ -84,6 +88,7 @@ export const fetchtour = (props) => {
       matchid: match,
       matchstatus:"Finished",
       w:W,
+      matchTime:matchTime
     }, )
   );
   ;
@@ -91,7 +96,10 @@ export const fetchtour = (props) => {
 
 }
   useEffect(() => {
-
+    setTimeLeft(Number(localStorage.getItem("Timer")))
+    setTimerRunning(true)
+    setmatchTime(Math.floor(timeLeft/60))
+    console.log(Math.floor(timeLeft/60))
 
     
 
@@ -200,9 +208,9 @@ export const fetchtour = (props) => {
 
     if (timerRunning) {
       intervalId = setInterval(() => {
-        setTimeLeft(prevTimeLeft => {
+        setTimeLeft(prevTimeLeft => { 
           if (prevTimeLeft < 2700) { // 45 minutes = 2700 seconds
-            return prevTimeLeft + 1;
+            return prevTimeLeft + 1 
           } else if (prevTimeLeft < 5400) { // 90 minutes = 5400 seconds
             // Stop timer at 45 minutes
             if (prevTimeLeft === 2700) {
@@ -224,34 +232,42 @@ export const fetchtour = (props) => {
     
  
 
-  }, [timerRunning]);
-  const startTimer = () => {
+  }, [timerRunning,Matchstatus]);
+  const startTimer = async () => {
     if (!timerRunning) {
-      setTimerRunning(true);
-      setmatchstatus("test")
+      setTimeLeft(Number(localStorage.getItem("Timer")))
       
-        editMatch({
-          matchid: match,
-          matchstatus:"ttt",
-          
-        }, )
-      ;
+      try {
+        await axios.put(`http://localhost:8000/match/${match}`, { matchstatus: 'Started' });
+      } catch (error) {
+        console.error('Error updating match status:', error);
+      }
+     
+ 
+      setTimerRunning(true);
+      
     }
+    if (timerRunning  == 10) {
+      setTimerRunning(false);
+    }
+
   };
 
-  const stopTimer = () => {
+  const stopTimer = async() => {
     if (timerRunning) {
+      try {
+        await axios.put(`http://localhost:8000/match/${match}`, { matchstatus: 'On Hold' });
+      } catch (error) {
+        console.error('Error updating match status:', error);
+      }
       setTimerRunning(false);
     }
   };
 
-  const continueTimer = () => {
-    if (!timerRunning && timeLeft < 5400) { // 90 minutes = 5400 seconds
-      setTimerRunning(true);
-    }
-  };
+
 
   const formatTime = (time) => {
+   
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
@@ -302,9 +318,9 @@ export const fetchtour = (props) => {
           <div className="text-center widget-vs-contents mb-4">
           <h4>{TournementId.matchstatus}</h4>
           <div><h1 className='text-black-200'> {formatTime(timeLeft)}</h1>
-                  <button onClick={startTimer} className='text-red-200'>Start</button>
-                  <button onClick={stopTimer} className='text-black-200'>Pause</button>
-                 <button onClick={continueTimer} className='text-black-200'>Continue</button>
+                  <button disabled={Matchstatus === "Finished"} onClick={startTimer} className='text-red-200'>Start</button>
+                  <button disabled={Matchstatus === "Finished"} onClick={stopTimer} className='text-black-200'>Pause</button>
+                 
                                                                                              </div>
             
             <p className="mb-5">

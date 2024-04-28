@@ -84,24 +84,25 @@ const Hero = () => {
               </div>
             </div>
           </div> */}
-          <div className="flex uppercase justify-center items-center font-semibold gap-x-2 text-[32px] sm:text-[64px] lg:text-[72px]">
-            <span style={{ fontSize: "1.5em" }} className="mr-4">
-              For
-            </span>
-            <TypeAnimation
-              sequence={[
-                // Same substring at the start will only be typed once, initially
-                "Academies",
-                2000,
-                "Footballer",
-                2000,
-              ]}
-              speed={50}
-              style={{ fontSize: "1.5em" }}
-              repeat={Infinity}
-              className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-200"
-            />
-          </div>
+    <div className="flex justify-center items-center uppercase font-semibold gap-x-2 text-[32px] sm:text-[64px] lg:text-[72px]">
+      <span style={{ fontSize: '1.5em'  }} className="pr-4">For</span>
+      
+                <TypeAnimation
+
+                    sequence={[
+                        // Same substring at the start will only be typed once, initially
+                        'Academies',
+                        2000,
+                        'Footballer',
+                        2000,
+
+                    ]}
+                    speed={50}
+                    style={{ fontSize: '1.5em' }}
+                    repeat={Infinity}
+                    className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-200"
+                />
+            </div>
           {/* <ModalVideo
             thumb={VideoThumb}
             thumbWidth={768}

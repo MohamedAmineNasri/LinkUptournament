@@ -131,7 +131,7 @@ import EmojiPicker from 'emoji-picker-react';
                     <section className="relative">
                     <div>
         {/* <Breadcrumb pageName="Stream" /> */}
-        <div className={`app-container ${darkMode ? 'dark' : ''}`} style={{ marginTop: '10px' }}>
+        <div className={`app-container ${darkMode ? 'dark' : ''}`} style={{ marginTop: '90px' }}>
            
 
             

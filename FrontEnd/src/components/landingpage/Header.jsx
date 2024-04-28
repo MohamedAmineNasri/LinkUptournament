@@ -27,27 +27,43 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Site branding */}
           <div className="shrink-0 mr-4">
-            <img src={Logo} className="h-10" />
+            <img src={Logo} className="h-10"  onClick={() => navigate("/")}/>
           </div>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex md:grow">
-            {/* Desktop navigation links */}
-            <ul className="flex grow justify-end flex-wrap items-center">
-              {/* Chatrooms link */}
-              <li>
-                <button
-                  onClick={() => navigate("/ChatFront")}
-                  className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
-                >
-                  Chatrooms
-                </button>
-              </li>
-
-              {/* User authentication links */}
-              {user ? (
-                <>
-                  <li>
+    {/* Desktop navigation links */}
+    <ul className="flex grow justify-end flex-wrap items-center">
+        {/* Chatrooms link */}
+        <li>
+            <button
+                onClick={() => navigate("/ChatFront")}
+                className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+            >
+                Chatrooms
+            </button>
+        </li>
+        <li>
+            <button
+                onClick={() => navigate("/fetchmatchforview")}
+                className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+            >
+                Matches
+            </button>
+        </li>
+        <li>
+            <button
+                onClick={() => navigate("/lineup")}
+                className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+            >
+                Lineup
+            </button>
+        </li>
+        
+        {/* User authentication links */}
+        {user ? (
+            <>
+                <li>
                     <button
                       onClick={() => navigate("/profile")}
                       className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-900 ml-3 flex items-center"

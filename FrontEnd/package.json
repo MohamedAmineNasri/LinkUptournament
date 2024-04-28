@@ -55,6 +55,7 @@
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.2",
     "react-bootstrap-icons": "^1.11.3",
+    "react-chatbot-kit": "^2.2.2",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
@@ -78,7 +79,7 @@
     "simple-peer": "^9.11.1",
     "socket.io-client": "^4.7.5",
     "stylis-plugin-rtl": "^2.1.1",
-    "sweetalert2": "^11.10.8",
+    "sweetalert2": "^11.6.13",
     "tailwindcss": "^3.4.1"
   },
   "devDependencies": {

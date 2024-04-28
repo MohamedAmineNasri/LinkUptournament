@@ -126,42 +126,14 @@ const Chat = () => {
         }
     };
 
+    const [searchQuery, setSearchQuery] = useState('');
 
+    const handleSearchInputChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
     return (
         <DefaultLayout>
-            {/* <Container maxWidth="lg">
-                <Breadcrumb pageName="Chat" />
-                <Typography variant="h4" style={{ marginBottom: '20px' }}>Chatrooms</Typography>
-                {userRole.includes('Admin') && (
-                    <Card variant="outlined" style={{ marginBottom: '20px' }}>
-                        <CardContent>
-                            <Typography variant="h6" style={{ marginBottom: '10px' }}>Create New Chatroom</Typography>
-                            <TextField
-                                fullWidth
-                                type="text"
-                                name="chatroomName"
-                                id="chatroomName"
-                                label="Enter Chatroom Name"
-                                variant="outlined"
-                                value={chatroomName}
-                                onChange={(e) => setChatroomName(e.target.value)}
-                                error={!!chatroomNameError}
-                                helperText={chatroomNameError}
-                            />
-                        </CardContent>
-                        <CardActions>
-                            <Button
-                                variant="contained"
-                                onClick={createChatroom}
-                                style={{ backgroundColor: '#4CAF50', color: '#fff', borderRadius: '5px' }}
-                            >
-                                Create
-                            </Button>
-                        </CardActions>
-                    </Card>
-                )}
 
-            </Container> */}
                 <main className="flex-grow container mx-auto space-y-12">
                     <div >
                         <div className="px-4 md:px-8">
@@ -187,29 +159,31 @@ const Chat = () => {
                                                         clipRule="evenodd" />
                                                 </svg>
                                             </div>
-                                            <input type="text" id="simple-search"
-                                                className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 "
-                                                placeholder="Search" required="" />
+                                            <input
+                                                type="text"
+                                                id="simple-search"
+                                                className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500"
+                                                placeholder="Search"
+                                                value={searchQuery}
+                                                onChange={handleSearchInputChange}
+                                                required
+                                            />
                                         </div>
                                     </form>
                                 </div>
-                                {/* Button to create challenge */}
-                                {/* {isLoggedIn() && userRole === "company" && ( */}
+
                                 <div className="flex items-center mb-4">
-    <Button
-        onClick={handleClickOpen}
-        style={{ backgroundColor: '#007bff', color: 'white' }} // Inline style for background color
-        className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-        </svg>
-        Create ChatRoom
-    </Button>
-</div>
-
-                                {/* )} */}
-
-                            
+                                <Button
+                                    onClick={handleClickOpen}
+                                    style={{ backgroundColor: '#007bff', color: 'white' }} // Inline style for background color
+                                    className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
+                                    Create ChatRoom
+                                </Button>
+                            </div>
+                    
                             </div>
                         </div>
                     </div>
@@ -217,28 +191,10 @@ const Chat = () => {
                     {/* Tabs */}
                     <div>
                         <div className="flex space-x-4 mb-4">
-                            {/* <button
-                                className={`px-4 py-2 rounded-md focus:outline-none ${activeTab === 'Ongoing' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                                // onClick={() => handleTabClick('Ongoing')}
-                            >
-                                Ongoing
-                            </button>
-                            <button
-                                className={`px-4 py-2 rounded-md focus:outline-none ${activeTab === 'Completed' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                                // onClick={() => handleTabClick('Completed')}
-                            >
-                                Completed
-                            </button>
-                            <button
-                                className={`px-4 py-2 rounded-md focus:outline-none ${activeTab === 'Upcoming' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                                // onClick={() => handleTabClick('Upcoming')}
-                            >
-                                Upcoming
-                            </button> */}
                         </div>
 
                         <div>
-                    {activeTab === 'Ongoing' && <div><h1 className="text-xl font-bold my-4"></h1> <Challenges status="Ongoing"  /></div>}
+                    {activeTab === 'Ongoing' && <div><h1 className="text-xl font-bold my-4"></h1> <Challenges status="Ongoing"  searchQuery={searchQuery}/></div>}
                             {activeTab === 'Completed' && <div><h1 className="text-xl font-bold my-4">Completed Challenges</h1> <Challenges status="Completed" /></div>}
                             {activeTab === 'Upcoming' && <div><h1 className="text-xl font-bold my-4">Upcoming Challenges</h1> <Challenges status="Upcoming" /></div>}
                         </div>

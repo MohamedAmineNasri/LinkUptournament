@@ -3,6 +3,8 @@ import HomeHeader from "../components/HomeHeader";
 import SoccerField from "../../public/assets/images/soccer_field.jpg";
 import axios from "axios";
 import LineUpSearchItem from "../Dashboard/src/components/LineUp/LineUpSearchItem";
+import Header from "../components/landingpage/Header";
+import Footer from "../components/landingpage/Footer";
 const TeamLineUp = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPlayers, setSelectedPlayers] = useState({});
@@ -14,7 +16,7 @@ const TeamLineUp = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:8000/team");
-        setPlayers(response.data[0].Players);
+        setPlayers(response.data[19].Players);
       } catch (error) {
         console.log(error);
       }
@@ -39,7 +41,8 @@ const TeamLineUp = () => {
   };
   return (
     <div>
-      <div className="bg-gray-100 pt-4">
+      <Header />
+      <div className="bg-gray-100 pt-40">
         <h1 class="max-w-3xl mx-auto text-center pt-4 h2 text-black-2 font-inter">
           Create your own football formation
         </h1>
@@ -521,6 +524,7 @@ const TeamLineUp = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

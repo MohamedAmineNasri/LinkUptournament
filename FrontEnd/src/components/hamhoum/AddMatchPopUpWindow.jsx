@@ -154,192 +154,120 @@ export const AddMatchPopUpWindow = (props) => {
 
   return (
     <>
-      <Button  size='lg' variant="success" onClick={handleShow}>
-        Add Match
+  <Button size="lg" variant="success" onClick={handleShow} className="mb-10  " >
+    Add Match
+  </Button>
+
+  <Modal show={show} onHide={handleClose} className="w-full  mx-auto bg-gray-900" >
+    <Modal.Header className="bg-gray-900 text-white" closeButton>
+      <Modal.Title>Add Match</Modal.Title>
+    </Modal.Header>
+    <Modal.Body className="bg-gray-900 text-white">
+      <Form>
+        <Form.Group className="mb-3" controlId="locationInput">
+          <Form.Label>Match Status: {Matchstatus}</Form.Label>
+          <br />
+          <Form.Label>Date:</Form.Label>
+          <Form.Control
+            type="date"
+            placeholder="date"
+            autoFocus
+            value={Date}
+            onChange={handleDateChange}
+            className={`border ${isValid1 ? 'border-green-500' : 'border-red-500'}`}
+          />
+          {!isValid1 && <p className="text-red-500">Date must be greater than today.</p>}
+          <Form.Label>Starting Time:</Form.Label>
+          <Form.Control
+            type="time"
+            placeholder="time"
+            autoFocus
+            value={Startingtime}
+            onChange={(e) => setStartingtime(e.target.value)}
+          />
+          <Form.Label>Match Type:</Form.Label>
+          <Form.Control
+            type="text"
+            autoFocus
+            value={Matchtype}
+            className={`border ${isValid ? 'border-green-500' : 'border-red-500'}`}
+          />
+          {!isValid && <p className="text-red-500">Match type must contain only letters.</p>}
+          <Form.Label>Team 1:</Form.Label>
+          <br />
+          <select onChange={handleteam1} className="border text-black">
+            <option value="null">Select Team 1</option>
+            {teamsWithNames.map((teamName, index) => (
+              <option key={index} value={tournament.teams[index]}>
+                {teamName}
+              </option>
+            ))}
+          </select>
+          {!isValidteam1 && <p className="text-red-500">Please select a different Team 1.</p>}
+          <br />
+          <Form.Label>Team 2:</Form.Label>
+          <br />
+          <select onChange={handleteam2} className="border text-black">
+            <option value="null">Select Team 2</option>
+            {teamsWithNames.map((teamName, index) => (
+              <option key={index} value={tournament.teams[index]}>
+                {teamName}
+              </option>
+            ))}
+          </select>
+          {!isValidteam2 && <p className="text-red-500">Please select a different Team 2.</p>}
+          <Form.Label>Referee:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Referee"
+            autoFocus
+            value={Referee}
+            onChange={handlerefChange}
+            className={`border ${isValid1 ? 'border-green-500' : 'border-red-500'}`}
+          />
+          {!isValid2 && <p className="text-red-500">Referee must contain only letters.</p>}
+          <Form.Label>Match Location:</Form.Label>
+          <br />
+          <select onChange={(e) => setLocation(e.target.value)} className="border text-black">
+            <option>Select City</option>
+            <option value="2464470">Tunis</option>
+            <option value="2467454">Sfax</option>
+            <option value="2464915">Sousse</option>
+            <option value="2468369">Gabès</option>
+            <option value="2465624">Kairouan</option>
+            <option value="2473305">Bizerte</option>
+            <option value="2467813">Gafsa</option>
+            <option value="2504205">Ariana</option>
+            <option value="2473448">Kasserine</option>
+            <option value="2464008">Monastir</option>
+            <option value="2471046">Ben Arous</option>
+            <option value="2467580">La Marsa</option>
+            <option value="2465440">Tataouine</option>
+            <option value="2469566">Nabeul</option>
+            <option value="2470233">Hammamet</option>
+            <option value="2468843">Mahdia</option>
+            <option value="2472771">Beja</option>
+            <option value="2467815">Jendouba</option>
+            <option value="2462881">Sidi Bouzid</option>
+            <option value="2468560">Medenine</option>
+            <option value="2469254">El Kef</option>
+            <option value="2465196">Zaghouan</option>
+            <option value="2462962">Siliana</option>
+            <option value="2464475">Tozeur</option>
+          </select>
+        </Form.Group>
+      </Form>
+    </Modal.Body>
+    <Modal.Footer className="bg-gray-900">
+      <Button variant="secondary" onClick={handleClose} className="bg-red-500 text-white">
+        Close
       </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header style={{ backgroundColor: "#222831" }} closeButton>
-          <Modal.Title>Add Match</Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "#222831" }}>
-          <Form style={{ color: "black" }}>
-          <Form.Group className="mb-3" controlId="locationInput">
-          <Form.Group className="mb-3" controlId="locationInput">
-          <Form.Group className="mb-3" controlId="locationInput">
-            
-            <Form.Label style={{ color: "white" }}>match statu : {Matchstatus}</Form.Label>
-<br/>
-               {/* <Form.Select size="lg"
-                onChange={(e) => setMatchstatus(e.target.value)}>
-      <option>Open this select menu</option>
-      <option value="On HOld">On HOld</option>
-      <option value="Finished">Finished</option>
-      <option value="Half Time">Half Time</option>
-      <option value="Starting Soon">Starting Soon</option>
-      
-     
-    </Form.Select> */}
-            </Form.Group>
-              <Form.Label style={{ color: "white" }}>Date :</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="date"
-                autoFocus
-                value={Date}
-                onChange={handleDateChange}
-                style={{ borderColor: isValid1 ? 'green' : 'red' }} 
-              />
-               {!isValid1 && <p>Date must be greater than today.</p>}
-            </Form.Group>
-          <Form.Label style={{ color: "white" }}>starting time :</Form.Label>
-              <Form.Control
-                type="time"
-                placeholder="time"
-                autoFocus
-                value={Startingtime}
-                onChange={(e) => setStartingtime(e.target.value)}
-              />
-              <Form.Label style={{ color: "white" }}>match type :</Form.Label>
-              <Form.Control
-                type="tex"
-               
-                autoFocus
-                value={Matchtype}
-                
-                style={{ borderColor: isValid ? 'green' : 'red'  }} 
-              />
-              {!isValid && <p style={{ color:"red"}}>match type must contain only letters.</p>}
-               
-              {/* <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label> */}
-
-               {/* <Form.Select size="lg"
-                onChange={(e) => setWeathercondition(e.target.value)}>
-      <option> select weather</option>
-      <option value="sunny">sunny</option>
-      <option value="rainy">rainy</option>
-      <option value="windy">windy</option>
-      <option value="stormy">stormy</option>
-      <option value="cloudy">cloudy</option>
-     
-    </Form.Select> */}
-            </Form.Group>
-          
-            <Form.Group className="mb-3" controlId="locationInput">
-              <Form.Label style={{ color: "white" }}>team1 :</Form.Label>
-              <br/>
-              <select onChange={handleteam1}>
-              <option value= "null"> select Team1 </option>
-    {teamsWithNames.map((teamName, index) => (
-      <option key={index} value={tournament.teams[index]}>
-        {teamName}
-      </option>
-      
-    ))}
-  </select>
-  {!isValidteam1 && <p style={{ color:"red"}}>please select deferent team1</p>}
-         <br/>
-         <Form.Label style={{ color: "white" }}>team2 :</Form.Label>
-              <br/>
-              <select onChange={handleteam2}>
-              <option value= "null"> select Team2</option>
-    {teamsWithNames.map((teamName, index) => (
-      <option key={index} value={tournament.teams[index]}>
-        {teamName}
-      </option>
-      
-      
-    ))}
-  </select>
-   {!isValidteam2 && <p style={{ color:"red"}}>please select deferent team2</p>}
-            </Form.Group>
-         
-          <Form.Group className="mb-3" controlId="locationInput">
-              <Form.Label style={{ color: "white" }}>Referee :</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Referee"
-                autoFocus
-                value={Referee}
-                onChange={handlerefChange}
-                style={{ borderColor: isValid1 ? 'green' : 'red' }} 
-                />
-                 {!isValid2 && <p style={{ color:"red"}}>Referee must contain only letters.</p>}
-
-              
-            </Form.Group>
-            
-            
-           
-            <Form.Group className="mb-3" controlId="locationInput">
-              <Form.Label style={{ color: "white" }}>match location :</Form.Label>
-              
-        
-              <br/>
-              <select onChange={(e) => setLocation(e.target.value)}>
-              <option> select City</option>
-    
-              <option  value="2464470">Tunis</option>
-              <option  value="2467454">Sfax </option>
-              <option  value="2464915">Sousse </option>
-              <option  value="2468369">Gabès </option>
-              <option  value="2465624">Kairouan </option>
-              <option  value="2473305">Bizerte </option>
-              <option  value="2467813">Gafsa </option>
-              <option  value="2504205">Ariana </option>
-              <option  value="2473448">Kasserine </option>
-              <option  value="2464008">Monastir </option>
-              <option  value="2471046">Ben Arous </option>
-              <option  value="2467580">La Marsa</option>
-              <option  value="2465440">Tataouine</option>
-              <option  value="2469566">Nabeul </option>
-              <option  value="2470233">Hammamet </option>
-              <option  value="2468843">Mahdia </option>
-              <option  value="2472771">Beja</option>
-              <option  value="2467815">Jendouba </option>
-              <option  value="2462881">Sidi Bouzid</option>
-              <option  value="2468560">Medenine </option>
-              <option  value="2469254">El Kef</option>
-              <option  value="2465196">Zaghouan </option>
-              <option  value="2462962">Siliana </option>
-              <option  value="2464475">Tozeur </option>
-
-      
-    
-  </select>
-              
-              {/* <Form.Control
-                type="select"
-                placeholder="match location"
-                autoFocus
-                value={Location}
-                onChange={handlelocationChange}
-                style={{ borderColor: isValid1 ? 'green' : 'red' }} 
-                />
-                 {!isValid3 && <p style={{ color:"white"}}>location must contain only letters.</p>} */}
-            </Form.Group>
-           
-            {/* <Form.Group> <select  onChange={(e) => setTournementId(e.target.value)}>
-           
-        {tournementId.map(tournament => (
-          <option  value={tournament._id}>
-            {tournament.name}
-          </option>
-        ))}
-      </select></Form.Group>
-            */}
-          </Form>
-        </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "#222831" }}>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+      <Button variant="primary" onClick={handleSaveChanges} className="bg-green-500 text-white">
+        Save Changes
+      </Button>
+    </Modal.Footer>
+  </Modal>
+</>
   );
 };
 

@@ -83,6 +83,12 @@ import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
 import HomeLandingPage from "./landingPage/HomeLandingPage";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Chatbot from "react-chatbot-kit";
+
+import config from "./components/ChatBotComponents/chatbot/config";
+import ActionProvider from "./components/ChatBotComponents/chatbot/ActionProvider";
+import MessageParser from "./components/ChatBotComponents/chatbot/MessageParser";
+import 'react-chatbot-kit/build/main.css'
 
 function App() {
   // animeaa
@@ -99,6 +105,14 @@ function App() {
   //console.log(fixtures);
 
   // const refresh = () => window.location.reload(true);
+  const chatbotStyle = {
+    textAlign: "center",
+    backgroundColor: "#282c34",
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  };
 
   return (
     <>
@@ -119,6 +133,15 @@ function App() {
       ) : (
         <Routes>
           <Route path="/qr" element={<QrCode />} />
+          <Route path="/ChatBot" element={
+          <div style={chatbotStyle}>
+            <Chatbot
+              config={config}
+              actionProvider={ActionProvider}
+              messageParser={MessageParser}
+            />
+          </div>
+        } />
 
           <Route path="/payment/:id" element={<Payment />} />
           <Route path="/c/:id" element={<Completiont />} />

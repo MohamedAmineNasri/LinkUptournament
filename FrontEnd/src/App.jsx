@@ -72,7 +72,7 @@ import Payment from "./components/hamhoum/Payments"
 import Completiont from "./components/hamhoum/Completion"
 import {loadStripe} from '@stripe/stripe-js';
 import QrCode from "./components/hamhoum/QrCode"
-
+import Timer from "./components/hamhoum/timer"
 
 // import Payment from "./components/hamhoum/Payments";
 // import Completiont from "./components/hamhoum/Completion";
@@ -83,6 +83,7 @@ import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
 import HomeLandingPage from "./landingPage/HomeLandingPage";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -114,7 +115,7 @@ function App() {
         </div>      
       ) : (
         <Routes>
-
+        <Route path="/timer" element={<Timer />} />
         <Route path="/qr" element={<QrCode />} />
   
              <Route path="/payment/:id" element={<Payment />} />

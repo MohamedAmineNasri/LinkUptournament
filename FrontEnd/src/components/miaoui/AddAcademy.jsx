@@ -3,19 +3,109 @@ import { addAcademyAndAssaignToManager } from "../../redux/slice/academySlice";
 import { useState, useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
-import addformstadiumImage from "../../assets/Mi-imgs/2.jpg";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import HeaderNavBar from "./HeaderNavBar";
 import DefaultLayout from "../../Dashboard/src/layout/DefaultLayout";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import MapPosition from "./Apis/MapPosition";
 
 export const AddAcademy = () => {
   const dispatch = useDispatch();
-  //modal logic
+
+  //lat and long for map
+  const [lat, setlat] = useState(null);
+  const [long, setlong] = useState(null);
+  //get user location
+  const getlocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (postion) => {
+          let lat = postion.coords.latitude;
+          let long = postion.coords.longitude;
+          setlat(lat);
+          setlong(long);
+          const LocationInfoEndPonit = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`;
+          try {
+            const response = await fetch(LocationInfoEndPonit);
+            if (response.ok) {
+              const locationData = await response.json();
+              console.log("Location Information:", locationData);
+              if (
+                locationData.address.residential == undefined &&
+                locationData.address.industrial
+              ) {
+                setLocation(
+                  locationData.address.industrial +
+                    "," +
+                    locationData.address.road
+                );
+
+                setLocationError(null);
+                setlocationfieldColor("green");
+              }
+              if (
+                locationData.address.residential !== undefined &&
+                locationData.address.industrial == undefined
+              ) {
+                setLocation(
+                  locationData.address.residential +
+                    "," +
+                    locationData.address.road
+                );
+                setLocationError(null);
+                setlocationfieldColor("green");
+              }
+              if (
+                locationData.address.residential == undefined &&
+                locationData.address.industrial == undefined
+              ) {
+                setLocation(
+                  locationData.address.county + "," + locationData.address.road
+                );
+                setLocationError(null);
+                setlocationfieldColor("green");
+              }
+              if (
+                locationData.address.residential !== undefined &&
+                locationData.address.industrial !== undefined
+              ) {
+                setLocation(
+                  locationData.address.county + "," + locationData.address.road
+                );
+                setLocationError(null);
+                setlocationfieldColor("green");
+              }
+
+              // You can update state or take actions with the fetched location data
+            } else {
+              console.error("Failed to fetch location information.");
+            }
+          } catch (error) {
+            console.error("Error fetching location information:", error);
+          }
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error.message);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
+  //modal logic docs
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  //modal logic maps
+  const [showMap, setShowMap] = useState(false);
+
+  const handleCloseMap = () => setShowMap(false);
+  const handleShowMap = () => {
+    getlocation();
+    setShowMap(true);
+  };
 
   //fields state
   const [Name, setName] = useState("");
@@ -204,6 +294,18 @@ export const AddAcademy = () => {
       });
     }
   };
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 600,
+    // bgcolor: "#f8f8ff",
+    bgcolor: "rgb(36 48 63)",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 0,
+  };
   return (
     <DefaultLayout>
       <div>
@@ -218,7 +320,7 @@ export const AddAcademy = () => {
             </Alert>
           ))}
       </div>
-      <div className="p-12">
+      <div>
         {/* <HeaderNavBar></HeaderNavBar> */}
         {/* Hero image ------------------------- */}
         <div>
@@ -256,8 +358,8 @@ export const AddAcademy = () => {
                   </div>
 
                   {/* location */}
-                  <div className="flex flex-col gap-5.5 p-6.5">
-                    <div>
+                  <div className="flex flex-row p-6.5">
+                    <div className="col-lg-10" style={{ width: "100%" }}>
                       <label className="mb-3 block text-black dark:text-white">
                         Academy Location
                       </label>
@@ -277,6 +379,32 @@ export const AddAcademy = () => {
                       {locationError && (
                         <p className="text-red-500">{locationError}</p>
                       )}
+                    </div>
+                    <div
+                      className="col-lg-1 "
+                      style={{ alignContent: "center" }}
+                    >
+                      <Button
+                        style={{
+                          backgroundColor: "#8bc34a",
+                          marginLeft: "12px",
+                        }}
+                        variant="success"
+                        size="lg"
+                        onClick={handleShowMap}
+                      >
+                        Current Location
+                      </Button>
+                      <Modal
+                        open={showMap}
+                        onClose={handleCloseMap}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          {lat && long && <MapPosition lat={lat} lon={long} />}
+                        </Box>
+                      </Modal>
                     </div>
                   </div>
                   {/* date */}
@@ -329,8 +457,17 @@ export const AddAcademy = () => {
                         <strong className="text-danger">{logoError}</strong>
                       )}
                     </div>
-                    <div className="col-md-1 align-self-end">
-                      <img src={Logo.myLogo} style={{ maxWidth: "60px" }} />
+                    <div
+                      className="col-md-1 "
+                      style={{ alignContent: "center", marginLeft: "15px" }}
+                    >
+                      <img
+                        src={Logo.myLogo}
+                        style={{
+                          maxWidth: "60px",
+                          marginTop: "25px",
+                        }}
+                      />
                     </div>
                   </div>
 
@@ -357,11 +494,14 @@ export const AddAcademy = () => {
                       )}
                     </div>
 
-                    <div className="col-md-1 align-self-center">
+                    <div
+                      className="col-md-1 "
+                      style={{ alignContent: "center" }}
+                    >
                       <Button
                         style={{
                           backgroundColor: "#8bc34a",
-                          marginTop: "12px",
+                          marginLeft: "12px",
                         }}
                         variant="success"
                         size="lg"
@@ -369,18 +509,20 @@ export const AddAcademy = () => {
                       >
                         Show
                       </Button>
-                      <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Document</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
+                      <Modal
+                        open={show}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
                           <embed
                             src={Doc.myDoc}
                             type="application/pdf"
                             width="100%"
                             height="600px"
                           />
-                        </Modal.Body>
+                        </Box>
                       </Modal>
                     </div>
                   </div>

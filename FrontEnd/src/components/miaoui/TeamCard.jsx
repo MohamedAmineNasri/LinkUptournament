@@ -126,8 +126,14 @@ const TeamCard = (props) => {
                 backgroundColor: "#212529c4",
               }}
             >
-              <div className="p-4 flex items-center  gap-10 justify-end">
-                <div className="w-1/2 pb-3">
+              <div className="p-4  flex items-center  gap-10 justify-end">
+                <div
+                  className="w-1/2 mb-8 "
+                  style={{
+                    borderRadius: "10px",
+                    backgroundColor: "#3ab93a54",
+                  }}
+                >
                   <FormControl variant="standard" sx={{ width: "100%" }}>
                     <InputLabel
                       id="Position"

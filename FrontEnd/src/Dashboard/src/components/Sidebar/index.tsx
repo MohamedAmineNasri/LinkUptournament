@@ -688,7 +688,7 @@ if(academyData){
                         </NavLink>
                   </li>
                   )}
-              {userRole.includes('Manager') && (
+              {userRole.includes('Manager') &&  Object.keys(academyData).length !== 0 &&(
                   <li>
                     <NavLink
                       to="/Academy"

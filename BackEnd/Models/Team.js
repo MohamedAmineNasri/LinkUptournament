@@ -35,6 +35,18 @@ const TeamSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    Total_Tournement_win_1: {
+      type: Number,
+      default: 0
+    },
+    Total_Tournement_second_2: {
+      type: Number,
+      default: 0
+    },
+    Total_Tournement_third_3: {
+      type: Number,
+      default: 0
+    },
     academy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Academy',
@@ -43,6 +55,10 @@ const TeamSchema = new mongoose.Schema(
     Players: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Player'
+    }],
+    Achievements :[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Tachievement'
     }],
 
     // Group stage data-------------------------------------------------------------------

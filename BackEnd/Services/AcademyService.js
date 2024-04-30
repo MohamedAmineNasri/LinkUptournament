@@ -79,7 +79,8 @@ const getAcademyByMangerId = async (req, res, next) => {
     try {
       const academyData = await academy.findOne({ user: req.params.idmanger });
       if (!academyData) {
-        return res.status(404).json({ message: 'Academy not found for the given user ID' });
+        // return res.status(404).json({ message: 'Academy not found for the given user ID' });
+        return res.json(false)
       }
       res.json(academyData);
     } catch (error) {

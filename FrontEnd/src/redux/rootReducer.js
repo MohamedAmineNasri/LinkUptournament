@@ -1,3 +1,5 @@
+import achievementReducer from './slice/achievementSlice'
+import tachievementSlice from './slice/tachievementSlice';
 import { combineReducers } from "@reduxjs/toolkit";
 import teamReducer from "./slice/teamSlice";
 import academyReducer from "./slice/academySlice";
@@ -32,6 +34,8 @@ export const rootReducer = combineReducers({
   updateReferee: updateRefereeSlice,
   deleteReferee: deleteRefereeSlice,
   searchReferee: searchRefereeSlice,
+  achievement:achievementReducer,
+  tachievement :tachievementSlice,
 });
 
 export default rootReducer;

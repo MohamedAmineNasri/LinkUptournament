@@ -13,15 +13,18 @@ export const AddAcademy = () => {
   const dispatch = useDispatch();
 
   const initialPosition = JSON.parse(localStorage.getItem("selectedPosition"));
-  //get user location by GPS
+
+  //get user location by map SELECTION------------------------------------------------------
   const getSelectedlocation = async (lat, long) => {
     if (lat && long) {
+      const pos = [lat, long];
+      localStorage.setItem("selectedPosition", JSON.stringify(pos));
       const LocationInfoEndPonit = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`;
       try {
         const response = await fetch(LocationInfoEndPonit);
         if (response.ok) {
           const locationData = await response.json();
-          console.log("Location Information:", locationData);
+          // console.log("Location Information:", locationData);
           if (
             locationData.address.residential === undefined &&
             locationData.address.industrial
@@ -73,6 +76,7 @@ export const AddAcademy = () => {
       }
     }
   };
+  // run getSelectedlocation everytime initialPosition coordinnates changes
   useEffect(() => {
     getSelectedlocation(initialPosition[0], initialPosition[1]);
   }, [initialPosition]);
@@ -81,16 +85,13 @@ export const AddAcademy = () => {
   const [showMap, setShowMap] = useState(false);
 
   const handleCloseMap = () => {
-    // setlat(initialPosition[0]);
-    // setlong(initialPosition[1]);
-    // getSelectedlocation(initialPosition[0], initialPosition[1]);
     setShowMap(false);
   };
   const handleShowMap = () => {
     setShowMap(true);
   };
 
-  //get user location by GPS
+  //get user location by GPS ----------------------------------------------------------------
   const getlocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -102,11 +103,19 @@ export const AddAcademy = () => {
             const response = await fetch(LocationInfoEndPonit);
             if (response.ok) {
               const locationData = await response.json();
-              console.log("Location Information:", locationData);
+              // console.log("Location Information:", locationData);
               if (
                 locationData.address.residential == undefined &&
-                locationData.address.industrial
+                locationData.address.industrial !== undefined
               ) {
+                //set local storage value to the gps coordinates result without changing initialPosition value that trigger hook that override the gps value
+                localStorage.setItem(
+                  "selectedPosition",
+                  JSON.stringify([
+                    postion.coords.latitude,
+                    postion.coords.longitude,
+                  ])
+                );
                 setLocation(
                   locationData.address.industrial +
                     "," +
@@ -120,6 +129,13 @@ export const AddAcademy = () => {
                 locationData.address.residential !== undefined &&
                 locationData.address.industrial == undefined
               ) {
+                localStorage.setItem(
+                  "selectedPosition",
+                  JSON.stringify([
+                    postion.coords.latitude,
+                    postion.coords.longitude,
+                  ])
+                );
                 setLocation(
                   locationData.address.residential +
                     "," +
@@ -132,6 +148,13 @@ export const AddAcademy = () => {
                 locationData.address.residential == undefined &&
                 locationData.address.industrial == undefined
               ) {
+                localStorage.setItem(
+                  "selectedPosition",
+                  JSON.stringify([
+                    postion.coords.latitude,
+                    postion.coords.longitude,
+                  ])
+                );
                 setLocation(
                   locationData.address.county + "," + locationData.address.road
                 );
@@ -142,6 +165,13 @@ export const AddAcademy = () => {
                 locationData.address.residential !== undefined &&
                 locationData.address.industrial !== undefined
               ) {
+                localStorage.setItem(
+                  "selectedPosition",
+                  JSON.stringify([
+                    postion.coords.latitude,
+                    postion.coords.longitude,
+                  ])
+                );
                 setLocation(
                   locationData.address.county + "," + locationData.address.road
                 );

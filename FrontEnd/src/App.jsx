@@ -1,4 +1,5 @@
-import * as Sentry from "@sentry/react";
+
+import * as Sentry from "@sentry/react"
 import "./App.css";
 
 import Home from "./pages/Home";
@@ -73,7 +74,6 @@ import {loadStripe} from '@stripe/stripe-js';
 import QrCode from "./components/hamhoum/QrCode"
 import Timer from "./components/hamhoum/timer"
 
-
 // import Payment from "./components/hamhoum/Payments";
 // import Completiont from "./components/hamhoum/Completion";
 // import { Elements, PaymentElement } from "@stripe/react-stripe-js";
@@ -86,17 +86,11 @@ import HomeLandingPage from "./landingPage/HomeLandingPage";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Chatbot from "react-chatbot-kit";
-
-import config from "./components/ChatBotComponents/chatbot/config";
-import ActionProvider from "./components/ChatBotComponents/chatbot/ActionProvider";
-import MessageParser from "./components/ChatBotComponents/chatbot/MessageParser";
-import 'react-chatbot-kit/build/main.css'
 
 function App() {
   // animeaa
   const [fixtures, setFixtures] = useState(data);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   useEffect(() => {
     AOS.init({
       duration: 1000, // Change the animation duration as per your preference
@@ -108,34 +102,19 @@ function App() {
   //console.log(fixtures);
 
   // const refresh = () => window.location.reload(true);
-  const chatbotStyle = {
-    textAlign: "center",
-    backgroundColor: "#282c34",
-    minHeight: "100vh",
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-  };
 
   return (
+    
     <>
       {loading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
           <img
             src="https://cdn.dribbble.com/users/494229/screenshots/1601132/loadingicon14.gif"
             alt="Loading..."
           />
-        </div>
+        </div>      
       ) : (
         <Routes>
-
         <Route path="/timer" element={<Timer />} />
         <Route path="/qr" element={<QrCode />} />
   
@@ -169,97 +148,94 @@ function App() {
             <Route path="format" element={<FormatSelect />}>
               <Route path="bracket" element={<ManageTournamentFormat />} />
               <Route path="group" element={<ManageTournamentGroup />} />
-
             </Route>
-
-            {/**YASSINE_ROUTES*/}
-
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/matches" element={<Matches />} />
-            <Route path="/players" element={<Players />} />
-            <Route path="/single" element={<Single />} />
-
-            <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
-              {/* <Route path="/addAcademy" element={<AddAcademy />} /> */}
-            </Route>
-            <Route path="/addAcademy" element={<AddAcademy />} />
-            <Route path="/Academy" element={<Academy />} />
-            <Route path="/team/:idTeam" element={<CheckSelectedTeam />} />
-            {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
-            <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
-              <Route path="/addAcademy" element={<AddAcademy />} />
-              <Route path="/Academy" element={<Academy />} />
-            </Route>
-
-            <Route path="/Academy" element={<Academy />} />
-            <Route path="/tournement" element={<Tournament />} />
-            <Route path="/groups" element={<TournamentRoundRobin />} />
-            <Route path="/test" element={<TournamentBracket />} />
-            <Route path="/player/:idTeam" element={<AddPlayerForm />} />
-
-            <Route path="/t" element={<EditPopUpmatch />} />
-            <Route path="/match" element={<MatchCard />} />
-            <Route path="/a" element={<Table data={fixtures} />}></Route>
-            <Route
-              path="/fixture/:matchID"
-              element={<Fixture data={fixtures} />}
-            ></Route>
-            <Route path="/testtt" element={<AddMatchPopUpWindow />} />
-            <Route path="/testt" element={<AddMatch />} />
-
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
-            {/* Protected Routes  */}
-            <Route element={<PersistLogin />}>
-              {/* <Route element={<RequireAuth  />}> */}
-              <Route
-                element={
-                  <RequireAuth
-                    allowedRoles={[
-                      "Admin",
-                      "Supporter",
-                      "Agent",
-                      "Manager",
-                      "TournamentCoordinator",
-                    ]}
-                  />
-                }
-              >
-                <Route path="/welcome" element={<Welcome />} />
-                <Route path="/userslist" element={<UserList />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/videopodcast" element={<VideoPodcast />} />
-                <Route
-                  path="/viewerlivestream"
-                  element={<ViewerLiveStream />}
-                />
-                <Route
-                  path="/viewerlivestreamui"
-                  element={<ViewerLiveStreamUi />}
-                />
-                <Route path="/videolivestream" element={<VideoLiveStream />} />
-                <Route
-                  path="/videolivestreamui"
-                  element={<VideoLiveStreamUi />}
-                />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/chatroom/:id" element={<ChatroomPage />} />
-                <Route
-                  path="/chatroomFront/:id"
-                  element={<ChatroomFrontPage />}
-                />
-                <Route path="/userstable" element={<Tables />} />
-                <Route path="/settings" element={<Settings />} />
-              </Route>
+            <Route path="participant" element={<ManageParticipant />}>
+              <Route path="player" element={<ManagePlayer />} />
+              <Route path="player/consult" element={<ConsultPlayer />} />
+              <Route path="referee" element={<ManageReferees />} />
+              <Route path="referee/consult" element={<ConsultReferee />} />
             </Route>
           </Route>
-
-          {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
-
-          {/* </Route> */}
-        </Routes>
+  
+          {/**YASSINE_ROUTES*/}
+  
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/matches" element={<Matches />} />
+          <Route path="/players" element={<Players />} />
+          <Route path="/single" element={<Single />} />
+  
+          <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
+            {/* <Route path="/addAcademy" element={<AddAcademy />} /> */}
+          </Route>
+          <Route path="/addAcademy" element={<AddAcademy />} />
+          <Route path="/Academy" element={<Academy />} />
+          <Route path="/team/:idTeam" element={<CheckSelectedTeam />} />
+          {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
+          <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
+            <Route path="/addAcademy" element={<AddAcademy />} />
+            <Route path="/Academy" element={<Academy />} />
+          </Route>
+  
+          <Route path="/Academy" element={<Academy />} />
+          <Route path="/tournement" element={<Tournament />} />
+          <Route path="/groups" element={<TournamentRoundRobin />} />
+          <Route path="/test" element={<TournamentBracket />} />
+          <Route path="/player/:idTeam" element={<AddPlayerForm />} />
+  
+          <Route path="/t" element={<EditPopUpmatch />} />
+          <Route path="/match" element={<MatchCard />} />
+          <Route path="/a" element={<Table data={fixtures} />}></Route>
+          <Route
+            path="/fixture/:matchID"
+            element={<Fixture data={fixtures} />}
+          ></Route>
+          <Route path="/testtt" element={<AddMatchPopUpWindow />} />
+          <Route path="/testt" element={<AddMatch />} />
+  
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboardAdmin/*" element={<AdminDashboard />} />
+          {/* Protected Routes  */}
+          <Route element={<PersistLogin />}>
+            {/* <Route element={<RequireAuth  />}> */}
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[
+                    "Admin",
+                    "Supporter",
+                    "Agent",
+                    "Manager",
+                    "TournamentCoordinator",
+                  ]}
+                />
+              }
+            >
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/userslist" element={<UserList />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/videopodcast" element={<VideoPodcast />} />
+              <Route path="/viewerlivestream" element={<ViewerLiveStream />} />
+              <Route
+                path="/viewerlivestreamui"
+                element={<ViewerLiveStreamUi />}
+              />
+              <Route path="/videolivestream" element={<VideoLiveStream />} />
+              <Route path="/videolivestreamui" element={<VideoLiveStreamUi />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/chatroom/:id" element={<ChatroomPage />} />
+              <Route path="/chatroomFront/:id" element={<ChatroomFrontPage />} />
+              <Route path="/userstable" element={<Tables />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+          </Route>
+        </Route>
+  
+        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+  
+        {/* </Route> */}
+      </Routes>
       )}
     </>
   );

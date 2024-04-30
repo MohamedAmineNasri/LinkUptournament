@@ -7,23 +7,96 @@ import Button from "react-bootstrap/Button";
 import DefaultLayout from "../../Dashboard/src/layout/DefaultLayout";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import MapPosition from "./Apis/MapPosition";
+import SelectMapPosition from "./Apis/MapPosition";
 
 export const AddAcademy = () => {
   const dispatch = useDispatch();
 
-  //lat and long for map
-  const [lat, setlat] = useState(null);
-  const [long, setlong] = useState(null);
-  //get user location
+  const initialPosition = JSON.parse(localStorage.getItem("selectedPosition"));
+  //get user location by GPS
+  const getSelectedlocation = async (lat, long) => {
+    if (lat && long) {
+      const LocationInfoEndPonit = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`;
+      try {
+        const response = await fetch(LocationInfoEndPonit);
+        if (response.ok) {
+          const locationData = await response.json();
+          console.log("Location Information:", locationData);
+          if (
+            locationData.address.residential === undefined &&
+            locationData.address.industrial
+          ) {
+            setLocation(
+              locationData.address.industrial + "," + locationData.address.road
+            );
+
+            setLocationError(null);
+            setlocationfieldColor("green");
+          }
+          if (
+            locationData.address.residential !== undefined &&
+            locationData.address.industrial === undefined
+          ) {
+            setLocation(
+              locationData.address.residential + "," + locationData.address.road
+            );
+            setLocationError(null);
+            setlocationfieldColor("green");
+          }
+          if (
+            locationData.address.residential === undefined &&
+            locationData.address.industrial === undefined
+          ) {
+            setLocation(
+              locationData.address.county + "," + locationData.address.road
+            );
+            setLocationError(null);
+            setlocationfieldColor("green");
+          }
+          if (
+            locationData.address.residential !== undefined &&
+            locationData.address.industrial !== undefined
+          ) {
+            setLocation(
+              locationData.address.county + "," + locationData.address.road
+            );
+            setLocationError(null);
+            setlocationfieldColor("green");
+          }
+
+          // You can update state or take actions with the fetched location data
+        } else {
+          console.error("Failed to fetch location information.");
+        }
+      } catch (error) {
+        console.error("Error fetching location information:", error);
+      }
+    }
+  };
+  useEffect(() => {
+    getSelectedlocation(initialPosition[0], initialPosition[1]);
+  }, [initialPosition]);
+
+  //modal logic maps
+  const [showMap, setShowMap] = useState(false);
+
+  const handleCloseMap = () => {
+    // setlat(initialPosition[0]);
+    // setlong(initialPosition[1]);
+    // getSelectedlocation(initialPosition[0], initialPosition[1]);
+    setShowMap(false);
+  };
+  const handleShowMap = () => {
+    setShowMap(true);
+  };
+
+  //get user location by GPS
   const getlocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (postion) => {
           let lat = postion.coords.latitude;
           let long = postion.coords.longitude;
-          setlat(lat);
-          setlong(long);
           const LocationInfoEndPonit = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`;
           try {
             const response = await fetch(LocationInfoEndPonit);
@@ -92,20 +165,16 @@ export const AddAcademy = () => {
       console.error("Geolocation is not supported by this browser.");
     }
   };
+  //gps get current position
+  const handleGpsPosition = () => {
+    getlocation();
+  };
 
   //modal logic docs
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  //modal logic maps
-  const [showMap, setShowMap] = useState(false);
-
-  const handleCloseMap = () => setShowMap(false);
-  const handleShowMap = () => {
-    getlocation();
-    setShowMap(true);
-  };
 
   //fields state
   const [Name, setName] = useState("");
@@ -361,53 +430,67 @@ export const AddAcademy = () => {
                   <div className="flex flex-row p-6.5">
                     <div className="col-lg-10" style={{ width: "100%" }}>
                       <label className="mb-3 block text-black dark:text-white">
-                        Academy Location
+                        Academy Location :{"  "}
+                        {/* Current GPS Location ----------------------------------------------*/}
+                        <Button
+                          style={{
+                            textDecoration: "underline",
+                            paddingLeft: "0px",
+                            paddingTop: "0px",
+                            boxShadow: "none",
+                            color: "#2b9451",
+                          }}
+                          variant="success"
+                          size="lg"
+                          onClick={handleGpsPosition}
+                        >
+                          Current Location
+                        </Button>
+                        {/*  ----------------------------------------------*/}
                       </label>
-                      <input
-                        type="text"
-                        id="location"
-                        placeholder="Enter the Location of the academy"
-                        value={Location}
-                        onChange={(e) => handleLocation(e)}
-                        style={{
-                          borderColor: locationfieldColor,
-                        }}
-                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-white outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
-                          locationError ? "border-red-500" : ""
-                        }`}
-                      />
+                      <div className="flex items-center">
+                        <input
+                          type="text"
+                          id="location"
+                          placeholder="Enter the Location of the academy"
+                          value={Location}
+                          onChange={(e) => handleLocation(e)}
+                          style={{
+                            borderColor: locationfieldColor,
+                          }}
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-white outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                            locationError ? "border-red-500" : ""
+                          }`}
+                        />
+                        {/* Select Location from Map ------------------------------------------------------*/}
+                        <Button
+                          style={{
+                            backgroundColor: "#8bc34a",
+                            marginLeft: "12px",
+                          }}
+                          variant="success"
+                          size="lg"
+                          onClick={handleShowMap}
+                        >
+                          Map
+                        </Button>
+                        <Modal
+                          open={showMap}
+                          onClose={handleCloseMap}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style}>
+                            <SelectMapPosition />
+                          </Box>
+                        </Modal>
+                      </div>
                       {locationError && (
                         <p className="text-red-500">{locationError}</p>
                       )}
                     </div>
-                    <div
-                      className="col-lg-1 "
-                      style={{ alignContent: "center" }}
-                    >
-                      <Button
-                        style={{
-                          backgroundColor: "#8bc34a",
-                          marginLeft: "12px",
-                        }}
-                        variant="success"
-                        size="lg"
-                        onClick={handleShowMap}
-                      >
-                        Current Location
-                      </Button>
-                      <Modal
-                        open={showMap}
-                        onClose={handleCloseMap}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style}>
-                          {lat && long && <MapPosition lat={lat} lon={long} />}
-                        </Box>
-                      </Modal>
-                    </div>
                   </div>
-                  {/* date */}
+                  {/* date ---------------------------------------------------- */}
                   <div className="flex flex-col gap-5.5 p-6.5">
                     <label className="mb-3 block text-black dark:text-white">
                       Date

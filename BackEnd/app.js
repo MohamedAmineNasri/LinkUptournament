@@ -7,12 +7,17 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 });
 //-
 
+
+
 var AcademyRouter = require("./Routes/Academy");
 var TeamRouter = require("./Routes/Team");
 const groupRoutes = require("./Routes/Group");
 const staduimRoutes = require("./Routes/Staduim");
 const tournamentRoutes = require("./Routes/Tournament");
 const match = require("./Routes/match");
+
+var AchievementRouter = require('./Routes/Achievement');
+var TachievementRouter = require('./Routes/tachievement');
 
 const m = require("./Models/match");
 
@@ -269,6 +274,8 @@ app.use("/tournament", tournamentRoutes);
 app.use("/team", TeamRouter);
 app.use("/match", match);
 app.use("/academy", AcademyRouter);
+app.use('/achievement', AchievementRouter);
+app.use('/tachievement', TachievementRouter);
 
 app.use("/uploads", express.static("uploads"));
 

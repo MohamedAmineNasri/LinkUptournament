@@ -1,4 +1,20 @@
 const Player = require("../Models/Player");
+const TeamService = require('../Services/TeamService')
+
+
+async function createPlayerMi(req, res) {
+  const { team } = req.body;
+  try {
+    console.log(team)
+    const targetTeam = await TeamService.getTeamById2(team)
+    const player = new Player(req.body);
+    await player.save();
+    targetTeam.Players.push(player);
+    await targetTeam.save();
+    res.status(201).send(player);
+  } catch (error) {
+    res.status(400).send(error);
+  }}
 
 // Create a player
 async function createPlayer(req, res) {
@@ -10,6 +26,8 @@ async function createPlayer(req, res) {
     res.status(400).send(error);
   }
 }
+
+
 
 // Get all players
 async function getAllPlayers(req, res) {
@@ -106,5 +124,7 @@ module.exports = {
   updatePlayerById,
   deletePlayerById,
   getplayerByteam,
+  createPlayer,
+  createPlayerMi,
   searchPlayers
 };

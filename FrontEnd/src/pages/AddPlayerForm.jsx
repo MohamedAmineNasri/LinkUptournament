@@ -9,11 +9,16 @@ import { soccerPositions } from "../data/playersPositions";
 import Header from "../components/Header";
 import { useParams } from "react-router-dom";
 import "./PlayerForm.css";
+import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 
 const AddPlayerForm = () => {
+  const navigate = useNavigate();
+
   const { idTeam } = useParams();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
+    name: "",
+    number: "",
     legal_guardian: "",
     academic_membership: "",
     position: "",
@@ -54,20 +59,45 @@ const AddPlayerForm = () => {
     e.preventDefault();
     console.log(formData);
     dispatch(addPlayerMi(formData));
+    navigate(`/team/${idTeam}`);
   };
 
   return (
     <div>
       <Header />
 
-      <div className="row " style={{ height: "100vh", margin: 0 }}>
+      <div
+        className="row "
+        style={{ height: "100vh", margin: 0, backgroundColor: "#282931" }}
+      >
         <div className="col-lg-5 text-center player-bg"></div>
         <div
           className="col-lg-5 mx-auto text-center"
-          style={{ width: "50vw", paddingTop: "9%" }}
+          style={{
+            width: "50vw",
+            paddingTop: "9%",
+          }}
         >
           <form onSubmit={handleSubmit} className="player-form">
             <h2 className="text-white">PLAYER</h2>
+            <Form.Group controlId="p name">
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Player Name"
+              />
+            </Form.Group>
+            <Form.Group controlId="ph numb">
+              <Form.Control
+                type="text"
+                name="number"
+                value={formData.number}
+                onChange={handleInputChange}
+                placeholder="Phone Number"
+              />
+            </Form.Group>
             <Form.Group controlId="legal_guardian">
               <Form.Control
                 type="text"

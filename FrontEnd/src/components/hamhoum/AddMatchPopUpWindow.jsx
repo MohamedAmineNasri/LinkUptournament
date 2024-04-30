@@ -58,7 +58,7 @@ export const AddMatchPopUpWindow = (props) => {
     e.preventDefault();
     dispatch(
         addnewMatch({
-          // matchTime: 0,
+          matchTime: 0,
           referee:Referee,
           date:Date,
           logo:Logo.myLogo,

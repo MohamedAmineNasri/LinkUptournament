@@ -10,8 +10,9 @@ const initialState = {
 export const fetchReferees = () => async (dispatch) => {
   dispatch(fetchRefereesPending());
   try {
-    const response = await axios.get("http://localhost:8000/referee");
-    dispatch(fetchRefereesFulfilled(response.data));
+    const response = await fetch(`http://localhost:8000/referee`);
+    const data = await response.json();
+    dispatch(fetchRefereesFulfilled(data));
   } catch (error) {
     dispatch(fetchRefereesRejected(error.message));
   }

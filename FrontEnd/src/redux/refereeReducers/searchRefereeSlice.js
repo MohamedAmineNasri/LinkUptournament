@@ -24,7 +24,7 @@ export const searchReferees =
       if (availability) url += `availability=${availability}&`;
 
       const response = await axios.get(url);
-      console.log(response.data);
+      
       dispatch(searchRefereesFulfilled(response.data));
       dispatch(fetchRefereesFulfilled(response.data));
     } catch (error) {

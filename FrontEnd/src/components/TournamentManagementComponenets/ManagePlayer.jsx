@@ -20,6 +20,7 @@ import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { getPlayersPosition } from "../../redux/playerReducers/searchPlayerSlice";
 import axios from "axios";
 import ImagePlaceholder from "/public/images/image-placeholder.jpg";
+import Pagination from "./Pagination";
 
 const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
@@ -37,7 +38,9 @@ const ManagePlayer = () => {
     }
   };
 
-  const players = useSelector((state) => state.root.fetchPlayers.players);
+  const { players, currentPage, totalPages } = useSelector(
+    (state) => state.root.fetchPlayers.players
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openAddForm, setOpenAddForm] = useState(false);
@@ -52,8 +55,8 @@ const ManagePlayer = () => {
     number: undefined,
     avatar: "",
   });
-  const [skillsSize, setSkillsSize] = useState(1);
   const [create, setCreate] = useState(true);
+  const [skillsSize, setSkillsSize] = useState(1);
   const [playerId, setPlayerId] = useState("");
   const [position, setPosition] = useState("");
 
@@ -141,7 +144,7 @@ const ManagePlayer = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {players.length == 0 ? (
+      {!players ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">
@@ -369,6 +372,9 @@ const ManagePlayer = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+            <div className="mt-4 flex justify-end">
+              <Pagination currentPage={currentPage} totalPages={totalPages} />
             </div>
           </div>
         </>

@@ -1,0 +1,59 @@
+import React from "react";
+import { useDispatch } from "react-redux";
+import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
+
+const Pagination = ({ currentPage, totalPages }) => {
+  const dispatch = useDispatch();
+
+  const handlePageChange = (page) => {
+    dispatch(fetchPlayers(page));
+  };
+
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  return (
+    <nav aria-label="Page navigation example">
+      <ul className="list-style-none mb-6 flex">
+        {/* Previous page button */}
+        <li>
+          <button
+            className="text-black font-bold pointer-events-none relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface/50 transition duration-300 dark:text-neutral-400"
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Previous
+          </button>
+        </li>
+        {/* Page numbers */}
+        {pages.map((page) => (
+          <li
+            key={page}
+            className={
+              page === currentPage
+                ? "bg-green-800 text-green-200 rounded"
+                : "text-black"
+            }
+          >
+            <button
+              className=" relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-200 focus:text-success-700 focus:outline-none  active:text-success-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-primary  dark:focus:text-success-500 dark:active:bg-neutral-700 dark:active:text-success-500"
+              onClick={() => handlePageChange(page)} // Handle page number click
+            >
+              {page}
+            </button>
+          </li>
+        ))}
+        {/* Next page button */}
+        <li>
+          <button
+            className="text-black font-bold relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-success-700 focus:outline-none  active:text-success-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700  dark:focus:text-success-500 dark:active:bg-neutral-700 dark:active:text-success-500"
+            disabled={currentPage === totalPages} // Disable if on the last page
+            onClick={() => handlePageChange(currentPage + 1)} // Handle next page click
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  );
+};
+
+export default Pagination;

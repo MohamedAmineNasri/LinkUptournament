@@ -1,3 +1,7 @@
+:root {
+  --accent-color: #2b9451; /* Your new accent color */
+}
+
 body {
   padding: 0px;
   margin: 0px;
@@ -23,11 +27,11 @@ body {
 
 @screen md {
   .h1 {
-      @apply text-5xl;
+    @apply text-5xl;
   }
 
   .h2 {
-      @apply text-4xl;
+    @apply text-4xl;
   }
 }
 

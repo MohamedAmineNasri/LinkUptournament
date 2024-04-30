@@ -11,11 +11,27 @@ async function createReferee(req, res) {
   }
 }
 
-// Get all referees
+// Controller function for getting all referees with pagination
 async function getAllReferees(req, res) {
   try {
-    const referees = await Referee.find();
-    return res.status(200).json(referees);
+    // Pagination parameters
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10; // Default limit to 10 if not provided
+
+    // Calculate the index to start from
+    const startIndex = (page - 1) * limit;
+
+    // Find total count of referees
+    const totalReferees = await Referee.countDocuments();
+
+    // Find referees for the current page
+    const referees = await Referee.find().skip(startIndex).limit(limit);
+
+    return res.status(200).json({
+      referees,
+      currentPage: page,
+      totalPages: Math.ceil(totalReferees / limit),
+    });
   } catch (error) {
     console.error("Error fetching referees:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -63,26 +79,25 @@ async function deleteRefereeById(req, res) {
   }
 }
 
+async function searchReferees(req, res) {
+  try {
+    const { name, country, location, availability, role } = req.query;
 
-async function searchReferees(req, res){
-    try {
-      const { name, country, location, availability, role } = req.query;
+    const query = {};
+    if (name) query.name = { $regex: new RegExp(name, "i") };
+    if (country) query.country = { $regex: new RegExp(country, "i") };
+    if (location) query.location = { $regex: new RegExp(location, "i") };
+    if (availability)
+      query.availability = { $regex: new RegExp(availability, "i") };
+    if (role) query.role = role;
 
-      const query = {};
-      if (name) query.name = { $regex: new RegExp(name, "i") };
-      if (country) query.country = { $regex: new RegExp(country, "i") };
-      if (location) query.location = { $regex: new RegExp(location, "i") };
-      if (availability) query.availability = { $regex: new RegExp(availability, "i") };
-      if (role) query.role = role;
+    const referees = await Referee.find(query);
 
-      const referees = await Referee.find(query);
-
-      res.json(referees);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
+    res.json(referees);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 }
-
 
 module.exports = {
   createReferee,
@@ -90,5 +105,5 @@ module.exports = {
   getRefereeById,
   updateRefereeById,
   deleteRefereeById,
-  searchReferees
+  searchReferees,
 };

@@ -18,11 +18,14 @@ import { updateReferee } from "../../redux/refereeReducers/updateRefereeSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { getRefereesQueryData } from "../../redux/refereeReducers/searchRefereeSlice";
+import Pagination from "./Pagination";
 
 const ManageReferees = () => {
-  const referees = useSelector((state) => state.root.fetchReferees.referees);
+  const { referees, currentPage, totalPages } = useSelector(
+    (state) => state.root.fetchReferees.referees
+  );
   const navigate = useNavigate();
-  const [av, setAv] = useState(false);
+
   const [openAddForm, setOpenAddForm] = useState(false);
   const [create, setCreate] = useState(true);
   const [refereeId, setRefereeId] = useState(null);
@@ -58,7 +61,7 @@ const ManageReferees = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
     if (create) {
       dispatch(addReferee(formData));
       toast.success("Referee added successfully 👌");
@@ -71,7 +74,7 @@ const ManageReferees = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {referees.length == 0 ? (
+      {!referees ? (
         <>
           <div className="p-3 flex items-center mt-2 justify-between gap-10">
             <h3 className="text-base font-bold flex-1 text-black dark:text-white ">
@@ -350,6 +353,13 @@ const ManageReferees = () => {
                 </tbody>
               </table>
             </div>
+            {totalPages == 1 ? (
+              <></>
+            ) : (
+              <div className="mt-4 flex justify-end">
+                <Pagination currentPage={currentPage} totalPages={totalPages} />
+              </div>
+            )}
           </div>
         </>
       )}

@@ -67,10 +67,12 @@ import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
 import AddTour from "./components/Tournament/AddTournament";
 import Edit from "./components/Tournament/Edit";
 
-import Payment from "./components/hamhoum/Payments";
-import Completiont from "./components/hamhoum/Completion";
-import { loadStripe } from "@stripe/stripe-js";
-import QrCode from "./components/hamhoum/QrCode";
+import Payment from "./components/hamhoum/Payments"
+import Completiont from "./components/hamhoum/Completion"
+import {loadStripe} from '@stripe/stripe-js';
+import QrCode from "./components/hamhoum/QrCode"
+import Timer from "./components/hamhoum/timer"
+
 
 // import Payment from "./components/hamhoum/Payments";
 // import Completiont from "./components/hamhoum/Completion";
@@ -81,6 +83,7 @@ import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
 import HomeLandingPage from "./landingPage/HomeLandingPage";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Chatbot from "react-chatbot-kit";
@@ -132,57 +135,41 @@ function App() {
         </div>
       ) : (
         <Routes>
-          <Route path="/qr" element={<QrCode />} />
-          <Route path="/ChatBot" element={
-          <div style={chatbotStyle}>
-            <Chatbot
-              config={config}
-              actionProvider={ActionProvider}
-              messageParser={MessageParser}
-            />
-          </div>
-        } />
 
-          <Route path="/payment/:id" element={<Payment />} />
-          <Route path="/c/:id" element={<Completiont />} />
-          <Route path="/pdf/:id" element={<Pdf />} />
-          <Route path="/buy/" element={<Buy />} />
+        <Route path="/timer" element={<Timer />} />
+        <Route path="/qr" element={<QrCode />} />
+  
+             <Route path="/payment/:id" element={<Payment />} />
+      <Route path="/c/:id" element={<Completiont />} /> 
+        <Route path="/pdf/:id" element={<Pdf />} />
+            <Route path="/buy/" element={<Buy />} />
+  
+        <Route path="/panel/:match" element={<Panel />} />
+        <Route path="/fetchalltour" element={<Fetchalltour />} />
+        <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
+        <Route
+          path="/fetchmatchbytour/:tournamentId"
+          element={<Fetchmatchbytour />}
+        />
+        <Route path="/testtt" element={<AddMatchPopUpWindow />} />
+        <Route path="/fetchonematch/:tournamentId" element={<Fetchonematch />} />
+  
+        <Route path="/" element={<Layout />}>
+          {/* Public Routes  */}
+          <Route index element={<HomeLandingPage />} />
+          <Route path="/lineup" element={<TeamLineUp />} />
+          <Route path="/ChatFront" element={<FrontUserChat />} />
+          {/**YASSINE_ROUTES*/}
+          {/* <Route path="/page" element={<LandingPage />} /> */}
+          <Route path="/manage" element={<TournamentLayout />}>
+            <Route index element={<ManageTournament />} />
+            <Route path="editt/:tournamentId" element={<Edit />} />
+            <Route path="tournament/:tournamentId" element={<Tournament />} />
+            <Route path="addT" element={<AddTour />} />
+            <Route path="format" element={<FormatSelect />}>
+              <Route path="bracket" element={<ManageTournamentFormat />} />
+              <Route path="group" element={<ManageTournamentGroup />} />
 
-          <Route path="/panel/:match" element={<Panel />} />
-          <Route path="/fetchalltour" element={<Fetchalltour />} />
-          <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
-          <Route
-            path="/fetchmatchbytour/:tournamentId"
-            element={<Fetchmatchbytour />}
-          />
-          <Route path="/testtt" element={<AddMatchPopUpWindow />} />
-          <Route
-            path="/fetchonematch/:tournamentId"
-            element={<Fetchonematch />}
-          />
-
-          <Route path="/" element={<Layout />}>
-            {/* Public Routes  */}
-            <Route index element={<HomeLandingPage />} />
-            <Route path="/lineup" element={<TeamLineUp />} />
-            <Route path="/ChatFront" element={<FrontUserChat />} />
-            {/**YASSINE_ROUTES*/}
-            {/* <Route path="/page" element={<LandingPage />} /> */}
-            <Route path="/manage" element={<TournamentLayout />}>
-              <Route index element={<ManageTournament />} />
-              <Route path="editt/:tournamentId" element={<Edit />} />
-              <Route path="tournament/:tournamentId" element={<Tournament />} />
-              <Route path="addT" element={<AddTour />} />
-              <Route path="format" element={<FormatSelect />}>
-                <Route path="bracket" element={<ManageTournamentFormat />} />
-                <Route path="group" element={<ManageTournamentGroup />} />
-              </Route>
-              <Route path="participant" element={<ManageParticipant />}>
-                <Route path="player" element={<ManagePlayer />} />
-                <Route path="player/consult" element={<ConsultPlayer />} />
-                <Route path="referee" element={<ManageReferees />} />
-                <Route path="referee/consult" element={<ConsultReferee />} />
-              </Route>
             </Route>
 
             {/**YASSINE_ROUTES*/}

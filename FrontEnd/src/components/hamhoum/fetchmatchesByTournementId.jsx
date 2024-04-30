@@ -10,8 +10,9 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
+import { Button } from "@material-tailwind/react";
 
 export const fetchtour = () => {
     const { tournamentId } = useParams();
@@ -114,7 +115,7 @@ if (TournementId.length ==0) {
           <div className="container">
             <div className="flex items-center">
               <div className="site-logo">
-                <AddMatchPopUpWindow></AddMatchPopUpWindow>
+                
               </div>
               <div className="ml-auto">
                 <a
@@ -127,12 +128,17 @@ if (TournementId.length ==0) {
             </div>
           </div>
         </header>
-
+       
         <div className="site-section bg-dark">
+        <AddMatchPopUpWindow></AddMatchPopUpWindow>
           <div className="container">
+          
             <div className="row">
+            
               <div className="col-12 title-section">
+                
                 <h2 className="heading">Upcoming Match</h2>
+            
               </div>
               {TournementId
                 .slice()
@@ -177,7 +183,7 @@ if (TournementId.length ==0) {
                           <strong className="text-primary">{match.tournamentName}</strong>
                         </p>
                       </div>
-                      <div className="row justify-content-around">
+                      <div className="flex justify-between">
                         <EditPopUpSelectedMatch
                           matchid={match._id}
                           referee={match.referee}
@@ -196,7 +202,8 @@ if (TournementId.length ==0) {
                         />
                         <DeleateMatchPopUp matchid={match._id} />
                         <Link to={`/panel/${match._id}`} tournementId={match.tournementId}>
-                          <Button size='lg' variant="outline-info">Referee</Button>
+                          <Button size='lg' variant="outline-info" className='bg-yellow-300 text-black
+                          '>Referee</Button>
                         </Link>
                       </div>
                     </div>

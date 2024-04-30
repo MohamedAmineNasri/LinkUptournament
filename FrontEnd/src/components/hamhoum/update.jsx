@@ -1,5 +1,5 @@
 import { useState ,useEffect} from "react";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,15 @@ import { useParams } from 'react-router-dom';
 import { editMatch ,fetchAllTour} from "../../redux/slice/matchSlice";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 import axios from 'axios';
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  IconButton,
+  Typography,
+  Input,
+} from "@material-tailwind/react";
 
 import MatchByID from "./getAllTournement";
 import Panel from "./panel"
@@ -15,7 +24,7 @@ import Panel from "./panel"
 
 export const EditPopUpSelectedMatch = (props) => {
   // pop up logic --------------
-  
+  const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
   const { tournamentId } = useParams();
   const handleClose = () => setShow(false);
@@ -49,6 +58,9 @@ export const EditPopUpSelectedMatch = (props) => {
   // Initialize flag to track changes
   const [isChanged, setIsChanged] = useState(false);
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
   // Update edited values only if the input fields are changed
   const dispatch = useDispatch();
   const handleMatchtype = (e) => {
@@ -202,16 +214,33 @@ export const EditPopUpSelectedMatch = (props) => {
 
   return (
     <>
-      <Button  variant="success" onClick={handleShow}>
-        Edit Team
-      </Button>
+      <button
+      size='lg'
+        data-modal-target="crud-modal"
+        data-modal-toggle="crud-modal"
+        className="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 "
+        type="button"
+        onClick={toggleModal}
+      >
+        Edit Match
+      </button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header style={{ backgroundColor: "#222831" }} closeButton>
-
-          <Modal.Title>Edit Match</Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "#222831" }}>
+      {showModal && (
+        <div
+          id="crud-modal"
+          tabIndex="-1"
+          aria-hidden="true"
+          className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-red bg-opacity-1 overflow-y-auto"
+        >
+          <div className="relative p-4 w-full max-w-md max-h-full">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Create New Match
+                </h3>
+                
+              </div>
+              <form className="p-4 md:p-5">
           
           <Form style={{ color: "black" }}>
           <Form.Group className="mb-3" controlId="locationInput">
@@ -221,10 +250,11 @@ export const EditPopUpSelectedMatch = (props) => {
             <Form.Label style={{ color: "white" }}>match statu : {Matchstatus||props.matchstatus}</Form.Label>
 <br/>
 
-                <Form.Select size="lg"
+                <Form.Select size="sm"
                 onChange={(e) => handleMatchstatus(e)}>
-      <option>Open this select menu</option>
+      <option>select Match Status</option>
       <option value="On HOld">On HOld</option>
+      <option value="Started">Started</option>
       <option value="Finished">Finished</option>
       <option value="Half Time">Half Time</option>
       <option value="Starting Soon">Starting Soon</option>
@@ -258,9 +288,9 @@ export const EditPopUpSelectedMatch = (props) => {
                 onChange={(e) => handleMatchtype(e)}
               />
                
-              <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label>
-<br/>
-               <Form.Select size="lg"
+              {/* <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label> */}
+{/* <br/> */}
+               {/* <Form.Select size="lg"
                 onChange={(e) => handleWeatherconditionChange(e)}>
       <option> {props.weathercondition||"null"}</option>
       <option value="sunny">sunny</option>
@@ -269,7 +299,7 @@ export const EditPopUpSelectedMatch = (props) => {
       <option value="stormy">stormy</option>
       <option value="cloudy">cloudy</option>
      
-    </Form.Select>
+    </Form.Select> */}
             </Form.Group>
           
             <Form.Group className="mb-3" controlId="locationInput">
@@ -313,35 +343,51 @@ export const EditPopUpSelectedMatch = (props) => {
            
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label style={{ color: "white" }}>match location :</Form.Label>
-              <Form.Control
-                type="select"
-                placeholder="match location"
-                autoFocus
-                value={Location||props.location}
-                onChange={(e) => handleLocationChange(e)}
-              />
+              <select onChange={(e) => setLocation(e.target.value)} className="border text-black">
+            <option>Select City</option>
+            <option value="2464470">Tunis</option>
+            <option value="2467454">Sfax</option>
+            <option value="2464915">Sousse</option>
+            <option value="2468369">Gabès</option>
+            <option value="2465624">Kairouan</option>
+            <option value="2473305">Bizerte</option>
+            <option value="2467813">Gafsa</option>
+            <option value="2504205">Ariana</option>
+            <option value="2473448">Kasserine</option>
+            <option value="2464008">Monastir</option>
+            <option value="2471046">Ben Arous</option>
+            <option value="2467580">La Marsa</option>
+            <option value="2465440">Tataouine</option>
+            <option value="2469566">Nabeul</option>
+            <option value="2470233">Hammamet</option>
+            <option value="2468843">Mahdia</option>
+            <option value="2472771">Beja</option>
+            <option value="2467815">Jendouba</option>
+            <option value="2462881">Sidi Bouzid</option>
+            <option value="2468560">Medenine</option>
+            <option value="2469254">El Kef</option>
+            <option value="2465196">Zaghouan</option>
+            <option value="2462962">Siliana</option>
+            <option value="2464475">Tozeur</option>
+          </select>
+             
             </Form.Group>
            
-             {/* <Form.Group> <select  onChange={(e) => setTournementId(e.target.value)}>
-           
-        {tournementId.map(tournament => (
-          <option  value={tournament._id}>
-            {tournament.name}
-          </option>
-        ))}
-      </select></Form.Group>
-             */}
           </Form>
-        </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "#222831" }}>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          <div className="flex justify-between">
+  <Button variant="secondary" onClick={toggleModal} className="bg-red-500 text-white">
+    Close
+  </Button>
+  <Button variant="primary" onClick={handleSaveChanges} className="bg-green-500 text-white">
+    Save Changes
+  </Button>
+</div>
+    
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

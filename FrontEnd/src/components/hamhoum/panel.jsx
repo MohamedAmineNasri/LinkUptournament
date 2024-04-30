@@ -15,6 +15,7 @@ import { editMatch } from "../../redux/slice/matchSlice";
 import { useDispatch } from "react-redux";
 import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 import Swal from "sweetalert2";
+import Timer from "./timer"
 
 export const fetchtour = (props) => {
   const { match } = useParams();
@@ -31,13 +32,16 @@ export const fetchtour = (props) => {
   const[T1playername,sett1name]=useState([]);
   const[T1playerid,sett1id]=useState([]);
   const[W,setw]=useState();
-  
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const[matchTime,setmatchTime]= useState(0)
 
   
   
   const handleShow = () => MatchCard
   const dispatch = useDispatch();
   const handleSaveChanges = () => {
+    localStorage.setItem('Timer', timeLeft);
     
       dispatch(
         editMatch({
@@ -45,11 +49,12 @@ export const fetchtour = (props) => {
           matchid: match,
           goal1: T1,
           goal2: T2,
+          matchTime:matchTime
           
           
         })
       );
-    
+      
     // window.location.reload();
    
        
@@ -65,8 +70,9 @@ export const fetchtour = (props) => {
       confirmButtonText: "Yes, end it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        setmatchstatus("test")
+       
         // If user clicks "Yes", execute the winer function
+        localStorage.removeItem("Timer")
         winer();
         setmatchstatus("Finished")
       }
@@ -82,6 +88,7 @@ export const fetchtour = (props) => {
       matchid: match,
       matchstatus:"Finished",
       w:W,
+      matchTime:matchTime
     }, )
   );
   ;
@@ -89,6 +96,15 @@ export const fetchtour = (props) => {
 
 }
   useEffect(() => {
+    setTimeLeft(Number(localStorage.getItem("Timer")))
+    setTimerRunning(true)
+    setmatchTime(Math.floor(timeLeft/60))
+    console.log(Math.floor(timeLeft/60))
+
+    
+
+
+
     const fetchTournaments = async () => {
       try {
         
@@ -188,16 +204,81 @@ export const fetchtour = (props) => {
     
     fetchTournaments();
     fetchMatchesWithTeamDetails()
+    let intervalId;
+
+    if (timerRunning) {
+      intervalId = setInterval(() => {
+        setTimeLeft(prevTimeLeft => { 
+          if (prevTimeLeft < 2700) { // 45 minutes = 2700 seconds
+            return prevTimeLeft + 1 
+          } else if (prevTimeLeft < 5400) { // 90 minutes = 5400 seconds
+            // Stop timer at 45 minutes
+            if (prevTimeLeft === 2700) {
+              stopTimer();
+            }
+            return prevTimeLeft + 1;
+          } else {
+            // Stop timer at 90 minutes
+            stopTimer();
+            return prevTimeLeft;
+          }
+        });
+      }, 1000);
+    } else {
+      clearInterval(intervalId);
+    }
+
+    return () => clearInterval(intervalId);
     
  
 
-  }, [match]);
+  }, [timerRunning,Matchstatus]);
+  const startTimer = async () => {
+    if (!timerRunning) {
+      setTimeLeft(Number(localStorage.getItem("Timer")))
+      
+      try {
+        await axios.put(`http://localhost:8000/match/${match}`, { matchstatus: 'Started' });
+      } catch (error) {
+        console.error('Error updating match status:', error);
+      }
+     
+ 
+      setTimerRunning(true);
+      
+    }
+    if (timerRunning  == 10) {
+      setTimerRunning(false);
+    }
 
+  };
+
+  const stopTimer = async() => {
+    if (timerRunning) {
+      try {
+        await axios.put(`http://localhost:8000/match/${match}`, { matchstatus: 'On Hold' });
+      } catch (error) {
+        console.error('Error updating match status:', error);
+      }
+      setTimerRunning(false);
+    }
+  };
+
+
+
+  const formatTime = (time) => {
+   
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  };
 
   return (
     <>
     <DefaultLayout>
-    
+     
+      
    
     <div className="site-section bg-dark">
   <Link to={`/fetchmatchbytour/${TournementId.tournementId}`}>
@@ -221,8 +302,10 @@ export const fetchtour = (props) => {
                 </div>
                 <div className="flex items-center justify-around">
                   <span className="vs">
+                    {/* <Timer/> */}
                     {T1.length}<span>VS</span> {T2.length}
                   </span>
+                  
                 </div>
                 <div className="team-2 text-center">
                   <img src={Team2logo} alt="Image" />
@@ -231,8 +314,15 @@ export const fetchtour = (props) => {
               </div>
             </div>
           </div>
+          
           <div className="text-center widget-vs-contents mb-4">
-            <h4>{TournementId.matchstatus}</h4>
+          <h4>{TournementId.matchstatus}</h4>
+          <div><h1 className='text-black-200'> {formatTime(timeLeft)}</h1>
+                  <button disabled={Matchstatus === "Finished"} onClick={startTimer} className='text-red-200'>Start</button>
+                  <button disabled={Matchstatus === "Finished"} onClick={stopTimer} className='text-black-200'>Pause</button>
+                 
+                                                                                             </div>
+            
             <p className="mb-5">
               <span className="block">{TournementId.date}</span>
               <span className="block">{TournementId.startingtime}</span>

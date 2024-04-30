@@ -19,6 +19,7 @@
     "@headlessui/react": "^1.7.19",
     "@lordicon/element": "^1.6.0",
     "@lordicon/react": "^1.6.0",
+    "@material-tailwind/react": "^2.1.9",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
     "@mui/x-charts": "^7.1.0",

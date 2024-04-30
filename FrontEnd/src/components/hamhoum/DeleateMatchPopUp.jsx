@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
+import { Button } from "@material-tailwind/react";
+// import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { deleteMatch } from "../../redux/slice/matchSlice";
@@ -20,7 +21,7 @@ export const DeleteMatchPopUp = (props) => {
 
   return (
     <>
-      <Button variant="danger" onClick={handleShow}>
+      <Button variant="danger" size='lg' onClick={handleShow} className="bg-red-500 text-white">
         Delete
       </Button>
 

@@ -99,7 +99,7 @@ export const fetchtour = () => {
     
     fetchTournaments();
     fetchMatchesWithTeamDetails()
-    
+    // 
 
   }, [TournementId.map((match, index) => (match.goal1.length,match.goal2.length))]);
 if (TournementId.length ==0) {

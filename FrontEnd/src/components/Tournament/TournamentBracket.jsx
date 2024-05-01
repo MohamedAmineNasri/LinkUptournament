@@ -10,12 +10,18 @@ const TournamentBracket = ({tournamentId}) => {
   useEffect(() => {
     const fetchTournament = async () => {
       const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
-      setTeamsData(response.data.tournament.teams);
-      console.log(response)
+      // Assuming response.data.tournament.teams contains an array of team IDs
+      const teamIds = response.data.tournament.teams;
+      const teamsDetails = await Promise.all(teamIds.map(async (teamId) => {
+        const teamResponse = await axios.get(`http://localhost:8000/Team/getTeam/${teamId}`);
+        
+        return teamResponse.data; // Assuming your team object has a property "teamName"
+      }));
+      setTeamsData(teamsDetails);
+    console.log("data",teamsDetails)
     };
 
     fetchTournament();
-
   }, [tournamentId]);
 
   
@@ -36,13 +42,14 @@ const TournamentBracket = ({tournamentId}) => {
     return (
       <ul className="matchup" key={index}>
         <li className="team team-top">
-          {leftTeams[index]}
+          {team.TeamName} {/* Render the team name */}
           <span className="score">&nbsp;
-            <div className="score-text">{leftTeams[index].score}</div>&nbsp;
+            <div className="score-text">95</div>&nbsp;
           </span>
         </li>
         <li className="team team-bottom">
-          {leftTeams[index + 1]}
+          {/* Render the team name of the next team */}
+          {leftTeams[index + 1].TeamName}
           <span className="score"> &nbsp;
             <div className="score-text">{leftTeams[index + 1].score}</div> &nbsp;
           </span>

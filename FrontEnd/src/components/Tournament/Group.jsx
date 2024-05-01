@@ -18,7 +18,7 @@ export const Group = ({ groupId }) => {
   }, [groupId]); // Add groupId to the dependency array
 
   if (!group) {
-    return <div>Loading...</div>;
+    return (<di></di>);
   }
  
 

@@ -35,7 +35,8 @@ export const fetchtour = (props) => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const[matchTime,setmatchTime]= useState(0)
-
+const[team1goaltime,setteam1goaltime]=useState([])
+const[team2goaltime,setteam2goaltime]=useState([])
   
   
   const handleShow = () => MatchCard
@@ -45,7 +46,8 @@ export const fetchtour = (props) => {
     
       dispatch(
         editMatch({
-          
+          team1goaltime:team1goaltime,
+          team2goaltime:team2goaltime,
           matchid: match,
           goal1: T1,
           goal2: T2,
@@ -73,6 +75,7 @@ export const fetchtour = (props) => {
        
         // If user clicks "Yes", execute the winer function
         localStorage.removeItem("Timer")
+        
         setTimerRunning(false)
         winer();
         setmatchstatus("Finished")
@@ -257,14 +260,16 @@ export const fetchtour = (props) => {
   };
 const cancelgoal1 = async ()=>{ try{
   setT1(prevT1 => prevT1.slice(0, -1))
-  await axios.put(`http://localhost:8000/match/${match}`, { goal1: T1 }
+  setteam1goaltime(prevT1 => prevT1.slice(0, -1))
+  await axios.put(`http://localhost:8000/match/${match}`, { goal1: T1,team1goaltime:team1goaltime }
 )} catch (error) {
   console.error('Error updating match status:', error);
 }
 }
 const cancelgoal2 = async ()=>{ try{
   setT2(prevT2 => prevT2.slice(0, -1))
-  await axios.put(`http://localhost:8000/match/${match}`, { goal2: T2 }
+  setteam2goaltime(prevT2 => prevT2.slice(0, -1))
+  await axios.put(`http://localhost:8000/match/${match}`, { goal2: T2 , team2goaltime:team2goaltime }
 )} catch (error) {
   console.error('Error updating match status:', error);
 }
@@ -356,7 +361,10 @@ const cancelgoal2 = async ()=>{ try{
                           <li>{Team1name} Gola</li>
                           <select
                             disabled={Matchstatus === "Finished"}
-                            onChange={(e) => setT1([...T1, e.target.value])}
+                            onChange={(e) => {
+                              setteam1goaltime([...team1goaltime, Math.floor(timeLeft/60)]);
+                              setT1([...T1, e.target.value]);
+                          }}
                             className="bg-black text-white"
                           >
                             <option>select player1</option>
@@ -376,7 +384,10 @@ const cancelgoal2 = async ()=>{ try{
                           <li>{Team2name} Gola</li>
                           <select
                             disabled={Matchstatus === "Finished"}
-                            onChange={(a) => setT2([...T2, a.target.value])}
+                            onChange={(a) => {
+                              setteam2goaltime([...team2goaltime, Math.floor(timeLeft/60)]);
+                              setT2([...T2, a.target.value]);
+                          }}
                             className="bg-black text-white"
                           >
                             <option>select player2</option>

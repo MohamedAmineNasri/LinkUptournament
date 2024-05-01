@@ -12,6 +12,7 @@ import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
 import Header from '../landingpage/Header';
 import Footer from '../landingpage/Footer';
+import './twink.css'
 
 export const fetchtour = () => {
     const { tournamentId } = useParams();
@@ -181,7 +182,7 @@ export const fetchtour = () => {
                     <div className="text-center widget-vs-contents mb-4">
                       <h4>{TournementId.matchstatus}</h4>
                       <p className="mb-5">
-                      <span className="d-block text-yellow-500">{TournementId.matchTime}</span> <br/>
+                      <span className="d-block text-yellow-500 animate-twinkle">"{TournementId.matchTime}</span> <br/>
                         <span className="d-block">{TournementId.date}</span><br/>
                         <span className="d-block">{TournementId.startingtime}</span><br/>
                           <strong className="text-primary">{TournementId.matchtype}</strong>
@@ -208,7 +209,7 @@ export const fetchtour = () => {
             <div className="team-details w-full text-center">
               <ul className="list-unstyled">
                 {T1go.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li key={index}>{TournementId.team1goaltime[index]}" {item} </li>
                 ))}
               </ul>
             </div>
@@ -217,7 +218,7 @@ export const fetchtour = () => {
             <div className="team-details w-full text-center">
               <ul className="list-unstyled">
                 {T2go.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li key={index}>{TournementId.team2goaltime[index]}" {item} </li>
                 ))}
               </ul>
             </div>

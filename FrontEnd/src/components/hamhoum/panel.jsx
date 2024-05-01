@@ -97,7 +97,7 @@ export const fetchtour = (props) => {
 }
   useEffect(() => {
     setTimeLeft(Number(localStorage.getItem("Timer")))
-    setTimerRunning(true)
+     setTimerRunning(true)
     setmatchTime(Math.floor(timeLeft/60))
     console.log(Math.floor(timeLeft/60))
 
@@ -126,7 +126,7 @@ export const fetchtour = (props) => {
       try {
         const matchesResponse = await axios.get('http://localhost:8000/match/'+match);
         console.log(matchesResponse.data.team1 )
-        // setw(matchesResponse.team1)
+        
          if(matchesResponse.data.matchstatus=="Finished"){setmatchstatus("Finished")}
          if(matchesResponse.data.goal1.length>matchesResponse.data.goal2.length){setw(matchesResponse.data.team1)}
      
@@ -207,9 +207,10 @@ export const fetchtour = (props) => {
     let intervalId;
 
     if (timerRunning) {
-      intervalId = setInterval(() => {
+      intervalId = setInterval(async() => {
         setTimeLeft(prevTimeLeft => { 
           if (prevTimeLeft < 2700) { // 45 minutes = 2700 seconds
+             axios.put(`http://localhost:8000/match/${match}`, { matchTime:Math.floor(prevTimeLeft/60) })
             return prevTimeLeft + 1 
           } else if (prevTimeLeft < 5400) { // 90 minutes = 5400 seconds
             // Stop timer at 45 minutes
@@ -233,6 +234,7 @@ export const fetchtour = (props) => {
  
 
   }, [timerRunning,Matchstatus]);
+  
   const startTimer = async () => {
     if (!timerRunning) {
       setTimeLeft(Number(localStorage.getItem("Timer")))
@@ -252,7 +254,20 @@ export const fetchtour = (props) => {
     }
 
   };
-
+const cancelgoal1 = async ()=>{ try{
+  setT1(prevT1 => prevT1.slice(0, -1))
+  await axios.put(`http://localhost:8000/match/${match}`, { goal1: T1 }
+)} catch (error) {
+  console.error('Error updating match status:', error);
+}
+}
+const cancelgoal2 = async ()=>{ try{
+  setT2(prevT2 => prevT2.slice(0, -1))
+  await axios.put(`http://localhost:8000/match/${match}`, { goal2: T2 }
+)} catch (error) {
+  console.error('Error updating match status:', error);
+}
+}
   const stopTimer = async() => {
     if (timerRunning) {
       try {
@@ -349,6 +364,7 @@ export const fetchtour = (props) => {
                               </option>
                             ))}
                           </select>
+                          <button onClick={cancelgoal1}>Cancel goal 1</button>
                         </ul>
                       </div>
                     </div>
@@ -368,6 +384,7 @@ export const fetchtour = (props) => {
                               </option>
                             ))}
                           </select>
+                          <button onClick={cancelgoal2}>Cancel goal 2</button>
                         </ul>
                       </div>
                     </div>

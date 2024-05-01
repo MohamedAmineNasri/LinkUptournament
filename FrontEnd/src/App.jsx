@@ -232,7 +232,7 @@ function App() {
           </Route>
         </Route>
   
-        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */} 
   
         {/* </Route> */}
       </Routes>

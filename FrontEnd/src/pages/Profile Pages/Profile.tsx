@@ -12,6 +12,10 @@
         const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
         console.log('user'+ user)
         console.log('role'+ userRole)
+
+        const handleClick = () => {
+            localStorage.setItem('facebook', 'test facebook');
+          };
     return (
         <DefaultLayout>
         <Breadcrumb pageName="Profile" />
@@ -19,9 +23,10 @@
         <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="relative z-20 h-35 md:h-65">
             <img
-                src={CoverOne}
+                // src={CoverOne}
+                src="https://c4.wallpaperflare.com/wallpaper/497/938/519/grass-football-field-green-lawn-wallpaper-preview.jpg"
                 alt="profile cover"
-                className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
+                className="h-full w-full rounded-tl-sm rounded-tr-sm  object-center"
             />
             <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
                 <label
@@ -134,10 +139,11 @@
                     Follow me on
                 </h4>
                 <div className="flex items-center justify-center gap-3.5">
-                    <Link
+                <Link
                     to="#"
                     className="hover:text-primary"
                     aria-label="social-icon"
+                    onClick={handleClick}
                     >
                     <svg
                         className="fill-current"

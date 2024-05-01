@@ -118,27 +118,35 @@ export const Tournament = () => {
         {/* Hero Image */}
         <div>
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark mb-4">
-          <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
-            <button
-              className={`text-lg font-semibold ${displayComponent === 'groups' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
-              onClick={() => handleClick("groups")}
-            >
-              Groups
-            </button>
-            <button
-              className={`text-lg font-semibold ${displayComponent === 'bracket' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
-              onClick={() => handleClick("bracket")}
-            >
-              Bracket
-            </button>
-            <button
-              className={`text-lg font-semibold ${displayComponent === 'bracket' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
-              onClick={() => handleClick("bracket")}
-            >
-              Matches
-            </button>
-          </div>
-        </div>
+  <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
+    {tournament.type !== 'Knockout' && (
+      
+      <button
+        className={`text-lg font-semibold ${displayComponent === 'groups' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
+        onClick={() => handleClick("groups")}
+      >
+        Groups
+      </button>
+    )}
+    {(tournament.type === 'Knockout' || tournament.type === 'Group stage and Knockout') && (
+      <button
+        className={`text-lg font-semibold ${displayComponent === 'bracket' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
+        onClick={() => handleClick("bracket")}
+      >
+        Bracket
+      </button>
+    )}
+    
+      <button
+        className={`text-lg font-semibold ${displayComponent === 'matches' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
+        onClick={() => handleClick("matches")}
+      >
+        Matches
+      </button>
+  
+  </div>
+</div>
+
     </div>
         {/* Render Group components */}
         {displayComponent === 'groups' && (
@@ -149,7 +157,7 @@ export const Tournament = () => {
           </div>
         )}
         {/* Only render TournamentBracket if tournament type is 'knockout' */}
-        {displayComponent === 'bracket' && tournament.type === 'Knockout' && (
+        {displayComponent === 'bracket' && (tournament.type === 'Knockout' || tournament.type === 'Group stage and Knockout') && (
           <TournamentBracket tournamentId={tournament._id}></TournamentBracket>
         )}
         

@@ -34,6 +34,7 @@ function Payment() {
           <CheckoutForm />
         </Elements>
       )}
+      
     </>
   );
 }

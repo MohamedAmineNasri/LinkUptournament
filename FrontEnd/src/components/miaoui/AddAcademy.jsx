@@ -7,6 +7,7 @@ import addformstadiumImage from "../../assets/Mi-imgs/2.jpg";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import HeaderNavBar from "./HeaderNavBar";
+import DefaultLayout from "../../Dashboard/src/layout/DefaultLayout";
 
 export const AddAcademy = () => {
   const dispatch = useDispatch();
@@ -204,80 +205,86 @@ export const AddAcademy = () => {
     }
   };
   return (
-    <div>
-      <HeaderNavBar></HeaderNavBar>
-      {/* Hero image ------------------------- */}
-      <div
-        className="hero overlay2 HeroImageAddAcademy"
-        style={{ backgroundImage: `url(${addformstadiumImage})` }}
-      >
-        {/* sucess msg when academy created "condional or Failure in iput" */}
-        <div>
-          {(submitSuccess && (
+    <DefaultLayout>
+      <div>
+        {(submitSuccess && (
+          <Alert className="alertModified" variant="success">
+            Academy added successfully!
+          </Alert>
+        )) ||
+          (submitFailure && (
             <Alert className="alertModified" variant="success">
-              Academy added successfully!
+              You Must Enter Valid Data!
             </Alert>
-          )) ||
-            (submitFailure && (
-              <Alert className="alertModified" variant="success">
-                You Must Enter Valid Data!
-              </Alert>
-            ))}
-        </div>
+          ))}
+      </div>
+      <div className="p-12">
+        {/* <HeaderNavBar></HeaderNavBar> */}
+        {/* Hero image ------------------------- */}
+        <div>
+          {/* sucess msg when academy created "condional or Failure in iput" */}
 
-        <div className="col-lg-12">
-          <h1 className="col-md-12 pb-5 pt-5 TitleAddAcademy">
-            Add You re Academy
-          </h1>
-        </div>
-        {/* form inside the hero image ------------------------  */}
-        {/* container --------> container-fluid  */}
-        <div className=" container-fluid col-lg-9 pt-5">
-          <div className="addAcademyFormBorder">
-            <div className="col-lg-12">
-              <form action="#">
-                <div>
-                  {/* name ----------------------------------------- */}
-                  <div className="col-md-12 form-group pb-2 pt-3 ">
-                    <label htmlFor="Aname">Academy Name</label>
-                    <input
-                      className="form-control custom-placeholder academyCreateInput"
-                      type="text"
-                      id="Aname"
-                      placeholder="Enter the name of the academy"
-                      value={Name}
-                      onChange={(e) => handleName(e)}
-                      style={{
-                        borderColor: namefieldColor,
-                      }}
-                    />
-                    {nameError && (
-                      <strong className="text-danger">{nameError}</strong>
-                    )}
+          <form onSubmit={handleSaveChanges}>
+            <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+              <div className="flex flex-col gap-9">
+                {/* academy Name */}
+                <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-white">
+                      Add Academy
+                    </h3>
                   </div>
-                  {/* location---------------------------------------------- */}
-                  <div className="col-md-12 form-group pb-2">
-                    <label htmlFor="location">Academy Location</label>
-                    <input
-                      className="form-control custom-placeholder academyCreateInput"
-                      type="text"
-                      id="location"
-                      placeholder="Enter the Location of the academy"
-                      value={Location}
-                      onChange={(e) => handleLocation(e)}
-                      style={{
-                        borderColor: locationfieldColor,
-                      }}
-                    />
-                    {locationError && (
-                      <strong className="text-danger">{locationError}</strong>
-                    )}
+                  <div className="flex flex-col gap-5.5 p-6.5">
+                    <div>
+                      <label className="mb-3 block text-black dark:text-white">
+                        Academy Name
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Add Achievement Name"
+                        value={Name}
+                        onChange={(e) => handleName(e)}
+                        style={{
+                          borderColor: namefieldColor,
+                        }}
+                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-white outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                          nameError ? "border-red-500" : ""
+                        }`}
+                      />
+                      {nameError && <p className="text-red-500">{nameError}</p>}
+                    </div>
                   </div>
-                  {/* date-------------------------------------------------- */}
-                  <div className="col-md-12 form-group pb-2">
-                    <label htmlFor="foundedDate">Founded Date</label>
+
+                  {/* location */}
+                  <div className="flex flex-col gap-5.5 p-6.5">
+                    <div>
+                      <label className="mb-3 block text-black dark:text-white">
+                        Academy Location
+                      </label>
+                      <input
+                        type="text"
+                        id="location"
+                        placeholder="Enter the Location of the academy"
+                        value={Location}
+                        onChange={(e) => handleLocation(e)}
+                        style={{
+                          borderColor: locationfieldColor,
+                        }}
+                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-white outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                          locationError ? "border-red-500" : ""
+                        }`}
+                      />
+                      {locationError && (
+                        <p className="text-red-500">{locationError}</p>
+                      )}
+                    </div>
+                  </div>
+                  {/* date */}
+                  <div className="flex flex-col gap-5.5 p-6.5">
+                    <label className="mb-3 block text-black dark:text-white">
+                      Date
+                    </label>
                     <input
-                      className="form-control custom-placeholder academyCreateInput"
                       type="date"
                       id="foundedDate"
                       value={FoundedYear}
@@ -285,19 +292,26 @@ export const AddAcademy = () => {
                       style={{
                         borderColor: datefieldColor,
                       }}
+                      className={`w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+                        foundedDateError ? "border-red-500" : ""
+                      }`}
                     />
                     {foundedDateError && (
-                      <strong className="text-danger">
-                        {foundedDateError}
-                      </strong>
+                      <p className="text-red-500">{foundedDateError}</p>
                     )}
                   </div>
-                  {/* logo ---------------------------------------- */}
-                  <div className="row" style={{ margin: "0px" }}>
-                    <div className="col-md-11 form-group pb-2">
-                      <label htmlFor="logoInput">Upload Logo</label>
+                </div>
+              </div>
+              {/* Right column */}
+              <div className="flex flex-col gap-9">
+                <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  {/* Icon */}
+                  <div className="flex flex-row p-6.5">
+                    <div className="col-lg-10">
+                      <label className="mb-3 block text-black dark:text-white">
+                        Attach Logo
+                      </label>
                       <input
-                        className="form-control custom-placeholder academyCreateInput"
                         name="myLogo"
                         type="file"
                         id="logoInput"
@@ -309,23 +323,25 @@ export const AddAcademy = () => {
                         style={{
                           borderColor: logofieldColor,
                         }}
+                        className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:border-0 file:border-r file:border-solid file:border-stroke file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                       />
                       {logoError && (
                         <strong className="text-danger">{logoError}</strong>
                       )}
                     </div>
-                    <div className="col-md-1 align-self-center">
+                    <div className="col-md-1 align-self-end">
                       <img src={Logo.myLogo} style={{ maxWidth: "60px" }} />
                     </div>
                   </div>
-                  {/* L documents --------------------------------------*/}
-                  <div className="row" style={{ margin: "0px" }}>
-                    <div className="col-md-11 form-group pb-2">
-                      <label htmlFor="fileInput">
+
+                  {/* Upload Legitimacy Documents */}
+                  <div className="flex flex-row p-6.5">
+                    <div className="col-lg-10">
+                      <label className="mb-3 block text-black dark:text-white">
                         Upload Legitimacy Documents
                       </label>
                       <input
-                        className="form-control custom-placeholder academyCreateInput "
+                        name="docs"
                         type="file"
                         id="fileInput"
                         accept=".pdf,.doc,.docx"
@@ -334,14 +350,19 @@ export const AddAcademy = () => {
                           handleDocs(e);
                         }}
                         style={{ borderColor: docsfieldColor }}
+                        className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:border-0 file:border-r file:border-solid file:border-stroke file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                       />
                       {docsError && (
                         <strong className="text-danger">{docsError}</strong>
                       )}
                     </div>
+
                     <div className="col-md-1 align-self-center">
                       <Button
-                        style={{ backgroundColor: "#8bc34a" }}
+                        style={{
+                          backgroundColor: "#8bc34a",
+                          marginTop: "12px",
+                        }}
                         variant="success"
                         size="lg"
                         onClick={handleShow}
@@ -363,24 +384,23 @@ export const AddAcademy = () => {
                       </Modal>
                     </div>
                   </div>
-
-                  {/* submit ------------------------------------------- */}
-                  <div className="col-md-12 form-group ">
-                    <input
-                      type="submit"
-                      className="btn btn-success py-3 px-5 btn-block"
-                      value="add academy "
-                      onClick={handleSaveChanges}
-                      style={{ backgroundColor: "#8bc34a" }}
-                    />
-                  </div>
                 </div>
-              </form>
+
+                {/* Submit Button */}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="mt-2 inline-flex items-center justify-center rounded-lg bg-primary py-4 px-6 text-white transition duration-300 ease-in-out hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  Add Achievement
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </div>
+    </DefaultLayout>
   );
 };
 

@@ -16,9 +16,7 @@ const FeaturesBlocks = () => {
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="h2 mb-4 text-black-2">Explore the solutions</h2>
             <p className="text-xl text-gray-600">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur excepteur sint occaecat
-              cupidatat.
+              Discover the solutions provided by LinkUpTournament and transform your football tournament management. Take charge of your game with streamlined planning, real-time tracking, and seamless coordination. Join us today and elevate your football experience!
             </p>
           </div>
 
@@ -60,11 +58,11 @@ const FeaturesBlocks = () => {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                Headless CMS
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black dark:text-white">
+              Tournament Planning:
               </h4>
               <p className="text-gray-600 text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Easily plan and organize football tournaments with a user-friendly interface.
               </p>
             </div>
 
@@ -101,11 +99,11 @@ const FeaturesBlocks = () => {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                Headless CMS
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black dark:text-white">
+              Team Registration:
               </h4>
               <p className="text-gray-600 text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Streamlined team registration process for participating academies.
               </p>
             </div>
 
@@ -145,11 +143,11 @@ const FeaturesBlocks = () => {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                Headless CMS
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black dark:text-white">
+              Player Management:
               </h4>
               <p className="text-gray-600 text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Efficiently manage player information, ensuring accurate and up-to-date data.
               </p>
             </div>
 
@@ -188,11 +186,11 @@ const FeaturesBlocks = () => {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                Headless CMS
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black dark:text-white">
+                Match Coordination:
               </h4>
               <p className="text-gray-600 text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Seamlessly coordinate and schedule matches with automated notifications.
               </p>
             </div>
 
@@ -226,11 +224,11 @@ const FeaturesBlocks = () => {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                Headless CMS
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black dark:text-white">
+              Result Tracking:
               </h4>
               <p className="text-gray-600 text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Real-time result tracking and reporting for all tournament matches.
               </p>
             </div>
 
@@ -260,11 +258,11 @@ const FeaturesBlocks = () => {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                Headless CMS
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black dark:text-white">
+                Live Commentary 
               </h4>
               <p className="text-gray-600 text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Real-time match analysis enhances your tournament experience.
               </p>
             </div>
           </div>

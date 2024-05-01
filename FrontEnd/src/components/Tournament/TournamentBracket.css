@@ -27,7 +27,7 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  width: 42%;
+  width: 95%;
   -webkit-flex-direction: row;
   -moz-flex-direction: row;
   flex-direction: row;
@@ -110,7 +110,7 @@
 .round li {
   background-color: #fff;
   box-shadow: none;
-  opacity: 0.45;
+  opacity: 0.80;
 }
 .current li {
   opacity: 1;
@@ -203,7 +203,7 @@
     width: 14%;
   }
   .split {
-    width: 43%;
+    width: 95%;
   }
   .split-one .vote-box {
     margin-left: 138px;

@@ -3,9 +3,11 @@ const cors = require("cors");
 const { resolve } = require("path");
 const env = require("dotenv").config({ path: "./.env" });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2022-08-01",
-  });
+  apiVersion: "2022-08-01",
+});
 //-
+
+
 
 var AcademyRouter = require("./Routes/Academy");
 var TeamRouter = require("./Routes/Team");
@@ -14,10 +16,10 @@ const staduimRoutes = require("./Routes/Staduim");
 const tournamentRoutes = require("./Routes/Tournament");
 const match = require("./Routes/match");
 
-const m = require("./Models/match")
+var AchievementRouter = require('./Routes/Achievement');
+var TachievementRouter = require('./Routes/tachievement');
 
-
-
+const m = require("./Models/match");
 
 const app = express();
 
@@ -31,7 +33,7 @@ const webrtc = require("wrtc");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
-const GridFSBucket = require("mongodb").GridFSBucket
+const GridFSBucket = require("mongodb").GridFSBucket;
 const MongoClient = require("mongodb").MongoClient;
 
 //YASSINE
@@ -46,7 +48,6 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     //If it is an image, save to photos bucket
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-      console.log(file);
       return {
         bucketName: "photos",
         filename: `${Date.now()}_${file.originalname}`,
@@ -70,8 +71,7 @@ const upload = multer({ storage });
 // app.use(cors());
 // app.use(express.json());
 
-const cookieParser = require('cookie-parser')
-
+const cookieParser = require("cookie-parser");
 
 // i added the {limit: '50mb'} so i can upolad files larger than 100kb
 app.use(express.json({ limit: "50mb" }));
@@ -122,6 +122,7 @@ require("./Models/Chatroom");
 
 // Users Route :
 app.use("/user", require("./Routes/user"));
+app.use("/news", require("./Routes/News"));
 app.use("/chatroom", require("./Routes/chatroom"));
 
 //YASSINE
@@ -133,7 +134,7 @@ app.post("/upload/image", upload.single("avatar"), (req, res) => {
     id: file.id,
     name: file.filename,
     contentType: file.contentType,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${file.filename}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/download/${file.filename}`,
   });
 });
 
@@ -157,16 +158,51 @@ app.get("/images", async (req, res) => {
       allImages.push(item);
     });
 
-
     res.send({ files: allImages });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       message: "Error Something went wrong",
       error,
-     });
-    }
     });
+  }
+});
+
+app.get("/download/:filename", async (req, res) => {
+  try {
+    await mongoClient.connect();
+
+    const database = mongoClient.db("LinkUptournament");
+
+    const imageBucket = new GridFSBucket(database, {
+      bucketName: "photos",
+    });
+
+    let downloadStream = imageBucket.openDownloadStreamByName(
+      req.params.filename
+    );
+
+    downloadStream.on("data", function (data) {
+      return res.status(200).write(data);
+    });
+
+    downloadStream.on("error", function (data) {
+      return res.status(404).send({ error: "Image not found" });
+    });
+
+    downloadStream.on("end", () => {
+      return res.end();
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error Something went wrong",
+      error,
+    });
+  }
+});
+//YASSINE
+
 //stripe
 app.use(express.static(process.env.STATIC_DIR));
 
@@ -184,12 +220,12 @@ app.get("/config", (req, res) => {
 app.post("/create-payment-intent/:id", async (req, res) => {
   try {
     const matchet = await m.findById(req.params.id);
-    
+
     // Check if ticket number is greater than 0
     if (matchet.ticketNumber <= 0) {
       throw new Error("No more tickets available");
     }
-    
+
     // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "EUR",
@@ -205,7 +241,7 @@ app.post("/create-payment-intent/:id", async (req, res) => {
     // Send publishable key, PaymentIntent details, and updated match details to client
     res.send({
       clientSecret: paymentIntent.client_secret,
-      match: matchet
+      match: matchet,
     });
   } catch (e) {
     return res.status(400).send({
@@ -219,17 +255,15 @@ app.post("/create-payment-intent/:id", async (req, res) => {
 
 
 // WebRTC endpoints
-app.post("/consumer", async (req, res) => {
-    const peer = new webrtc.RTCPeerConnection({
-        iceServers: [
-            {
-                urls: "stun:stun.stunprotocol.org"
-            }
-        ]
-
-    });
-  }
-);
+// app.post("/consumer", async (req, res) => {
+//   const peer = new webrtc.RTCPeerConnection({
+//     iceServers: [
+//       {
+//         urls: "stun:stun.stunprotocol.org",
+//       },
+//     ],
+//   });
+// });
 
 //YASSINE
 app.use("/player", playerRouter);
@@ -241,39 +275,39 @@ app.use("/tournament", tournamentRoutes);
 app.use("/team", TeamRouter);
 app.use("/match", match);
 app.use("/academy", AcademyRouter);
+app.use('/achievement', AchievementRouter);
+app.use('/tachievement', TachievementRouter);
 
 app.use("/uploads", express.static("uploads"));
 
 // WebRTC endpoints
 app.post("/consumer", async (req, res) => {
   const peer = new webrtc.RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.stunprotocol.org",
-      },
-    ],
+      iceServers: [
+          {
+              urls: "stun:stun.stunprotocol.org"
+          }
+      ]
   });
   const desc = new webrtc.RTCSessionDescription(req.body.sdp);
   await peer.setRemoteDescription(desc);
-  senderStream
-    .getTracks()
-    .forEach((track) => peer.addTrack(track, senderStream));
+  senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
   const payload = {
-    sdp: peer.localDescription,
-  };
+      sdp: peer.localDescription
+  } 
 
   res.json(payload);
 });
 
-app.post("/broadcast", async (req, res) => {
+app.post('/broadcast', async (req, res) => { 
   const peer = new webrtc.RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.stunprotocol.org",
-      },
-    ],
+      iceServers: [
+          {
+              urls: "stun:stun.stunprotocol.org"
+          }
+      ]
   });
   peer.ontrack = (e) => handleTrackEvent(e, peer);
   const desc = new webrtc.RTCSessionDescription(req.body.sdp);
@@ -281,14 +315,16 @@ app.post("/broadcast", async (req, res) => {
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
   const payload = {
-    sdp: peer.localDescription,
-  };
+      sdp: peer.localDescription
+  }
 
   res.json(payload);
 });
 
+
 function handleTrackEvent(e, peer) {
   senderStream = e.streams[0];
 }
+
 
 module.exports = app;

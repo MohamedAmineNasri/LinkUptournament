@@ -19,8 +19,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { getPlayersPosition } from "../../redux/playerReducers/searchPlayerSlice";
 import axios from "axios";
+import ImagePlaceholder from "/public/images/image-placeholder.jpg";
 
 const ManagePlayer = () => {
+  const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
+  const [img, setImg] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setImg(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const players = useSelector((state) => state.root.fetchPlayers.players);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,6 +50,7 @@ const ManagePlayer = () => {
     age: undefined,
     current_team: "",
     number: undefined,
+    avatar: "",
   });
   const [skillsSize, setSkillsSize] = useState(1);
   const [create, setCreate] = useState(true);
@@ -68,15 +85,56 @@ const ManagePlayer = () => {
     }));
   };
 
+  //save avatar
+  const handleUpload = async (uploadedPhoto) => {
+    try {
+      const imageData = new FormData();
+      imageData.append("avatar", uploadedPhoto);
+
+      const response = await axios.post(
+        "http://localhost:8000/upload/image",
+        imageData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (create) {
+        dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
+      } else {
+        dispatch(
+          updatePlayer(playerId, {
+            ...formData,
+            avatar: response.data.imageUrl,
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
     if (create) {
-      dispatch(addPlayer(formData));
-      toast.success("Player added successfully 👌");
+      if (imageUrl != ImagePlaceholder) {
+        handleUpload(img);
+      } else {
+        dispatch(addPlayer(formData));
+        toast.success("Player added successfully 👌");
+        setFormData({});
+      }
     } else {
-      dispatch(updatePlayer(playerId, formData));
-      toast.success("Player updated successfully 👌");
+      if (imageUrl != ImagePlaceholder) {
+        handleUpload(img);
+      } else {
+        dispatch(updatePlayer(playerId, formData));
+        toast.success("Player updated successfully 👌");
+        setFormData({});
+      }
     }
     setOpenAddForm(false);
   };
@@ -145,6 +203,7 @@ const ManagePlayer = () => {
               type="submit"
               onClick={() => {
                 setOpenAddForm((prev) => !prev);
+                setCreate(true);
               }}
             >
               Add Player
@@ -208,11 +267,15 @@ const ManagePlayer = () => {
                     <tr key={key}>
                       <td className="border-b border-[#eee] px-4 pl-9 dark:border-strokedark xl:pl-11">
                         <div className="flex items-center gap-3">
-                          <img
-                            src={"/assets/images/avatar_placeholder.jpg"}
-                            alt="Product"
-                            width={40}
-                          />
+                          {!player?.avatar ? (
+                            <img
+                              src={"/assets/images/avatar_placeholder.jpg"}
+                              alt="Product"
+                              width={40}
+                            />
+                          ) : (
+                            <img src={player.avatar} alt="Product" width={40} />
+                          )}
                           <h5 className="font-medium text-black dark:text-white">
                             {player.name}
                           </h5>
@@ -322,11 +385,30 @@ const ManagePlayer = () => {
           className="text-black dark:text-white  bg-white dark:bg-boxdark"
           style={{ borderBottom: "1px solid #2B9451" }}
         >
-          Add New Player
+          {create ? "Create New" : "Update"} Player
         </DialogTitle>
         <DialogContent className="bg-white dark:bg-boxdark">
           {/* Form for updating user details */}
           <form className="mt-5" onSubmit={handleSubmit}>
+            <div>
+              <input
+                type="file"
+                className="mb-4 rounded-lg text-white font-light text-sm"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+              <figure className="will-change-auto">
+                <img
+                  className="h-70 mx-auto max-w-full rounded-lg"
+                  src={imageUrl}
+                  alt="image description"
+                />
+                <figcaption className="mt-2 text-sm font-semibold text-center text-gray-500 dark:text-gray-400">
+                  PLAYER AVATAR
+                </figcaption>
+              </figure>
+            </div>
+
             <TextField
               autoFocus
               margin="dense"
@@ -467,6 +549,8 @@ const ManagePlayer = () => {
                 style={{ color: "#2B9451" }}
                 onClick={() => {
                   setOpenAddForm(false);
+
+                  setImageUrl(ImagePlaceholder);
                 }}
               >
                 Cancel

@@ -62,12 +62,21 @@ const ConsultPlayer = () => {
         <div className="">
           <Card sx={{ maxWidth: 340, background: "transparent" }}>
             <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image="/assets/images/avatar_placeholder.jpg"
-                alt="green iguana"
-              />
+              {!player?.avatar ? (
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image="/assets/images/avatar_placeholder.jpg"
+                  alt="green iguana"
+                />
+              ) : (
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={player.avatar}
+                  alt="green iguana"
+                />
+              )}
               <CardContent className="bg-white dark:bg-[#2d3b4c]">
                 <Typography
                   gutterBottom
@@ -146,7 +155,7 @@ const ConsultPlayer = () => {
             </div>
             <div className="flex py-5">
               <span className="flex-1 text-white font-bold">Skills</span>
-              <span className="flex-1 text-bodygray">{player.skills }</span>
+              <span className="flex-1 text-bodygray">{player.skills}</span>
             </div>
             <div className="flex py-5">
               <span className="flex-1 text-white font-bold">

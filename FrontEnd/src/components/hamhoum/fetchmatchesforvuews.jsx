@@ -99,7 +99,7 @@ export const fetchtour = () => {
     
     fetchTournaments();
     fetchMatchesWithTeamDetails()
-    
+    // 
 
   }, [TournementId.map((match, index) => (match.goal1.length,match.goal2.length))]);
 if (TournementId.length ==0) {
@@ -201,6 +201,7 @@ if (TournementId.length ==0) {
             <div className="text-center widget-vs-contents mb-4">
               <h4>{match.matchstatus}</h4>
               <p className="mb-5">
+              <span className="block text-yellow-500">{match.matchTime}</span>
                 <span className="block">{match.date}</span>
                 <span className="block">{match.startingtime}</span>
                 <strong className="text-primary">{match.tournamentName}</strong>

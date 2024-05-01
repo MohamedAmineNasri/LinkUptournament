@@ -1,4 +1,4 @@
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import axios from 'axios';
@@ -7,6 +7,15 @@ import { addnewMatch, fetchAllTour } from "../../redux/slice/matchSlice";
 import { useDispatch } from "react-redux";
 import MatchByID from "./getAllTournement";
 import { useParams } from 'react-router-dom';
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  IconButton,
+  Typography,
+  Input,
+} from "@material-tailwind/react";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
 
 
@@ -38,13 +47,18 @@ export const AddMatchPopUpWindow = (props) => {
    const [isValid3, setIsValid3] = useState(true);
    const [isValidteam2, setIsValidteam2] = useState(true);
    const [isValidteam1, setIsValidteam1] = useState(true);
+   const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
    
   const dispatch = useDispatch();
   const handleSaveChanges = (e) => {
     e.preventDefault();
     dispatch(
         addnewMatch({
-          // matchTime: 0,
+          matchTime: 0,
           referee:Referee,
           date:Date,
           logo:Logo.myLogo,
@@ -154,16 +168,33 @@ export const AddMatchPopUpWindow = (props) => {
 
   return (
     <>
-  <Button size="lg" variant="success" onClick={handleShow} className="mb-10  " >
-    Add Match
-  </Button>
-
-  <Modal show={show} onHide={handleClose} className="w-full  mx-auto bg-gray-900" >
-    <Modal.Header className="bg-gray-900 text-white" closeButton>
-      <Modal.Title>Add Match</Modal.Title>
-    </Modal.Header>
-    <Modal.Body className="bg-gray-900 text-white">
-      <Form>
+    <button
+        data-modal-target="crud-modal"
+        data-modal-toggle="crud-modal"
+        className="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 "
+        type="button"
+        onClick={toggleModal}
+      >
+        Add match
+      </button>
+      {showModal && (
+        <div
+          id="crud-modal"
+          tabIndex="-1"
+          aria-hidden="true"
+          className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-red bg-opacity-1 overflow-y-auto"
+        >
+          <div className="relative p-4 w-full max-w-md max-h-full">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Create New Match
+                </h3>
+                
+              </div>
+              <form className="p-4 md:p-5">
+              <Form>
+        
         <Form.Group className="mb-3" controlId="locationInput">
           <Form.Label>Match Status: {Matchstatus}</Form.Label>
           <br />
@@ -203,6 +234,7 @@ export const AddMatchPopUpWindow = (props) => {
               </option>
             ))}
           </select>
+          
           {!isValidteam1 && <p className="text-red-500">Please select a different Team 1.</p>}
           <br />
           <Form.Label>Team 2:</Form.Label>
@@ -257,16 +289,22 @@ export const AddMatchPopUpWindow = (props) => {
           </select>
         </Form.Group>
       </Form>
-    </Modal.Body>
-    <Modal.Footer className="bg-gray-900">
-      <Button variant="secondary" onClick={handleClose} className="bg-red-500 text-white">
-        Close
-      </Button>
-      <Button variant="primary" onClick={handleSaveChanges} className="bg-green-500 text-white">
-        Save Changes
-      </Button>
-    </Modal.Footer>
-  </Modal>
+      <div className="flex justify-between">
+  <Button variant="secondary" onClick={toggleModal} className="bg-red-500 text-white">
+    Close
+  </Button>
+  <Button variant="primary" onClick={handleSaveChanges} className="bg-green-500 text-white">
+    Save Changes
+  </Button>
+</div>
+    
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+  
+  
 </>
   );
 };

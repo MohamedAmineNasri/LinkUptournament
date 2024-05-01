@@ -254,17 +254,6 @@ app.post("/create-payment-intent/:id", async (req, res) => {
 
 
 
-// WebRTC endpoints
-// app.post("/consumer", async (req, res) => {
-//   const peer = new webrtc.RTCPeerConnection({
-//     iceServers: [
-//       {
-//         urls: "stun:stun.stunprotocol.org",
-//       },
-//     ],
-//   });
-// });
-
 //YASSINE
 app.use("/player", playerRouter);
 app.use("/referee", refereeRouter);

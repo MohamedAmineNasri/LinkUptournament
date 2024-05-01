@@ -17,6 +17,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
+import { number } from "prop-types";
 
 
 export const AddMatchPopUpWindow = (props) => {
@@ -47,6 +48,10 @@ export const AddMatchPopUpWindow = (props) => {
    const [isValid3, setIsValid3] = useState(true);
    const [isValidteam2, setIsValidteam2] = useState(true);
    const [isValidteam1, setIsValidteam1] = useState(true);
+   const [isValidticketnumber, setIsValidticketnumber] = useState(true);
+   const [isValidticketprice, setIsValidticketprice] = useState(true);
+   const [price, setprice] = useState();
+   const [ticketNumber, setticketNumber] = useState();
    const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -72,6 +77,8 @@ export const AddMatchPopUpWindow = (props) => {
           tournementId:TournementId,
           team1Gols:Team1Gols,
           team2Gols:Team2Gols,
+          ticketNumber:ticketNumber,
+          price:price
        
       }),
        fetchAllTour(),
@@ -90,6 +97,14 @@ export const AddMatchPopUpWindow = (props) => {
     // Validate name (only letters)
     setIsValid(/^[a-zA-Z]+$/.test(newName));
   };
+  const handeleTicketnumber=(e)=>{ const newNamee = e.target.value;
+  setticketNumber(newNamee)
+  setIsValidticketnumber( newNamee>1);
+  }
+  const handeleTicketprice=(e)=>{ const newNamee = e.target.value;
+    setprice(newNamee)
+    setIsValidticketprice( newNamee>1);
+    }
   const handleteam2 = (e) => {
     const newName = e.target.value;
     setTeam2(newName);
@@ -186,10 +201,11 @@ export const AddMatchPopUpWindow = (props) => {
     
     
   }, [tournamentId]);
- 
+  
 
   return (
     <>
+    
     <button
         data-modal-target="crud-modal"
         data-modal-toggle="crud-modal"
@@ -310,6 +326,24 @@ export const AddMatchPopUpWindow = (props) => {
             <option value="2464475">Tozeur</option>
           </select>
         </Form.Group>
+        <Form.Label>Ticket number:</Form.Label>
+          <Form.Control
+            type="number"
+            autoFocus
+            value={ticketNumber}
+            onChange={handeleTicketnumber}
+            className={`border ${isValidticketnumber ? 'border-green-500' : 'border-red-500'}`}
+          />
+          {!isValidticketnumber && <p className="text-red-500">Ticket number must be positive.</p>}
+          <Form.Label>Ticket price:</Form.Label>
+          <Form.Control
+            type="number"
+            autoFocus
+            onChange={handeleTicketprice}
+            value={price}
+            className={`border ${isValidticketprice ? 'border-green-500' : 'border-red-500'}`}
+          />
+          {!isValidticketprice && <p className="text-red-500">Ticket price must be positive.</p>}
       </Form>
       <div className="flex justify-between">
   <Button variant="secondary" onClick={toggleModal} className="bg-red-500 text-white">

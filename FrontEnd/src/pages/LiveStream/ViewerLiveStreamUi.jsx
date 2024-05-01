@@ -10,6 +10,7 @@ import { io } from 'socket.io-client';
 import styles from '../../pages/Chat/ChatStyle.module.css';
 import EmojiPicker from 'emoji-picker-react';
 import './ViewerLiveStreamUi.css'
+import { Typography, AppBar, styled } from '@mui/material';
 
 
 const ViewerLiveStreamUi = () => {
@@ -26,6 +27,21 @@ const ViewerLiveStreamUi = () => {
             document.body.classList.remove('dark');
         }
     };
+    const Wrapper = styled('div')(({ theme }) => ({
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+    }));
+
+    const VideoContainer = styled('div')(({ theme }) => ({
+        position: 'relative',
+        width: '100%',
+        height: '100%', // Set the height to 100%
+        border: '1px solid #E8E8E8',
+        marginBottom: '1em',
+        background: `url('https://i.pinimg.com/originals/fa/67/c5/fa67c55e124872f72910116c1d6039b0.gif') center/cover no-repeat`,
+    }));
 
     // Close right side panel
     const closeRightSide = () => {
@@ -220,8 +236,9 @@ const ViewerLiveStreamUi = () => {
            
             <div className="app-main">
                 <div className="video-call-wrapper">
-                      
+                <VideoContainer>
                         <video ref={videoRef} id="videoplayer" autoPlay muted style={{ width: '100%', border: '1px solid #E8E8E8' }}></video>
+                </VideoContainer>
                 </div>
 
                 <div className="video-call-actions">

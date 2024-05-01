@@ -25,6 +25,7 @@ const VideoContainer = styled('div')(({ theme }) => ({
     height: '100%', // Set the height to 100%
     border: '1px solid #E8E8E8',
     marginBottom: '1em',
+    background: `url('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4efebd150179589.62f5014d9f4fa.gif') center/cover no-repeat`,
 }));
 
 
@@ -232,7 +233,7 @@ const VideoLiveStreamUi = () => {
                     <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                 </svg>
             </button>
-           
+        
             <div className="app-main">
                 <div className="video-call-wrapper">
 
@@ -342,38 +343,38 @@ const VideoLiveStreamUi = () => {
 
 
 
-<div className="chat-typing-area-wrapper">
-    <div className="chat-typing-area">
-        <input
-            type="text"
-            placeholder="Type your message..."
-            className="chat-input"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-        />
-        <button className="send-button" onClick={sendMessage}>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="feather feather-send"
-                viewBox="0 0 24 24"
-            >
-                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-            </svg>
-        </button>
-        <button className="send-button" onClick={toggleEmojiPicker}>
-            {showEmojiPicker ? "🙂" : "🙂"}
-        </button>
-    
-    </div>
-</div>
+                <div className="chat-typing-area-wrapper">
+                    <div className="chat-typing-area">
+                        <input
+                            type="text"
+                            placeholder="Type your message..."
+                            className="chat-input"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                        />
+                        <button className="send-button" onClick={sendMessage}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                className="feather feather-send"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                            </svg>
+                        </button>
+                        <button className="send-button" onClick={toggleEmojiPicker}>
+                            {showEmojiPicker ? "🙂" : "🙂"}
+                        </button>
+                    
+                    </div>
+                </div>
 
                 </div>
-              
+            
             </div>
             <button className="expand-btn" onClick={expandRightSide}>
                 <svg

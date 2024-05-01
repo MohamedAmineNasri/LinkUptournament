@@ -21,10 +21,13 @@ import { getPlayersPosition } from "../../redux/playerReducers/searchPlayerSlice
 import axios from "axios";
 import ImagePlaceholder from "/public/images/image-placeholder.jpg";
 import Pagination from "./Pagination";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import AssignPlayer from "./AssignPlayer";
 
 const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
   const [img, setImg] = useState(null);
+  const [openAssignField, setOpenAssignField] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -125,7 +128,7 @@ const ManagePlayer = () => {
     /** Validator */
 
     if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
-      toast.error("Name is required and must contain only letters and spaces");
+      toast.error("Name is required and must contain only letters");
       return;
     }
 
@@ -321,9 +324,28 @@ const ManagePlayer = () => {
                         {player.position}
                       </td>
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        {player.current_team == ""
-                          ? "not yet"
-                          : player.current_team}
+                        {player.team?.TeamName == "" ||
+                        player.team?.TeamName == undefined ? (
+                          <button
+                            className="pl-5"
+                            onClick={() => {
+                              setPlayerId(player._id);
+                              setOpenAssignField(true);
+                            }}
+                          >
+                            <PersonAddIcon />
+                          </button>
+                        ) : (
+                          <p
+                            className="pl-5 hover:text-primary hover:font-medium cursor-pointer"
+                            onClick={() => {
+                              setPlayerId(player._id);
+                              setOpenAssignField(true);
+                            }}
+                          >
+                            {player.team.TeamName}
+                          </p>
+                        )}
                       </td>
                       <td className=" border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                         <section className="pl-1">{player.age}</section>
@@ -604,6 +626,11 @@ const ManagePlayer = () => {
           </form>
         </DialogContent>
       </MuiDialog>
+      <AssignPlayer
+        openAssignField={openAssignField}
+        setOpenAssignField={setOpenAssignField}
+        playerId={playerId}
+      />
       <ToastContainer />
     </div>
   );

@@ -81,7 +81,13 @@ async function deleteRefereeById(req, res) {
 
 async function searchReferees(req, res) {
   try {
-    const { name, country, location, availability, role } = req.query;
+    const { name, country, location, availability, role, page, limit } =
+      req.query;
+
+    // Set default values for page and limit if not provided
+    const pageNumber = parseInt(page) || 1;
+    const pageSize = parseInt(limit) || 10;
+    const skip = (pageNumber - 1) * pageSize;
 
     const query = {};
     if (name) query.name = { $regex: new RegExp(name, "i") };
@@ -91,9 +97,20 @@ async function searchReferees(req, res) {
       query.availability = { $regex: new RegExp(availability, "i") };
     if (role) query.role = role;
 
-    const referees = await Referee.find(query);
+    // Count total number of documents matching the query
+    const totalRefereesCount = await Referee.countDocuments(query);
 
-    res.json(referees);
+    // Calculate total number of pages
+    const totalPages = Math.ceil(totalRefereesCount / pageSize);
+
+    // Execute query with pagination
+    const referees = await Referee.find(query).skip(skip).limit(pageSize);
+
+    res.json({
+      referees,
+      totalPages,
+      currentPage: pageNumber,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

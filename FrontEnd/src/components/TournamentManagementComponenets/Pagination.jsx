@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
 import { useLocation } from "react-router-dom";
 import { searchPlayers } from "../../redux/playerReducers/searchPlayerSlice";
+import { searchReferees } from "../../redux/refereeReducers/searchRefereeSlice";
 
 const Pagination = ({ currentPage, totalPages, type }) => {
   const dispatch = useDispatch();
@@ -10,7 +10,12 @@ const Pagination = ({ currentPage, totalPages, type }) => {
   const { name, position } = useSelector(
     (state) => state.root.searchPlayers.searchResults
   );
-  console.log(name, position);
+  const {
+    name: refereeName,
+    role,
+    availability,
+  } = useSelector((state) => state.root.fetchReferees.referees);
+
   const handlePageChange = (page) => {
     switch (pathname) {
       case "/manage/participant/player": {
@@ -18,7 +23,14 @@ const Pagination = ({ currentPage, totalPages, type }) => {
         break;
       }
       case "/manage/participant/referee": {
-        //dispatch(fetchPlayers(page));
+        dispatch(
+          searchReferees({
+            name: refereeName,
+            role: role,
+            availability: availability,
+            page: page,
+          })
+        );
         break;
       }
       default:

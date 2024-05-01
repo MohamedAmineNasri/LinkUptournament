@@ -108,6 +108,33 @@ const ManageReferees = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validation
+    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
+      toast.error("Name is required and must contain only letters");
+      return;
+    }
+
+    if (!formData.country.trim()) {
+      toast.error("Country is required");
+      return;
+    }
+
+    if (!formData.location.trim()) {
+      toast.error("Location is required");
+      return;
+    }
+
+    if (!formData.availability.trim()) {
+      toast.error("Availability is required");
+      return;
+    }
+
+    if (!formData.role.trim()) {
+      toast.error("Role is required");
+      return;
+    }
+
     if (create) {
       if (imageUrl != ImagePlaceholder) {
         handleUpload(img);

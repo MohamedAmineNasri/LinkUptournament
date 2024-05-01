@@ -3,6 +3,7 @@ var router = express.Router();
 const teamService = require("../Services/TeamService");
 
 router.get("/", teamService.getAllTeams);
+router.get("/search", teamService.searchTeams);
 
 router.post("/addTeam", teamService.addTeam);
 router.post(

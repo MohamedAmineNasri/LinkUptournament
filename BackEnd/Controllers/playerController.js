@@ -41,7 +41,11 @@ async function getAllPlayers(req, res) {
     const totalPlayers = await Player.countDocuments();
 
     // Find players for the current page and populate their team
-    const players = await Player.find().skip(startIndex).limit(limit);
+    const players = await Player.find().skip(startIndex).limit(limit).populate({
+      path: "team",
+      select: "TeamName", // Select only the TeamName field
+      model: "team",
+    });
 
     return res.status(200).json({
       players,
@@ -126,7 +130,14 @@ async function searchPlayers(req, res) {
     const count = await Player.countDocuments(query);
     const totalPages = Math.ceil(count / perPage);
 
-    const players = await Player.find(query).skip(skip).limit(perPage);
+    const players = await Player.find(query)
+      .skip(skip)
+      .limit(perPage)
+      .populate({
+        path: "team",
+        select: "TeamName", // Select only the TeamName field
+        model: "team",
+      });
 
     res.json({
       players,

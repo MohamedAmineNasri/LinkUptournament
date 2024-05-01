@@ -56,12 +56,19 @@ export const AddAcademy = () => {
             setLocationError(null);
             setlocationfieldColor("green");
           }
+          if (locationData.address.road == undefined) {
+            setLocation(
+              locationData.address.state + "," + locationData.address.county
+            );
+            setLocationError(null);
+            setlocationfieldColor("green");
+          }
           if (
             locationData.address.residential !== undefined &&
             locationData.address.industrial !== undefined
           ) {
             setLocation(
-              locationData.address.county + "," + locationData.address.road
+              locationData.address.state + "," + locationData.address.road
             );
             setLocationError(null);
             setlocationfieldColor("green");
@@ -161,6 +168,20 @@ export const AddAcademy = () => {
                 setLocationError(null);
                 setlocationfieldColor("green");
               }
+              if (locationData.address.road == undefined) {
+                localStorage.setItem(
+                  "selectedPosition",
+                  JSON.stringify([
+                    postion.coords.latitude,
+                    postion.coords.longitude,
+                  ])
+                );
+                setLocation(
+                  locationData.address.state + "," + locationData.address.county
+                );
+                setLocationError(null);
+                setlocationfieldColor("green");
+              }
               if (
                 locationData.address.residential !== undefined &&
                 locationData.address.industrial !== undefined
@@ -173,7 +194,7 @@ export const AddAcademy = () => {
                   ])
                 );
                 setLocation(
-                  locationData.address.county + "," + locationData.address.road
+                  locationData.address.state + "," + locationData.address.road
                 );
                 setLocationError(null);
                 setlocationfieldColor("green");

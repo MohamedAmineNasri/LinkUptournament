@@ -21,7 +21,6 @@
         ];
 
         const roleOptions = [
-            "Admin",
             "Agent",
             "Manager",
             "TournamentCoordinator",

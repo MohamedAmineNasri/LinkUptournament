@@ -15,7 +15,7 @@ export const fetchPlayers =
       const response = await axios.get(
         `http://localhost:8000/player?page=${page}&limit=${limit}`
       );
-      dispatch(fetchPlayersFulfilled(response.data));
+      dispatch(fetchPlayersFulfilled({ ...response.data, type: "fetch" }));
     } catch (error) {
       dispatch(fetchPlayersRejected(error.message));
     }

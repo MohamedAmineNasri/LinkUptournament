@@ -105,31 +105,39 @@ async function deletePlayerById(req, res) {
 // Route to handle player search
 async function searchPlayers(req, res) {
   try {
-    const { name, position, team } = req.query;
-    // Build the query object based on the provided parameters
+    const { name, position, team, page, limit } = req.query;
     const query = {};
+    const pageNumber = parseInt(page) || 1;
+    const perPage = parseInt(limit) || 10;
+    const skip = (pageNumber - 1) * perPage;
 
     if (name) {
-      query.name = { $regex: new RegExp(name, "i") }; // Case-insensitive search for name
+      query.name = { $regex: new RegExp(name, "i") };
     }
 
     if (position) {
-      query.position = position; // Case-insensitive search for position
+      query.position = position;
     }
 
     if (team) {
-      query.team = team; // Assuming team is the ID of the team
+      query.team = team;
     }
 
-    const players = await Player.find(query); // Populate team field
+    const count = await Player.countDocuments(query);
+    const totalPages = Math.ceil(count / perPage);
 
-    res.json(players);
+    const players = await Player.find(query).skip(skip).limit(perPage);
+
+    res.json({
+      players,
+      totalPages: totalPages,
+      currentPage: pageNumber,
+    });
   } catch (error) {
     console.error("Error searching players:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
-
 module.exports = {
   createPlayer,
   getAllPlayers,

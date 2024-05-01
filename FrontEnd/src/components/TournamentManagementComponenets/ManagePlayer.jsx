@@ -38,7 +38,7 @@ const ManagePlayer = () => {
     }
   };
 
-  const { players, currentPage, totalPages } = useSelector(
+  const { players, currentPage, totalPages, type } = useSelector(
     (state) => state.root.fetchPlayers.players
   );
   const dispatch = useDispatch();
@@ -121,7 +121,40 @@ const ManagePlayer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    /** Validator */
+
+    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
+      toast.error("Name is required and must contain only letters and spaces");
+      return;
+    }
+
+    if (!formData.age || isNaN(formData.age) || formData.age <= 0) {
+      toast.error("Age is required and must be a positive number");
+      return;
+    }
+
+    if (!formData.legal_guardian || formData.legal_guardian.trim() === "") {
+      toast.error("Legal guardian is required");
+      return;
+    }
+
+    if (!formData.position || formData.position.trim() === "") {
+      toast.error("Position is required");
+      return;
+    }
+
+    /* if (!formData.current_team || formData.current_team.trim() === "") {
+      toast.error("Current team is required");
+      return;
+    } */
+
+    if (!formData.number || isNaN(formData.number) || formData.number <= 0) {
+      toast.error("Number is required and must be a positive number");
+      return;
+    }
+    /** Validator */
+
     if (create) {
       if (imageUrl != ImagePlaceholder) {
         handleUpload(img);
@@ -374,7 +407,11 @@ const ManagePlayer = () => {
               </table>
             </div>
             <div className="mt-4 flex justify-end">
-              <Pagination currentPage={currentPage} totalPages={totalPages} />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                type={type}
+              />
             </div>
           </div>
         </>
@@ -474,7 +511,7 @@ const ManagePlayer = () => {
               id="age"
               name="age"
               label="Age"
-              type="age"
+              type="number"
               fullWidth
               variant="standard"
               InputLabelProps={{
@@ -516,7 +553,7 @@ const ManagePlayer = () => {
             />
             {/**ggggggg */}
             <div>
-              {formData.skills.map((skill, index) => (
+              {formData?.skills?.map((skill, index) => (
                 <div key={index} className="flex items-center relative">
                   <TextField
                     autoFocus
@@ -555,7 +592,6 @@ const ManagePlayer = () => {
                 style={{ color: "#2B9451" }}
                 onClick={() => {
                   setOpenAddForm(false);
-
                   setImageUrl(ImagePlaceholder);
                 }}
               >

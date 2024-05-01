@@ -1,12 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
+import { useLocation } from "react-router-dom";
+import { searchPlayers } from "../../redux/playerReducers/searchPlayerSlice";
 
-const Pagination = ({ currentPage, totalPages }) => {
+const Pagination = ({ currentPage, totalPages, type }) => {
   const dispatch = useDispatch();
-
+  const { pathname } = useLocation();
+  const { name, position } = useSelector(
+    (state) => state.root.searchPlayers.searchResults
+  );
+  console.log(name, position);
   const handlePageChange = (page) => {
-    dispatch(fetchPlayers(page));
+    switch (pathname) {
+      case "/manage/participant/player": {
+        dispatch(searchPlayers({ name: name, position: position, page: page }));
+        break;
+      }
+      case "/manage/participant/referee": {
+        //dispatch(fetchPlayers(page));
+        break;
+      }
+      default:
+        break;
+    }
   };
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);

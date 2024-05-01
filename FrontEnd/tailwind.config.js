@@ -351,6 +351,7 @@ module.exports = withMT({
           "0%, 100%": { transform: "rotate(360deg)" },
           "50%": { transform: "rotate(0deg)" },
         },
+        
       },
       animation: {
         /** Landing Page */
@@ -363,6 +364,7 @@ module.exports = withMT({
         "spin-2": "spin 2s linear infinite",
         "spin-3": "spin 3s linear infinite",
       },
+      
     },
   },
   plugins: [],

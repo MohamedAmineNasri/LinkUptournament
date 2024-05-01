@@ -35,7 +35,8 @@ export const fetchtour = (props) => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const[matchTime,setmatchTime]= useState(0)
-
+const[team1goaltime,setteam1goaltime]=useState([])
+const[team2goaltime,setteam2goaltime]=useState([])
   
   
   const handleShow = () => MatchCard
@@ -45,7 +46,8 @@ export const fetchtour = (props) => {
     
       dispatch(
         editMatch({
-          
+          team1goaltime:team1goaltime,
+          team2goaltime:team2goaltime,
           matchid: match,
           goal1: T1,
           goal2: T2,
@@ -73,6 +75,8 @@ export const fetchtour = (props) => {
        
         // If user clicks "Yes", execute the winer function
         localStorage.removeItem("Timer")
+        
+        setTimerRunning(false)
         winer();
         setmatchstatus("Finished")
       }
@@ -97,7 +101,7 @@ export const fetchtour = (props) => {
 }
   useEffect(() => {
     setTimeLeft(Number(localStorage.getItem("Timer")))
-    setTimerRunning(true)
+    
     setmatchTime(Math.floor(timeLeft/60))
     console.log(Math.floor(timeLeft/60))
 
@@ -126,7 +130,7 @@ export const fetchtour = (props) => {
       try {
         const matchesResponse = await axios.get('http://localhost:8000/match/'+match);
         console.log(matchesResponse.data.team1 )
-        // setw(matchesResponse.team1)
+        
          if(matchesResponse.data.matchstatus=="Finished"){setmatchstatus("Finished")}
          if(matchesResponse.data.goal1.length>matchesResponse.data.goal2.length){setw(matchesResponse.data.team1)}
      
@@ -207,9 +211,10 @@ export const fetchtour = (props) => {
     let intervalId;
 
     if (timerRunning) {
-      intervalId = setInterval(() => {
+      intervalId = setInterval(async() => {
         setTimeLeft(prevTimeLeft => { 
           if (prevTimeLeft < 2700) { // 45 minutes = 2700 seconds
+             axios.put(`http://localhost:8000/match/${match}`, { matchTime:Math.floor(prevTimeLeft/60) })
             return prevTimeLeft + 1 
           } else if (prevTimeLeft < 5400) { // 90 minutes = 5400 seconds
             // Stop timer at 45 minutes
@@ -233,6 +238,7 @@ export const fetchtour = (props) => {
  
 
   }, [timerRunning,Matchstatus]);
+  
   const startTimer = async () => {
     if (!timerRunning) {
       setTimeLeft(Number(localStorage.getItem("Timer")))
@@ -252,10 +258,26 @@ export const fetchtour = (props) => {
     }
 
   };
-
+const cancelgoal1 = async ()=>{ try{
+  setT1(prevT1 => prevT1.slice(0, -1))
+  setteam1goaltime(prevT1 => prevT1.slice(0, -1))
+  await axios.put(`http://localhost:8000/match/${match}`, { goal1: T1,team1goaltime:team1goaltime }
+)} catch (error) {
+  console.error('Error updating match status:', error);
+}
+}
+const cancelgoal2 = async ()=>{ try{
+  setT2(prevT2 => prevT2.slice(0, -1))
+  setteam2goaltime(prevT2 => prevT2.slice(0, -1))
+  await axios.put(`http://localhost:8000/match/${match}`, { goal2: T2 , team2goaltime:team2goaltime }
+)} catch (error) {
+  console.error('Error updating match status:', error);
+}
+}
   const stopTimer = async() => {
     if (timerRunning) {
       try {
+        localStorage.setItem('Timer', timeLeft);
         await axios.put(`http://localhost:8000/match/${match}`, { matchstatus: 'On Hold' });
       } catch (error) {
         console.error('Error updating match status:', error);
@@ -339,7 +361,10 @@ export const fetchtour = (props) => {
                           <li>{Team1name} Gola</li>
                           <select
                             disabled={Matchstatus === "Finished"}
-                            onChange={(e) => setT1([...T1, e.target.value])}
+                            onChange={(e) => {
+                              setteam1goaltime([...team1goaltime, Math.floor(timeLeft/60)]);
+                              setT1([...T1, e.target.value]);
+                          }}
                             className="bg-black text-white"
                           >
                             <option>select player1</option>
@@ -349,6 +374,7 @@ export const fetchtour = (props) => {
                               </option>
                             ))}
                           </select>
+                          <button onClick={cancelgoal1}>Cancel goal 1</button>
                         </ul>
                       </div>
                     </div>
@@ -358,7 +384,10 @@ export const fetchtour = (props) => {
                           <li>{Team2name} Gola</li>
                           <select
                             disabled={Matchstatus === "Finished"}
-                            onChange={(a) => setT2([...T2, a.target.value])}
+                            onChange={(a) => {
+                              setteam2goaltime([...team2goaltime, Math.floor(timeLeft/60)]);
+                              setT2([...T2, a.target.value]);
+                          }}
                             className="bg-black text-white"
                           >
                             <option>select player2</option>
@@ -368,6 +397,7 @@ export const fetchtour = (props) => {
                               </option>
                             ))}
                           </select>
+                          <button onClick={cancelgoal2}>Cancel goal 2</button>
                         </ul>
                       </div>
                     </div>

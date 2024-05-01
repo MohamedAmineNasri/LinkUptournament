@@ -10,6 +10,9 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
+import Header from '../landingpage/Header';
+import Footer from '../landingpage/Footer';
+import './twink.css'
 
 export const fetchtour = () => {
     const { tournamentId } = useParams();
@@ -19,14 +22,16 @@ export const fetchtour = () => {
   const[Team1logo,setteam1logo]=useState();
   const[Team2name,setteam2name]=useState();
   const[Team2logo,setteam2logo]=useState();
+  const[matchstatus,setmatchstatus]=useState();
   const[T1,sett1]=useState([]);
   const[T1go,sett1go]=useState([]);
   const[T2go,sett2go]=useState([]);
   const[T2,sett2]=useState([]);
   const[Weather,setweather]= useState([])
   const[Location,setlocation]= useState([])
+  const[test,settest]=useState([])
   
-  const handleShow = () => MatchCard
+  
   useEffect(() => {
     const fetchTournaments = async () => {
     try {
@@ -127,11 +132,24 @@ export const fetchtour = () => {
 
   }, [T2 , T1,TournementId.startingtime]);
 
+  useEffect(() => {
+    const fetch = async () => {
+    
+      const response = await axios.get(`http://localhost:8000/match/${tournamentId}`);
+      
+      sett1(response.data.goal1);
+      sett2(response.data.goal2);
+    settest(response.data.matchTime)
+  }
+      fetch()
+    },[T1,T2,TournementId.matchTime])
+      
 
   return (
     <>
+    <Header/>
      <div className="site-section bg-dark">
-     <Link to ={`/fetchmatchforview`}> <button>Return</button></Link>
+     
             <div className="container">
               
    <div className="row mb-5">
@@ -164,7 +182,7 @@ export const fetchtour = () => {
                     <div className="text-center widget-vs-contents mb-4">
                       <h4>{TournementId.matchstatus}</h4>
                       <p className="mb-5">
-                      <span className="d-block text-yellow-500">{TournementId.matchTime}</span> <br/>
+                      <span className="d-block text-yellow-500 animate-twinkle">"{TournementId.matchTime}</span> <br/>
                         <span className="d-block">{TournementId.date}</span><br/>
                         <span className="d-block">{TournementId.startingtime}</span><br/>
                           <strong className="text-primary">{TournementId.matchtype}</strong>
@@ -191,7 +209,7 @@ export const fetchtour = () => {
             <div className="team-details w-full text-center">
               <ul className="list-unstyled">
                 {T1go.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li key={index}>{TournementId.team1goaltime[index]}" {item} </li>
                 ))}
               </ul>
             </div>
@@ -200,7 +218,7 @@ export const fetchtour = () => {
             <div className="team-details w-full text-center">
               <ul className="list-unstyled">
                 {T2go.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li key={index}>{TournementId.team2goaltime[index]}" {item} </li>
                 ))}
               </ul>
             </div>
@@ -231,7 +249,7 @@ export const fetchtour = () => {
     
     
     
-    
+    <Footer/>
  
    
     </>

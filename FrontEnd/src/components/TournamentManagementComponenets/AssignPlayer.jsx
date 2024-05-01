@@ -20,11 +20,8 @@ const AssignPlayer = ({ openAssignField, setOpenAssignField, playerId }) => {
     const fetchTeams = async (name) => {
       let url = "http://localhost:8000/team/search?";
       if (name) url += `name=${name}`;
-      console.log(name);
-      console.log(url);
       const response = await axios.get(url);
       setTeamsData([...response.data.teams]);
-      console.log(response.data);
     };
     fetchTeams(searchQuery);
   }, [searchQuery]);

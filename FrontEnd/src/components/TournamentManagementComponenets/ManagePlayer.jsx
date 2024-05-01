@@ -23,11 +23,13 @@ import ImagePlaceholder from "/public/images/image-placeholder.jpg";
 import Pagination from "./Pagination";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AssignPlayer from "./AssignPlayer";
+import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
 
 const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
   const [img, setImg] = useState(null);
   const [openAssignField, setOpenAssignField] = useState(false);
+  const location = useLocation();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -57,6 +59,7 @@ const ManagePlayer = () => {
     current_team: "",
     number: undefined,
     avatar: "",
+    team: "",
   });
   const [create, setCreate] = useState(true);
   const [skillsSize, setSkillsSize] = useState(1);
@@ -65,6 +68,11 @@ const ManagePlayer = () => {
 
   useEffect(() => {
     dispatch(fetchPlayers());
+    if (location.state) {
+      console.log("here", location.state);
+      setFormData({ ...formData, team: location.state });
+      setOpenAddForm(true);
+    }
   }, [dispatch, fetchPlayers]);
 
   const handleAddSkill = () => {
@@ -615,6 +623,7 @@ const ManagePlayer = () => {
                 onClick={() => {
                   setOpenAddForm(false);
                   setImageUrl(ImagePlaceholder);
+                  setFormData({});
                 }}
               >
                 Cancel

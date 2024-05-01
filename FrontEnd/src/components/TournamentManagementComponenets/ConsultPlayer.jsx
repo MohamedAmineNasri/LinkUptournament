@@ -9,10 +9,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea, Chip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 
-import { useSelector } from "react-redux";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100%",
@@ -40,7 +37,7 @@ const ConsultPlayer = () => {
   const location = useLocation();
   const player = location.state;
 
-  console.log(player);
+  
   return (
     <div className="rounded-sm border p-4 border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="py-6 px-2 md:px-2 xl:px-3.5 flex  items-center justify-center relative">

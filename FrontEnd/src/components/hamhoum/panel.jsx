@@ -73,6 +73,7 @@ export const fetchtour = (props) => {
        
         // If user clicks "Yes", execute the winer function
         localStorage.removeItem("Timer")
+        setTimerRunning(false)
         winer();
         setmatchstatus("Finished")
       }
@@ -97,7 +98,7 @@ export const fetchtour = (props) => {
 }
   useEffect(() => {
     setTimeLeft(Number(localStorage.getItem("Timer")))
-     setTimerRunning(true)
+    
     setmatchTime(Math.floor(timeLeft/60))
     console.log(Math.floor(timeLeft/60))
 
@@ -271,6 +272,7 @@ const cancelgoal2 = async ()=>{ try{
   const stopTimer = async() => {
     if (timerRunning) {
       try {
+        localStorage.setItem('Timer', timeLeft);
         await axios.put(`http://localhost:8000/match/${match}`, { matchstatus: 'On Hold' });
       } catch (error) {
         console.error('Error updating match status:', error);

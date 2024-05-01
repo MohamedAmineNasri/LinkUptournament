@@ -122,6 +122,7 @@ require("./Models/Chatroom");
 
 // Users Route :
 app.use("/user", require("./Routes/user"));
+app.use("/news", require("./Routes/News"));
 app.use("/chatroom", require("./Routes/chatroom"));
 
 //YASSINE

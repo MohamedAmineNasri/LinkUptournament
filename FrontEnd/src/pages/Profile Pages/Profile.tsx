@@ -12,6 +12,10 @@
         const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
         console.log('user'+ user)
         console.log('role'+ userRole)
+
+        const handleClick = () => {
+            localStorage.setItem('facebook', 'test facebook');
+          };
     return (
         <DefaultLayout>
         <Breadcrumb pageName="Profile" />
@@ -135,10 +139,11 @@
                     Follow me on
                 </h4>
                 <div className="flex items-center justify-center gap-3.5">
-                    <Link
+                <Link
                     to="#"
                     className="hover:text-primary"
                     aria-label="social-icon"
+                    onClick={handleClick}
                     >
                     <svg
                         className="fill-current"

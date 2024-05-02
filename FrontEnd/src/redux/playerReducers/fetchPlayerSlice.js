@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const fetchPlayers =
-  (page = 1, limit = 10) =>
+  (page = 1, limit = 10, role = "") =>
   async (dispatch) => {
     dispatch(fetchPlayersPending());
     try {

@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { editAcademyStatusToApproved } from "../../../redux/slice/academySlice";
 import { editAcademyStatusToRejected } from "../../../redux/slice/academySlice";
+import { deleteAcademy } from "../../../redux/slice/academySlice";
 import DropDownStautsFilter from "./DropDownStautsFilter";
 import DropDownNameFilter from "./DropDownNameFilter";
 import DropDownDateFilter from "./DropDownDateFilter";
@@ -70,6 +71,20 @@ const AcademyDashB = () => {
     e.preventDefault();
     dispatch(
       editAcademyStatusToRejected({
+        id: idAcademy,
+      })
+    ).then(() => {
+      // After successful deletion, fetch the updated team list
+      dispatch(fetchAllAcademy());
+      handleClose();
+    });
+  };
+
+  // Handle delete
+  const handleDelete = (e, idAcademy) => {
+    e.preventDefault();
+    dispatch(
+      deleteAcademy({
         id: idAcademy,
       })
     ).then(() => {
@@ -296,7 +311,10 @@ const AcademyDashB = () => {
                       >
                         <FontAwesomeIcon icon={faXmark} />
                       </button>
-                      <button className="hover:text-warning">
+                      <button
+                        className="hover:text-warning"
+                        onClick={(e) => handleDelete(e, academy._id)}
+                      >
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
                     </div>

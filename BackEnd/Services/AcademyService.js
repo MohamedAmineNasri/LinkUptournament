@@ -1,5 +1,6 @@
 const academy = require('../Models/Academy')
 const user =require('../Models/Users');
+const Team = require('../Models/Team');
 const { sendAcademyStatusEmail } = require('./AcademyStatusEmailSender');
 
 
@@ -98,10 +99,28 @@ const getAcademyByIdParam =  async (Aid)=>{
 
 
 
-const deleteAcademyById =  async (req,res,next)=>{
-    const academyData = await academy.findByIdAndDelete(req.params.id);
-    res.json("deleted sucessfully" + academyData);
-}
+const deleteAcademyById = async (req, res, next) => {
+    try {
+        const academyId = req.params.id;
+
+        const academyData = await academy.findById(academyId);
+
+        if (!academyData) {
+            return res.status(404).json({ message: "Academy not found" });
+        }
+
+        if (academyData.teams && academyData.teams.length > 0) {
+            await Promise.all(academyData.teams.map(teamId => Team.findByIdAndDelete(teamId)));
+        }
+
+        await academy.findByIdAndDelete(academyId);
+
+        res.json({ message: "Academy and associated teams deleted successfully" });
+
+    } catch (error) {
+        next(error); 
+    }
+};
 
 
 

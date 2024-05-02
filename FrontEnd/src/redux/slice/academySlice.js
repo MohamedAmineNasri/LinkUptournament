@@ -106,12 +106,26 @@ export const editAcademyStatusToApproved = createAsyncThunk(
 );
 export const editAcademyStatusToRejected = createAsyncThunk(
   'academy/editAcademyRejected',
-  async ({ id}) => {
+  async ({id}) => {
     try {
       const response = await axios.put(
         'http://localhost:8000/academy/updateStatustoRejected/'+id,
       );
       
+      // window.location.reload();
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const deleteAcademy = createAsyncThunk(
+  'academy/deleteAcademy',
+  async ({id}) => {
+    try {
+      const response = await axios.delete(
+        'http://localhost:8000/academy/deleteAcademy/'+id,
+      );
       // window.location.reload();
       return response.data;
     } catch (error) {

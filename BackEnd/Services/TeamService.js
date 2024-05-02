@@ -461,8 +461,71 @@ const getTeamsByName = async (req, res, next) => {
     res.status(500).json("Internal server error");
   }
 };
+const removePlayerFromTeam = async (req,res) => {
+    const team = await Team.findOneAndUpdate(
+      { _id: req.params.idt },
+      { $pull: { Players: req.params.idp } }, 
+      { new: true }
+    );
+    console.log(team ,"removed---------------------------------------")
+    res.json("deleted sucessfully" + team);
+  };
+  const UpdateTeamsStatsFromFinishedMatches = async (req, res, next) => {
+    const matches = await Match.find({matchstatus : "Finished"})
+
+    // Reset data for all teams involved in the matches
+    const teamsToReset = new Set();
+    matches.forEach((match) => {
+        teamsToReset.add(match.team1);
+        teamsToReset.add(match.team2);
+    });
+
+    // Reset all teams before starting the loop
+    for (const teamId of teamsToReset) {
+       await resetData(teamId);
+    }
+
+    for (const match of matches) {
+        // resetData(match.team1)
+        // resetData(match.team2)
+        const team1 = await Team.findById(match.team1)
+        const team2 = await Team.findById(match.team2)
+
+        const goalTeam1 = match.goal1.length
+        const goalTeam2 = match.goal2.length
+        if(goalTeam1 > goalTeam2){ //team 1 win
+            updateTeamMatchesWon_P(match.team1)
+            updateGoals_scored_P(match.team1,goalTeam1)
+            updateGoals_received_P(match.team1,goalTeam2)
+            updateTeamMatchesLost_P(match.team2)
+            updateGoals_scored_P(match.team2,goalTeam2)
+            updateGoals_received_P(match.team2,goalTeam1)
+            
+        }
+        else if(goalTeam1 < goalTeam2){ //team 2 win
+            updateTeamMatchesWon_P(match.team2)
+            updateGoals_scored_P(match.team2,goalTeam2)
+            updateGoals_received_P(match.team2,goalTeam1)
+            updateTeamMatchesLost_P(match.team1)
+            updateGoals_scored_P(match.team1,goalTeam1)
+            updateGoals_received_P(match.team1,goalTeam2)
+        }else{//draw
+            updateTeamMatchesDrawn_P(match.team1)
+            updateGoals_scored_P(match.team1,goalTeam1)
+            updateGoals_received_P(match.team1,goalTeam2)
+            updateTeamMatchesDrawn_P(match.team2)
+            updateGoals_scored_P(match.team2,goalTeam2)
+            updateGoals_received_P(match.team2,goalTeam1)
+        }
+        await team1.save()
+        await team2.save()
+    }
+    return res.json("done")
+}
 
 module.exports = {
+  UpdateTeamsStatsFromFinishedMatches,
+  removePlayerFromTeam,
   getTeamsByName,
   searchTeams,
   getAllTeams,

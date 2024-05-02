@@ -77,9 +77,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     );
   }
 }, []);
-if(academyData){
-  console.log(academyData)
-}
+
+// -----------------------------------------------------------------------
+
 
 const hasAdminOrManagerRole = () => {
   return userRole.includes("Agent") || userRole.includes("Manager");
@@ -87,6 +87,7 @@ const hasAdminOrManagerRole = () => {
 const ForAcademiesRole = () => {
   return userRole.includes("Agent") || userRole.includes("Manager") ||  userRole.includes("Admin");
 };
+
 
 
   return (
@@ -578,7 +579,7 @@ const ForAcademiesRole = () => {
                         </NavLink>
                   </li>
                   )}
-              {userRole.includes('Manager') && (
+              {userRole.includes('Manager') &&  Object.keys(academyData).length !== 0 &&(
                   <li>
                     <NavLink
                       to="/Academy"

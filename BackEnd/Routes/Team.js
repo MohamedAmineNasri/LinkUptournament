@@ -43,6 +43,8 @@ router.post("/cancelGoalsIn/:id", teamService.cancelGoals_received);
 
 router.post("/resetGSdata/:id", teamService.resetGroupStageData);
 
+router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
+router.put("/removePlayerFromTeam/:idt/:idp",teamService.removePlayerFromTeam);
 router.post(
   "/addTeamAndAssaignAcademy",
   teamService.addTeamAndAssaignToAcademy
@@ -54,5 +56,7 @@ router.delete(
 );
 
 router.get("/teams/search/:searchString", teamService.getTeamsByName);
+
+router.post("/UpdateTeamsStatsFromFinishedMatches",teamService.UpdateTeamsStatsFromFinishedMatches);
 
 module.exports = router;

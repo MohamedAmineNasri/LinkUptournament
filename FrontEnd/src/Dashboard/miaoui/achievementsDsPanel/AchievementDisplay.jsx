@@ -172,13 +172,13 @@ const AchievementDisplay = () => {
             onChange={(e) => setSearch(e.target.value)}
             type="text"
             placeholder="Search By Academy Name"
-            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-5 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
         <div className="ml-4 xl:w-1/3 ">
           <button
-            className="flex items-center hover:text-success"
-            style={{ border: "solid thin", padding: "13px", color: "#ee1e46" }}
+            className="flex items-start hover:text-success"
+            style={{ border: "solid thin", padding: "22px", color: "#ee1e46" }}
             onClick={() => navigate(`/dashboardAdmin/AddAchivementDS`)}
           >
             <span>Add Achievement</span>

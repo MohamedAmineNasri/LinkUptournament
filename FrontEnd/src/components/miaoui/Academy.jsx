@@ -124,17 +124,17 @@ export const Academy = () => {
                   paddingLeft: "20px",
                   paddingTop: "50px",
                 }}
-                className="p-4 border border-gray-300 bg-opacity-25 bg-gray-900"
+                className=" border border-gray-300 bg-opacity-25 bg-gray-900"
               >
                 <div className="flex justify-center items-top">
                   <div className="col-md-12 col-lg-12 word-wrap-break  pb-6 text-center">
-                    <div className="flex flex-col sm:flex-row">
+                    <div className="flex flex-col sm:flex-row gap-19">
                       <div className="sm:w-1/2">
                         <img
                           src={academyData.Logo}
                           alt="Logo"
                           className="img-fluid max-w-sm sm:max-w-none m-auto mb-4"
-                          style={{ maxWidth: "200px" }}
+                          style={{ maxWidth: "220px" }}
                         />
                         <h3
                           className="mb-4 mt-3 text-white font-bold text-3xl"
@@ -188,8 +188,14 @@ export const Academy = () => {
                           academyLogo={academyData.Logo}
                           academyname={academyData.AcademyName}
                         /> */}
-                        <div className="p-4 flex items-center  gap-10 justify-end">
-                          <div className="w-1/2 pb-3">
+                        <div className="p-4 flex items-center  gap-10 justify-center">
+                          <div
+                            className="w-1/2 "
+                            style={{
+                              borderRadius: "10px",
+                              backgroundColor: "#3ab93a54",
+                            }}
+                          >
                             <FormControl
                               variant="standard"
                               sx={{ width: "100%" }}

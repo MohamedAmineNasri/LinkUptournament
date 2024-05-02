@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== FONT FACE ===== */
+@font-face {
+  font-family: "Space Grotesk";
+  font-weight: 600;
+  src: url("../fonts/SpaceGrotesk-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-weight: 700;
+  src: url("../fonts/SpaceGrotesk-Bold.ttf") format("truetype");
+}
+
+/* ===== REUSABLE CSS CLASS ===== */
+@layer components {
+  .container {
+    @apply mx-auto w-[calc(100%-3rem)] max-w-screen-xl;
+  }
+}
+
+/* Define keyframes for floating animation */
+@keyframes floating {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  /* Apply animation to the image */
+  .animate-floating {
+    animation: floating 1.5s infinite;
+  }

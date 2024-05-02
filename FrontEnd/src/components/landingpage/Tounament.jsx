@@ -17,7 +17,12 @@ export const Tournament = ({tournamentId}) => {
     const fetchTournament = async () => {
       const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
       const tournamentData = response.data.tournament;
-
+      let winnerName = "Unknown"; 
+      if (tournamentData.winner) {
+        const winnerResponse = await axios.get(`http://localhost:8000/Team/getTeam/${tournamentData.winner}`);
+        winnerName = winnerResponse.data.TeamName; 
+        console.log("winenr" ,winnerName)// Assuming there's a field called 'name' for the winner
+      }
       // Get current date
       const currentDate = new Date();
       // Convert tournament start date to Date object
@@ -36,6 +41,7 @@ export const Tournament = ({tournamentId}) => {
 
       setTournament({
         ...tournamentData,
+        winner: winnerName,
         // Format the date_debut field
         date_debut: new Date(tournamentData.date_debut).toLocaleDateString('en-US'),
       });
@@ -95,7 +101,16 @@ export const Tournament = ({tournamentId}) => {
               </h4>
               <p className="text-gray-600 text-center">
               {tournament.type}              </p>
-              
+              <div className="flex items-center justify-center"> {/* Flex container */}
+  <img 
+    src={`http://localhost:8000/uploads/trophe.png`} 
+    alt={tournament.name} 
+    className="w-14 h-14 p-1 -mt-1 mb-2 rounded-full"
+  />
+  <h1 className="text-gray-600 text-center ml-2"> {/* Add margin for space */}
+    {tournament.winner}
+  </h1>
+</div>
               <p className={`text-center ${
                   tournament.status === 'Coming Soon' ? 'text-orange-600' :
                   tournament.status === 'Started' ? 'text-green-600' :

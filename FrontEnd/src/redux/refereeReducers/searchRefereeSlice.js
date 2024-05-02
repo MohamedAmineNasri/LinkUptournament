@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { fetchRefereesFulfilled } from "./fetchRefereeSlice";
 
 const initialState = {
@@ -14,7 +13,7 @@ const initialState = {
 };
 
 export const searchReferees =
-  ({ name, role, availability }) =>
+  ({ name, role, availability, page, limit }) =>
   async (dispatch) => {
     dispatch(searchRefereesPending());
     try {
@@ -22,11 +21,13 @@ export const searchReferees =
       if (name) url += `name=${name}&`;
       if (role) url += `role=${role}&`;
       if (availability) url += `availability=${availability}&`;
+      if (page) url += `page=${page}&`;
+      if (limit) url += `limit=${limit}&`;
 
-      const response = await axios.get(url);
-      console.log(response.data);
-      dispatch(searchRefereesFulfilled(response.data));
-      dispatch(fetchRefereesFulfilled(response.data));
+      const response = await fetch(url);
+      const data = await response.json();
+      dispatch(searchRefereesFulfilled({ ...data, name, role, availability }));
+      dispatch(fetchRefereesFulfilled({ ...data, name, role, availability }));
     } catch (error) {
       dispatch(searchRefereesRejected(error.message));
     }

@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
-import { fetchteamById } from "../../redux/slice/teamSlice";
+import {
+  deletePlayerFromTeam,
+  fetchteamById,
+} from "../../redux/slice/teamSlice";
 import Table from "react-bootstrap/Table";
 import logo from "../../assets/Mi-imgs/personpng.png";
 import trohy from "../../assets/Mi-imgs/trophy.png";
@@ -19,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 import { updatetachievementStatus } from "../../redux/slice/tachievementSlice";
 import { fetchDefaultAchievementOfTeamByTeamId } from "../../redux/slice/tachievementSlice";
+import { deletePlayer } from "../../redux/playerReducers/deletePlayerSlice";
 import DefaultLayout from "../../Dashboard/src/layout/DefaultLayout";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -103,29 +107,14 @@ export const CheckSelectedTeam = () => {
     );
   }, [dispatch]);
 
-  //locked or unlocked effect
-  // const getRowStyle = (status) => {
-  //   // Define a default style
-  //   let style = {
-  //     opacity: 1,
-  //     transition: "all 0.3s ease-in-out",
-  //   };
-
-  //   // Apply a darker style if status is not "Active"
-  //   if (status !== "NOTActive") {
-  //     style.opacity = 0.5; // Make the row semi-transparent
-  //     style.backgroundColor = "#e0e0e0"; // Optional: apply a light gray background
-  //   }
-
-  //   return style;
-  // };
-
-  // delete logic
-
-  // const handledeletePlayer = () => {
-  //   dispatch(deleteTeam(props.teamid));
-  //   window.location.reload();
-  // };
+  const handleDeletePlayer = async (teamid, idp) => {
+    dispatch(deletePlayer(idp));
+    if (SelectedteamDataById !== null) {
+      console.log(teamid, idp);
+      dispatch(deletePlayerFromTeam({ it: teamid, ip: idp }));
+    }
+    window.location.reload();
+  };
 
   const style = {
     position: "absolute",
@@ -136,8 +125,7 @@ export const CheckSelectedTeam = () => {
     bgcolor: "#1a2635",
     boxShadow: 24,
     p: 4,
-    height: "90vh", // Using a percentage for flexibility
-    overflowY: "auto",
+    height: "100vh",
   };
   return (
     <>
@@ -249,8 +237,9 @@ export const CheckSelectedTeam = () => {
 
                         <TableContainer
                           sx={{
-                            maxHeight: "90%", // Adjust as needed to ensure the table fits within the modal
-                            overflowY: "hidden", // This enables scrolling in the table
+                            maxHeight: "90%",
+                            overflowY: "auto",
+                            overflowX: "hidden",
                           }}
                         >
                           <Table hover responsive="xl">
@@ -375,7 +364,12 @@ export const CheckSelectedTeam = () => {
                       <div>
                         <button
                           className="mb-3 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition"
-                          onClick={() => navigate(`/player/${idTeam}`)}
+                          // onClick={() => navigate(`/player/${idTeam}`)}
+                          onClick={() =>
+                            navigate("/manage/participant/player", {
+                              state: idTeam,
+                            })
+                          }
                         >
                           Player <FontAwesomeIcon icon={faPlus} />
                         </button>
@@ -522,15 +516,10 @@ export const CheckSelectedTeam = () => {
                                           <Button
                                             variant="secondary"
                                             onClick={() =>
-                                              console.log("Edit Player")
-                                            }
-                                          >
-                                            <FontAwesomeIcon icon={faEdit} />
-                                          </Button>
-                                          <Button
-                                            variant="secondary"
-                                            onClick={() =>
-                                              console.log("Delete Player")
+                                              handleDeletePlayer(
+                                                SelectedteamDataById._id,
+                                                player._id
+                                              )
                                             }
                                           >
                                             <FontAwesomeIcon icon={faTrash} />

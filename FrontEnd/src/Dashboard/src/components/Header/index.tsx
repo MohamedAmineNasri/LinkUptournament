@@ -1,12 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
-import DropdownMessage from './DropdownMessage';
+import DropdownMessage from "./DropdownMessage";
 import DropdownNotification from "./DropdownNotification";
-import DropdownUser from './DropdownUser';
+import DropdownUser from "./DropdownUser";
 import LogoIcon from "../../../../../public/images/logo_vector.svg";
-import DarkModeSwitcher from './DarkModeSwitcher';
+import DarkModeSwitcher from "./DarkModeSwitcher";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Translate from "../../../../components/miaoui/Apis/Translate .jsx"
+import Translate from "../../../../components/miaoui/Apis/Translate .jsx";
 import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { searchPlayers } from "../../../../redux/playerReducers/searchPlayerSlice.js";
 import { searchReferees } from "../../../../redux/refereeReducers/searchRefereeSlice.js";
@@ -23,16 +23,20 @@ const Header = (props: {
   const positionQuery = useSelector(
     (state) => state.root.searchPlayers.position
   );
+  const teamQuery = useSelector((state) => state.root.searchPlayers.team);
   const refereeQuery = useSelector(
     (state) => state.root.searchReferee.queryReferee
   );
+
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [name, setName] = useState("");
 
   useEffect(() => {
     if (playerLocation) {
-      dispatch(searchPlayers({ name: name, position: positionQuery }));
+      dispatch(
+        searchPlayers({ name: name, position: positionQuery, team: teamQuery })
+      );
     }
     if (refereeLocation) {
       dispatch(
@@ -43,7 +47,7 @@ const Header = (props: {
         })
       );
     }
-  }, [positionQuery, refereeQuery]);
+  }, [positionQuery, refereeQuery,teamQuery]);
 
   const handleChange = (event: Event) => {
     const { value } = event.target;
@@ -53,7 +57,13 @@ const Header = (props: {
     if (playerLocation) {
       setName(value);
       setTimeout(() => {
-        dispatch(searchPlayers({ name: value, position: positionQuery }));
+        dispatch(
+          searchPlayers({
+            name: value,
+            position: positionQuery,
+            team: teamQuery,
+          })
+        );
       }, 300);
     }
     if (refereeLocation) {
@@ -125,7 +135,7 @@ const Header = (props: {
         <div className="hidden sm:block">
           <form onSubmit={(e) => e.preventDefault()}>
             <div className="relative flex items-center">
-              <button className="absolute left-0 top-1/2 -translate-y-1/2">
+              <button className="absolute left-0 top-[15px] -translate-y-1/2">
                 <svg
                   className="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
                   width="20"
@@ -152,7 +162,7 @@ const Header = (props: {
               <input
                 type="text"
                 placeholder="Type to search..."
-                className="w-full bg-transparent pl-9 pr-4 text-black focus:outline-none dark:text-white xl:w-125"
+                className="border-none w-full bg-transparent pl-9 pr-4 text-black focus:outline-none dark:text-white xl:w-125"
                 value={searchQuery}
                 onChange={handleChange}
               />
@@ -164,33 +174,33 @@ const Header = (props: {
           <ul className="flex items-center gap-2 2xsm:gap-4">
             {/* google translate api call  */}
             <li>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        style={{
-                          backgroundColor: "transparent",
-                          border: "none",
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          style={{ fontSize: "24px" }}
-                          icon={faLanguage}
-                        />
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Translate />
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </li>
+              <Dropdown>
+                <Dropdown.Toggle
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                  }}
+                >
+                  <FontAwesomeIcon
+                    style={{ fontSize: "24px" }}
+                    icon={faLanguage}
+                  />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Translate />
+                </Dropdown.Menu>
+              </Dropdown>
+            </li>
             {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
 
             {/* <!-- Notification Menu Area --> */}
-            <DropdownNotification />
+            {/* <DropdownNotification /> */}
             {/* <!-- Notification Menu Area --> */}
 
             {/* <!-- Chat Notification Area --> */}
-            <DropdownMessage />
+            {/* <DropdownMessage /> */}
             {/* <!-- Chat Notification Area --> */}
           </ul>
 

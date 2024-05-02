@@ -20,7 +20,7 @@ var AchievementRouter = require('./Routes/Achievement');
 var TachievementRouter = require('./Routes/tachievement');
 
 const m = require("./Models/match");
-
+const u = require("./Controllers/registerController")
 const app = express();
 
 const corsOptions = require("./config/corsOptions");

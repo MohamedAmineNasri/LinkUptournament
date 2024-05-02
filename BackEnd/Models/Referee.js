@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const RefereeSchema = new mongoose.Schema({
+  avatar: String,
   name: {
     type: String,
   },

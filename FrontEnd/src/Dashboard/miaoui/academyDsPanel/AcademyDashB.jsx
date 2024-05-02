@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { editAcademyStatusToApproved } from "../../../redux/slice/academySlice";
 import { editAcademyStatusToRejected } from "../../../redux/slice/academySlice";
+import { deleteAcademy } from "../../../redux/slice/academySlice";
 import DropDownStautsFilter from "./DropDownStautsFilter";
 import DropDownNameFilter from "./DropDownNameFilter";
 import DropDownDateFilter from "./DropDownDateFilter";
@@ -70,6 +71,20 @@ const AcademyDashB = () => {
     e.preventDefault();
     dispatch(
       editAcademyStatusToRejected({
+        id: idAcademy,
+      })
+    ).then(() => {
+      // After successful deletion, fetch the updated team list
+      dispatch(fetchAllAcademy());
+      handleClose();
+    });
+  };
+
+  // Handle delete
+  const handleDelete = (e, idAcademy) => {
+    e.preventDefault();
+    dispatch(
+      deleteAcademy({
         id: idAcademy,
       })
     ).then(() => {
@@ -259,7 +274,7 @@ const AcademyDashB = () => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p
-                      className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
+                      className={`inline-flex rounded-full  py-1 px-3 text-sm font-medium ${
                         academy.Status === "Approved"
                           ? "bg-success text-white"
                           : academy.Status === "Rejected"
@@ -296,7 +311,10 @@ const AcademyDashB = () => {
                       >
                         <FontAwesomeIcon icon={faXmark} />
                       </button>
-                      <button className="hover:text-warning">
+                      <button
+                        className="hover:text-warning"
+                        onClick={(e) => handleDelete(e, academy._id)}
+                      >
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
                     </div>

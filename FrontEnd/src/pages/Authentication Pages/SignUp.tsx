@@ -16,7 +16,7 @@
         const steps = [
             { label: 'Step 1', fields: ['firstName', 'lastName'] },
             { label: 'Step 2', fields: ['email', 'phoneNumber', 'password'] },
-            { label: 'Step 3', fields: ['birthday', 'bio', 'roles'] },
+            { label: 'Step 3', fields: ['birthday', 'bio', 'roles','accountImage'] },
         ];
         import  soccerteam  from "../../assets/soccerteam.png";
         import  linkuptournamentlogo  from "../../assets/linkuptournamentlogo.png";
@@ -122,8 +122,6 @@
                 <div className="hidden w-full xl:block xl:w-1/2">
                     <div className="py-17.5 px-26 text-center">
                     <Link className="mb-5.5 inline-block" to="/">
-                        {/* <img className="hidden dark:block" src={Logo} alt="Logo" />
-                        <img className="dark:hidden" src={LogoDark} alt="Logo" /> */}
                             <img
                             src={linkuptournamentlogo}
                                 alt="Soccer Team"
@@ -131,7 +129,7 @@
                                 height="350"
                             />
                     </Link>
-                    <p className="2xl:px-20">
+                    <p className="2xl:px-20 text-black dark:text-white ">
                         Simplify tournaments, focus on the game. Elevate your experience effortlessly!
                     </p>
 
@@ -153,7 +151,7 @@
                     
                     <form onSubmit={handleSubmit}>
                         <div className="p-4">
-                            <span className="mb-1.5 block font-medium">Start for free</span>
+                            <span className="mb-1.5 block font-medium text-black dark:text-white">Start for free</span>
                             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                                 Sign Up To LinkUptournament
                             </h2>
@@ -233,9 +231,9 @@
                             </div>
                         </div>
                         <div className="mt-6 text-center">
-                                <p>
+                                <p className='text-black dark:text-white'>
                                     Already have an account?{' '}
-                                    <Link to="/signin" className="text-primary">
+                                    <Link to="/signin" className="text-primary text-black dark:text-white dark:text-white">
                                         Sign in
                                     </Link>
                                 </p>

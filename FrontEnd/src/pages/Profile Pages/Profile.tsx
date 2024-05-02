@@ -5,17 +5,28 @@
     import { Link } from 'react-router-dom';
     import { useSelector } from 'react-redux';
     import { selectCurrentToken, selectCurrentUser } from "../../../Features/auth/authSlice.js"; 
+    import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
+    import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+    import BadgeIcon from '@mui/icons-material/Badge';
     const Profile = () => {
         const user = useSelector(selectCurrentUser);
-        const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
-        const userRole = user ? `Role : ${user.roles}` : 'Welcome';
-        const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
-        console.log('user'+ user)
-        console.log('role'+ userRole)
+        const userFullName = user ? `${user.firstName} ${user.lastName}` : 'Welcome';
+        const userPhone = user ? `${user.phoneNumber} ` : 'Number';
+        const userBirthday = user ? new Date(user.birthday).toLocaleDateString() : 'birthday';
+        const userRole = user ? ` ${user.roles}` : 'Role';
+
+
+        //default location for maps-------------------------------- 
+        const initialPosition = localStorage.setItem("selectedPosition" , JSON.stringify([36.84916714107817, 10.201032618108135]))
+        //   -----------------------------------------------
+        
+
+        const userBio = user ? `${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
+
 
         const handleClick = () => {
             localStorage.setItem('facebook', 'test facebook');
-          };
+        };
     return (
         <DefaultLayout>
         <Breadcrumb pageName="Profile" />
@@ -103,25 +114,24 @@
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
                 {userFullName}
                 </h3>
-                <p className="font-medium">{userRole}</p>
                 <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
                 <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white">
-                    259
+                    {userPhone}
                     </span>
-                    <span className="text-sm">Posts</span>
+                    <span className="text-sm text-black dark:text-white"><PhoneEnabledIcon /></span>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white">
-                    129K
+                    {userBirthday}
                     </span>
-                    <span className="text-sm">Followers</span>
+                    <span className="text-sm text-black dark:text-white"><CalendarMonthIcon /></span>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white">
-                    2K
+                        {userRole}
                     </span>
-                    <span className="text-sm">Following</span>
+                    <span className="text-sm text-black dark:text-white"><BadgeIcon /></span>
                 </div>
                 </div>
 
@@ -129,7 +139,7 @@
                 <h4 className="font-semibold text-black dark:text-white">
                     About Me
                 </h4>
-                <p className="mt-4.5">
+                <p className="mt-4.5 text-black dark:text-white">
                     {userBio}
                 </p>
                 </div>
@@ -138,7 +148,7 @@
                 <h4 className="mb-3.5 font-medium text-black dark:text-white">
                     Follow me on
                 </h4>
-                <div className="flex items-center justify-center gap-3.5">
+                <div className="flex items-center justify-center gap-3.5 text-black dark:text-white">
                 <Link
                     to="#"
                     className="hover:text-primary"

@@ -35,6 +35,7 @@ const usersSchema = new mongoose.Schema(
                 "Manager",
                 "TournamentCoordinator",
                 "Supporter",
+                "Recruiter"
             ],
             default: "Supporter",
             },

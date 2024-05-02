@@ -20,6 +20,14 @@
             { label: 'Step 3', fields: ['birthday', 'bio', 'roles'] },
         ];
 
+        const roleOptions = [
+            "Agent",
+            "Manager",
+            "TournamentCoordinator",
+            "Supporter",
+            "Recruiter"
+          ];
+
         const SignUp: React.FC = () => {
             const dispatch = useDispatch();
             const navigate = useNavigate();
@@ -265,7 +273,19 @@
                             {steps[activeStep].fields.map((field) => (
                                 <div className="form-group" key={field}>
                                     <label className="text-black dark:text-white">{field}</label>
-                                    {field === 'birthday' ? (
+                                    {field === 'roles' ? (
+                                    <select
+                                        className="form-control"
+                                        name={field}
+                                        value={formData[field]}
+                                        onChange={handleChange}
+                                        required
+                                    >
+                                        {roleOptions.map((option) => (
+                                        <option key={option} value={option}>{option}</option>
+                                        ))}
+                                    </select>) :
+                                    field === 'birthday' ? (
                                         <input
                                             type="date"
                                             className="form-control"

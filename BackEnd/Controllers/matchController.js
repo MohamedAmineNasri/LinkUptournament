@@ -1,9 +1,11 @@
 const match = require("../Models/match");
 const player = require("../Models/Player");
 const tournament = require("../Models/Tournament")
+
 const Filter = require('bad-words')
 const filter = new Filter();
 filter.addWords('zebi', '3asba', 'fack','mnayik','fack');
+
 
 //get all 
 
@@ -12,10 +14,17 @@ async function getAllematch(req, res) {
  
   res.json(matches)
   }
+  async function getAllematchByNameTeam(req, res) {
+    const matches = await match.find()
+      .populate('team1', 'TeamName TeamLogo')  
+      .populate('team2', 'TeamName TeamLogo'); 
+    res.json(matches)
+  }
+
   async function getmatchByTouernement(req, res) {
     const { id } = req.params; 
     const matchet = await match.find({tournementId:id})
-     res.json(matchet)
+      res.json(matchet)
   }
   async function getmatchBygroup(req, res) {
     const { id } = req.params; 
@@ -23,6 +32,7 @@ async function getAllematch(req, res) {
      res.json(matchet)
   }
 //get ticket id 
+
 
 
 async function verifyTicket(req, res) {
@@ -187,7 +197,11 @@ async function updatescoreById(req, res) {
     updatescore_ById,
     getmatchByTouernement,
     verifyTicket,
-    getmatchBygroup
+
+    getmatchBygroup,
+
+    getAllematchByNameTeam
+
   };
 
 

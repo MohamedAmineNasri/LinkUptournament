@@ -16,7 +16,7 @@
         const steps = [
             { label: 'Step 1', fields: ['firstName', 'lastName'] },
             { label: 'Step 2', fields: ['email', 'phoneNumber', 'password'] },
-            { label: 'Step 3', fields: ['birthday', 'bio', 'roles'] },
+            { label: 'Step 3', fields: ['birthday', 'bio', 'roles','accountImage'] },
         ];
         import  soccerteam  from "../../assets/soccerteam.png";
         import  linkuptournamentlogo  from "../../assets/linkuptournamentlogo.png";

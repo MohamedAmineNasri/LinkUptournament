@@ -130,7 +130,7 @@ export default function Testimonials() {
                   </svg>
                   <img
                     className="relative rounded-full"
-                    src="https://scontent.ftun14-1.fna.fbcdn.net/v/t1.15752-9/260661486_291736219628166_2022704157349701522_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=BzTS97ZfL5MQ7kNvgGO9LRP&_nc_ht=scontent.ftun14-1.fna&oh=03_Q7cD1QGuzTK39mNNkMFiWjzPUpXQzYAi3FETarOcKo1L3p2vEg&oe=665249BE"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Florentino_perez.jpg/618px-Florentino_perez.jpg"
                     width={96}
                     height={96}
                     alt="Testimonial 01"
@@ -145,7 +145,7 @@ export default function Testimonials() {
                 <div className="text-gray-600">
                   <span>CEO & Co-Founder</span>{" "}
                   <a className="text-green-600 hover:underline" href="#0">
-                    @Dropbox
+                    @Real Madrid
                   </a>
                 </div>
               </div>

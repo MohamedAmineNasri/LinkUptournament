@@ -113,6 +113,7 @@ const AddTour = () => {
           date_debut: dateDebut,
           date_fin: dateFin,
           teams: selectedTeams,
+          nbphase:  nbP , 
         };
         console.log("here")
         const addTournamentResponse = await dispatch(

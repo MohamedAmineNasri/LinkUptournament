@@ -208,30 +208,32 @@ const Chat = () => {
                     </div>
 
                 </main> 
-                <Dialog open={openDialog} onClose={handleClose}>
+                <Dialog open={openDialog} onClose={handleClose} PaperProps={{ style: { backgroundColor: '#262a42' } }}>
                 <DialogTitle>Create New Chatroom</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Enter the name for the new chatroom:
-                    </DialogContentText>
+                <DialogContentText style={{ color: 'white' }}>
+                Enter the name for the new chatroom :
+                </DialogContentText>
+
                     <TextField
-                        autoFocus
-                        margin="dense"
-                        id="chatroomName"
-                        label="Chatroom Name"
-                        type="text"
-                        fullWidth
-                        value={chatroomName}
-                        onChange={(e) => setChatroomName(e.target.value)}
-                        error={!!chatroomNameError}
-                        helperText={chatroomNameError}
+                    autoFocus
+                    margin="dense"
+                    id="chatroomName"
+                    label="Chatroom Name"
+                    type="text"
+                    fullWidth
+                    value={chatroomName}
+                    onChange={(e) => setChatroomName(e.target.value)}
+                    error={!!chatroomNameError}
+                    helperText={chatroomNameError}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleCreateChatroom} variant="contained" color="primary">Create</Button>
                 </DialogActions>
-            </Dialog>
+                </Dialog>
+
         </DefaultLayout>
     );
 };

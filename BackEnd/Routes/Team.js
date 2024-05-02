@@ -41,6 +41,7 @@ router.post("/resetGSdata/:id",teamService.resetGroupStageData);
 router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
 
 router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
+router.put("/removePlayerFromTeam/:idt/:idp",teamService.removePlayerFromTeam);
 
 router.get('/teams/search/:searchString', teamService.getTeamsByName);
 

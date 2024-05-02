@@ -397,6 +397,17 @@ const deleteTeamById = async (req, res, next) => {
   const teamData = await Team.findByIdAndDelete(req.params.id);
   res.json("deleted sucessfully" + teamData);
 };
+//-------------------------------------------------------------------------------------------------
+
+ const removePlayerFromTeam = async (req,res) => {
+  const team = await Team.findOneAndUpdate(
+    { _id: req.params.idt },
+    { $pull: { Players: req.params.idp } }, 
+    { new: true }
+  );
+  console.log(team ,"removed---------------------------------------")
+  res.json("deleted sucessfully" + team);
+};
 
 
 
@@ -564,4 +575,4 @@ const UpdateTeamsStatsFromFinishedMatches = async (req, res, next) => {
 
 
 
-module.exports = {UpdateTeamsStatsFromFinishedMatches,getTeamsByName , getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};
+module.exports = {removePlayerFromTeam,UpdateTeamsStatsFromFinishedMatches,getTeamsByName , getAllTeams,getTeamById2,getPlayersByTeamId, addTeam, deleteTeamById, getTeamById,updateTeamMatchesWon,updateTeamMatchesLost,updateTeamMatchesDrawn,updateGoals_scored,updateGoals_received,addTeamAndAssaignToAcademy,cancelTeamMatchesWon,cancelTeamMatchesLost,cancelTeamMatchesDrawn,cancelGoals_received,cancelGoals_scored,resetGroupStageData ,deleteTeamByIdandFromAcademy,getTeamByAcademyId,updateTeam,assignPlayerToTeam,updateTeamSameName};

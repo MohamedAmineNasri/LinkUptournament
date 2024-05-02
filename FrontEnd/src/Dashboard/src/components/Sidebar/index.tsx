@@ -77,9 +77,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     );
   }
 }, []);
-if(academyData){
-  console.log(academyData)
-}
 // -----------------------------------------------------------------------
 
   return (

@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
-import { fetchteamById } from "../../redux/slice/teamSlice";
+import {
+  deletePlayerFromTeam,
+  fetchteamById,
+} from "../../redux/slice/teamSlice";
 import Table from "react-bootstrap/Table";
 import logo from "../../assets/Mi-imgs/personpng.png";
 import trohy from "../../assets/Mi-imgs/trophy.png";
@@ -19,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 import { updatetachievementStatus } from "../../redux/slice/tachievementSlice";
 import { fetchDefaultAchievementOfTeamByTeamId } from "../../redux/slice/tachievementSlice";
+import { deletePlayer } from "../../redux/playerReducers/deletePlayerSlice";
 import DefaultLayout from "../../Dashboard/src/layout/DefaultLayout";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -102,6 +106,15 @@ export const CheckSelectedTeam = () => {
       })
     );
   }, [dispatch]);
+
+  const handleDeletePlayer = async (teamid, idp) => {
+    dispatch(deletePlayer(idp));
+    if (SelectedteamDataById !== null) {
+      console.log(teamid, idp);
+      dispatch(deletePlayerFromTeam({ it: teamid, ip: idp }));
+    }
+    window.location.reload();
+  };
 
   const style = {
     position: "absolute",
@@ -506,7 +519,10 @@ export const CheckSelectedTeam = () => {
                                           <Button
                                             variant="secondary"
                                             onClick={() =>
-                                              console.log("Delete Player")
+                                              handleDeletePlayer(
+                                                SelectedteamDataById._id,
+                                                player._id
+                                              )
                                             }
                                           >
                                             <FontAwesomeIcon icon={faTrash} />

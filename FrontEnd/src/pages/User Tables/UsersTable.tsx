@@ -266,49 +266,42 @@ const changePage = ({ selected }) => {
                 </DialogContent>
             </MuiDialog>
             <ReactPaginate
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                pageCount={pageCount}
-                containerClassName={"pagination"}
-                disabledClassName={"pagination__link--disabled"}
-                
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "1rem",
-                    marginBottom: "1rem",
-                    padding: "1rem"
-                }}
-                previousClassName={"page-item"}
-                previousLinkClassName={"page-link"}
-                nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
-                breakLabel={"..."}
-                breakClassName={"page-item"}
-                breakLinkClassName={"page-link"}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                forcePage={pageNumber}
-                onPageChange={changePage}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                activeClassName={"active"}
-                pageStyle={{
-                    margin: "0 0.5rem",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    backgroundColor: "#f0f0f0",
-                    color: "#333",
-                    transition: "background-color 0.3s ease",
-                }}
-                activeLinkStyle={{
-                    backgroundColor: "#007bff",
-                    color: "#fff",
-                }}
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            pageCount={pageCount}
+            containerClassName={"pagination flex flex-row justify-center space-x-4"} // Added flex classes here
+            disabledClassName={"pagination__link--disabled"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakLabel={"..."}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            forcePage={pageNumber}
+            onPageChange={changePage}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            activeClassName={"active"}
+            pageStyle={{
+                margin: "0 0.5rem",
+                padding: "0.5rem",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                cursor: "pointer",
+                backgroundColor: "#f0f0f0",
+                color: "#333",
+                transition: "background-color 0.3s ease",
+            }}
+            activeLinkStyle={{
+                backgroundColor: "#007bff",
+                color: "#fff",
+            }}
             />
+
+
 
 
         </div>

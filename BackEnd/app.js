@@ -20,7 +20,7 @@ var AchievementRouter = require('./Routes/Achievement');
 var TachievementRouter = require('./Routes/tachievement');
 
 const m = require("./Models/match");
-
+const u = require("./Controllers/registerController")
 const app = express();
 
 const corsOptions = require("./config/corsOptions");
@@ -217,8 +217,9 @@ app.get("/config", (req, res) => {
   });
 });
 
-app.post("/create-payment-intent/:id", async (req, res) => {
+app.get("/create-payment-intent/:id", async (req, res) => {
   try {
+    const user = await u.sendWelcomeEmail("omriyasser12@gmail.com","yasser","omri")
     const matchet = await m.findById(req.params.id);
 
     // Check if ticket number is greater than 0

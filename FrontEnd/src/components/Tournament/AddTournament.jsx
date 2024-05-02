@@ -15,7 +15,7 @@ const AddTour = () => {
   const [logo, setLogo] = useState(null);
   const [uploadedLogo, setUploadedLogo] = useState(null);
   const [rules, setRules] = useState("");
-  const [status, setStatus] = useState("comming soon");
+  const [status, setStatus] = useState("Coming Soon");
   const [winner] = useState(null);
   const [dateDebut, setDateDebut] = useState("");
   const [dateFin, setDateFin] = useState("");

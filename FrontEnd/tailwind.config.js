@@ -89,6 +89,7 @@ module.exports = withMT({
         warning: "#FFA70B",
         "custom-red": "#ee1e46",
         "custom-green": "#234F1E",
+        "custom-orange": "#F28C28",
       },
       fontSize: {
         /** Landing Page */

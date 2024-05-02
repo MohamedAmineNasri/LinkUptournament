@@ -15,6 +15,7 @@ import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
 import { Button } from "@material-tailwind/react";
 
 export const FetchTour = ({ tournamentId }) => {
+  console.log("fetch tour ",tournamentId)
   const [TournementId, setTournementId] = useState([]);
   const [Team1name, setTeam1name] = useState([]);
   const [Team1logo, setTeam1logo] = useState([]);
@@ -76,7 +77,7 @@ export const FetchTour = ({ tournamentId }) => {
   if (TournementId.length === 0) {
     return (
       <div style={{ backgroundColor: "rgb(35, 79, 30)" }}>
-        <AddMatchPopUpWindow tourid={tournamentId} />
+        <AddMatchPopUpWindow tournamentId={tournamentId} />
         <br />
         Loading tournament...
       </div>
@@ -88,7 +89,7 @@ export const FetchTour = ({ tournamentId }) => {
       
     <div className="rounded-sm border border-stroke bg-white px-3 py-2 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="site-section bg-dark ">
-        <AddMatchPopUpWindow></AddMatchPopUpWindow>
+        <AddMatchPopUpWindow tournamentId={tournamentId}></AddMatchPopUpWindow>
           <div className="container">
           
             <div className="row">

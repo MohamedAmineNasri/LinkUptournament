@@ -53,6 +53,14 @@ const Header = () => {
         </li>
         <li>
             <button
+                onClick={() => navigate("/tournaments")}
+                className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+            >
+                Tournaments
+            </button>
+        </li>
+        <li>
+            <button
                 onClick={() => navigate("/lineup")}
                 className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
             >

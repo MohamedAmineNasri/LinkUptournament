@@ -20,9 +20,10 @@ import { convertToBase64 } from "../../utilities/convertFileBase64";
 import { number } from "prop-types";
 
 
-export const AddMatchPopUpWindow = (props) => {
+export const AddMatchPopUpWindow = ({ tournamentId }) => {
+  console.log("Matchpopup ",tournamentId)
   const [show, setShow] = useState(false);
-  const { tournamentId } = useParams();
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   //add logic

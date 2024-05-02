@@ -87,6 +87,7 @@ import HomeLandingPage from "./landingPage/HomeLandingPage";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Tournaments from "./components/landingpage/Tournaments";
 
 function App() {
   // animeaa
@@ -140,6 +141,7 @@ function App() {
           <Route index element={<HomeLandingPage />} />
           <Route path="/lineup" element={<TeamLineUp />} />
           <Route path="/ChatFront" element={<FrontUserChat />} />
+          <Route path="/tournaments" element={<Tournaments />} />
           {/**YASSINE_ROUTES*/}
           {/* <Route path="/page" element={<LandingPage />} /> */}
           <Route path="/manage" element={<TournamentLayout />}>

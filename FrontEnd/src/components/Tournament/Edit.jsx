@@ -34,10 +34,24 @@ const Edit = () => {
         setTournament(tournamentData);
         setName(tournamentData.name);
         setLogo(tournamentData.logo);
+        const currentDate = new Date();
+      // Convert tournament start date to Date object
+      const startDate = new Date(tournamentData.date_debut);
+      // Convert tournament end date to Date object
+      const endDate = new Date(tournamentData.date_fin);
+
+      // Check if tournament has started or ended
+      if (currentDate < startDate) {
+        tournamentData.status = 'Coming Soon';
+      } else if (currentDate > endDate) {
+        tournamentData.status = 'Ended';
+      } else {
+        tournamentData.status = 'Started';
+      }
         setStatus(tournamentData.status);
         setRules(tournamentData.rules);
-        setDateDebut(tournamentData.dateDebut);
-        setDateFin(tournamentData.dateFin);
+        setDateDebut(tournamentData.date_debut);
+        setDateFin(tournamentData.date_fin);
         setWinner(tournamentData.winner); 
         // Set winner from tournament data
       } catch (error) {

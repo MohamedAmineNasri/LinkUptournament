@@ -69,32 +69,39 @@ io.on("connection", async (socket) => {
   });
 
   // Handle chatroom message event
+  const Filter = require('bad-words');
+  const filter = new Filter();
+  filter.addWords('zebi', '3asba', 'fack','mnayik','fack');
+  
   socket.on("chatroomMessage", async ({ id, message }) => {
     if (message.trim().length > 0) {
       try {
+        // Blur out bad words in the message
+        const blurredMessage = filter.clean(message);
+  
         // Fetch user details from the database using the stored userId
         const foundUser = await User.findById(socket.userId);
-
+  
         if (!foundUser) {
           console.log("User not found for ID:", socket.userId);
           return;
         }
-
+  
         // Create a new message object
         const newMessage = new Message({
           chatroom: id,
           user: socket.userId,
-          message,
+          message: blurredMessage, // Send the blurred message to the chatroom
         });
-
+  
         // Emit the new message to the chatroom
         io.to(id).emit("newMessage", {
-          message,
+          message: blurredMessage, // Send the blurred message to the client
           name: `${foundUser.firstName} ${foundUser.lastName}`,
           userId: socket.userId,
         });
-
-        // Save the new message to the database
+  
+        // Save the original message to the database
         await newMessage.save();
       } catch (error) {
         console.error("Error sending message:", error);

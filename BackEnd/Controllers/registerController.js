@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 // Set your SendinBlue API key
-// const apiKey = ' ';
+const apiKey = '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';
 // Configure API key authorization: api-key
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKeyAuth = defaultClient.authentications['api-key'];
@@ -171,7 +171,15 @@ const sendPaymentEmail = async (email, firstName, lastName) => {
         <div class="container">
             <h1>Thank you for buying ticket !</h1>
             <p>Dear <span class="highlight">${firstName} ${lastName}</span>,</p>
-            <p>We're thrilled to welcome you to LinkUptournament, your gateway to the exciting world of football tournaments!</p>
+            <p>I hope this message finds you well.
+
+            I wanted to take a moment to express my sincere gratitude for choosing to purchase tickets from [Your Site Name]. We truly appreciate your support and trust in our services.
+            
+            Your recent purchase means a great deal to us, and we are committed to ensuring that you have a seamless and enjoyable experience throughout your journey with us.
+            
+            If you have any questions or need assistance with your tickets or any other aspect of our services, please do not hesitate to reach out to our customer support team. We are here to help you in any way we can.
+            
+            Once again, thank you for choosing [Your Site Name]. We look forward to serving you again in the future.</p>
             <img src="https://imgs.search.brave.com/RNhCKYPRo3vyrxWkc9naCD0GHLT_edhH6ZbalII4bNg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvOTA0/Mzc4MzYvcGhvdG8v/aXRhbGlhbi1mb290/YmFsbC1mYW5zLWNo/ZWVyaW5nLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz16c0s0/dl9kRFhUT2t0cXhG/VkhDdUR2YjFwXzZ5/eWdsQmtZWFBTRDA1/ajBVPQ" alt="Football Image">
             <p>With LinkUptournament, you'll discover a vibrant community of football enthusiasts and opportunities to connect, compete, and enjoy the beautiful game.</p>
             <p>Whether you're a player, coach, supporter, or involved in any other role, we're here to make your tournament experience seamless and enjoyable.</p>

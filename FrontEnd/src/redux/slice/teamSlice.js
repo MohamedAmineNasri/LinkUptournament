@@ -61,6 +61,21 @@ export const deleteTeam = createAsyncThunk(
     }
   }
 );
+export const deletePlayerFromTeam  = createAsyncThunk(
+  'team/deletePlayer',
+  async ({it,ip}) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/team/removePlayerFromTeam/${it}/${ip}`
+      );
+      console.log(it,ip)
+      return response.data;
+    } catch (error) {
+      throw Error('Error removing player from team: ' + error.message);
+    }
+  }
+);
+
 
 
 export const addTeamAndAssaignToAcademy = createAsyncThunk(
@@ -122,6 +137,18 @@ export const editTeamSameName = createAsyncThunk(
       return response.data;
     } catch (error) {
       throw Error('Error edit teams: ' + error.message);
+    }
+  }
+);
+
+export const UpdateTeamsStatsFromFinishedMatches =  createAsyncThunk(
+  'team/UpdateTeamsStatsFromFinishedMatches', 
+  async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/Team/UpdateTeamsStatsFromFinishedMatches');
+      return response.data;
+    } catch (error) {
+      throw Error('Error fetching teams: ' + error.message);
     }
   }
 );

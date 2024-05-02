@@ -96,7 +96,7 @@ function App() {
     AOS.init({
       duration: 1000, // Change the animation duration as per your preference
     });
-    const timeout = setTimeout(() => setLoading(false), 3000);
+    const timeout = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timeout);
   }, []);
 

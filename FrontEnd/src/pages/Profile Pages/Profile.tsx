@@ -14,7 +14,15 @@
         const userPhone = user ? `${user.phoneNumber} ` : 'Number';
         const userBirthday = user ? new Date(user.birthday).toLocaleDateString() : 'birthday';
         const userRole = user ? ` ${user.roles}` : 'Role';
+
+
+        //default location for maps-------------------------------- 
+        const initialPosition = localStorage.setItem("selectedPosition" , JSON.stringify([36.84916714107817, 10.201032618108135]))
+        //   -----------------------------------------------
+        
+
         const userBio = user ? `${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
+
 
         const handleClick = () => {
             localStorage.setItem('facebook', 'test facebook');

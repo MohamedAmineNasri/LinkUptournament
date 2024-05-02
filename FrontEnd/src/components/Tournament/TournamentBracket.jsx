@@ -113,7 +113,7 @@ const semifinalMatches = matchesd.filter(match => match.matchtype === 'Semi Fina
                   return (
                     <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
                       {/* Team 1 */}
-                      <li className="team team-top">
+                      <li className="team team-top  ">
                         <div className="flex justify-between items-center w-full">
                           <div className="flex items-center">
                             <img
@@ -130,7 +130,7 @@ const semifinalMatches = matchesd.filter(match => match.matchtype === 'Semi Fina
                         </div>
                       </li>
                       {/* Team 2 */}
-                      <li className="team team-bottom">
+                      <li className="team team-bottom dark:shadow-white">
                         <div className="flex justify-between items-center w-full">
                           <div className="flex items-center">
                             <img

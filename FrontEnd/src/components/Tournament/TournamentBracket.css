@@ -109,7 +109,7 @@
 .champion li,
 .round li {
   background-color: #fff;
-  box-shadow: none;
+ 
   opacity: 0.80;
 }
 .current li {

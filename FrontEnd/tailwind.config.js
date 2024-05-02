@@ -337,6 +337,7 @@ module.exports = withMT({
         6: "0px 3px 15px rgba(0, 0, 0, 0.1)",
         7: "-5px 0 0 #313D4A, 5px 0 0 #313D4A",
         8: "1px 0 0 #313D4A, -1px 0 0 #313D4A, 0 1px 0 #313D4A, 0 -1px 0 #313D4A, 0 3px 13px rgb(0 0 0 / 8%)",
+        white: '0 1px 4px rgba(255, 255, 255, 0.1)',
       },
       dropShadow: {
         1: "0px 1px 0px #E2E8F0",

@@ -22,11 +22,13 @@ const Wrapper = styled('div')(({ theme }) => ({
 const VideoContainer = styled('div')(({ theme }) => ({
     position: 'relative',
     width: '100%',
-    height: '100%', // Set the height to 100%
+    height: '100%', 
     border: '1px solid #E8E8E8',
     marginBottom: '1em',
-    background: `url('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4efebd150179589.62f5014d9f4fa.gif') center/cover no-repeat`,
+    background: `url('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4efebd150179589.62f5014d9f4fa.gif') center/cover `,
+    backgroundRepeat: 'no-repeat', // Prevent background image from repeating
 }));
+
 
 
 const VideoPlayer = styled('video')(({ theme }) => ({
@@ -48,11 +50,12 @@ const Button = styled('button')(({ theme }) => ({
     },
 }));
 
-
+const defaultVideoSource = 'https://i.pinimg.com/originals/fa/67/c5/fa67c55e124872f72910116c1d6039b0.gif';
 const VideoLiveStreamUi = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [rightSideVisible, setRightSideVisible] = useState(false);
-    
+    const [videoSource, setVideoSource] = useState(defaultVideoSource);
+    const [streamActive, setStreamActive] = useState(false);
     // Toggle dark mode
     const toggleDarkMode = () => {
         console.log("ddd")
@@ -81,6 +84,7 @@ const VideoLiveStreamUi = () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); 
             setStream(stream);
+            setStreamActive(true)
             const peer = createPeer();
             stream.getTracks().forEach(track => peer.addTrack(track, stream));
             if (videoRef.current) {
@@ -197,6 +201,19 @@ const VideoLiveStreamUi = () => {
         }
         }, [user]);
 
+        const leaveStream = () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                // Remove srcObject when stream is stopped
+                if (videoRef.current) {
+                    videoRef.current.srcObject = null;
+                }
+            }
+            setStream(null);
+            setVideoSource(defaultVideoSource);
+            setStreamActive(false); // Set stream inactive
+        };
+        
     return (
         <DefaultLayout>
         <div>
@@ -246,8 +263,11 @@ const VideoLiveStreamUi = () => {
                 <button className="video-action-button mic"></button>
                 <button className="video-action-button camera"></button>
                 <button className="video-action-button maximize"></button>
-                <button className="video-action-button endcall" onClick={startStream}>Start</button>
-                <button className="video-action-button endcall">Leave</button>
+                {streamActive ? (
+                    <Button className="video-action-button endcall" onClick={leaveStream}>Leave</Button>
+                ) : (
+                    <Button className="video-action-button endcall" onClick={startStream}>Start Stream</Button>
+                )}
                 <button className="video-action-button magnifier">
                     <svg
                     xmlns="http://www.w3.org/2000/svg"

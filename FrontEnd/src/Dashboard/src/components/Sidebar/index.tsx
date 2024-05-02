@@ -181,7 +181,7 @@ const ForAcademiesRole = () => {
               {/* <!-- Menu Item Calendar --> */}
 
               {/* <!-- Menu Item Profile --> */}
-              {userRole.includes("TournamentCoordinator") && (
+              {ForAcademiesRole() && (
               <li>
                 <NavLink
                   to="/manage"

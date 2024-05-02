@@ -87,6 +87,7 @@ import HomeLandingPage from "./landingPage/HomeLandingPage";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import NotFound from "./landingPage/notfound";
 
 function App() {
   // animeaa
@@ -238,6 +239,7 @@ function App() {
         {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */} 
   
         {/* </Route> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       )}
     </>

@@ -180,15 +180,15 @@ const AddTour = () => {
   return (
     <>
       <form
-        className="shadow-2xl p-6 bg-green-50 dark:bg-slate-700 rounded-lg"
+        className="shadow-2xl p-6 bg-green-50 dark:border-strokedark dark:bg-boxdark rounded-lg"
         onSubmit={handleSaveChanges}
       >
         <div className="space-y-12 ">
           <div className="border-b border-slate-500 dark:border-gray-900/10 pb-12 ">
-            <h2 className="text-base font-semibold leading-7 text-slate-900 dark:text-slate-50">
+            <h2 className="text-base font-semibold leading-7 text-black dark:text-white">
               Tournament Information
             </h2>
-            <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400 ">
+            <p className="mt-1 text-sm leading-6 text-black dark:text-white ">
               Please provide the tournament information here and affect teams
             </p>
 
@@ -225,7 +225,7 @@ const AddTour = () => {
               <div className="col-span-4 ">
                 <label
                   htmlFor="tournament-name"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   Tournament Name
                 </label>
@@ -251,7 +251,7 @@ const AddTour = () => {
               <div className="col-span-3">
                 <label
                   htmlFor="datedebut"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   Start Date
                 </label>
@@ -277,7 +277,7 @@ const AddTour = () => {
               <div className="col-span-3">
                 <label
                   htmlFor="datefin"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   End Date
                 </label>
@@ -303,7 +303,7 @@ const AddTour = () => {
               <div className="col-span-5">
                 <label
                   htmlFor="rules"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   Rules
                 </label>
@@ -323,10 +323,10 @@ const AddTour = () => {
         </div>
 
         <div className="border-b border-slate-500 dark:border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-slate-900 dark:text-slate-50 pt-6">
+          <h2 className="text-base font-semibold leading-7 text-black dark:text-white pt-6">
             Teams
           </h2>
-          <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-sm leading-6 text-black dark:text-white">
   Please Affect{" "}
   <span style={{ fontWeight: "bold", color: "#FF5733" }}>{teamCount}</span> teams to your tournament
 </p>

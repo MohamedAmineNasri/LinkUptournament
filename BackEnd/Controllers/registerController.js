@@ -7,7 +7,7 @@ const apiKey = '';
 // Configure API key authorization: api-key
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKeyAuth = defaultClient.authentications['api-key'];
-apiKeyAuth.apiKey = apiKey;
+apiKeyAuth.apiKey = "";
 
 // Create an instance of the SendinBlue API
 const sendinblueApi = new SibApiV3Sdk.TransactionalEmailsApi();

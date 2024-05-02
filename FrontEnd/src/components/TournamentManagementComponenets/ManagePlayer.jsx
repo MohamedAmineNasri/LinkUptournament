@@ -26,6 +26,7 @@ import Pagination from "./Pagination";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AssignPlayer from "./AssignPlayer";
 import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
+import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
 
 const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
@@ -51,6 +52,8 @@ const ManagePlayer = () => {
   );
   const teams =
     useSelector((state) => state.root.academy.academyData.teams) || [];
+  const academy = useSelector((state) => state.root.academy.academyData);
+  console.log("academy___________", academy);
 
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -74,7 +77,7 @@ const ManagePlayer = () => {
   const [position, setPosition] = useState("");
 
   useEffect(() => {
-    if (user?.roles[0] == "Manager" && teams) {
+    if (user?.roles[0] == "Manager" && teams.length != 0) {
       dispatch(getPlayersTeam(teams[0]?._id));
       setTeamFilter(teams[0]?._id);
     }
@@ -195,10 +198,10 @@ const ManagePlayer = () => {
     }
     setOpenAddForm(false);
   };
-
+  console.log(academy.length == 0 && teams.length == 0);
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {!players ? (
+      {academy.length != 0 && teams.length == 0 ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">

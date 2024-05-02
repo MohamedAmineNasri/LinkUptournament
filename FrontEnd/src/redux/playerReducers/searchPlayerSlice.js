@@ -47,6 +47,7 @@ export const searchPlayers =
           type: "search",
           name,
           position,
+          team
         })
       );
     } catch (error) {

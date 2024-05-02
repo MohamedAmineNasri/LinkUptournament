@@ -88,7 +88,7 @@ import Chatbot from "react-chatbot-kit";
 import config from "./components/ChatBotComponents/chatbot/config";
 import ActionProvider from "./components/ChatBotComponents/chatbot/ActionProvider";
 import MessageParser from "./components/ChatBotComponents/chatbot/MessageParser";
-import 'react-chatbot-kit/build/main.css'
+import "react-chatbot-kit/build/main.css";
 
 function App() {
   // animeaa
@@ -133,15 +133,18 @@ function App() {
       ) : (
         <Routes>
           <Route path="/qr" element={<QrCode />} />
-          <Route path="/ChatBot" element={
-          <div style={chatbotStyle}>
-            <Chatbot
-              config={config}
-              actionProvider={ActionProvider}
-              messageParser={MessageParser}
-            />
-          </div>
-        } />
+          <Route
+            path="/ChatBot"
+            element={
+              <div style={chatbotStyle}>
+                <Chatbot
+                  config={config}
+                  actionProvider={ActionProvider}
+                  messageParser={MessageParser}
+                />
+              </div>
+            }
+          />
 
           <Route path="/payment/:id" element={<Payment />} />
           <Route path="/c/:id" element={<Completiont />} />
@@ -164,7 +167,6 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* Public Routes  */}
             <Route index element={<HomeLandingPage />} />
-            <Route path="/lineup" element={<TeamLineUp />} />
             <Route path="/ChatFront" element={<FrontUserChat />} />
             {/**YASSINE_ROUTES*/}
             {/* <Route path="/page" element={<LandingPage />} /> */}
@@ -177,6 +179,7 @@ function App() {
                 <Route path="bracket" element={<ManageTournamentFormat />} />
                 <Route path="group" element={<ManageTournamentGroup />} />
               </Route>
+              <Route path="lineup" element={<TeamLineUp />} />
               <Route path="participant" element={<ManageParticipant />}>
                 <Route path="player" element={<ManagePlayer />} />
                 <Route path="player/consult" element={<ConsultPlayer />} />
@@ -199,6 +202,8 @@ function App() {
             <Route path="/addAcademy" element={<AddAcademy />} />
             <Route path="/Academy" element={<Academy />} />
             <Route path="/team/:idTeam" element={<CheckSelectedTeam />} />
+            
+
             {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
             <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
               <Route path="/addAcademy" element={<AddAcademy />} />

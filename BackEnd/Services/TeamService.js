@@ -55,6 +55,22 @@ const addTeam = async (req, res, next) => {
   });
 };
 
+
+//By Yassine
+async function updateTeamById(req, res) {
+  try {
+    const team = await Team.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!team) {
+      return res.status(404).send();
+    }
+    res.send(team);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+}
+
 const updateTeam = async (req, res, next) => {
   const { TeamName } = req.body;
   try {
@@ -118,7 +134,7 @@ const addTeamAndAssaignToAcademy = async (req, res, next) => {
 };
 
 const getTeamById = async (req, res, next) => {
-  const TeamData = await Team.findById(req.params.id);
+  const TeamData = await Team.findById(req.params.id).populate("Players");
   res.json(TeamData);
 };
 const getTeamById2 = async (id) => {
@@ -472,4 +488,5 @@ module.exports = {
   updateTeam,
   assignPlayerToTeam,
   updateTeamSameName,
+  updateTeamById
 };

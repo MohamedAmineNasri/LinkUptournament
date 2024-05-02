@@ -13,10 +13,10 @@ const LineUpSearchItem = ({
 }) => {
   return (
     <tr class="hover:bg-gray-100 dark:hover:bg-neutral-700">
-      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-        <p className="pl-4">{position}</p>
+      <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+        <p className="pl-4">{position }</p>
       </td>
-      <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
         <div className="">
           <div className="relative">
             <input
@@ -55,10 +55,10 @@ const LineUpSearchItem = ({
                         width={40}
                       />
                       <div>
-                        <h5 className="font-medium text-black dark:text-white">
+                        <h5 className="font-medium text-black ">
                           {player.name}
                         </h5>
-                        <h5 className="font-medium text-black dark:text-white">
+                        <h5 className="font-medium text-black ">
                           {player.position}
                         </h5>
                       </div>
@@ -78,13 +78,13 @@ const LineUpSearchItem = ({
               alt="Product"
               width={40}
             />
-            <h5 className="font-medium text-gray-800">
+            <h5 className="font-medium text-black dark:text-white">
               {selectedPlayers[position].name}
             </h5>
           </div>
         )}
       </td>
-      <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+      <td class="px-6 py-1 whitespace-nowrap text-end text-sm font-medium">
         <button
           type="button"
           className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-500 hover:text-red-500 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400"

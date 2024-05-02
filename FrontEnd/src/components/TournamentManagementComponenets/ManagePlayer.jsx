@@ -116,6 +116,7 @@ const ManagePlayer = () => {
   const handleUpload = async (uploadedPhoto) => {
     try {
       const imageData = new FormData();
+      console.log("UPPPPPPPPpPPPPPP",uploadedPhoto)
       imageData.append("avatar", uploadedPhoto);
 
       const response = await axios.post(
@@ -189,6 +190,7 @@ const ManagePlayer = () => {
       }
     } else {
       if (imageUrl != ImagePlaceholder) {
+        console.log(img);
         handleUpload(img);
       } else {
         dispatch(updatePlayer(playerId, formData, teamFilter));
@@ -201,7 +203,7 @@ const ManagePlayer = () => {
   console.log(academy.length == 0 && teams.length == 0);
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {academy.length != 0 && teams.length == 0 ? (
+      {academy.length != 0 && teams.length == 0 || !players ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">

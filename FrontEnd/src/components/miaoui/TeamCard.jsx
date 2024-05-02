@@ -154,6 +154,21 @@ const TeamCard = (props) => {
                           Check Team
                         </Button>
                       </MenuItem>
+
+                      <MenuItem value="">
+                        <Button
+                          variant="success"
+                          style={{
+                            width: "-webkit-fill-available",
+                            color: "black",
+                          }}
+                          onClick={() => {
+                            navigate("/manage/lineup", { state: team._id });
+                          }}
+                        >
+                          Create LineUp
+                        </Button>
+                      </MenuItem>
                       <MenuItem value="">
                         <Button
                           variant="success"
@@ -166,6 +181,7 @@ const TeamCard = (props) => {
                           Edit Team
                         </Button>
                       </MenuItem>
+
                       <MenuItem value="">
                         <Button
                           variant="success"

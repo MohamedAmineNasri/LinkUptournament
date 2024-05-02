@@ -1,4 +1,5 @@
 const Player = require("../Models/Player");
+const Team = require("../Models/Team");
 const TeamService = require("../Services/TeamService");
 
 async function createPlayerMi(req, res) {
@@ -19,8 +20,16 @@ async function createPlayerMi(req, res) {
 // Create a player
 async function createPlayer(req, res) {
   try {
+    const { team } = req.body;
     const player = new Player(req.body);
     await player.save();
+    if (team) {
+      const foundTeam = await Team.findById(team);
+      if (foundTeam) {
+        foundTeam.Players.push(player._id);
+        await foundTeam.save();
+      }
+    }
     res.status(201).send(player);
   } catch (error) {
     res.status(400).send(error);

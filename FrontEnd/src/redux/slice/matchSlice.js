@@ -47,11 +47,12 @@ export const fetchMatchById = createAsyncThunk(
 );
 export const editMatch = createAsyncThunk(
   'match/editMatch',
-  async ({matchTime,w,goal2,goal1,matchid,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
+  async ({team2goaltime,team1goaltime,matchTime,w,goal2,goal1,matchid,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
     try {
       const response = await axios.put(
         'http://localhost:8000/match/'+matchid,
-        {
+        {team1goaltime:team1goaltime,
+          team2goaltime:team2goaltime,
           matchTime:matchTime,
           goal1:goal1,
           goal2:goal2,
@@ -112,7 +113,7 @@ export const deletetour = createAsyncThunk(
 
 export const addnewMatch = createAsyncThunk(
   'match/addMatch',
-  async ({matchTime,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
+  async ({ticketNumber,price,matchTime,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/match/',
@@ -132,7 +133,9 @@ export const addnewMatch = createAsyncThunk(
           team1:team1,
            team2:team2,
    tournementId:tournementId,
-          
+   ticketNumber:ticketNumber,
+   price:price,
+   ticketId:[0]
         }
       );
       window.location.reload();

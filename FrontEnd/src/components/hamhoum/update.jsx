@@ -17,7 +17,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-import MatchByID from "./getAllTournement";
+import MatchByID from "./getAllGroup";
 import Panel from "./panel"
 
 

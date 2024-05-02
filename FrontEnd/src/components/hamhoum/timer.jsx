@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 const Timer = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
 
   // Load timer state from localStorage on component mount
   useEffect(() => {
@@ -56,12 +62,16 @@ const Timer = () => {
   };
 
   return (
+    <>
+    
+    
+    
     <div className='bg-black'>
       <h1 className='text-black-200'>Timer: {formatTime(timeLeft)}</h1>
       <button onClick={startTimer} className='text-red-200'>Start</button>
       <button onClick={stopTimer} className='text-black-200'>Stop</button>
       <button onClick={resetTimer} className='text-black-200'>Reset</button>
-    </div>
+    </div></>
   );
 };
 

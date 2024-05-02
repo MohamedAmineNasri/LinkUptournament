@@ -61,7 +61,7 @@ import VideoLiveStream from "./pages/LiveStream/VideoLiveStream";
 import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 import Panel from "./components/hamhoum/panel";
 import Fetchonematch from "./components/hamhoum/fetchOneMatchByID";
-import Fetchalltour from "./components/hamhoum/getAllTournement";
+import Fetchalltour from "./components/hamhoum/getAllGroup";
 import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
 import Buy from "./components/hamhoum/buyticket";
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
@@ -73,6 +73,7 @@ import Completiont from "./components/hamhoum/Completion"
 import {loadStripe} from '@stripe/stripe-js';
 import QrCode from "./components/hamhoum/QrCode"
 import Timer from "./components/hamhoum/timer"
+import FetchMatchByGroup from "./components/hamhoum/getMatchByGroup"
 
 // import Payment from "./components/hamhoum/Payments";
 // import Completiont from "./components/hamhoum/Completion";
@@ -116,15 +117,16 @@ function App() {
       ) : (
         <Routes>
         <Route path="/timer" element={<Timer />} />
+        <Route path="/matchBygroup/:tournamentId/:group" element={<FetchMatchByGroup />} />
         <Route path="/qr" element={<QrCode />} />
   
-             <Route path="/payment/:id" element={<Payment />} />
+             
       <Route path="/c/:id" element={<Completiont />} /> 
         <Route path="/pdf/:id" element={<Pdf />} />
             <Route path="/buy/" element={<Buy />} />
   
         <Route path="/panel/:match" element={<Panel />} />
-        <Route path="/fetchalltour" element={<Fetchalltour />} />
+        <Route path="/fetchallgroup/:tournamentId" element={<Fetchalltour />} />
         <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
         <Route
           path="/fetchmatchbytour/:tournamentId"
@@ -212,6 +214,7 @@ function App() {
                 />
               }
             >
+              <Route path="/payment/:id" element={<Payment />} />
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/userslist" element={<UserList />} />
               <Route path="/profile" element={<Profile />} />
@@ -232,7 +235,7 @@ function App() {
           </Route>
         </Route>
   
-        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
+        {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */} 
   
         {/* </Route> */}
       </Routes>

@@ -6,6 +6,8 @@ import Pdf from  "./justpdf"
 import QRCode from 'qrcode.react';
 import axios from 'axios';
 import { useEffect, useState } from "react"; // Changed useState to useEffect
+import Header from '../landingpage/Header';
+import Footer from '../landingpage/Footer';
 
 function Completion() {
   const { id } = useParams();
@@ -35,7 +37,10 @@ function Completion() {
   };
 
   return (
+    <>
+    <Header/>
     <div style={centerScreen}>
+      
       <h1 style={{ color: "black" }}>Thank you! 🎉</h1>
       <h2 style={{ color: "black" }}>You can download your ticket</h2>
       
@@ -48,6 +53,8 @@ function Completion() {
         </>
       )}
     </div>
+    <Footer/>
+    </>
   );
 }
 

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import { addnewMatch, fetchAllTour } from "../../redux/slice/matchSlice";
 import { useDispatch } from "react-redux";
-import MatchByID from "./getAllTournement";
+import MatchByID from "./getAllGroup";
 import { useParams } from 'react-router-dom';
 import {
   Button,
@@ -17,6 +17,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { convertToBase64 } from "../../utilities/convertFileBase64";
+import { number } from "prop-types";
 
 
 export const AddMatchPopUpWindow = (props) => {
@@ -29,7 +30,7 @@ export const AddMatchPopUpWindow = (props) => {
   const [Matchtype, setMatchtype] = useState(null);
   const [Location, setLocation ] = useState(null);
    const [Referee, setReferee ] = useState(null);
-   const [Date, setDate ] = useState(null);
+   const [Datee, setDate ] = useState(null);
    const [Startingtime, setStartingtime] = useState(null);
    const [Logo, setLogo ] = useState({myLogo:""});
    const [Matchstatus, setMatchstatus ] = useState(null);
@@ -47,6 +48,10 @@ export const AddMatchPopUpWindow = (props) => {
    const [isValid3, setIsValid3] = useState(true);
    const [isValidteam2, setIsValidteam2] = useState(true);
    const [isValidteam1, setIsValidteam1] = useState(true);
+   const [isValidticketnumber, setIsValidticketnumber] = useState(true);
+   const [isValidticketprice, setIsValidticketprice] = useState(true);
+   const [price, setprice] = useState();
+   const [ticketNumber, setticketNumber] = useState();
    const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -60,7 +65,7 @@ export const AddMatchPopUpWindow = (props) => {
         addnewMatch({
           matchTime: 0,
           referee:Referee,
-          date:Date,
+          date:Datee,
           logo:Logo.myLogo,
           matchstatus:Matchstatus,         
           team1:Team1,
@@ -72,6 +77,8 @@ export const AddMatchPopUpWindow = (props) => {
           tournementId:TournementId,
           team1Gols:Team1Gols,
           team2Gols:Team2Gols,
+          ticketNumber:ticketNumber,
+          price:price
        
       }),
        fetchAllTour(),
@@ -83,12 +90,21 @@ export const AddMatchPopUpWindow = (props) => {
     
    
   };
+  
   const handleNameChange = (e) => {
     const newName = e.target.value;
     setMatchtype(newName);
     // Validate name (only letters)
     setIsValid(/^[a-zA-Z]+$/.test(newName));
   };
+  const handeleTicketnumber=(e)=>{ const newNamee = e.target.value;
+  setticketNumber(newNamee)
+  setIsValidticketnumber( newNamee>1);
+  }
+  const handeleTicketprice=(e)=>{ const newNamee = e.target.value;
+    setprice(newNamee)
+    setIsValidticketprice( newNamee>1);
+    }
   const handleteam2 = (e) => {
     const newName = e.target.value;
     setTeam2(newName);
@@ -103,12 +119,7 @@ export const AddMatchPopUpWindow = (props) => {
     setIsValidteam1(newName!=Team2 && newName!= "null");
    
   };
-  const handlelocationChange = (e) => {
-    const newName = e.target.value;
-    setLocation(newName);
-    // Validate name (only letters)
-    setIsValid3(/^[a-zA-Z]+$/.test(newName));
-  };
+  
   const handlerefChange = (e) => {
     const newName = e.target.value;
     setReferee(newName);
@@ -117,11 +128,35 @@ export const AddMatchPopUpWindow = (props) => {
   };
   const handleDateChange = (e) => {
     const newDate = e.target.value;
-    setDate(newDate);
-    // Validate date (greater than today)
-    const today = new Date().toISOString().slice(0, 10); // Get today's date as string
-    setIsValid1(newDate > today); // Compare entered date with today's date
-  };
+    setDate(e.target.value)
+    const dd =  tournament.date_debut
+    const df = tournament.date_fin
+  console.log(dd,df,)
+    // console.log(currentDate.getDay > today.getDay)
+     setIsValid3(newDate > dd && newDate<df) 
+    // console.log( setIsValid3(currentDate > today))
+    
+  
+    // setIsValid3(false);
+    // const newDate = e.target.value;
+    // const currentDate = new Date(); // Get the current date
+    
+    // console.log("tse", newDate, currentDate);
+    
+    // setDate("2024-06-06"); // Update the state with the new date
+    
+    // setIsValid3(currentDate > new Date(newDate));
+    // Get today's date as a string in YYYY-MM-DD format
+      // const d = new Date(newDate).getDate()
+//   const m = new Date().getMonth();
+  //   const d = new Date().getDate();
+  //   const y =new Date().getFullYear();
+  //  const day = m+"-"+d+"-"+y
+    // Check if the entered date is valid (greater than today's date)
+    
+
+     // Update the state with the validation result
+};
   const handleLogoUpload = async (e) => {
     const file = e.target.files[0];
     console.log(file);
@@ -132,23 +167,24 @@ export const AddMatchPopUpWindow = (props) => {
   
  
   useEffect(() => {
-   
+    
     const fetchTournaments = async () => {
       try {
+        
         setTeam1Gols(0)
         setTeam2Gols(0)
         setTournementId(tournamentId)
         setMatchstatus("Starting Soon")
         const response = await axios.get('http://localhost:8000/tournament/' + tournamentId);
         const tournament = response.data.tournament;
-        console.log("Successfully retrieved the tournament:", response.data.tournament.type);
+        // console.log("Successfully retrieved the tournament:", response.data.tournament.type);
         settournament(tournament)
         // Fetch team names for each team ID
         const teamsWithNames = await Promise.all(tournament.teams.map(async teamId => {
           const teamResponse = await axios.get(`http://localhost:8000/team/getTeam/${teamId}`);
           return teamResponse.data.TeamName;
         }));
-  
+        
         // console.log("Teams with names:", teamsWithNames);
         
         // Optionally, you can update the tournament object with team names
@@ -162,11 +198,13 @@ export const AddMatchPopUpWindow = (props) => {
   
     fetchTournaments();
     
+    
   }, [tournamentId]);
- 
+  
 
   return (
     <>
+    
     <button
         data-modal-target="crud-modal"
         data-modal-toggle="crud-modal"
@@ -202,11 +240,11 @@ export const AddMatchPopUpWindow = (props) => {
             type="date"
             placeholder="date"
             autoFocus
-            value={Date}
+            value={Datee}
             onChange={handleDateChange}
-            className={`border ${isValid1 ? 'border-green-500' : 'border-red-500'}`}
+            className={`border ${isValid3 ? 'border-green-500' : 'border-red-500'}`}
           />
-          {!isValid1 && <p className="text-red-500">Date must be greater than today.</p>}
+          {!isValid3 && <p className="text-red-500">Date must be greater than today.</p>}
           <Form.Label>Starting Time:</Form.Label>
           <Form.Control
             type="time"
@@ -276,28 +314,44 @@ export const AddMatchPopUpWindow = (props) => {
             <option value="2467454">Sfax</option>
             <option value="2464915">Sousse</option>
             <option value="2468369">Gabès</option>
-            <option value="2465624">Kairouan</option>
-            <option value="2473305">Bizerte</option>
-            <option value="2467813">Gafsa</option>
-            <option value="2504205">Ariana</option>
-            <option value="2473448">Kasserine</option>
-            <option value="2464008">Monastir</option>
-            <option value="2471046">Ben Arous</option>
-            <option value="2467580">La Marsa</option>
-            <option value="2465440">Tataouine</option>
-            <option value="2469566">Nabeul</option>
-            <option value="2470233">Hammamet</option>
-            <option value="2468843">Mahdia</option>
-            <option value="2472771">Beja</option>
-            <option value="2467815">Jendouba</option>
-            <option value="2462881">Sidi Bouzid</option>
-            <option value="2468560">Medenine</option>
-            <option value="2469254">El Kef</option>
-            <option value="2465196">Zaghouan</option>
-            <option value="2462962">Siliana</option>
-            <option value="2464475">Tozeur</option>
+            <option value="2473449">Kairouan</option>
+            <option value="2472706">Bizerte</option>
+            <option value="2468353">Gafsa</option>
+            <option value="2473245">Ariana</option>
+            <option value="2473457">Kasserine</option>
+            <option value="2473493">Monastir</option>
+            <option value="2472479">Ben Arous</option>
+            <option value="2464698">Tataouine</option>
+            <option value="2468576">Nabeul</option>
+            <option value="2473744">Hammamet</option>
+            <option value="2473572">Mahdia</option>
+            <option value="2470085">Jendouba</option>
+            <option value="2465840">Sidi Bouzid</option>
+            <option value="2469473">Medenine</option>
+            <option value="2473634">El Kef</option>
+            <option value="2464041">Zaghouan</option>
+            <option value="2465030">Siliana</option>
+            <option value="2464648">Tozeur</option>
           </select>
         </Form.Group>
+        <Form.Label>Ticket number:</Form.Label>
+          <Form.Control
+            type="number"
+            autoFocus
+            value={ticketNumber}
+            onChange={handeleTicketnumber}
+            className={`border ${isValidticketnumber ? 'border-green-500' : 'border-red-500'}`}
+          />
+          {!isValidticketnumber && <p className="text-red-500">Ticket number must be positive.</p>}
+          <Form.Label>Ticket price:</Form.Label>
+          <Form.Control
+            type="number"
+            autoFocus
+            onChange={handeleTicketprice}
+            value={price}
+            className={`border ${isValidticketprice ? 'border-green-500' : 'border-red-500'}`}
+          />
+          {!isValidticketprice && <p className="text-red-500">Ticket price must be positive.</p>}
       </Form>
       <div className="flex justify-between">
   <Button variant="secondary" onClick={toggleModal} className="bg-red-500 text-white">

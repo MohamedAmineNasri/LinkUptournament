@@ -200,6 +200,7 @@ const ManageTournament = () => {
                       <MenuItem onClick={() => navigate(`/manage/tournament/${tournament._id}`)}>Select tournament</MenuItem>
                       <MenuItem onClick={() => navigate(`/manage/editt/${tournament._id}`)}>Edit tournament</MenuItem>
                       <MenuItem onClick={() => navigate(`/fetchmatchbytour/${tournament._id}`)}>get matches </MenuItem>
+                      <MenuItem onClick={() => navigate(`/fetchallgroup/${tournament._id}`)}>get group </MenuItem>
                       <MenuItem onClick={() => handleVerifySMS(tournament._id)}>send SMS to players</MenuItem>
                       <MenuItem onClick={() => handleDeleteClick(tournament._id)}>Delete tournament</MenuItem>
                     </Menu>

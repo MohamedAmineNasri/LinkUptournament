@@ -1,4 +1,3 @@
-// to do 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Form from "react-bootstrap/Form";
@@ -11,8 +10,10 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
-import Header from '../landingpage/Header';
-import Footer from '../landingpage/Footer';
+// import Button from "react-bootstrap/Button";
+import DefaultLayout from '../../Dashboard/src/layout/DefaultLayout';
+import { Button } from "@material-tailwind/react";
+
 export const fetchtour = () => {
     const { tournamentId } = useParams();
   
@@ -22,28 +23,21 @@ export const fetchtour = () => {
   const[Team2name,setteam2name]=useState([]);
   const[Team2logo,setteam2logo]=useState([]);
   
-  
   const handleShow = () => MatchCard
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
         
       
-        const response = await axios.get('http://localhost:8000/match/');
-        console.log(response.data.filter(
-          (match) => match.matchstatus === "Starting Soon" && match.ticketNumber > 0
-        ))
-        setTournementId(response.data.filter(
-    (match) => match.matchstatus === "Starting Soon" && match.ticketNumber > 0
-  ));
-       
+        const response = await axios.get('http://localhost:8000/match/tournement/'+tournamentId);
+        setTournementId(response.data);
       } catch (error) {
         console.error('Error fetching tournaments:', error);
       }
     };
     const fetchMatchesWithTeamDetails = async () => {
       try {
-        const matchesResponse = await axios.get('http://localhost:8000/match/');
+        const matchesResponse = await axios.get('http://localhost:8000/match/tournement/'+tournamentId);
         
         const team2 = matchesResponse.data.map((e)=>e.team2);
         const teamPromises2 = team2.map(teamId =>
@@ -100,15 +94,13 @@ export const fetchtour = () => {
 
   }, []);
 if (TournementId.length ==0) {
-  <Header/>
  
-        return <div style={{ backgroundColor:"rgb(35, 79, 30)"}}><br/>Loading tournament...</div>;
+        return <div style={{ backgroundColor:"rgb(35, 79, 30)"}}><AddMatchPopUpWindow tourid={tournamentId}  /><br/>Loading tournament...</div>;
        
       }
   return (
     <>
-    <Header/>
-    <div>
+    <DefaultLayout>
       <div className="site-wrap">
         <div className="site-mobile-menu site-navbar-target">
           <div className="site-mobile-menu-header">
@@ -118,76 +110,111 @@ if (TournementId.length ==0) {
           </div>
           <div className="site-mobile-menu-body"></div>
         </div>
-  
+
         <header className="site-navbar py-4" role="banner">
           <div className="container">
             <div className="flex items-center">
               <div className="site-logo">
-                {/* Logo content */}
+                
               </div>
               <div className="ml-auto">
-                <a href="#" className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white">
+                <a
+                  href="#"
+                  className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"
+                >
                   <span className="icon-menu h3 text-white"></span>
                 </a>
               </div>
             </div>
           </div>
         </header>
-  
+       
         <div className="site-section bg-dark">
+        <AddMatchPopUpWindow></AddMatchPopUpWindow>
           <div className="container">
+          
             <div className="row">
+            
               <div className="col-12 title-section">
-                <h2 className="heading">Matches</h2>
+                
+                <h2 className="heading">Upcoming Match</h2>
+            
               </div>
               {TournementId
                 .slice()
                 .reverse()
                 .map((match, index) => (
-                  <div className="col-lg-6 mb-4" key={index}>
-                    <Link to={`/payment/${match._id}`} disabled={match.ticketNumber === 0}>
-                      <div className="bg-light p-4 rounded">
-                        <div className="widget-body">
-                          <div className="widget-vs">
-                            <div className="flex items-center justify-between w-full">
-                              <div className="team-1 text-center">
-                                <img src={Team1logo.slice().reverse()[index]} alt="Image" />
-                                <h3>{Team1name.slice().reverse()[index]}</h3>
-                              </div>
-                              <div>
-                                <span className="vs">
-                                  <span className="flex items-center justify-center">VS</span>
-                                </span>
-                                <span>
-                                  <span className="flex items-center justify-center">{match.goal1.length}:{match.goal2.length}</span>
-                                </span>
-                              </div>
-                              <div className="team-2 text-center">
-                                <img src={Team2logo.slice().reverse()[index]} alt="Image" />
-                                <h3>{Team2name.slice().reverse()[index]}</h3>
-                              </div>
+                  <div key={match._id} className="col-lg-6 mb-4">
+                    <div className="bg-light p-4 rounded">
+                      <div className="widget-body">
+                        <div className="widget-vs">
+                          <div className="flex justify-between items-center">
+                            <div className="team-1 text-center">
+                              <img
+                                src={Team1logo.slice().reverse()[index]}
+                                alt="Image"
+                              />
+                              <h3>{Team1name.slice().reverse()[index]}</h3>
+                            </div>
+                            <div>
+                              <span className="vs">
+                                <span className="flex items-center justify-center">VS</span>
+                              </span>
+                              <span>
+                                <span className="flex items-center justify-center">{match.goal1.length}:{match.goal2.length}</span>
+                              </span>
+                            </div>
+                            <div className="team-2 text-center">
+                              <img
+                                src={Team2logo.slice().reverse()[index]}
+                                alt="Image"
+                              />
+                              <h3>{Team2name.slice().reverse()[index]}</h3>
                             </div>
                           </div>
                         </div>
-  
-                        <div className="text-center widget-vs-contents mb-4">
-                          <h4>{match.matchstatus}</h4>
-                          <p className="mb-5">
-                            <span className="block">{match.date}</span>
-                            <span className="block">{match.startingtime}</span>
-                            <strong className="text-primary">{match.tournamentName}</strong>
-                          </p>
-                        </div>
                       </div>
-                    </Link>
+
+                      <div className="text-center widget-vs-contents mb-4">
+                        <h4>{match.matchstatus}</h4>
+                        <p className="mb-5">
+                        <span className="block text-yellow-500">{match.matchTime}</span>
+                          <span className="block">{match.date}</span>
+                          <span className="block">{match.startingtime}</span>
+                          <strong className="text-primary">{match.tournamentName}</strong>
+                        </p>
+                      </div>
+                      <div className="flex justify-between">
+                        <EditPopUpSelectedMatch
+                          matchid={match._id}
+                          referee={match.referee}
+                          date={match.date}
+                          logo={match.logo}
+                          matchstatus={match.matchstatus}
+                          team1={match.team1}
+                          team2={match.team2}
+                          weathercondition={match.weathercondition}
+                          startingtime={match.startingtime}
+                          matchtype={match.matchtype}
+                          location={match.location}
+                          tournementId={match.tournementId}
+                          team1Gols={match.team1Gols}
+                          team2Gols={match.team2Gols}
+                        />
+                        <DeleateMatchPopUp matchid={match._id} />
+                        <Link to={`/panel/${match._id}`} tournementId={match.tournementId}>
+                          <Button size='lg' variant="outline-info" className='bg-yellow-300 text-black
+                          '>Referee</Button>
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 ))}
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <Footer/>
+    </DefaultLayout>
   </>
   );
 };

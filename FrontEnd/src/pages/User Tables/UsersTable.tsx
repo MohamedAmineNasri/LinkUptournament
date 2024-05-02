@@ -189,10 +189,11 @@ const changePage = ({ selected }) => {
             <MuiDialog
                 open={openConfirmationDialog}
                 onClose={handleCloseConfirmationDialog}
+                PaperProps={{ style: { backgroundColor: '#262a42' } }}
             >
                 <DialogTitle>Confirmation</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText style={{ color: 'white' }}>
                         Are you sure you want to delete this user?
                     </DialogContentText>
                 </DialogContent>
@@ -208,8 +209,9 @@ const changePage = ({ selected }) => {
             <MuiDialog
                 open={openUpdateDialog}
                 onClose={handleCloseUpdateDialog}
+                PaperProps={{ style: { backgroundColor: '#262a42' } }}
             >
-                <DialogTitle>Update User</DialogTitle>
+                <DialogTitle style={{ color: 'white' }}>Update User</DialogTitle>
                 <DialogContent>
                     {/* Form for updating user details */}
                     <form
@@ -219,18 +221,20 @@ const changePage = ({ selected }) => {
                         }}
                     >
                         <TextField
-                            autoFocus
-                            required
-                            margin="dense"
-                            id="firstName"
-                            name="firstName"
-                            label="First Name"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            value={updatedUserData.firstName}
-                            onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
+                        autoFocus
+                        required
+                        margin="dense"
+                        id="firstName"
+                        name="firstName"
+                        label="First Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={updatedUserData.firstName}
+                        onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
+                        InputProps={{ style: { color: 'white' } }}
                         />
+
                         <TextField
                             required
                             margin="dense"
@@ -242,6 +246,7 @@ const changePage = ({ selected }) => {
                             variant="standard"
                             value={updatedUserData.lastName}
                             onChange={(e) => setUpdatedUserData({ ...updatedUserData, lastName: e.target.value })}
+                            InputProps={{ style: { color: 'white' } }}
                         />
                         <TextField
                             required
@@ -254,11 +259,12 @@ const changePage = ({ selected }) => {
                             variant="standard"
                             value={updatedUserData.email}
                             onChange={(e) => setUpdatedUserData({ ...updatedUserData, email: e.target.value })}
+                            InputProps={{ style: { color: 'white' } }}
                         />
 
 
                         {/* Dialog Actions */}
-                        <DialogActions>
+                        <DialogActions >
                             <MuiButton onClick={handleCloseUpdateDialog}>Cancel</MuiButton>
                             <MuiButton type="submit">Update</MuiButton>
                         </DialogActions>

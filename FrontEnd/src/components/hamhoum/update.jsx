@@ -36,7 +36,7 @@ export const EditPopUpSelectedMatch = (props) => {
   const [Matchtype, setMatchtype] = useState(null);
   const [Location, setLocation ] = useState(null);
    const [Referee, setReferee ] = useState(null);
-   const [Date, setDate ] = useState(null);
+   const [Datee, setDate ] = useState(null);
    const [Startingtime, setStartingtime] = useState(null);
    const [Logo, setLogo ] = useState({myLogo:""});
    const [Matchstatus, setMatchstatus ] = useState(null);
@@ -48,7 +48,14 @@ export const EditPopUpSelectedMatch = (props) => {
    const [teamsWithNames, setteamsWithNames ] = useState([]);
    const [Team1Gols, setTeam1Gols ] = useState(null);
    const [Team2Gols, setTeam2Gols ] = useState(null);
-   
+   const [isValid, setIsValid] = useState(true);
+   const [isValid1, setIsValid1] = useState(true);
+   const [isValid2, setIsValid2] = useState(true);
+   const [isValid3, setIsValid3] = useState(true);
+   const [isValidteam2, setIsValidteam2] = useState(true);
+   const [isValidteam1, setIsValidteam1] = useState(true);
+   const [isValidticketnumber, setIsValidticketnumber] = useState(true);
+   const [isValidticketprice, setIsValidticketprice] = useState(true);
 
   // to change
   const [T1, setT1] = useState(null);
@@ -72,12 +79,19 @@ export const EditPopUpSelectedMatch = (props) => {
     setIsChanged(true);
   };
   const handleRefereeChange = (e) => {
-    setReferee(e.target.value);
-    setIsChanged(true);
+    const newName = e.target.value;
+    setReferee(newName);
+    // Validate name (only letters)
+    setIsValid2(/^[a-zA-Z]+$/.test(newName));
   };
   const handleDateChange = (e) => {
-    setDate(e.target.value);
-    setIsChanged(true);
+    const newDate = e.target.value;
+    setDate(e.target.value)
+    const dd =  tournament.date_debut
+    const df = tournament.date_fin
+  // console.log(dd,df,)
+  
+     setIsValid3(newDate > dd && newDate<df) 
   };
   const handleStartingtimeChange = (e) => {
     setStartingtime(e.target.value);
@@ -96,12 +110,16 @@ export const EditPopUpSelectedMatch = (props) => {
     setIsChanged(true);
   };
   const handleTeam1Change = (e) => {
-    setTeam1(e.target.value);
-    setIsChanged(true);
+    const newName = e.target.value;
+    setTeam1(newName);
+    // Validate name (only letters)
+    setIsValidteam1(newName!=Team2 && newName!= "null");
   };
   const handleTeam2Change = (e) => {
-    setTeam2(e.target.value);
-    setIsChanged(true);
+    const newName = e.target.value;
+    setTeam2(newName);
+    // Validate name (only letters)
+    setIsValidteam2(newName!=Team1 && newName!= "null") ;
   };
   const handleTournementIdChange = (e) => {
     setTournementId(e.target.value);
@@ -267,9 +285,11 @@ export const EditPopUpSelectedMatch = (props) => {
                 type="date"
                 placeholder="date"
                 autoFocus
-                value={Date||props.date}
+                value={Datee||props.date}
                 onChange={(e) => handleDateChange(e)}
+                className={`border ${isValid3 ? 'border-green-500' : 'border-red-500'}`}
               />
+               {!isValid3 && <p className="text-red-500">Date must be greater than today.</p>}
             </Form.Group>
           <Form.Label style={{ color: "white" }}>starting time :</Form.Label>
               <Form.Control
@@ -305,8 +325,8 @@ export const EditPopUpSelectedMatch = (props) => {
             <Form.Group className="mb-3" controlId="locationInput">
               <Form.Label style={{ color: "white" }}>team1 :</Form.Label>
               <br/>
-              <select onChange={(e) => handleTeam1Change(e)}>
-              <option> {T1}</option>
+              <select onChange={handleTeam1Change}>
+              <option value = "null"> Select Team 1</option>
     {teamsWithNames.map((teamName, index) => (
       <option key={index} value={tournament.teams[index]}>
         {teamName}
@@ -314,11 +334,12 @@ export const EditPopUpSelectedMatch = (props) => {
       
     ))}
   </select>
+  {!isValidteam1 && <p className="text-red-500">Please select a different Team 1.</p>}
          <br/>
          <Form.Label style={{ color: "white" }}>team2 :</Form.Label>
               <br/>
-              <select onChange={(e) => handleTeam2Change(e)}>
-              <option> {T2}</option>
+              <select onChange={ handleTeam2Change}>
+              <option value = "null"> Select Team 2</option>
     {teamsWithNames.map((teamName, index) => (
       <option key={index} value={tournament.teams[index]}>
         {teamName}
@@ -326,6 +347,7 @@ export const EditPopUpSelectedMatch = (props) => {
       
     ))}
   </select>
+  {!isValidteam2 && <p className="text-red-500">Please select a different Team 2.</p>}
             </Form.Group>
          
           <Form.Group className="mb-3" controlId="locationInput">
@@ -336,7 +358,9 @@ export const EditPopUpSelectedMatch = (props) => {
                 autoFocus
                 value={Referee||props.referee}
                 onChange={(e) => handleRefereeChange(e)}
+                className={`border ${isValid1 ? 'border-green-500' : 'border-red-500'}`}
               />
+              {!isValid2 && <p className="text-red-500">Referee must contain only letters.</p>}
             </Form.Group>
             
             
@@ -349,26 +373,24 @@ export const EditPopUpSelectedMatch = (props) => {
             <option value="2467454">Sfax</option>
             <option value="2464915">Sousse</option>
             <option value="2468369">Gabès</option>
-            <option value="2465624">Kairouan</option>
-            <option value="2473305">Bizerte</option>
-            <option value="2467813">Gafsa</option>
-            <option value="2504205">Ariana</option>
-            <option value="2473448">Kasserine</option>
-            <option value="2464008">Monastir</option>
-            <option value="2471046">Ben Arous</option>
-            <option value="2467580">La Marsa</option>
-            <option value="2465440">Tataouine</option>
-            <option value="2469566">Nabeul</option>
-            <option value="2470233">Hammamet</option>
-            <option value="2468843">Mahdia</option>
-            <option value="2472771">Beja</option>
-            <option value="2467815">Jendouba</option>
-            <option value="2462881">Sidi Bouzid</option>
-            <option value="2468560">Medenine</option>
-            <option value="2469254">El Kef</option>
-            <option value="2465196">Zaghouan</option>
-            <option value="2462962">Siliana</option>
-            <option value="2464475">Tozeur</option>
+            <option value="2473449">Kairouan</option>
+            <option value="2472706">Bizerte</option>
+            <option value="2468353">Gafsa</option>
+            <option value="2473245">Ariana</option>
+            <option value="2473457">Kasserine</option>
+            <option value="2473493">Monastir</option>
+            <option value="2472479">Ben Arous</option>
+            <option value="2464698">Tataouine</option>
+            <option value="2468576">Nabeul</option>
+            <option value="2473744">Hammamet</option>
+            <option value="2473572">Mahdia</option>
+            <option value="2470085">Jendouba</option>
+            <option value="2465840">Sidi Bouzid</option>
+            <option value="2469473">Medenine</option>
+            <option value="2473634">El Kef</option>
+            <option value="2464041">Zaghouan</option>
+            <option value="2465030">Siliana</option>
+            <option value="2464648">Tozeur</option>
           </select>
              
             </Form.Group>

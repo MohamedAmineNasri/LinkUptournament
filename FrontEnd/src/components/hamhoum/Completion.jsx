@@ -12,7 +12,7 @@ import Footer from '../landingpage/Footer';
 function Completion() {
   const { id } = useParams();
   const [ticket, setTicket] = useState(null);
-
+  // window.location.reload();
   useEffect(() => { // Use useEffect for asynchronous operations
     const fetchData = async () => {
       try {
@@ -20,6 +20,11 @@ function Completion() {
         console.log(response.data.ticketId.length)
         console.log(response.data)
         setTicket(response.data.ticketId.length); // Set the ticket data when the request is successful
+        //  const mail = await axios.get(`http://localhost:8000/match/paymentmail/`+JSON.parse(localStorage.getItem('user')).email+"/"+JSON.parse(localStorage.getItem('user')).firstName+"/"+JSON.parse(localStorage.getItem('user')).lastName)
+               
+      
+      console.log(JSON.parse(localStorage.getItem('user')).email+"/"+JSON.parse(localStorage.getItem('user')).firstName+"/"+JSON.parse(localStorage.getItem('user')).lastName)
+      
       } catch (error) {
         console.error("Error fetching ticket:", error);
       }
@@ -28,6 +33,7 @@ function Completion() {
     fetchData(); // Call the async function to fetch data
   }, [id]); // Trigger the effect whenever the `id` parameter changes
 
+  // const mail =  axios.get(`http://localhost:8000/match/paymentmail/omriyasser12@gmail.com/yasser/yasser`)
   const centerScreen = {
     display: "flex",
     flexDirection: "column",
@@ -35,6 +41,8 @@ function Completion() {
     justifyContent: "center",
     minHeight: "100vh", // Set minimum height to take up the entire viewport height
   };
+  console.log(JSON.parse(localStorage.getItem('user')).email)
+
 
   return (
     <>

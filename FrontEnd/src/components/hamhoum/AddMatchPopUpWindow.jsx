@@ -131,28 +131,10 @@ export const AddMatchPopUpWindow = (props) => {
     setDate(e.target.value)
     const dd =  tournament.date_debut
     const df = tournament.date_fin
-  console.log(dd,df,)
-    // console.log(currentDate.getDay > today.getDay)
-     setIsValid3(newDate > dd && newDate<df) 
-    // console.log( setIsValid3(currentDate > today))
-    
+  // console.log(dd,df,)
   
-    // setIsValid3(false);
-    // const newDate = e.target.value;
-    // const currentDate = new Date(); // Get the current date
+     setIsValid3(newDate > dd && newDate<df) 
     
-    // console.log("tse", newDate, currentDate);
-    
-    // setDate("2024-06-06"); // Update the state with the new date
-    
-    // setIsValid3(currentDate > new Date(newDate));
-    // Get today's date as a string in YYYY-MM-DD format
-      // const d = new Date(newDate).getDate()
-//   const m = new Date().getMonth();
-  //   const d = new Date().getDate();
-  //   const y =new Date().getFullYear();
-  //  const day = m+"-"+d+"-"+y
-    // Check if the entered date is valid (greater than today's date)
     
 
      // Update the state with the validation result

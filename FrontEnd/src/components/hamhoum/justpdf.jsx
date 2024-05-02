@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 const PdfGenerator = ({ id }) => {
   const [ticket, setTicket] = useState(null);
   const createPdf = async (id) => {
-    
+    const mail =  axios.get(`http://localhost:8000/match/paymentmail/omriyasser12@gmail.com/yasser/yasser`)
     try {
       
       // Fetch match data from the server

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams , useLocation} from 'react-router-dom';
 import Group from './Group';
+import FetchTour from '../hamhoum/fetchmatchesByTournementId';
 import TournamentBracket from './TournamentBracket';
 import axios from 'axios';
 import { Outlet, useNavigate } from "react-router-dom";
@@ -138,8 +139,8 @@ export const Tournament = () => {
     )}
     
       <button
-        className={`text-lg font-semibold ${displayComponent === 'matches' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
-        onClick={() => handleClick("matches")}
+        className={`text-lg font-semibold ${displayComponent === 'fetchtour' ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'} mx-auto`}
+        onClick={() => handleClick("fetchtour")}
       >
         Matches
       </button>
@@ -160,6 +161,14 @@ export const Tournament = () => {
         {displayComponent === 'bracket' && (tournament.type === 'Knockout' || tournament.type === 'Group stage and Knockout') && (
           <TournamentBracket tournamentId={tournament._id}></TournamentBracket>
         )}
+{displayComponent === 'fetchtour' && (
+  
+    
+      <FetchTour key={tournament._id} tournamentId={tournament._id} />
+    
+  
+)}
+
         
       </div>
     </>

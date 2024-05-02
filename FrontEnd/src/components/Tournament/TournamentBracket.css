@@ -27,15 +27,15 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  width: 95%;
+  width: 40%;
   -webkit-flex-direction: row;
   -moz-flex-direction: row;
   flex-direction: row;
 }
-*/ .champion {
+ .champion {
   float: left;
   display: block;
-  width: 16%;
+  width: 30%;
   -webkit-flex-direction: row;
   flex-direction: row;
   -webkit-align-self: center;
@@ -200,10 +200,10 @@
     margin: 0 1%;
   }
   .champion {
-    width: 14%;
+    width: 30%;
   }
   .split {
-    width: 95%;
+    width: 40%;
   }
   .split-one .vote-box {
     margin-left: 138px;

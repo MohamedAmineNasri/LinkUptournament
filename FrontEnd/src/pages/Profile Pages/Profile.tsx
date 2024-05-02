@@ -12,6 +12,11 @@
         const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
         console.log('user'+ user)
         console.log('role'+ userRole)
+
+        //default location for maps-------------------------------- 
+        const initialPosition = localStorage.setItem("selectedPosition" , JSON.stringify([36.84916714107817, 10.201032618108135]))
+        //   -----------------------------------------------
+        
     return (
         <DefaultLayout>
         <Breadcrumb pageName="Profile" />

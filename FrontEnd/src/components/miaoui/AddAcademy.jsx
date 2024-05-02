@@ -16,6 +16,7 @@ export const AddAcademy = () => {
 
   //get user location by map SELECTION------------------------------------------------------
   const getSelectedlocation = async (lat, long) => {
+    console.log("map");
     if (lat && long) {
       const pos = [lat, long];
       localStorage.setItem("selectedPosition", JSON.stringify(pos));
@@ -27,6 +28,7 @@ export const AddAcademy = () => {
           // console.log("Location Information:", locationData);
           if (
             locationData.address.residential === undefined &&
+            locationData.address.road &&
             locationData.address.industrial
           ) {
             setLocation(
@@ -38,6 +40,7 @@ export const AddAcademy = () => {
           }
           if (
             locationData.address.residential !== undefined &&
+            locationData.address.road &&
             locationData.address.industrial === undefined
           ) {
             setLocation(
@@ -48,7 +51,9 @@ export const AddAcademy = () => {
           }
           if (
             locationData.address.residential === undefined &&
-            locationData.address.industrial === undefined
+            locationData.address.county &&
+            locationData.address.industrial === undefined &&
+            locationData.address.road
           ) {
             setLocation(
               locationData.address.county + "," + locationData.address.road
@@ -100,6 +105,7 @@ export const AddAcademy = () => {
 
   //get user location by GPS ----------------------------------------------------------------
   const getlocation = () => {
+    console.log("gps");
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (postion) => {

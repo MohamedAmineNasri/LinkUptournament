@@ -86,16 +86,20 @@ const Header = () => {
                 <>
                   <li>
                     <button
-                      onClick={() => navigate("signin")}
-                      className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+
+                        onClick={() => navigate("/signin")}
+                        className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+
                     >
                       Sign in
                     </button>
                   </li>
                   <li>
                     <button
-                      onClick={() => navigate("register")}
-                      className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-900 ml-3 flex items-center"
+
+                        onClick={() => navigate("/register")}
+                        className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-900 ml-3 flex items-center"
+
                     >
                       <span>Sign up</span>
                       <svg

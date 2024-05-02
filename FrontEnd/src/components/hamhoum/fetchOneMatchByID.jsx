@@ -10,6 +10,9 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
+import Header from '../landingpage/Header';
+import Footer from '../landingpage/Footer';
+import './twink.css'
 
 export const fetchtour = () => {
     const { tournamentId } = useParams();
@@ -19,14 +22,16 @@ export const fetchtour = () => {
   const[Team1logo,setteam1logo]=useState();
   const[Team2name,setteam2name]=useState();
   const[Team2logo,setteam2logo]=useState();
+  const[matchstatus,setmatchstatus]=useState();
   const[T1,sett1]=useState([]);
   const[T1go,sett1go]=useState([]);
   const[T2go,sett2go]=useState([]);
   const[T2,sett2]=useState([]);
   const[Weather,setweather]= useState([])
   const[Location,setlocation]= useState([])
+  const[test,settest]=useState([])
   
-  const handleShow = () => MatchCard
+  
   useEffect(() => {
     const fetchTournaments = async () => {
     try {
@@ -63,12 +68,7 @@ export const fetchtour = () => {
         const matchesResponse = await axios.get('http://localhost:8000/match/'+tournamentId);
         
         const team2 = matchesResponse.data.team2;
-        const weather = await axios.get ("http://api.openweathermap.org/data/2.5/forecast?id="+matchesResponse.data.location+"&dt=1712750400&appid=f30fae93770f8d10eec128c5c8627b54")
-        setweather(weather.data)
-        // console.log(matchesResponse.data.date)
-        setlocation(weather.data.city.name)
-        // console.log(weather.data.list[0].weather[0].description,"gtgtgtrgtrgtr")
-        setweather(weather.data.list[0].weather[0])
+       
        
 
         
@@ -104,9 +104,17 @@ export const fetchtour = () => {
           setteam1name(teamNames1)
           setteam1logo(teamNameslogo1)
           // console.log("Team Names:1", teamNames1,"team1logo",teamNameslogo1);
+          const weather = await axios.get ("http://api.openweathermap.org/data/2.5/forecast?id="+matchesResponse.data.location+"&dt=1712750400&appid=f30fae93770f8d10eec128c5c8627b54")
+          setweather(weather.data)
+          // console.log(matchesResponse.data.date)
+          setlocation(weather.data.city.name)
+          // console.log(weather.data.list[0].weather[0].description,"gtgtgtrgtrgtr")
+          setweather(weather.data.list[0].weather[0])
         } catch (error) {
           console.error("Error fetching team data:", error);
         }
+        
+        
 
 
         
@@ -123,15 +131,28 @@ export const fetchtour = () => {
     fetchTournaments();
     fetchMatchesWithTeamDetails()
   
+    // 
+
+  }, [T2 , T1,TournementId.startingtime]);
+
+  useEffect(() => {
+    const fetch = async () => {
     
-
-  }, [T2 , T1]);
-
+      const response = await axios.get(`http://localhost:8000/match/${tournamentId}`);
+      
+      sett1(response.data.goal1);
+      sett2(response.data.goal2);
+    settest(response.data.matchTime)
+  }
+      fetch()
+    },[T1,T2,TournementId.matchTime])
+      
 
   return (
     <>
+    <Header/>
      <div className="site-section bg-dark">
-     <Link to ={`/fetchmatchforview`}> <button>Return</button></Link>
+     
             <div className="container">
               
    <div className="row mb-5">
@@ -164,11 +185,12 @@ export const fetchtour = () => {
                     <div className="text-center widget-vs-contents mb-4">
                       <h4>{TournementId.matchstatus}</h4>
                       <p className="mb-5">
-                        <span className="d-block">{TournementId.date}</span>
-                        <span className="d-block">{TournementId.startingtime}</span>
+                      <span className="d-block text-yellow-500 animate-twinkle">"{TournementId.matchTime}</span> <br/>
+                        <span className="d-block">{TournementId.date}</span><br/>
+                        <span className="d-block">{TournementId.startingtime}</span><br/>
                           <strong className="text-primary">{TournementId.matchtype}</strong>
                         
-                        <span  style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}}> <svg fill="#ffff" version="1.1" height="4%" width="4%" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 221.538 221.538" xml:space="preserve" stroke="#ffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M158.389,81.099c-3.009,7.71-12.826,27.33-34.88,27.33c-0.099,0-60.939,60.828-81.83,81.711 c-3.837,3.843-10.524,4.392-14.946,1.248l-23.24-16.539l0.901,8.265l30.468,21.717c4.417,3.148,10.964,2.454,14.623-1.548 l55.305-60.548l47.758,24.456c20.691,9.274,48.358-7.514,61.801-37.484c9.538-21.277,9.295-43.434,0.983-57.845L158.389,81.099z"></path> <path d="M25.899,188.318c4.422,3.143,11.13,2.589,14.975-1.232l81.698-81.193c25.093,1.642,34.104-27.553,34.104-27.553 l60.563-9.817l-14.779-9.15c3.506-5.432,6.131-10.905,7.597-15.975c2.973-10.304,1.062-18.962-5.38-24.358 c-4.557-3.827-12.49-7.063-24.348-0.699c-7.255,3.884-13.883,10.273-18.724,15.716l-17.477-10.827 c-22.918-3.822-45.829,19.102-45.829,19.102C79.746,75.072,60.101,69.609,60.101,69.609L1.637,159.051 c-2.969,4.535-1.786,10.76,2.636,13.908L25.899,188.318z M184.968,26.988c8.472-4.546,12.185-1.45,13.401-0.424 c3.376,2.827,4.132,7.576,2.247,14.11c-1.201,4.153-3.479,8.833-6.515,13.51l-24.006-14.872 C175.228,33.75,180.407,29.432,184.968,26.988z M101.173,44.811l52.928,29.096c-7.094,26.186-30.281,28.511-30.281,28.511 C85.08,99.963,61.892,72.82,61.892,72.82C85.212,76.506,101.173,44.811,101.173,44.811z"></path> </g> </g> </g></svg>&nbsp;&nbsp;{TournementId.referee}</span>
+                        <span style={{display: 'flex',alignItems: 'center',justifyContent: 'center',}} > <svg fill="#ffff" version="1.1" height="4%" width="4%" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 221.538 221.538" xml:space="preserve" stroke="#ffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M158.389,81.099c-3.009,7.71-12.826,27.33-34.88,27.33c-0.099,0-60.939,60.828-81.83,81.711 c-3.837,3.843-10.524,4.392-14.946,1.248l-23.24-16.539l0.901,8.265l30.468,21.717c4.417,3.148,10.964,2.454,14.623-1.548 l55.305-60.548l47.758,24.456c20.691,9.274,48.358-7.514,61.801-37.484c9.538-21.277,9.295-43.434,0.983-57.845L158.389,81.099z"></path> <path d="M25.899,188.318c4.422,3.143,11.13,2.589,14.975-1.232l81.698-81.193c25.093,1.642,34.104-27.553,34.104-27.553 l60.563-9.817l-14.779-9.15c3.506-5.432,6.131-10.905,7.597-15.975c2.973-10.304,1.062-18.962-5.38-24.358 c-4.557-3.827-12.49-7.063-24.348-0.699c-7.255,3.884-13.883,10.273-18.724,15.716l-17.477-10.827 c-22.918-3.822-45.829,19.102-45.829,19.102C79.746,75.072,60.101,69.609,60.101,69.609L1.637,159.051 c-2.969,4.535-1.786,10.76,2.636,13.908L25.899,188.318z M184.968,26.988c8.472-4.546,12.185-1.45,13.401-0.424 c3.376,2.827,4.132,7.576,2.247,14.11c-1.201,4.153-3.479,8.833-6.515,13.51l-24.006-14.872 C175.228,33.75,180.407,29.432,184.968,26.988z M101.173,44.811l52.928,29.096c-7.094,26.186-30.281,28.511-30.281,28.511 C85.08,99.963,61.892,72.82,61.892,72.82C85.212,76.506,101.173,44.811,101.173,44.811z"></path> </g> </g> </g></svg>&nbsp;&nbsp;{TournementId.referee}</span>
                         
                         
                         
@@ -190,7 +212,7 @@ export const fetchtour = () => {
             <div className="team-details w-full text-center">
               <ul className="list-unstyled">
                 {T1go.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li key={index}>{TournementId.team1goaltime[index]}" {item} </li>
                 ))}
               </ul>
             </div>
@@ -199,7 +221,7 @@ export const fetchtour = () => {
             <div className="team-details w-full text-center">
               <ul className="list-unstyled">
                 {T2go.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li key={index}>{TournementId.team2goaltime[index]}" {item} </li>
                 ))}
               </ul>
             </div>
@@ -230,7 +252,7 @@ export const fetchtour = () => {
     
     
     
-    
+    <Footer/>
  
    
     </>

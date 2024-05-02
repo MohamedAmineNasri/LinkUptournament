@@ -13,6 +13,7 @@ import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
 import Header from '../landingpage/Header';
 import Footer from '../landingpage/Footer';
+import './twink.css'
 
 export const fetchtour = () => {
 
@@ -99,7 +100,7 @@ export const fetchtour = () => {
     
     fetchTournaments();
     fetchMatchesWithTeamDetails()
-    
+    // 
 
   }, [TournementId.map((match, index) => (match.goal1.length,match.goal2.length))]);
 if (TournementId.length ==0) {
@@ -201,6 +202,7 @@ if (TournementId.length ==0) {
             <div className="text-center widget-vs-contents mb-4">
               <h4>{match.matchstatus}</h4>
               <p className="mb-5">
+              <span className="block text-yellow-500 animate-twinkle ">{match.matchTime}</span>
                 <span className="block">{match.date}</span>
                 <span className="block">{match.startingtime}</span>
                 <strong className="text-primary">{match.tournamentName}</strong>

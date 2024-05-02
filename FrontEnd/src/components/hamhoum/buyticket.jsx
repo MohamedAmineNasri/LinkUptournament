@@ -11,7 +11,8 @@ import { useParams } from 'react-router-dom';
 import EditPopUpSelectedMatch from "./update";
 import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import not_found from "../../../public/assets/images/not found.png"
-
+import Header from '../landingpage/Header';
+import Footer from '../landingpage/Footer';
 export const fetchtour = () => {
     const { tournamentId } = useParams();
   
@@ -30,10 +31,10 @@ export const fetchtour = () => {
       
         const response = await axios.get('http://localhost:8000/match/');
         console.log(response.data.filter(
-          (match) => match.matchstatus === "Starting Soon"
+          (match) => match.matchstatus === "Starting Soon" && match.ticketNumber > 0
         ))
         setTournementId(response.data.filter(
-    (match) => match.matchstatus === "Starting Soon"
+    (match) => match.matchstatus === "Starting Soon" && match.ticketNumber > 0
   ));
        
       } catch (error) {
@@ -99,12 +100,14 @@ export const fetchtour = () => {
 
   }, []);
 if (TournementId.length ==0) {
+  <Header/>
  
         return <div style={{ backgroundColor:"rgb(35, 79, 30)"}}><br/>Loading tournament...</div>;
        
       }
   return (
     <>
+    <Header/>
     <div>
       <div className="site-wrap">
         <div className="site-mobile-menu site-navbar-target">
@@ -184,6 +187,7 @@ if (TournementId.length ==0) {
         </div>
       </div>
     </div>
+    <Footer/>
   </>
   );
 };

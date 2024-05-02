@@ -1,7 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-
+const withMT = require("@material-tailwind/react/utils/withMT");
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = withMT({
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
@@ -351,6 +351,7 @@ module.exports = {
           "0%, 100%": { transform: "rotate(360deg)" },
           "50%": { transform: "rotate(0deg)" },
         },
+        
       },
       animation: {
         /** Landing Page */
@@ -363,7 +364,8 @@ module.exports = {
         "spin-2": "spin 2s linear infinite",
         "spin-3": "spin 3s linear infinite",
       },
+      
     },
   },
   plugins: [],
-};
+});

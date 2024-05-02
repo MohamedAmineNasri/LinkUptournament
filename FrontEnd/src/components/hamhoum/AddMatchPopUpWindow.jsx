@@ -20,9 +20,10 @@ import { convertToBase64 } from "../../utilities/convertFileBase64";
 import { number } from "prop-types";
 
 
-export const AddMatchPopUpWindow = (props) => {
+export const AddMatchPopUpWindow = ({ tournamentId }) => {
+  console.log("Matchpopup ",tournamentId)
   const [show, setShow] = useState(false);
-  const { tournamentId } = useParams();
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   //add logic
@@ -179,7 +180,6 @@ export const AddMatchPopUpWindow = (props) => {
         const tournament = response.data.tournament;
         // console.log("Successfully retrieved the tournament:", response.data.tournament.type);
         settournament(tournament)
-        setMatchtype(response.data.tournament.type)
         // Fetch team names for each team ID
         const teamsWithNames = await Promise.all(tournament.teams.map(async teamId => {
           const teamResponse = await axios.get(`http://localhost:8000/team/getTeam/${teamId}`);
@@ -255,13 +255,24 @@ export const AddMatchPopUpWindow = (props) => {
             onChange={(e) => setStartingtime(e.target.value)}
           />
           <Form.Label>Match Type:</Form.Label>
-          <Form.Control
-            type="text"
-            autoFocus
-            value={Matchtype}
-            className={`border ${isValid ? 'border-green-500' : 'border-red-500'}`}
-          />
-          {!isValid && <p className="text-red-500">Match type must contain only letters.</p>}
+<Form.Control
+  as="select"
+  autoFocus
+  value={Matchtype}
+  onChange={(e) => setMatchtype(e.target.value)}
+  className={`border ${isValid ? 'border-green-500' : 'border-red-500'}`}
+>
+  <option value="">Select Match Type</option>
+  <option value="Group Stage">Group Stage</option>
+  <option value="Round1">Round 1</option>
+  <option value="Round2">Round 2</option>
+  <option value="Round3">Round 3</option>
+  <option value="Round4">Round 4</option>
+  <option value="Round5">Round 5</option>
+  <option value="Semi Final">Semi Final</option>
+  <option value="Final">Final</option>
+</Form.Control>
+{!isValid && <p className="text-red-500">Please select a valid Match Type.</p>}
           <Form.Label>Team 1:</Form.Label>
           <br />
           <select onChange={handleteam1} className="border text-black">

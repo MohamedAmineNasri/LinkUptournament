@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useParams , useLocation} from 'react-router-dom';
-import Group from './Group';
-import FetchTour from '../hamhoum/fetchmatchesByTournementId';
-import TournamentBracket from './TournamentBracket';
+import Group from '../../components/Tournament/Group';
+import FetchTour from '../../components/hamhoum/fetchmatchesByTournementId';
+import TournamentBracket from '../../components/Tournament/TournamentBracket';
 import axios from 'axios';
 import { Outlet, useNavigate } from "react-router-dom";
 
-export const Tournament = () => {
+export const Tournament = ({tournamentId}) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [groups, setGroups] = useState(null);
   const [tournament, setTournament] = useState(null);
   const [displayComponent, setDisplayComponent] = useState("groups");
-  const { tournamentId } = useParams();
 
   useEffect(() => {
     const fetchTournament = async () => {
       const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
       const tournamentData = response.data.tournament;
-
+      let winnerName = "Unknown"; 
+      if (tournamentData.winner) {
+        const winnerResponse = await axios.get(`http://localhost:8000/Team/getTeam/${tournamentData.winner}`);
+        winnerName = winnerResponse.data.TeamName; 
+        console.log("winenr" ,winnerName)// Assuming there's a field called 'name' for the winner
+      }
       // Get current date
       const currentDate = new Date();
       // Convert tournament start date to Date object
@@ -38,6 +41,7 @@ export const Tournament = () => {
 
       setTournament({
         ...tournamentData,
+        winner: winnerName,
         // Format the date_debut field
         date_debut: new Date(tournamentData.date_debut).toLocaleDateString('en-US'),
       });
@@ -84,40 +88,39 @@ export const Tournament = () => {
     <>
       <div>
         {/* Header */}
-        <div class="flex p-6 font-mono">
-          <div class=" flex-none w-48 mb-10 relative z-10 before:absolute before:top-1 before:left-1 before:w-full before:h-full before:bg-custom-green">
-            <img src={`http://localhost:8000/${tournament.logo}`} alt="" class="absolute z-10 inset-0 w-full h-full object-cover rounded-lg" loading="lazy" />
-          </div>
-          <form class="flex-auto pl-6">
-            <div class="relative flex flex-wrap items-baseline pb-6 before:bg-red-500 before:absolute before:-top-6 before:bottom-0 before:-left-60 before:-right-6">
-              <h1 class="relative uppercase w-full flex-none mb-2 text-2xl font-semibold text-black">
-                {tournament.name}
-              </h1>
-              <div class="relative uppercase text-white w-full  ">{tournament.status}</div>
-              <div class="relative text-xs text-white ml-90 mt-1  ">{tournament.date_debut}</div>
-            </div>
-            <div class="flex items-baseline my-6">
-              <div class="space-x-3 flex text-sm font-medium"></div>
-            </div>
-            <div class="flex space-x-2 mb-4 text-sm font-medium">
-              <div class="flex space-x-4">
-                <button class="px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-custom-green text-white" type="submit" onClick={() => navigate(`/manage/editt/${tournament._id}`)}>
-                  Edit
-                </button>
-                
-              </div>
-              <button class="flex-none flex items-center justify-center w-12 h-12 text-black" type="button" aria-label="Like">
-                <svg width="20" height="20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-                </svg>
-              </button>
-            </div>
-            
-            <p class="text-xs leading-6 text-slate-500">{tournament.rules}</p>
-          </form>
-        </div>
-        {/* Hero Image */}
-        <div>
+        <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
+               <img 
+                    src={`http://localhost:8000/${tournament.logo}`} 
+                    alt={tournament.name} 
+                    className="w-20 h-20 p-1 -mt-1 mb-2 rounded-full "
+                    
+                  />
+             
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black dark:text-white">
+              {tournament.name}
+              </h4>
+              <p className="text-gray-600 text-center">
+              {tournament.type}              </p>
+              <div className="flex items-center justify-center"> {/* Flex container */}
+  <img 
+    src={`http://localhost:8000/uploads/trophe.png`} 
+    alt={tournament.name} 
+    className="w-14 h-14 p-1 -mt-1 mb-2 rounded-full"
+  />
+  <h1 className="text-gray-600 text-center ml-2"> {/* Add margin for space */}
+    {tournament.winner}
+  </h1>
+</div>
+              <p className={`text-center ${
+                  tournament.status === 'Coming Soon' ? 'text-orange-600' :
+                  tournament.status === 'Started' ? 'text-green-600' :
+                  tournament.status === 'Ended' ? 'text-red-600' : ''
+                }`}>
+                  {tournament.status}
+                </p>
+         </div>
+        
+        
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark mb-4">
   <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
     {tournament.type !== 'Knockout' && (
@@ -148,7 +151,7 @@ export const Tournament = () => {
   </div>
 </div>
 
-    </div>
+    
         {/* Render Group components */}
         {displayComponent === 'groups' && (
           <div className="flex flex-wrap gap-4">
@@ -161,13 +164,7 @@ export const Tournament = () => {
         {displayComponent === 'bracket' && (tournament.type === 'Knockout' || tournament.type === 'Group stage and Knockout') && (
           <TournamentBracket tournamentId={tournament._id}></TournamentBracket>
         )}
-{displayComponent === 'fetchtour' && (
-  
-    
-      <FetchTour key={tournament._id} tournamentId={tournament._id} />
-    
-  
-)}
+{displayComponent === 'fetchtour' }
 
         
       </div>

@@ -51,95 +51,81 @@ const updateGroup = async (req,res,next)=>{
 }
 
 
-const createGroups = async (req, res , next) => {
+const createGroups = async (req, res, next) => {
   const tournament = await Tournament.findById(req.params.id);
-  let teamsChunks = []; 
   const numGroups = req.params.nbG;
-  const numTeams = req.params.nbT; 
-  let teams; 
+  const numTeams = req.params.nbT;
+  let teams;
 
-  switch(tournament.type) {
+  switch (tournament.type) {
     case 'Group Stage':
-      teams = [...tournament.teams]; // Create a copy of the teams array
-      for (let i = 0; i < numGroups; i++) {
-        let teamsChunk = [];
-        for (let j = 0; j < numTeams; j++) {
-          if (teams.length > 0) {
-            let teamId = teams.splice(Math.floor(Math.random() * teams.length), 1)[0];
-            const teamDoc = await Team.findById(teamId);
-            teamsChunk.push({
-              team: teamId,
-              TeamName : teamDoc.TeamName,
-              MJ: 0,
-              G: 0,
-              N: 0,
-              P: 0,
-              BP: 0,
-              BC: 0,
-              DB: 0,
-              PTS: 0
-            });
-          }
-        }
-        teamsChunks.push(teamsChunk);
-      }
-      
-      for (let j = 0; j < numGroups; j++) {
-        const groupName = 'Group ' + String.fromCharCode(65 + j);
-        const group = new Group({
-          name: groupName,
-          tournament: tournament,
-          teams: teamsChunks[j]
-        });
-        await group.save();
-      }
-      break;
     case 'Group stage and Knockout':
-      teams = [...tournament.teams]; // Create a copy of the teams array
-      for (let i = 0; i < numGroups; i++) {
-        let teamsChunk = [];
-        for (let j = 0; j < numTeams; j++) {
-          if (teams.length > 0) {
-            let teamId = teams.splice(Math.floor(Math.random() * teams.length), 1)[0];
-            const teamDoc = await Team.findById(teamId);
-            teamsChunk.push({
-              team: teamId,
-              TeamName : teamDoc.TeamName,
-              MJ: 0,
-              G: 0,
-              N: 0,
-              P: 0,
-              BP: 0,
-              BC: 0,
-              DB: 0,
-              PTS: 0
-            });
-          }
-        }
-        teamsChunks.push(teamsChunk);
+      teams = [...tournament.teams.map(team => team.toString())]; // Convert ObjectId instances to strings
+
+      // Create a map of team performances
+      const teamPerformance = new Map();
+      for (const teamId of teams) {
+        const team = await Team.findById(teamId);
+        const performance = team.Total_MatchesPlayed ? team.Total_MatchesWon / team.Total_MatchesPlayed : 0;
+        teamPerformance.set(teamId, performance);
       }
-      
+
+      // Sort teams based on the performance map
+      teams.sort((teamIdA, teamIdB) => {
+        const performanceA = teamPerformance.get(teamIdA) || 0;
+        const performanceB = teamPerformance.get(teamIdB) || 0;
+        return performanceB - performanceA; // Sort in descending order based on performance
+      });
+
+      // Initialize an array of groups
+      let groups = Array.from({length: numGroups}, () => []);
+
+      // Distribute teams among groups
+      for (let i = 0; i < teams.length; i++) {
+        const teamId = teams[i];
+        const teamDoc = await Team.findById(teamId);
+        const groupIndex = i % numGroups; // Determine which group the team should go to
+        groups[groupIndex].push({
+          team: teamId,
+          TeamName: teamDoc.TeamName,
+          TeamLogo : teamDoc.TeamLogo,
+          MJ: 0,
+          G: 0,
+          N: 0,
+          P: 0,
+          BP: 0,
+          BC: 0,
+          DB: 0,
+          PTS: 0
+        });
+      }
+
+      // Save the groups
       for (let j = 0; j < numGroups; j++) {
         const groupName = 'Group ' + String.fromCharCode(65 + j);
         const group = new Group({
           name: groupName,
           tournament: tournament,
-          teams: teamsChunks[j]
+          teams: groups[j]
         });
         await group.save();
+       
       }
       break;
-    
+
     default:
       res.status(400).json({ message: 'Invalid tournament type' });
       return;
   }
 
   res.json({
-    message : "Groups successfully created!",
+    message: "Groups successfully created!",
     tournament: tournament
   });
 };
+
+
+
 
 
 
@@ -173,7 +159,7 @@ const updateGroupAfterMatch = async (req, res, next) => {
           throw new Error('Match not found');
       }
 
-      const group = await Group.findById(match.groupId);
+      const group = await Group.findById(match.group);
       console.log('Group found:', group);
 
       const team1 = group.teams.find(team => team.team.toString() === match.team1.toString());
@@ -188,10 +174,10 @@ const updateGroupAfterMatch = async (req, res, next) => {
       team2.MJ += 1;
 
       // Update the balls played (BP), balls conceded (BC), and difference in balls (DB) for both teams
-      team2.BP += match.team2Gols ;
-      team1.BC += match.team2Gols;
-      team2.BC += match.team1Gols ;
-      team1.BP += match.team1Gols ;
+      team2.BP += match.goal2.length  ;
+      team1.BC += match.goal2.length ;
+      team2.BC += match.goal1.length ;
+      team1.BP += match.goal1.length  ;
       team1.DB = team1.BP - team1.BC;
       team2.DB = team2.BP - team2.BC;
 

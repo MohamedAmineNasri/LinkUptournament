@@ -4,7 +4,6 @@ const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 // Set your SendinBlue API key
 // const apiKey = ' ';
-
 // Configure API key authorization: api-key
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKeyAuth = defaultClient.authentications['api-key'];

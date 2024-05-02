@@ -511,14 +511,6 @@ export const CheckSelectedTeam = () => {
                                           <Button
                                             variant="secondary"
                                             onClick={() =>
-                                              console.log("Edit Player")
-                                            }
-                                          >
-                                            <FontAwesomeIcon icon={faEdit} />
-                                          </Button>
-                                          <Button
-                                            variant="secondary"
-                                            onClick={() =>
                                               handleDeletePlayer(
                                                 SelectedteamDataById._id,
                                                 player._id

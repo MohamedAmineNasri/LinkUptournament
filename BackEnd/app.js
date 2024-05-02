@@ -217,9 +217,8 @@ app.get("/config", (req, res) => {
   });
 });
 
-app.get("/create-payment-intent/:id", async (req, res) => {
+app.post("/create-payment-intent/:id", async (req, res) => {
   try {
-    const user = await u.sendWelcomeEmail("omriyasser12@gmail.com","yasser","omri")
     const matchet = await m.findById(req.params.id);
 
     // Check if ticket number is greater than 0

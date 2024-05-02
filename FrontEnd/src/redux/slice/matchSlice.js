@@ -135,7 +135,7 @@ export const addnewMatch = createAsyncThunk(
    tournementId:tournementId,
    ticketNumber:ticketNumber,
    price:price,
-          
+   ticketId:[0]
         }
       );
       window.location.reload();

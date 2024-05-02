@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import { addnewMatch, fetchAllTour } from "../../redux/slice/matchSlice";
 import { useDispatch } from "react-redux";
-import MatchByID from "./getAllTournement";
+import MatchByID from "./getAllGroup";
 import { useParams } from 'react-router-dom';
 import {
   Button,
@@ -304,26 +304,24 @@ export const AddMatchPopUpWindow = (props) => {
             <option value="2467454">Sfax</option>
             <option value="2464915">Sousse</option>
             <option value="2468369">Gabès</option>
-            <option value="2465624">Kairouan</option>
-            <option value="2473305">Bizerte</option>
-            <option value="2467813">Gafsa</option>
-            <option value="2504205">Ariana</option>
-            <option value="2473448">Kasserine</option>
-            <option value="2464008">Monastir</option>
-            <option value="2471046">Ben Arous</option>
-            <option value="2467580">La Marsa</option>
-            <option value="2465440">Tataouine</option>
-            <option value="2469566">Nabeul</option>
-            <option value="2470233">Hammamet</option>
-            <option value="2468843">Mahdia</option>
-            <option value="2472771">Beja</option>
-            <option value="2467815">Jendouba</option>
-            <option value="2462881">Sidi Bouzid</option>
-            <option value="2468560">Medenine</option>
-            <option value="2469254">El Kef</option>
-            <option value="2465196">Zaghouan</option>
-            <option value="2462962">Siliana</option>
-            <option value="2464475">Tozeur</option>
+            <option value="2473449">Kairouan</option>
+            <option value="2472706">Bizerte</option>
+            <option value="2468353">Gafsa</option>
+            <option value="2473245">Ariana</option>
+            <option value="2473457">Kasserine</option>
+            <option value="2473493">Monastir</option>
+            <option value="2472479">Ben Arous</option>
+            <option value="2464698">Tataouine</option>
+            <option value="2468576">Nabeul</option>
+            <option value="2473744">Hammamet</option>
+            <option value="2473572">Mahdia</option>
+            <option value="2470085">Jendouba</option>
+            <option value="2465840">Sidi Bouzid</option>
+            <option value="2469473">Medenine</option>
+            <option value="2473634">El Kef</option>
+            <option value="2464041">Zaghouan</option>
+            <option value="2465030">Siliana</option>
+            <option value="2464648">Tozeur</option>
           </select>
         </Form.Group>
         <Form.Label>Ticket number:</Form.Label>

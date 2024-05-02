@@ -8,10 +8,10 @@ import DeleateMatchPopUp from "./DeleateMatchPopUp";
 import AddMatchPopUpWindow from "./AddMatchPopUpWindow";
 import NavBar from "./navbar";
 import Footer from "./foter";
-import MatchByID from "./getAllTournement"
+import MatchByID from "./getAllGroup"
 import EditPopUpmatch from "./EditPopUpMatch";
 import EditPopUpSelectedMatch from "./update";
-import Showmatch from "./getAllTournement";
+import Showmatch from "./getAllGroup";
 
 const MatchCard = (props) => {
   const matchData = useSelector((state) => state.root.match.matchData);

@@ -38,6 +38,12 @@ const TournamentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Team'
   }] ,
+  winners: [{
+    type: mongoose.Schema.Types.ObjectId,
+  }] ,
+  nbphase :{
+    type: Number , 
+  }
   
 }, 
 { timestamps: true });

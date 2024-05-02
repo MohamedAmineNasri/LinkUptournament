@@ -1,0 +1,39 @@
+.lineup-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 24px;
+  padding: 24px;
+  overflow: hidden;
+  background-color: #3d4757;
+}
+.football-pitch {
+  border-radius: 24px;
+}
+
+.lineup-pitch {
+  background-color: #b4bac5;
+  border-radius: 24px;
+  position: "relative";
+  padding: 0px;
+}
+.addPlayerLineUp{
+    height: 60px;
+    width: 60px;
+    border-radius: 60px;
+    filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px);
+    z-index: 2;
+    position: relative;
+    transition: transform 0.5s ease 0s;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px dashed white;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+}

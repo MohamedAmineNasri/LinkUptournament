@@ -111,7 +111,7 @@ io.on("connection", async (socket) => {
 
 function filterOutBadWords(message) {
   // Define an array of bad words to filter out
-  const badWords = ['zebi', '3asba', 'fack', 'mnayik'];
+  const badWords = ['zebi', '3asba', 'fack', 'mnayik','fuck','bitch'];
 
   // Regular expression pattern to match emojis
   const emojiPattern = /[\uD800-\uDFFF][\uDC00-\uDFFF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDDFF]|\uD83E[\uDD00-\uDDFF]/g;

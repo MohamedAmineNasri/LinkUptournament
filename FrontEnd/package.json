@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@alan-ai/alan-sdk-web": "^1.8.54",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
@@ -39,10 +40,13 @@
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.2",
     "chroma-js": "^2.4.2",
+    "classnames": "^2.5.1",
     "crypto-random-string": "^5.0.0",
     "downloadjs": "^1.4.7",
     "emoji-picker-react": "^4.9.2",
     "flatpickr": "^4.6.13",
+    "html-to-image": "^1.11.11",
+    "html2canvas": "^1.4.1",
     "jsvectormap": "^1.5.3",
     "lottie-web": "^5.12.2",
     "node-fetch": "^3.3.2",
@@ -81,7 +85,8 @@
     "socket.io-client": "^4.7.5",
     "stylis-plugin-rtl": "^2.1.1",
     "sweetalert2": "^11.6.13",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

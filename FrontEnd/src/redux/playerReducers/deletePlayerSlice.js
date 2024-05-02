@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { fetchPlayers } from "./fetchPlayerSlice";
+import { searchPlayers } from "./searchPlayerSlice";
 
 const initialState = {
   status: "idle",
   error: null,
 };
 
-export const deletePlayer = (id) => async (dispatch) => {
+export const deletePlayer = (id, teamFilter) => async (dispatch) => {
   dispatch(deletePlayerPending());
   try {
     await axios.delete(`http://localhost:8000/player/${id}`);
     dispatch(deletePlayerFulfilled());
-    dispatch(fetchPlayers());
+    dispatch(searchPlayers({ team: teamFilter }));
   } catch (error) {
     dispatch(deletePlayerRejected(error.message));
   }

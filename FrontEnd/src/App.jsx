@@ -87,7 +87,15 @@ import HomeLandingPage from "./landingPage/HomeLandingPage";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+import Chatbot from "react-chatbot-kit";
+
+import config from "./components/ChatBotComponents/chatbot/config";
+import ActionProvider from "./components/ChatBotComponents/chatbot/ActionProvider";
+import MessageParser from "./components/ChatBotComponents/chatbot/MessageParser";
+import "react-chatbot-kit/build/main.css";
 import NotFound from "./landingPage/notfound";
+
 
 function App() {
   // animeaa
@@ -117,6 +125,18 @@ function App() {
         </div>      
       ) : (
         <Routes>
+        <Route
+            path="/ChatBot"
+            element={
+              <div style={chatbotStyle}>
+                <Chatbot
+                  config={config}
+                  actionProvider={ActionProvider}
+                  messageParser={MessageParser}
+                />
+              </div>
+            }
+          />
         <Route path="/timer" element={<Timer />} />
         <Route path="/matchBygroup/:tournamentId/:group" element={<FetchMatchByGroup />} />
         <Route path="/qr" element={<QrCode />} />
@@ -151,6 +171,7 @@ function App() {
             <Route path="format" element={<FormatSelect />}>
               <Route path="bracket" element={<ManageTournamentFormat />} />
               <Route path="group" element={<ManageTournamentGroup />} />
+
             </Route>
             <Route path="participant" element={<ManageParticipant />}>
               <Route path="player" element={<ManagePlayer />} />
@@ -178,6 +199,19 @@ function App() {
           <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
             <Route path="/addAcademy" element={<AddAcademy />} />
             <Route path="/Academy" element={<Academy />} />
+
+            <Route path="/team/:idTeam" element={<CheckSelectedTeam />} />
+            
+
+            {/* <Route element={<RequireAuth allowedRoles={['Manager']} />}> */}
+            <Route element={<RequireAuth allowedRoles={["Manager"]} />}>
+              <Route path="/addAcademy" element={<AddAcademy />} />
+              <Route path="/Academy" element={<Academy />} />
+            </Route>
+
+            
+
+            
           </Route>
   
           <Route path="/Academy" element={<Academy />} />
@@ -202,6 +236,7 @@ function App() {
           {/* Protected Routes  */}
           <Route element={<PersistLogin />}>
             {/* <Route element={<RequireAuth  />}> */}
+
             <Route
               element={
                 <RequireAuth

@@ -7,15 +7,20 @@ const initialState = {
   error: null,
 };
 
-export const fetchReferees = () => async (dispatch) => {
-  dispatch(fetchRefereesPending());
-  try {
-    const response = await axios.get("http://localhost:8000/referee");
-    dispatch(fetchRefereesFulfilled(response.data));
-  } catch (error) {
-    dispatch(fetchRefereesRejected(error.message));
-  }
-};
+export const fetchReferees =
+  (page = 1, limit = 10) =>
+  async (dispatch) => {
+    dispatch(fetchRefereesPending());
+    try {
+      const response = await fetch(
+        `http://localhost:8000/referee?page=${page}&limit=${limit}`
+      );
+      const data = await response.json();
+      dispatch(fetchRefereesFulfilled(data));
+    } catch (error) {
+      dispatch(fetchRefereesRejected(error.message));
+    }
+  };
 
 const fetchRefereeSlice = createSlice({
   name: "referees",

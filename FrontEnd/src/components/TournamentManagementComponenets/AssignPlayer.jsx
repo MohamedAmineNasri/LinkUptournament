@@ -87,6 +87,7 @@ const AssignPlayer = ({ openAssignField, setOpenAssignField, playerId }) => {
             {teamsData.map((team) => {
               return (
                 <div
+                  key={team._id}
                   className={`flex flex-col items-center justify-center gap-2 p-2 cursor-pointer ${
                     activeTeamId === team._id
                       ? "bg-green-400"

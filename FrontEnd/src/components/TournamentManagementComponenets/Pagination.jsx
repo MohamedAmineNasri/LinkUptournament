@@ -7,7 +7,7 @@ import { searchReferees } from "../../redux/refereeReducers/searchRefereeSlice";
 const Pagination = ({ currentPage, totalPages, type }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { name, position } = useSelector(
+  const { name, position, team } = useSelector(
     (state) => state.root.searchPlayers.searchResults
   );
   const {
@@ -19,7 +19,14 @@ const Pagination = ({ currentPage, totalPages, type }) => {
   const handlePageChange = (page) => {
     switch (pathname) {
       case "/manage/participant/player": {
-        dispatch(searchPlayers({ name: name, position: position, page: page }));
+        dispatch(
+          searchPlayers({
+            name: name,
+            position: position,
+            team: team,
+            page: page,
+          })
+        );
         break;
       }
       case "/manage/participant/referee": {

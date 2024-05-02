@@ -12,12 +12,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addPlayer } from "../../redux/playerReducers/addPlayerSlice";
-import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
 import { updatePlayer } from "../../redux/playerReducers/updatePlayerSlice";
 import { deletePlayer } from "../../redux/playerReducers/deletePlayerSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
-import { getPlayersPosition } from "../../redux/playerReducers/searchPlayerSlice";
+import {
+  getPlayersPosition,
+  getPlayersTeam,
+} from "../../redux/playerReducers/searchPlayerSlice";
 import axios from "axios";
 import ImagePlaceholder from "/public/images/image-placeholder.jpg";
 import Pagination from "./Pagination";
@@ -29,6 +31,7 @@ const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
   const [img, setImg] = useState(null);
   const [openAssignField, setOpenAssignField] = useState(false);
+  const [teamFilter, setTeamFilter] = useState("");
   const location = useLocation();
 
   const handleFileChange = (event) => {
@@ -43,9 +46,13 @@ const ManagePlayer = () => {
     }
   };
 
-  const { players, currentPage, totalPages, type } = useSelector(
+  let { players, currentPage, totalPages, type } = useSelector(
     (state) => state.root.fetchPlayers.players
   );
+  const teams =
+    useSelector((state) => state.root.academy.academyData.teams) || [];
+
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openAddForm, setOpenAddForm] = useState(false);
@@ -67,13 +74,16 @@ const ManagePlayer = () => {
   const [position, setPosition] = useState("");
 
   useEffect(() => {
-    dispatch(fetchPlayers());
+    if (user?.roles[0] == "Manager" && teams) {
+      dispatch(getPlayersTeam(teams[0]?._id));
+      setTeamFilter(teams[0]?._id);
+    }
+
     if (location.state) {
-      console.log("here", location.state);
       setFormData({ ...formData, team: location.state });
       setOpenAddForm(true);
     }
-  }, [dispatch, fetchPlayers]);
+  }, [dispatch, teams, location.state]);
 
   const handleAddSkill = () => {
     setFormData((prevData) => ({
@@ -170,7 +180,7 @@ const ManagePlayer = () => {
       if (imageUrl != ImagePlaceholder) {
         handleUpload(img);
       } else {
-        dispatch(addPlayer(formData));
+        dispatch(addPlayer(formData, teamFilter));
         toast.success("Player added successfully 👌");
         setFormData({});
       }
@@ -178,7 +188,7 @@ const ManagePlayer = () => {
       if (imageUrl != ImagePlaceholder) {
         handleUpload(img);
       } else {
-        dispatch(updatePlayer(playerId, formData));
+        dispatch(updatePlayer(playerId, formData, teamFilter));
         toast.success("Player updated successfully 👌");
         setFormData({});
       }
@@ -260,11 +270,39 @@ const ManagePlayer = () => {
           <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
             <div className="max-w-full overflow-x-auto">
               <div className="p-3 flex items-center justify-between gap-10">
-                <h3 className="text-base font-bold text-black dark:text-white ">
+                <h3 className="text-base flex-1 font-bold text-black dark:text-white ">
                   Filter:
                 </h3>
-                <div className="w-1/5 pb-3">
-                  <FormControl variant="standard" sx={{ width: "100%" }}>
+                <div className="flex-1 pb-3 flex justify-end">
+                  {user?.roles[0] == "Manager" && teams ? (
+                    <FormControl
+                      variant="standard"
+                      sx={{ minWidth: "40%", paddingRight: "20px" }}
+                    >
+                      <InputLabel id="Position" sx={{ color: "gray" }}>
+                        Teams
+                      </InputLabel>
+                      <Select
+                        labelId="Teams"
+                        id="Teams"
+                        label="Teams"
+                        name="team"
+                        value={teamFilter}
+                        onChange={(e) => {
+                          setTeamFilter(e.target.value);
+
+                          dispatch(getPlayersTeam(e.target.value));
+                        }}
+                      >
+                        {teams?.map((team) => (
+                          <MenuItem value={team._id}>{team.TeamName}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <></>
+                  )}
+                  <FormControl variant="standard" sx={{ width: "40%" }}>
                     <InputLabel id="Position" sx={{ color: "gray" }}>
                       Position
                     </InputLabel>
@@ -282,7 +320,7 @@ const ManagePlayer = () => {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {Object.entries(soccerPositions).map(([key, value]) => (
+                      {Object.entries(soccerPositions)?.map(([key, value]) => (
                         <MenuItem value={key}>{value}</MenuItem>
                       ))}
                     </Select>
@@ -310,7 +348,7 @@ const ManagePlayer = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {players.map((player, key) => (
+                  {players?.map((player, key) => (
                     <tr key={key}>
                       <td className="border-b border-[#eee] px-4 pl-9 dark:border-strokedark xl:pl-11">
                         <div className="flex items-center gap-3">
@@ -387,7 +425,7 @@ const ManagePlayer = () => {
                           <button
                             className="hover:text-primary"
                             onClick={() => {
-                              dispatch(deletePlayer(player._id));
+                              dispatch(deletePlayer(player._id, teamFilter));
 
                               toast.success("Player deleted successfully!");
                             }}

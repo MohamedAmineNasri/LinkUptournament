@@ -7,10 +7,11 @@ const initialState = {
   searchResults: [],
   error: null,
   position: "",
+  team: "",
 };
 
 export const searchPlayers =
-  ({ name, position, page, limit }) =>
+  ({ name, position, team, page, limit }) =>
   async (dispatch) => {
     dispatch(searchPlayersPending());
     try {
@@ -19,7 +20,8 @@ export const searchPlayers =
       if (position) url += `position=${position}&`;
       if (page) url += `page=${page}&`;
       if (limit) url += `limit=${limit}&`;
-
+      if (team) url += `team=${team}&`;
+      console.log("slice", team);
       const response = await axios.get(url);
       dispatch(
         searchPlayersFulfilled({
@@ -27,6 +29,7 @@ export const searchPlayers =
           type: "search",
           name,
           position,
+          team,
         })
       );
       dispatch(
@@ -35,6 +38,7 @@ export const searchPlayers =
           type: "search",
           name,
           position,
+          team,
         })
       );
       dispatch(
@@ -57,6 +61,10 @@ const searchPlayerSlice = createSlice({
       state.status = "succeeded";
       state.position = action.payload;
     },
+    getPlayersTeam: (state, action) => {
+      state.status = "succeeded";
+      state.team = action.payload;
+    },
     searchPlayersPending: (state) => {
       state.status = "loading";
     },
@@ -73,6 +81,7 @@ const searchPlayerSlice = createSlice({
 
 export const {
   getPlayersPosition,
+  getPlayersTeam,
   searchPlayersPending,
   searchPlayersFulfilled,
   searchPlayersRejected,

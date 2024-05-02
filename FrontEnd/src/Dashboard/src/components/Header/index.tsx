@@ -23,16 +23,20 @@ const Header = (props: {
   const positionQuery = useSelector(
     (state) => state.root.searchPlayers.position
   );
+  const teamQuery = useSelector((state) => state.root.searchPlayers.team);
   const refereeQuery = useSelector(
     (state) => state.root.searchReferee.queryReferee
   );
+
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [name, setName] = useState("");
 
   useEffect(() => {
     if (playerLocation) {
-      dispatch(searchPlayers({ name: name, position: positionQuery }));
+      dispatch(
+        searchPlayers({ name: name, position: positionQuery, team: teamQuery })
+      );
     }
     if (refereeLocation) {
       dispatch(
@@ -43,7 +47,7 @@ const Header = (props: {
         })
       );
     }
-  }, [positionQuery, refereeQuery]);
+  }, [positionQuery, refereeQuery,teamQuery]);
 
   const handleChange = (event: Event) => {
     const { value } = event.target;
@@ -53,7 +57,13 @@ const Header = (props: {
     if (playerLocation) {
       setName(value);
       setTimeout(() => {
-        dispatch(searchPlayers({ name: value, position: positionQuery }));
+        dispatch(
+          searchPlayers({
+            name: value,
+            position: positionQuery,
+            team: teamQuery,
+          })
+        );
       }, 300);
     }
     if (refereeLocation) {

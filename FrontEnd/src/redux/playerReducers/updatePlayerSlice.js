@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { fetchPlayers } from "./fetchPlayerSlice";
+import { searchPlayers } from "./searchPlayerSlice";
 
 const initialState = {
   status: "idle",
   error: null,
 };
 
-export const updatePlayer = (id, newData) => async (dispatch) => {
+export const updatePlayer = (id, newData,teamFilter) => async (dispatch) => {
   dispatch(updatePlayerPending());
   try {
     const response = await axios.patch(`http://localhost:8000/player/${id}`, newData);
     dispatch(updatePlayerFulfilled(response.data));
-    dispatch(fetchPlayers());
+    dispatch(searchPlayers({ team: teamFilter }));
   } catch (error) {
     dispatch(updatePlayerRejected(error.message));
   }

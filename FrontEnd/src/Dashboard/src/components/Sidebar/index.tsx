@@ -72,7 +72,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   if (loading === false && error === null) {
     dispatch(
       fetchAcademybyManagerId({
-        idmanger: user.id,
+        idmanger: user?.id,
       })
     );
   }

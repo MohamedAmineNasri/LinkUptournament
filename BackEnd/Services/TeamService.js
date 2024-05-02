@@ -165,6 +165,9 @@ const deleteTeamByIdandFromAcademy = async (req, res, next) => {
       return res.status(404).send("Team not found");
     }
 
+    // Deleting all players associated with the team
+    await Player.deleteMany({ team: team._id });
+
     // Updating the corresponding academy's list of team IDs
     const academy = await Academy.findOneAndUpdate(
       { _id: team.academy },

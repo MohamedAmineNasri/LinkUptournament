@@ -7,15 +7,19 @@ const initialState = {
   error: null,
 };
 
-export const fetchPlayers = () => async (dispatch) => {
-  dispatch(fetchPlayersPending());
-  try {
-    const response = await axios.get("http://localhost:8000/player");
-    dispatch(fetchPlayersFulfilled(response.data));
-  } catch (error) {
-    dispatch(fetchPlayersRejected(error.message));
-  }
-};
+export const fetchPlayers =
+  (page = 1, limit = 10) =>
+  async (dispatch) => {
+    dispatch(fetchPlayersPending());
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/player?page=${page}&limit=${limit}`
+      );
+      dispatch(fetchPlayersFulfilled({ ...response.data, type: "fetch" }));
+    } catch (error) {
+      dispatch(fetchPlayersRejected(error.message));
+    }
+  };
 
 const fetchPlayerSlice = createSlice({
   name: "players",

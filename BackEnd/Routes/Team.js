@@ -3,6 +3,7 @@ var router = express.Router();
 const teamService = require("../Services/TeamService");
 
 router.get("/", teamService.getAllTeams);
+router.get("/search", teamService.searchTeams);
 
 router.post("/addTeam", teamService.addTeam);
 router.post(
@@ -12,38 +13,49 @@ router.post(
 router.get("/ofTeam/:idTeam", teamService.getPlayersByTeamId);
 router.post(
   "/assignPlayerToTeam/:teamId/:playerId",
-  teamService.assignPlayerToTeam)
+  teamService.assignPlayerToTeam
+);
 
-router.get("/getTeam/:id" ,teamService.getTeamById);
-router.get("/getTeambyAcademyId/:id" ,teamService.getTeamByAcademyId);
+router.get("/getTeam/:id", teamService.getTeamById);
+router.get("/getTeambyAcademyId/:id", teamService.getTeamByAcademyId);
 
-router.delete("/deleteTeam/:id" ,teamService.deleteTeamById);
-router.put("/updateTeam/:id",teamService.updateTeam);
-router.put("/updateTeamSameName/:id",teamService.updateTeamSameName);
+router.delete("/deleteTeam/:id", teamService.deleteTeamById);
+//By yassine
+router.put("/:id", teamService.updateTeamById);
 
-router.post("/updateMW/:id",teamService.updateTeamMatchesWon);
-router.post("/cancelMW/:id",teamService.cancelTeamMatchesWon);
+router.put("/updateTeam/:id", teamService.updateTeam);
+router.put("/updateTeamSameName/:id", teamService.updateTeamSameName);
 
-router.post("/updateML/:id",teamService.updateTeamMatchesLost);
-router.post("/cancelML/:id",teamService.cancelTeamMatchesLost);
+router.post("/updateMW/:id", teamService.updateTeamMatchesWon);
+router.post("/cancelMW/:id", teamService.cancelTeamMatchesWon);
 
-router.post("/updateMD/:id",teamService.updateTeamMatchesDrawn);
-router.post("/cancelMD/:id",teamService.cancelTeamMatchesDrawn);
+router.post("/updateML/:id", teamService.updateTeamMatchesLost);
+router.post("/cancelML/:id", teamService.cancelTeamMatchesLost);
 
-router.post("/updateGoals/:id",teamService.updateGoals_scored);
-router.post("/cancelGoals/:id",teamService.cancelGoals_scored);
+router.post("/updateMD/:id", teamService.updateTeamMatchesDrawn);
+router.post("/cancelMD/:id", teamService.cancelTeamMatchesDrawn);
 
-router.post("/updateGoalsIn/:id",teamService.updateGoals_received);
-router.post("/cancelGoalsIn/:id",teamService.cancelGoals_received);
+router.post("/updateGoals/:id", teamService.updateGoals_scored);
+router.post("/cancelGoals/:id", teamService.cancelGoals_scored);
 
-router.post("/resetGSdata/:id",teamService.resetGroupStageData);
+router.post("/updateGoalsIn/:id", teamService.updateGoals_received);
+router.post("/cancelGoalsIn/:id", teamService.cancelGoals_received);
 
-router.post("/addTeamAndAssaignAcademy",teamService.addTeamAndAssaignToAcademy);
+router.post("/resetGSdata/:id", teamService.resetGroupStageData);
 
 router.delete("/deleteTeamByIdandFromAcademy/:id",teamService.deleteTeamByIdandFromAcademy);
 router.put("/removePlayerFromTeam/:idt/:idp",teamService.removePlayerFromTeam);
+router.post(
+  "/addTeamAndAssaignAcademy",
+  teamService.addTeamAndAssaignToAcademy
+);
 
-router.get('/teams/search/:searchString', teamService.getTeamsByName);
+router.delete(
+  "/deleteTeamByIdandFromAcademy/:id",
+  teamService.deleteTeamByIdandFromAcademy
+);
+
+router.get("/teams/search/:searchString", teamService.getTeamsByName);
 
 router.post("/UpdateTeamsStatsFromFinishedMatches",teamService.UpdateTeamsStatsFromFinishedMatches);
 

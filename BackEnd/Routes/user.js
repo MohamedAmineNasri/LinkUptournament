@@ -24,4 +24,5 @@ router.put("/users/:id", updateUserById);
 router.get("/refresh", refreshTokenController.handleRefreshToken);
 router.get("/logout", handleLogout.handleLogout);
 
+
 module.exports = router;

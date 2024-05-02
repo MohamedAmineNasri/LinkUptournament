@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@alan-ai/alan-sdk-web": "^1.8.54",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
@@ -19,6 +20,7 @@
     "@headlessui/react": "^1.7.19",
     "@lordicon/element": "^1.6.0",
     "@lordicon/react": "^1.6.0",
+    "@material-tailwind/react": "^2.1.9",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
     "@mui/x-charts": "^7.1.0",
@@ -38,10 +40,13 @@
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.2",
     "chroma-js": "^2.4.2",
+    "classnames": "^2.5.1",
     "crypto-random-string": "^5.0.0",
     "downloadjs": "^1.4.7",
     "emoji-picker-react": "^4.9.2",
     "flatpickr": "^4.6.13",
+    "html-to-image": "^1.11.11",
+    "html2canvas": "^1.4.1",
     "jsvectormap": "^1.5.3",
     "leaflet": "^1.9.4",
     "lottie-web": "^5.12.2",
@@ -56,6 +61,7 @@
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.2",
     "react-bootstrap-icons": "^1.11.3",
+    "react-chatbot-kit": "^2.2.2",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
@@ -81,7 +87,8 @@
     "socket.io-client": "^4.7.5",
     "stylis-plugin-rtl": "^2.1.1",
     "sweetalert2": "^11.6.13",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "words-to-numbers": "^1.5.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

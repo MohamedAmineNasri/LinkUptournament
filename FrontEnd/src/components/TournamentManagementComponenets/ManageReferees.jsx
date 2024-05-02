@@ -18,11 +18,31 @@ import { updateReferee } from "../../redux/refereeReducers/updateRefereeSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { getRefereesQueryData } from "../../redux/refereeReducers/searchRefereeSlice";
+import Pagination from "./Pagination";
+import ImagePlaceholder from "/public/images/image-placeholder.jpg";
+import axios from "axios";
 
 const ManageReferees = () => {
-  const referees = useSelector((state) => state.root.fetchReferees.referees);
+  const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
+  const [img, setImg] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setImg(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const { referees, currentPage, totalPages } = useSelector(
+    (state) => state.root.fetchReferees.referees
+  );
   const navigate = useNavigate();
-  const [av, setAv] = useState(false);
+
   const [openAddForm, setOpenAddForm] = useState(false);
   const [create, setCreate] = useState(true);
   const [refereeId, setRefereeId] = useState(null);
@@ -41,7 +61,6 @@ const ManageReferees = () => {
 
   useEffect(() => {
     dispatch(fetchReferees());
-    //console.log(.length);
   }, [dispatch, fetchReferees]);
 
   useEffect(() => {
@@ -56,22 +75,89 @@ const ManageReferees = () => {
     }));
   };
 
+  //save avatar
+  const handleUpload = async (uploadedPhoto) => {
+    try {
+      const imageData = new FormData();
+      imageData.append("avatar", uploadedPhoto);
+
+      const response = await axios.post(
+        "http://localhost:8000/upload/image",
+        imageData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (create) {
+        dispatch(addReferee({ ...formData, avatar: response.data.imageUrl }));
+      } else {
+        dispatch(
+          updateReferee(refereeId, {
+            ...formData,
+            avatar: response.data.imageUrl,
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    // Validation
+    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
+      toast.error("Name is required and must contain only letters");
+      return;
+    }
+
+    if (!formData.country.trim()) {
+      toast.error("Country is required");
+      return;
+    }
+
+    if (!formData.location.trim()) {
+      toast.error("Location is required");
+      return;
+    }
+
+    if (!formData.availability.trim()) {
+      toast.error("Availability is required");
+      return;
+    }
+
+    if (!formData.role.trim()) {
+      toast.error("Role is required");
+      return;
+    }
+
     if (create) {
-      dispatch(addReferee(formData));
-      toast.success("Referee added successfully 👌");
+      if (imageUrl != ImagePlaceholder) {
+        handleUpload(img);
+      } else {
+        dispatch(addReferee(formData));
+        toast.success("Referee added successfully 👌");
+        setFormData({});
+      }
     } else {
-      dispatch(updateReferee(refereeId, formData));
-      toast.success("Referee updated successfully 👌");
+      if (imageUrl != ImagePlaceholder) {
+        handleUpload(img);
+      } else {
+        dispatch(updateReferee(refereeId, formData));
+        toast.success("Referee updated successfully 👌");
+        setFormData({});
+      }
     }
     setOpenAddForm(false);
   };
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {referees.length == 0 ? (
+      {!referees ? (
         <>
           <div className="p-3 flex items-center mt-2 justify-between gap-10">
             <h3 className="text-base font-bold flex-1 text-black dark:text-white ">
@@ -82,7 +168,7 @@ const ManageReferees = () => {
                 variant="standard"
                 sx={{ minWidth: "40%", paddingRight: "20px" }}
               >
-                <InputLabel id="location-label" sx={{ color: "white" }}>
+                <InputLabel id="location-label" sx={{ color: "gray" }}>
                   Availability
                 </InputLabel>
                 <Select
@@ -106,7 +192,7 @@ const ManageReferees = () => {
                 </Select>
               </FormControl>
               <FormControl variant="standard" sx={{ minWidth: "40%" }}>
-                <InputLabel id="role-label" sx={{ color: "white" }}>
+                <InputLabel id="role-label" sx={{ color: "gray" }}>
                   Role
                 </InputLabel>
                 <Select
@@ -146,6 +232,7 @@ const ManageReferees = () => {
               type="submit"
               onClick={() => {
                 setOpenAddForm((prev) => !prev);
+                setCreate(true);
               }}
             >
               Add Referee
@@ -163,6 +250,7 @@ const ManageReferees = () => {
               type="submit"
               onClick={() => {
                 setOpenAddForm((prev) => !prev);
+                setCreate(true);
               }}
             >
               Add Referee
@@ -179,7 +267,7 @@ const ManageReferees = () => {
                   variant="standard"
                   sx={{ minWidth: "40%", paddingRight: "20px" }}
                 >
-                  <InputLabel id="location-label" sx={{ color: "white" }}>
+                  <InputLabel id="location-label" sx={{ color: "gray" }}>
                     Availability
                   </InputLabel>
                   <Select
@@ -203,7 +291,7 @@ const ManageReferees = () => {
                   </Select>
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: "40%" }}>
-                  <InputLabel id="role-label" sx={{ color: "white" }}>
+                  <InputLabel id="role-label" sx={{ color: "gray" }}>
                     Role
                   </InputLabel>
                   <Select
@@ -256,21 +344,34 @@ const ManageReferees = () => {
                 <tbody>
                   {referees.map((referee, key) => (
                     <tr key={key}>
-                      <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                      <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11 text-black dark:text-white">
                         <div className="flex items-center gap-3">
+                          {!referee?.avatar ? (
+                            <img
+                              src={"/assets/images/avatar_placeholder.jpg"}
+                              alt="Product"
+                              width={40}
+                            />
+                          ) : (
+                            <img
+                              src={referee.avatar}
+                              alt="Product"
+                              width={40}
+                            />
+                          )}
                           <h5 className="font-medium text-black dark:text-white">
                             {referee.name}
                           </h5>
                         </div>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <span className="pl-1 lg:pl-8">{referee.location}</span>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         {referee.availability}
                       </td>
 
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <button>{referee.role}</button>
                       </td>
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -350,6 +451,13 @@ const ManageReferees = () => {
                 </tbody>
               </table>
             </div>
+            {totalPages == 1 ? (
+              <></>
+            ) : (
+              <div className="mt-4 flex justify-end">
+                <Pagination currentPage={currentPage} totalPages={totalPages} />
+              </div>
+            )}
           </div>
         </>
       )}
@@ -370,6 +478,24 @@ const ManageReferees = () => {
         <DialogContent className="bg-white dark:bg-boxdark">
           {/* Form for updating user details */}
           <form className="mt-5" onSubmit={handleSubmit}>
+            <div>
+              <input
+                type="file"
+                className="mb-4 rounded-lg text-white font-light text-sm"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+              <figure className="will-change-auto">
+                <img
+                  className="h-70 mx-auto max-w-full rounded-lg"
+                  src={imageUrl}
+                  alt="image description"
+                />
+                <figcaption className="mt-2 text-sm font-semibold text-center text-gray-500 dark:text-gray-400">
+                  REFEREE AVATAR
+                </figcaption>
+              </figure>
+            </div>
             <TextField
               autoFocus
               margin="dense"
@@ -471,6 +597,7 @@ const ManageReferees = () => {
                 style={{ color: "#2B9451" }}
                 onClick={() => {
                   setOpenAddForm(false);
+                  setImageUrl(ImagePlaceholder);
                 }}
               >
                 Cancel

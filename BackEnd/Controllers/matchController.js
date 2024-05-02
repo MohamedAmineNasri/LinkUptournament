@@ -2,18 +2,37 @@ const match = require("../Models/match");
 const player = require("../Models/Player");
 const tournament = require("../Models/Tournament")
 
+const Filter = require('bad-words')
+const filter = new Filter();
+filter.addWords('zebi', '3asba', 'fack','mnayik','fack');
+
+
 //get all 
 
 async function getAllematch(req, res) {
   const matches = await match.find();
+ 
   res.json(matches)
   }
+  async function getAllematchByNameTeam(req, res) {
+    const matches = await match.find()
+      .populate('team1', 'TeamName TeamLogo')  
+      .populate('team2', 'TeamName TeamLogo'); 
+    res.json(matches)
+  }
+
   async function getmatchByTouernement(req, res) {
     const { id } = req.params; 
     const matchet = await match.find({tournementId:id})
+      res.json(matchet)
+  }
+  async function getmatchBygroup(req, res) {
+    const { id } = req.params; 
+    const matchet = await match.find({group:id})
      res.json(matchet)
   }
 //get ticket id 
+
 
 
 async function verifyTicket(req, res) {
@@ -61,21 +80,24 @@ async function creatematch(req, res) {
   try {
     let matchTime = 0;
 
-// Update match time every minute
-setInterval(() => {
-  matchTime++; // Increment match time by 1 minute
-}, 60000); // 60000 ms = 1 minute
+    // Update match time every minute
+    setInterval(() => {
+      matchTime++; // Increment match time by 1 minute
+    }, 60000); // 60000 ms = 1 minute
+
     const { card, ...matchData } = req.body;
     const matche = new match(matchData);
-  
-    // Populate tournamentName if tournementId exists
+    
+    // Filter out bad words from the referee variable
+    matche.referee = filter.clean(matche.referee);
+
+    // Populate tournamentName if tournamentId exists
     if (req.body.tournementId) {
       const tournamentData = await tournament.findById(req.body.tournementId);
       if (tournamentData) {
         matche.tournamentName = tournamentData.name;
       } else {
         matche.tournamentName = null; // Tournament not found
-        
       }
     } else {
       matche.tournamentName = null; // tournementId not provided
@@ -174,7 +196,12 @@ async function updatescoreById(req, res) {
     updatescore2_ById,
     updatescore_ById,
     getmatchByTouernement,
-    verifyTicket
+    verifyTicket,
+
+    getmatchBygroup,
+
+    getAllematchByNameTeam
+
   };
 
 

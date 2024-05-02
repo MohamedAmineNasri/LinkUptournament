@@ -20,7 +20,7 @@ var AchievementRouter = require('./Routes/Achievement');
 var TachievementRouter = require('./Routes/tachievement');
 
 const m = require("./Models/match");
-
+const u = require("./Controllers/registerController")
 const app = express();
 
 const corsOptions = require("./config/corsOptions");
@@ -122,6 +122,7 @@ require("./Models/Chatroom");
 
 // Users Route :
 app.use("/user", require("./Routes/user"));
+app.use("/news", require("./Routes/News"));
 app.use("/chatroom", require("./Routes/chatroom"));
 
 //YASSINE
@@ -253,17 +254,6 @@ app.post("/create-payment-intent/:id", async (req, res) => {
 
 
 
-// WebRTC endpoints
-// app.post("/consumer", async (req, res) => {
-//   const peer = new webrtc.RTCPeerConnection({
-//     iceServers: [
-//       {
-//         urls: "stun:stun.stunprotocol.org",
-//       },
-//     ],
-//   });
-// });
-
 //YASSINE
 app.use("/player", playerRouter);
 app.use("/referee", refereeRouter);
@@ -280,6 +270,8 @@ app.use('/tachievement', TachievementRouter);
 app.use("/uploads", express.static("uploads"));
 
 // WebRTC endpoints
+let senderStream; // Define senderStream outside of the routes
+
 app.post("/consumer", async (req, res) => {
   const peer = new webrtc.RTCPeerConnection({
       iceServers: [
@@ -290,7 +282,16 @@ app.post("/consumer", async (req, res) => {
   });
   const desc = new webrtc.RTCSessionDescription(req.body.sdp);
   await peer.setRemoteDescription(desc);
-  senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
+
+  // Check if senderStream is defined before using it
+  if (senderStream) {
+    senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
+  } else {
+    console.error("senderStream is not defined.");
+    // Handle the case when senderStream is not defined
+    // You can send an error response or take appropriate action here
+  }
+
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
   const payload = {
@@ -319,7 +320,6 @@ app.post('/broadcast', async (req, res) => {
 
   res.json(payload);
 });
-
 
 function handleTrackEvent(e, peer) {
   senderStream = e.streams[0];

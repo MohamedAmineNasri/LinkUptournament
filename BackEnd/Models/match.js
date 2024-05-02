@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var match = new Schema({
-    // matchTime :Number,
+   matchTime :Number,
     date: String,
     referee:String,
     tournamentName: String,
@@ -13,11 +13,13 @@ var match = new Schema({
     location:String,
     matchtype: String,
     weathercondition: String,
-    team1:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
-    team2:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
+    team1:{ type: mongoose.Schema.Types.ObjectId, ref: 'team'},
+    team2:{ type: mongoose.Schema.Types.ObjectId, ref: 'team'},
     team1Gols:Number,
     team2Gols:Number,
     goal1:[{type: mongoose.Schema.Types.ObjectId, ref: 'Player'}],
+    team1goaltime:[Number],
+    team2goaltime:[Number],
     goal2:[{type: mongoose.Schema.Types.ObjectId, ref: 'Player'}],
     tournementId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournement'},
     card:[{player: {type: mongoose.Schema.Types.ObjectId, ref: 'Player'},name:String,number:Number,yellow:Number,red:Number}],

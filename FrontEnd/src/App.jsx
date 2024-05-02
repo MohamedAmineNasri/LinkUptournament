@@ -60,7 +60,7 @@ import VideoLiveStream from "./pages/LiveStream/VideoLiveStream";
 import CheckSelectedTeam from "./components/miaoui/CheckSelectedTeam";
 import Panel from "./components/hamhoum/panel";
 import Fetchonematch from "./components/hamhoum/fetchOneMatchByID";
-import Fetchalltour from "./components/hamhoum/getAllTournement";
+import Fetchalltour from "./components/hamhoum/getAllGroup";
 import Fetchmatchbytour from "./components/hamhoum/fetchmatchesByTournementId";
 import Buy from "./components/hamhoum/buyticket";
 import Fetchmatchforview from "./components/hamhoum/fetchmatchesforvuews";
@@ -71,6 +71,8 @@ import Payment from "./components/hamhoum/Payments";
 import Completiont from "./components/hamhoum/Completion";
 import { loadStripe } from "@stripe/stripe-js";
 import QrCode from "./components/hamhoum/QrCode";
+import Timer from "./components/hamhoum/timer";
+import FetchMatchByGroup from "./components/hamhoum/getMatchByGroup";
 
 // import Payment from "./components/hamhoum/Payments";
 // import Completiont from "./components/hamhoum/Completion";
@@ -81,8 +83,10 @@ import TeamLineUp from "./pages/TeamLineUp";
 import ViewerLiveStreamUi from "./pages/LiveStream/ViewerLiveStreamUi";
 import VideoLiveStreamUi from "./pages/LiveStream/VideoLiveStreamUi";
 import HomeLandingPage from "./landingPage/HomeLandingPage";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
+import NotFound from "./landingPage/notfound";
 
 function App() {
   // animeaa
@@ -118,15 +122,22 @@ function App() {
         </div>
       ) : (
         <Routes>
+          <Route path="/timer" element={<Timer />} />
+          <Route
+            path="/matchBygroup/:tournamentId/:group"
+            element={<FetchMatchByGroup />}
+          />
           <Route path="/qr" element={<QrCode />} />
 
-          <Route path="/payment/:id" element={<Payment />} />
           <Route path="/c/:id" element={<Completiont />} />
           <Route path="/pdf/:id" element={<Pdf />} />
           <Route path="/buy/" element={<Buy />} />
 
           <Route path="/panel/:match" element={<Panel />} />
-          <Route path="/fetchalltour" element={<Fetchalltour />} />
+          <Route
+            path="/fetchallgroup/:tournamentId"
+            element={<Fetchalltour />}
+          />
           <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
           <Route
             path="/fetchmatchbytour/:tournamentId"
@@ -141,7 +152,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* Public Routes  */}
             <Route index element={<HomeLandingPage />} />
-            <Route path="/lineup" element={<TeamLineUp />} />
+
             <Route path="/ChatFront" element={<FrontUserChat />} />
             {/**YASSINE_ROUTES*/}
             {/* <Route path="/page" element={<LandingPage />} /> */}
@@ -154,6 +165,7 @@ function App() {
                 <Route path="bracket" element={<ManageTournamentFormat />} />
                 <Route path="group" element={<ManageTournamentGroup />} />
               </Route>
+              <Route path="lineup" element={<TeamLineUp />} />
               <Route path="participant" element={<ManageParticipant />}>
                 <Route path="player" element={<ManagePlayer />} />
                 <Route path="player/consult" element={<ConsultPlayer />} />
@@ -217,6 +229,7 @@ function App() {
                   />
                 }
               >
+                <Route path="/payment/:id" element={<Payment />} />
                 <Route path="/welcome" element={<Welcome />} />
                 <Route path="/userslist" element={<UserList />} />
                 <Route path="/profile" element={<Profile />} />
@@ -249,6 +262,7 @@ function App() {
           {/* <Route path="/tournamentBracket" element={<TournamentBracket />} /> */}
 
           {/* </Route> */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       )}
     </>

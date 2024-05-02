@@ -364,7 +364,12 @@ export const CheckSelectedTeam = () => {
                       <div>
                         <button
                           className="mb-3 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition"
-                          onClick={() => navigate(`/player/${idTeam}`)}
+                          // onClick={() => navigate(`/player/${idTeam}`)}
+                          onClick={() =>
+                            navigate("/manage/participant/player", {
+                              state: idTeam,
+                            })
+                          }
                         >
                           Player <FontAwesomeIcon icon={faPlus} />
                         </button>

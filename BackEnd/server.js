@@ -69,38 +69,60 @@ io.on("connection", async (socket) => {
   });
 
   // Handle chatroom message event
+  // const Filter = require('bad-words');
+  // const filter = new Filter();
+  // filter.addWords('zebi', '3asba', 'fack','mnayik','fack');
+  
   socket.on("chatroomMessage", async ({ id, message }) => {
     if (message.trim().length > 0) {
       try {
+        // Implement custom filtering logic to exclude emojis
+        const filteredMessage = filterOutBadWords(message);
+  
         // Fetch user details from the database using the stored userId
         const foundUser = await User.findById(socket.userId);
-
+  
         if (!foundUser) {
           console.log("User not found for ID:", socket.userId);
           return;
         }
-
+  
         // Create a new message object
         const newMessage = new Message({
           chatroom: id,
           user: socket.userId,
-          message,
+          message: filteredMessage,
         });
-
+  
         // Emit the new message to the chatroom
         io.to(id).emit("newMessage", {
-          message,
+          message: filteredMessage,
           name: `${foundUser.firstName} ${foundUser.lastName}`,
           userId: socket.userId,
         });
-
-        // Save the new message to the database
+  
+        // Save the original message to the database
         await newMessage.save();
       } catch (error) {
         console.error("Error sending message:", error);
       }
     }
   });
+
+function filterOutBadWords(message) {
+  // Define an array of bad words to filter out
+  const badWords = ['zebi', '3asba', 'fack', 'mnayik'];
+
+  // Regular expression pattern to match emojis
+  const emojiPattern = /[\uD800-\uDFFF][\uDC00-\uDFFF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDDFF]|\uD83E[\uDD00-\uDDFF]/g;
+
+  // Replace bad words with asterisks (*) in the message
+  let filteredMessage = message.replace(new RegExp(badWords.join('|'), 'gi'), match => '*'.repeat(match.length));
+
+  // Return the filtered message
+  return filteredMessage;
+}
+
 
   // Handle callUser event
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {

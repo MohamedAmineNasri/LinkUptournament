@@ -1,34 +1,75 @@
-import React, { useEffect, useState } from "react";
-import HomeHeader from "../components/HomeHeader";
+import React, { useEffect, useState, useRef } from "react";
 import SoccerField from "../../public/assets/images/soccer_field.jpg";
 import axios from "axios";
 import LineUpSearchItem from "../Dashboard/src/components/LineUp/LineUpSearchItem";
-import Header from "../components/landingpage/Header";
-import Footer from "../components/landingpage/Footer";
+import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
+import html2canvas from "html2canvas";
+
 const TeamLineUp = () => {
+  const ToCaptureRef = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPlayers, setSelectedPlayers] = useState({});
-
+  const location = useLocation();
+  console.log(location.state);
   const [isOpen, setIsOpen] = useState("");
   const [players, setPlayers] = useState([]);
+  const [team, setTeam] = useState([]);
+
+  //save avatar
+  const handleUpload = async (uploadedPhoto) => {
+    try {
+      const imageData = new FormData();
+      imageData.append("avatar", uploadedPhoto);
+
+      const response = await axios.post(
+        "http://localhost:8000/upload/image",
+        imageData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      await axios.put(`http://localhost:8000/team/${location.state}`, {
+        avatar: response.data.imageUrl,
+      });
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return;
+    }
+  };
+
+  //capture img
+  let captureScreenshot = () => {
+    var canvasPromise = html2canvas(ToCaptureRef.current, {
+      useCORS: true,
+    });
+    canvasPromise.then((canvas) => {
+      canvas.toBlob((blob) => {
+        var imgFile = new File([blob], "screenshot.png", { type: "image/png" });
+        handleUpload(imgFile);
+      });
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/team");
-        setPlayers(response.data[19].Players);
+        const response = await axios.get(
+          `http://localhost:8000/team/getTeam/${location.state}`
+        );
+        setTeam(response.data);
+        setPlayers(response.data.Players);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-
-    return () => {};
   }, []);
 
   const filteredPlayers = players
-    .filter((player) =>
+    ?.filter((player) =>
       player.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .slice(0, 7);
@@ -41,19 +82,18 @@ const TeamLineUp = () => {
   };
   return (
     <div>
-      <Header />
-      <div className="bg-gray-100 pt-40">
-        <h1 class="max-w-3xl mx-auto text-center pt-4 h2 text-black-2 font-inter">
+      <div className="bg-gray-100 dark:bg-transparent pt-4">
+        <h1 class="max-w-3xl mx-auto text-center py-6 h2 dark:text-white text-black-2 font-inter">
           Create your own football formation
         </h1>
-        <div className="p-12">
+        <div className="">
           <div className="font-semibold flex gap-50 justify-around pb-4">
             <p>Formation: 4 3 3</p>
-            <p>Team: PSG</p>
-            <p>Theme</p>
+            <p>Team: {team.TeamName}</p>
+            <button onClick={captureScreenshot}>ScreenShot</button>
           </div>
-          <div className="flex gap-8">
-            <div className="w-3/5 relative">
+          <div className="flex flex-col lg:flex-row gap-8">
+            <div className="w-full lg:w-1/2  relative" ref={ToCaptureRef}>
               <img
                 src={SoccerField}
                 alt="soccer-field"
@@ -359,7 +399,7 @@ const TeamLineUp = () => {
               </div>
             </div>
 
-            <div class="flex flex-col w-full bg-white p-4 rounded-md border-2 border-primary">
+            <div class="flex flex-col w-full lg:w-1/2 bg-white dark:bg-boxdark p-4 rounded-md border-2 border-primary ">
               <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
                   <div class="overflow-hidden">
@@ -368,25 +408,25 @@ const TeamLineUp = () => {
                         <tr>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                            class="px-6  text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
                           >
                             Position
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                            class="px-6  text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
                           >
                             Search
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                            class="px-6  text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
                           >
                             Player Name
                           </th>
                           <th
                             scope="col"
-                            class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                            class="px-6  text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
                           >
                             Remove
                           </th>
@@ -524,7 +564,6 @@ const TeamLineUp = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

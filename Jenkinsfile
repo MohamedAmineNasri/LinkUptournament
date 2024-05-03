@@ -15,6 +15,13 @@ pipeline {
             }
         }
         
+        stage('Node Clean') {  
+            steps {
+                echo 'Cleaning node_modules...'
+                sh 'rm -rf node_modules || true'
+            }
+        }
+        
         stage('Install dependencies') {
             steps {
                 script {
@@ -22,10 +29,16 @@ pipeline {
                 }
             }
         }
-
         
+        stage('Build application') {
+            steps {
+                script {
+                    sh 'npm run build'
+                }
+            }
+        }
 
- stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     def scannerHome = tool 'scanner'
@@ -36,20 +49,24 @@ pipeline {
             }
         }
 
-        // stage('Building images') {
+        stage('Building image') {
+           steps {
+               script {
+                   sh('docker-compose build')
+               }
+           }
+        }
+
+        // Additional stages can be added here...
+
+        // stage('Docker compose') {
         //     steps {
         //         script {
-        //             sh 'docker-compose build'
+        //             sh 'docker-compose up -d'
         //         }
         //     }
         // }
-// stage('Docker compose') {
-//             steps {
-//                 script {
-//                     sh 'docker-compose up -d'
-//                 }
-//             }
-//         }
+        
         // stage('Deploy to Nexus') {
         //     steps {
         //         script {

@@ -24,7 +24,7 @@ pipeline {
         
        stage('Install dependencies') {
             steps {
-                dir('../FrontEnd') { 
+                dir('./FrontEnd') { 
                     script {
                         sh 'npm install'
                     }
@@ -35,7 +35,7 @@ pipeline {
         
           stage('Build application') {
             steps {
-                dir('../FrontEnd/package.json') {
+                dir('./FrontEnd/package.json') {
                     script {
                         sh 'npm install' 
                         sh 'npm run build'

@@ -210,7 +210,7 @@ const ForAcademiesRole = () => {
                 </NavLink>
               </li>
               )}
-              {hasAdminOrManagerRole() && (
+              {ForAcademiesRole() && (
               <li>
                 <NavLink
                   to="/manage/participant/player"

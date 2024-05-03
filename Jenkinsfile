@@ -1,73 +1,50 @@
 pipeline {
     agent any
 
-    // environment {
-    //     registryCredentials = "nexus"
-    //     registry = "192.168.1.197:8083"
-    // }
-    
+    environment {
+        // Define environment variables if needed
+    }
+
     stages {
-        stage('git pull') {
+        stage('Build') {
             steps {
-                script {
-                    sh 'git pull origin main'
+                // Install dependencies and build React app
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run tests
+                sh 'npm test'
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                // Run SonarQube analysis
+                withSonarQubeEnv('SonarQube_Server') {
+                    sh 'npm install -g sonarqube-scanner'
+                    sh 'sonar-scanner'
                 }
             }
         }
-        
-        stage('Install dependencies') {
+        stage('Deploy') {
             steps {
-                script {
-                    sh 'npm install'
-                }
+                // Add your deployment script here
+                // For example, deploying to a web server
+                // sh 'scp -r build/* user@server:/var/www/html'
             }
         }
+    }
 
-        
-
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    def scannerHome = tool 'scanner'
-                    withSonarQubeEnv {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                }
-            }
+    post {
+        success {
+            echo 'Pipeline succeeded! Ready for deployment.'
+            // You can trigger deployment here if needed
         }
-
-        // stage('Building images') {
-        //     steps {
-        //         script {
-        //             sh 'docker-compose build'
-        //         }
-        //     }
-        // }
-// stage('Docker compose') {
-//             steps {
-//                 script {
-//                     sh 'docker-compose up -d'
-//                 }
-//             }
-//         }
-        // stage('Deploy to Nexus') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry("http://${registry}", registryCredentials) {
-        //                 sh "docker push $registry/reactapp:1.0.0"
-        //             }
-        //         }
-        //     }
-        // }
-
-        // stage('Run application') {
-        //     steps {  
-        //         script {
-        //             docker.withRegistry("http://${registry}", registryCredentials) {
-        //                 sh 'docker run -d -p 5173:5173 $registry/reactapp:1.0.0'
-        //             }
-        //         }
-        //     }
-        // }
+        failure {
+            echo 'Pipeline failed! Please check the build logs.'
+            // You can send notifications or take other actions on failure
+        }
     }
 }

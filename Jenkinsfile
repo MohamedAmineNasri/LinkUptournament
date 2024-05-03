@@ -22,13 +22,16 @@ pipeline {
             }
         }
         
-        stage('Install dependencies') {
+       stage('Install dependencies') {
             steps {
-                script {
-                    sh 'npm install'
+                dir('../FrontEnd') { 
+                    script {
+                        sh 'npm install'
+                    }
                 }
             }
         }
+
         
           stage('Build application') {
             steps {

@@ -91,7 +91,6 @@ import Tournaments from "./components/landingpage/Tournaments";
 
 import NotFound from "./landingPage/notfound";
 
-
 function App() {
   // animeaa
   const [fixtures, setFixtures] = useState(data);
@@ -161,23 +160,29 @@ function App() {
             <Route path="/tournaments" element={<Tournaments />} />
             {/**YASSINE_ROUTES*/}
             {/* <Route path="/page" element={<LandingPage />} /> */}
-            <Route path="/manage" element={<TournamentLayout />}>
-              <Route index element={<ManageTournament />} />
-              <Route path="editt/:tournamentId" element={<Edit />} />
-              <Route path="tournament/:tournamentId" element={<Tournament />} />
-              <Route path="addT" element={<AddTour />} />
-              <Route path="format" element={<FormatSelect />}>
-                <Route path="bracket" element={<ManageTournamentFormat />} />
-                <Route path="group" element={<ManageTournamentGroup />} />
+            <Route
+              element={<RequireAuth allowedRoles={["Manager", "Admin"]} />}
+            >
+              <Route path="/manage" element={<TournamentLayout />}>
+                <Route index element={<ManageTournament />} />
+                <Route path="editt/:tournamentId" element={<Edit />} />
+                <Route
+                  path="tournament/:tournamentId"
+                  element={<Tournament />}
+                />
+                <Route path="addT" element={<AddTour />} />
+                <Route path="format" element={<FormatSelect />}>
+                  <Route path="bracket" element={<ManageTournamentFormat />} />
+                  <Route path="group" element={<ManageTournamentGroup />} />
+                </Route>
+                <Route path="lineup" element={<TeamLineUp />} />
+                <Route path="participant" element={<ManageParticipant />}>
+                  <Route path="player" element={<ManagePlayer />} />
+                  <Route path="player/consult" element={<ConsultPlayer />} />
+                  <Route path="referee" element={<ManageReferees />} />
+                  <Route path="referee/consult" element={<ConsultReferee />} />
+                </Route>
               </Route>
-              <Route path="lineup" element={<TeamLineUp />} />
-              <Route path="participant" element={<ManageParticipant />}>
-                <Route path="player" element={<ManagePlayer />} />
-                <Route path="player/consult" element={<ConsultPlayer />} />
-                <Route path="referee" element={<ManageReferees />} />
-                <Route path="referee/consult" element={<ConsultReferee />} />
-              </Route>
-
             </Route>
 
             {/**YASSINE_ROUTES*/}

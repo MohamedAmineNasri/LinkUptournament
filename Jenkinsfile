@@ -26,7 +26,7 @@ pipeline {
             steps {
                 dir('./FrontEnd') { 
                     script {
-                        sh 'npm install'
+                        sh 'npm install --force'
                     }
                 }
             }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 dir('./FrontEnd/package.json') {
                     script {
-                        sh 'npm install' 
+                        sh 'npm install --force' 
                         sh 'npm run build'
                     }
                 }

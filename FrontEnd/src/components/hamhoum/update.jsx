@@ -48,6 +48,12 @@ export const EditPopUpSelectedMatch = (props) => {
    const [teamsWithNames, setteamsWithNames ] = useState([]);
    const [Team1Gols, setTeam1Gols ] = useState(null);
    const [Team2Gols, setTeam2Gols ] = useState(null);
+   const [isValid, setIsValid] = useState(true);
+   const [isValid1, setIsValid1] = useState(true);
+   const [isValid2, setIsValid2] = useState(true);
+   const [isValid3, setIsValid3] = useState(true);
+   const [isValidteam2, setIsValidteam2] = useState(true);
+   const [isValidteam1, setIsValidteam1] = useState(true);
    
 
   // to change

@@ -27,6 +27,7 @@ export const fetchtour = (props) => {
   const[Team2logo,setteam2logo]=useState();
   const[T1,setT1]=useState([]);
   const[T2,setT2]=useState([]);
+  const[l,setl]=useState();
   const[T2playerid,sett2id]=useState([]);
   const[T2playername,sett2name]=useState([]);
   const[T1playername,sett1name]=useState([]);
@@ -61,7 +62,12 @@ const[team2goaltime,setteam2goaltime]=useState([])
    
        
   };
-  const handleEndMatch = () => {
+  const handleEndMatch = async() => {
+    const response = await axios.get('http://localhost:8000/match/'+match);
+  //   if(response.data.matchtype == "Final"){
+  //       await axios.put('http://localhost:8000/tournament/update/'+TournementId ,{ winner: W})
+  //  }
+  
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -78,9 +84,12 @@ const[team2goaltime,setteam2goaltime]=useState([])
         
         setTimerRunning(false)
         winer();
+       
         setmatchstatus("Finished")
       }
     });
+    //to fix
+    // await axios.put('http://localhost:8000/group/updatetgroupaftermatch/'+match)
   };
   const dispatch2 = useDispatch();
   const winer = () => { 
@@ -92,7 +101,8 @@ const[team2goaltime,setteam2goaltime]=useState([])
       matchid: match,
       matchstatus:"Finished",
       w:W,
-      matchTime:matchTime
+      matchTime:matchTime,
+      l:l
     }, )
   );
   ;
@@ -114,7 +124,9 @@ const[team2goaltime,setteam2goaltime]=useState([])
         
       
         const response = await axios.get('http://localhost:8000/match/'+match);
-       
+       if(response.data.matchtype == "Final" && response.data.matchstatus =="Finished"){
+           await axios.put('http://localhost:8000/match/'+TournementId ,{ winner: W})
+      }
         setTournementId(response.data);
        
         setT1(response.data.goal1)
@@ -132,10 +144,10 @@ const[team2goaltime,setteam2goaltime]=useState([])
         console.log(matchesResponse.data.team1 )
         
          if(matchesResponse.data.matchstatus=="Finished"){setmatchstatus("Finished")}
-         if(matchesResponse.data.goal1.length>matchesResponse.data.goal2.length){setw(matchesResponse.data.team1)}
+         if(matchesResponse.data.goal1.length>matchesResponse.data.goal2.length){setw(matchesResponse.data.team1),setl(matchesResponse.data.team2)}
      
-         if(matchesResponse.data.goal1.length<matchesResponse.data.goal2.length){setw(matchesResponse.data.team2)}
-        if(matchesResponse.data.goal1.length==matchesResponse.data.goal2.length){setw(null)}
+         if(matchesResponse.data.goal1.length<matchesResponse.data.goal2.length){setw(matchesResponse.data.team2),setl(matchesResponse.data.team1)}
+        if(matchesResponse.data.goal1.length==matchesResponse.data.goal2.length){setw(null),setl(null)}
         
        
         
@@ -303,7 +315,7 @@ const cancelgoal2 = async ()=>{ try{
       
    
     <div className="site-section bg-dark">
-  <Link to={`/manage/tournament/${TournementId.tournementId}`}>
+  <Link to={`/manage/tournament/`}>
     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       Return
     </button>

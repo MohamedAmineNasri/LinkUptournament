@@ -35,7 +35,7 @@ pipeline {
         
           stage('Build application') {
             steps {
-                dir('../FrontEnd') {
+                dir('../FrontEnd/package.json') {
                     script {
                         sh 'npm install' 
                         sh 'npm run build'

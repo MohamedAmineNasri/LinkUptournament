@@ -279,14 +279,24 @@ export const EditPopUpSelectedMatch = (props) => {
                 value={Startingtime||props.startingtime}
                 onChange={(e) => handleStartingtimeChange(e)}
               />
-              <Form.Label style={{ color: "white" }}>match type :</Form.Label>
-              <Form.Control
-                type="tex"
-                placeholder="match type"
-                autoFocus
-                value={Matchtype||props.matchtype}
-                onChange={(e) => handleMatchtype(e)}
-              />
+              <Form.Label>Match Type:</Form.Label>
+<Form.Control
+  as="select"
+  autoFocus
+  value={Matchtype}
+  onChange={(e) => setMatchtype(e.target.value)}
+  className={`border ${isValid ? 'border-green-500' : 'border-red-500'}`}
+>
+  <option value="">Select Match Type</option>
+  <option value="Group Stage">Group Stage</option>
+  <option value="Round1">Round 1</option>
+  <option value="Round2">Round 2</option>
+  <option value="Round3">Round 3</option>
+  <option value="Round4">Round 4</option>
+  <option value="Round5">Round 5</option>
+  <option value="Semi Final">Semi Final</option>
+  <option value="Final">Final</option>
+</Form.Control>
                
               {/* <Form.Label style={{ color: "white" }}>weathercondition :</Form.Label> */}
 {/* <br/> */}

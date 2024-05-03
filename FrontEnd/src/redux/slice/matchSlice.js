@@ -113,11 +113,12 @@ export const deletetour = createAsyncThunk(
 
 export const addnewMatch = createAsyncThunk(
   'match/addMatch',
-  async ({ticketNumber,price,matchTime,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
+  async ({group,ticketNumber,price,matchTime,team1Gols,team2Gols,referee,date,tournamentName,startingtime,matchtype,location,logo,matchstatus,tournementId,weathercondition,team1,team2}) => {
     try {
       const response = await axios.post(
         'http://localhost:8000/match/',
         {
+          group:null ||group,
           matchTime:matchTime,
           referee:referee,
           date:date,

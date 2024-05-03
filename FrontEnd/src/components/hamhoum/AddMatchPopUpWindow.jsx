@@ -51,6 +51,7 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
    const [isValidteam1, setIsValidteam1] = useState(true);
    const [isValidticketnumber, setIsValidticketnumber] = useState(true);
    const [isValidticketprice, setIsValidticketprice] = useState(true);
+   const [matchgroupe, setgroup] = useState(true);
    const [price, setprice] = useState();
    const [ticketNumber, setticketNumber] = useState();
    const [showModal, setShowModal] = useState(false);
@@ -79,7 +80,8 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
           team1Gols:Team1Gols,
           team2Gols:Team2Gols,
           ticketNumber:ticketNumber,
-          price:price
+          price:price,
+          group:matchgroupe
        
       }),
        fetchAllTour(),
@@ -185,7 +187,9 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
           const teamResponse = await axios.get(`http://localhost:8000/team/getTeam/${teamId}`);
           return teamResponse.data.TeamName;
         }));
-        
+        const responseforgroup = await axios.get('http://localhost:8000/group/tournament/' + tournamentId)
+
+        setgroup(responseforgroup.data)
         // console.log("Teams with names:", teamsWithNames);
         
         // Optionally, you can update the tournament object with team names
@@ -272,9 +276,24 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
   <option value="Semi Final">Semi Final</option>
   <option value="Final">Final</option>
 </Form.Control>
+{Matchtype === 'Group Stage' && (
+  <>
+    <Form.Label>Group 1:</Form.Label>
+    <br />
+    <select onChange={(e) => setgroup(e.target.value)} className="border text-black">
+      <option value="null">Select group 1</option>
+      {matchgroupe.map((teamName, index) => (
+        <option key={index} value={teamName._id}>
+          {teamName.name}
+        </option>
+      ))}
+    </select>
+  </>
+)}
 {!isValid && <p className="text-red-500">Please select a valid Match Type.</p>}
           <Form.Label>Team 1:</Form.Label>
           <br />
+         
           <select onChange={handleteam1} className="border text-black">
             <option value="null">Select Team 1</option>
             {teamsWithNames.map((teamName, index) => (
@@ -297,6 +316,12 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
             ))}
           </select>
           {!isValidteam2 && <p className="text-red-500">Please select a different Team 2.</p>}
+         
+      
+          
+          
+          
+          
           <Form.Label>Referee:</Form.Label>
           <Form.Control
             type="text"

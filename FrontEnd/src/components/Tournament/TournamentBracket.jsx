@@ -1,321 +1,645 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import "./TournamentBracket.css";
 import axios from 'axios';
 
 
 const TournamentBracket = ({tournamentId}) => {
 
-  const [leftTeams, setTeamsData] = useState([]);
+  const [matches, setMatches] = useState([]);
+  const [matchesd, setMatchesd] = useState([]);
+  const [winnersRound1, setWinnersRound1] = useState([]);
+
 
   useEffect(() => {
-    const fetchTournament = async () => {
-      const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
-      setTeamsData(response.data.tournament.teams);
-      console.log(response)
+    const fetchMatches = async () => {
+      try {
+        // Fetch matches by tournament ID
+        const response = await axios.get(`http://localhost:8000/match/tournement/${tournamentId}`);
+        setMatches(response.data);
+      } catch (error) {
+        console.error("Error fetching matches:", error);
+      }
     };
 
-    fetchTournament();
+    fetchMatches();
 
   }, [tournamentId]);
 
+  useEffect(() => {
+    const fetchTeamsDetails = async () => {
+      try {
+        const updatedMatches = await Promise.all(matches.map(async match => {
+          const team1Response = await axios.get(`http://localhost:8000/team/getTeam/${match.team1}`);
+          const team2Response = await axios.get(`http://localhost:8000/team/getTeam/${match.team2}`);
+          return {
+            ...match,
+            team1Details: team1Response.data,
+            team2Details: team2Response.data
+          };
+        }));
+        setMatchesd(updatedMatches);
+      } catch (error) {
+        console.error("Error fetching team details:", error);
+      }
+     
+    };
+
+    if (matches.length > 0) {
+      fetchTeamsDetails();
+    }
+
+  }, [matches]); 
+   
+
+  // useEffect(() => {
+  //   const updateRound2 = () => {
+  //     console.log(matchesd)
+  //     const winners = matchesd.filter(match => match.
+  //       matchstatus === "Finished").map(match => {
+  //       return match.w === match.team1 ? match.team1Details : match.team2Details;
+  //     });
+  //     // setWinnersRound1(prevWinners => {
+  //     //   // Update winnersRound1 based on previous state
+  //     //   return [...prevWinners, ...winners];
+  //     // });
+  //     console.log("w",winners)
+  //     setWinnersRound1(winners);
+  //   };
+  
+  //   updateRound2();
+  // }, [matchesd]);
   
 
+  // const renderRound2Matches = () => {
+  //   const round2Matches = [];
+  //   for (let i = 0; i < winnersRound1.length; i += 2) {
+  //     round2Matches.push(
+  //       <ul className="matchup" key={i}>
+  //         <li className="team team-top">
+  //           <span className="team-name text-black">{winnersRound1[i].TeamName}</span>
+  //         </li>
+  //         <li className="team team-bottom">
+  //           <span className="team-name text-black">{winnersRound1[i + 1] ? winnersRound1[i + 1].TeamName : "Bye"}</span>
+  //         </li>
+  //       </ul>
+  //     );
+  //   }}
+  const round1Matches = matchesd.filter(match => match.matchtype === 'Round1');
+const round2Matches = matchesd.filter(match => match.matchtype === 'Round2');
+const round3Matches = matchesd.filter(match => match.matchtype === 'Round3');
+const finalMatches = matchesd.filter(match => match.matchtype === 'Final');
+const semifinalMatches = matchesd.filter(match => match.matchtype === 'Semi Final');
+
+
   return (
-    <div>
+    <div className="rounded-sm border border-stroke bg-white px-3 py-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <section id="bracket">
-        <div class="container-custom">
-          <div class="split split-one">
-            <div class="round round-one current">
-              <div class="round-details">
+        <div className="container-custom">
+          <div className="split split-one">
+          {matchesd.some(m => m.matchtype === 'Round1') && (
+            <div className="round round-one current">
+              <div className="round-details">
                 Round 1<br />
-                <span class="date">March 16</span>
               </div>
-              {leftTeams.map((team, index) => {
-  // Check if the current index is divisible by 2 and less than the length of the array
-  if (index % 2 === 0 && index < leftTeams.length - 1) {
-    return (
-      <ul className="matchup" key={index}>
-        <li className="team team-top">
-          {leftTeams[index]}
-          <span className="score">&nbsp;
-            <div className="score-text">{leftTeams[index].score}</div>&nbsp;
-          </span>
-        </li>
-        <li className="team team-bottom">
-          {leftTeams[index + 1]}
-          <span className="score"> &nbsp;
-            <div className="score-text">{leftTeams[index + 1].score}</div> &nbsp;
-          </span>
-        </li>
-      </ul>
-    );
-  } else {
-    return null; // If the condition is not met, return null to skip rendering
-  }
-})}
+              {/* Render matches for Round 2 */}
+              {round1Matches.map((m, index) => {
 
-            </div>{" "}
+                if ( index < round1Matches.length/2 &&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName && m.matchtype === 'Round1'
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top  ">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom dark:shadow-white">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {" "}
             {/*<!-- END ROUND ONE -->*/}
-            <div class="round round-two">
-              <div class="round-details">
-                Round 2<br />
-                <span class="date">March 18</span>
-              </div>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-            </div>{" "}
-            {/*<!-- END ROUND TWO -->*/}
-            <div class="round round-three">
-              <div class="round-details">
-                Round 3<br />
-                <span class="date">March 22</span>
-              </div>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-            </div>{" "}
-            {/*<!-- END ROUND THREE -->*/}
-          </div>
 
-          <div class="champion">
-            <div class="semis-l">
-              <div class="round-details">
-                west semifinals <br />
-                <span class="date">March 26-28</span>
-              </div>
-              <ul class="matchup championship">
-                <li class="team team-top">
-                  &nbsp;<span class="vote-count">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="vote-count">&nbsp;</span>
-                </li>
-              </ul>
-            </div>
-            <div class="final">
-              <i class="fa fa-trophy"></i>
-              <div class="round-details">
-                championship <br />
-                <span class="date">March 30 - Apr. 1</span>
-              </div>
-              <ul class="matchup championship">
-                <li class="team team-top">
-                  &nbsp;<span class="vote-count">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="vote-count">&nbsp;</span>
-                </li>
-              </ul>
-            </div>
-            <div class="semis-r">
-              <div class="round-details">
-                east semifinals <br />
-                <span class="date">March 26-28</span>
-              </div>
-              <ul class="matchup championship">
-                <li class="team team-top">
-                  &nbsp;<span class="vote-count">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="vote-count">&nbsp;</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="split split-two">
-            <div class="round round-three">
-              <div class="round-details">
-                Round 3<br />
-                <span class="date">March 22</span>
-              </div>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-            </div>{" "}
-            {/*<!-- END ROUND THREE -->  */}
-            <div class="round round-two">
-              <div class="round-details">
+            {matchesd.some(m => m.matchtype === 'Round2') && (
+            <div className="round round-two current">
+              <div className="round-details">
                 Round 2<br />
-                <span class="date">March 18</span>
+                <span className="date">March 18</span>
               </div>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-                <li class="team team-bottom">
-                  &nbsp;<span class="score">&nbsp;</span>
-                </li>
-              </ul>
-            </div>{" "}
-            {/*<!-- END ROUND TWO -->*/}
-            <div class="round round-one current">
-              <div class="round-details">
+              {/* Render matches for Round 2 */}
+              {round2Matches.map((m, index) => {
+                if ( index < round2Matches.length/2 &&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName && m.matchtype === 'Round2'
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {/*<!-- END ROUND TWO -->*/}{" "}
+
+          {matchesd.some(m => m.matchtype === 'Round3') && (
+            <div className="round round-two current">
+              <div className="round-details">
+                Round 3<br />
+              </div>
+              {round3Matches.map((m, index) => {
+                if ( index < round3Matches.length/2 &&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName && m.matchtype === 'Round3'
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {/*<!-- END ROUND 3 -->*/}
+          
+  
+        
+          </div>
+          <div className="champion current">
+          {matchesd.some(m => m.matchtype === 'Semi Final') && (
+            <div className="semis-l">
+              
+              <div className="round-details">
+              semifinals <br />
+              </div>
+              {semifinalMatches.map((m, index) => {
+                if ( index < semifinalMatches.length/2 &&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName 
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {/*<!-- END ROUND Semi Final -->*/}{" "}
+          {matchesd.some(m => m.matchtype === 'Final') && (
+            <div className="final">
+              <i className="fa fa-trophy"></i>
+              <div className="round-details">
+              
+                Final<br />
+              </div>
+              {finalMatches.map((m, index) => {
+                if (
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName && m.matchtype === 'Final'
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {/*<!-- END ROUND Final -->*/}{" "}
+          {matchesd.some(m => m.matchtype === 'Semi Final') && (
+            <div className="semis-r">
+              
+              <div className="round-details">
+              semifinals <br />
+              </div>
+              {semifinalMatches.map((m, index) => {
+                if ( index >= semifinalMatches.length/2 &&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName 
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {/*<!-- END ROUND Semi Final -->*/}{" "}
+          </div>
+          <div className="split split-two">
+
+          {matchesd.some(m => m.matchtype === 'Round3') && (
+            <div className="round round-two current">
+              <div className="round-details">
+                Round 3<br />
+              </div>
+              {round3Matches.map((m, index) => {
+                if ( index >= round3Matches.length / 2 &&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName && m.matchtype === 'Round3'
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {" "}
+          {/*<!-- END ROUND 3 -->*/}
+            {matchesd.some(m => m.matchtype === 'Round2') && (
+            <div className="round round-two current">
+              <div className="round-details">
+                Round 2<br />
+                <span className="date">March 18</span>
+              </div>
+              {/* Render matches for Round 2 */}
+              {round2Matches.map((m, index) => {
+                if ( index >= round2Matches.length / 2&&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName && m.matchtype === 'Round2'
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {/*<!-- END ROUND TWO -->*/}{" "}
+           {matchesd.some(m => m.matchtype === 'Round1') && (
+            <div className="round round-one current">
+              <div className="round-details">
                 Round 1<br />
-                <span class="date">March 16</span>
               </div>
-              <ul class="matchup">
-                <li class="team team-top">
-                  Minnesota<span class="score">62</span>
-                </li>
-                <li class="team team-bottom">
-                  Northwestern<span class="score">54</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  Michigan<span class="score">68</span>
-                </li>
-                <li class="team team-bottom">
-                  Iowa<span class="score">66</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  Illinois<span class="score">64</span>
-                </li>
-                <li class="team team-bottom">
-                  Wisconsin<span class="score">56</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  Purdue<span class="score">36</span>
-                </li>
-                <li class="team team-bottom">
-                  Boise State<span class="score">40</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  Penn State<span class="score">38</span>
-                </li>
-                <li class="team team-bottom">
-                  Indiana<span class="score">44</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  Ohio State<span class="score">52</span>
-                </li>
-                <li class="team team-bottom">
-                  VCU<span class="score">80</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  USC<span class="score">58</span>
-                </li>
-                <li class="team team-bottom">
-                  Cal<span class="score">59</span>
-                </li>
-              </ul>
-              <ul class="matchup">
-                <li class="team team-top">
-                  Virginia Tech<span class="score">74</span>
-                </li>
-                <li class="team team-bottom">
-                  Dartmouth<span class="score">111</span>
-                </li>
-              </ul>
-            </div>{" "}
-            {/* END ROUND ONE -->*/}
+              {/* Render matches for Round 2 */}
+              {round1Matches.map((m, index) => {
+
+                if ( index >= round1Matches.length / 2 &&
+                  m.team1Details &&
+                  m.team2Details &&
+                  m.team1Details.TeamName &&
+                  m.team2Details.TeamName && m.matchtype === 'Round1'
+                ) {
+                  return (
+                    <ul className="matchup" key={index} style={{ marginBottom: '3rem' }}>
+                      {/* Team 1 */}
+                      <li className="team team-top">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team1Details.TeamLogo}`}
+                              alt={m.team1Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team1Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal1.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                      {/* Team 2 */}
+                      <li className="team team-bottom">
+                        <div className="flex justify-between items-center w-full">
+                          <div className="flex items-center">
+                            <img
+                              src={`http://localhost:8000/${m.team2Details.TeamLogo}`}
+                              alt={m.team2Details.TeamName}
+                              width={20}
+                              className="h-auto rounded-full object-cover mr-2"
+                            />
+                            <span className="team-name text-black">{m.team2Details.TeamName}</span>
+                          </div>
+                          <div>
+                            <span className="score text-white bg-orange-200 px-2 py-1 rounded">{m.goal2.length}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          )}
+          {" "}
+            {/*<!-- END ROUND ONE -->*/}
+  
+        
           </div>
         </div>
       </section>
-      <section class="share">
-        <div class="share-wrap">
-          <a class="share-icon" href="https://twitter.com/_joebeason">
-            <i class="fa fa-twitter"></i>
-          </a>
-          <a class="share-icon" href="#">
-            <i class="fa fa-facebook"></i>
-          </a>
-          <a class="share-icon" href="#">
-            <i class="fa fa-envelope"></i>
-          </a>
-        </div>
-      </section>
+      
     </div>
   );
 };

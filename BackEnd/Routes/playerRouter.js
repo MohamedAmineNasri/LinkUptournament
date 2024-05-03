@@ -9,5 +9,7 @@ router.get("/:id", playerController.getPlayerById);
 router.patch("/:id", playerController.updatePlayerById);
 router.delete("/:id", playerController.deletePlayerById);
 router.get("/team/:id",playerController.getplayerByteam)
+router.post("/addPlayer", playerController.createPlayerMi); // do not delete
+
 
 module.exports = router;

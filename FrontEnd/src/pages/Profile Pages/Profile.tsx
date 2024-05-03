@@ -14,7 +14,15 @@
         const userPhone = user ? `${user.phoneNumber} ` : 'Number';
         const userBirthday = user ? new Date(user.birthday).toLocaleDateString() : 'birthday';
         const userRole = user ? ` ${user.roles}` : 'Role';
-        const userBio = user ? `Bio : ${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
+
+
+        //default location for maps-------------------------------- 
+        const initialPosition = localStorage.setItem("selectedPosition" , JSON.stringify([36.84916714107817, 10.201032618108135]))
+        //   -----------------------------------------------
+        
+
+        const userBio = user ? `${user.bio}` : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus ultricies. Sed vel aliquet libero. Nunc a augue fermentum, pharetra ligula sed, aliquam lacus.';
+
 
         const handleClick = () => {
             localStorage.setItem('facebook', 'test facebook');
@@ -111,19 +119,19 @@
                     <span className="font-semibold text-black dark:text-white">
                     {userPhone}
                     </span>
-                    <span className="text-sm"><PhoneEnabledIcon /></span>
+                    <span className="text-sm text-black dark:text-white"><PhoneEnabledIcon /></span>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white">
                     {userBirthday}
                     </span>
-                    <span className="text-sm"><CalendarMonthIcon /></span>
+                    <span className="text-sm text-black dark:text-white"><CalendarMonthIcon /></span>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
                     <span className="font-semibold text-black dark:text-white">
                         {userRole}
                     </span>
-                    <span className="text-sm"><BadgeIcon /></span>
+                    <span className="text-sm text-black dark:text-white"><BadgeIcon /></span>
                 </div>
                 </div>
 
@@ -131,7 +139,7 @@
                 <h4 className="font-semibold text-black dark:text-white">
                     About Me
                 </h4>
-                <p className="mt-4.5">
+                <p className="mt-4.5 text-black dark:text-white">
                     {userBio}
                 </p>
                 </div>
@@ -140,7 +148,7 @@
                 <h4 className="mb-3.5 font-medium text-black dark:text-white">
                     Follow me on
                 </h4>
-                <div className="flex items-center justify-center gap-3.5">
+                <div className="flex items-center justify-center gap-3.5 text-black dark:text-white">
                 <Link
                     to="#"
                     className="hover:text-primary"

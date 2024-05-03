@@ -19,6 +19,7 @@ const Header = () => {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
+  
   return (
     <header
       className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top ? "bg-white backdrop-blur-sm shadow-lg" : ""}`}
@@ -32,6 +33,7 @@ const Header = () => {
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex md:grow">
+
             {/* Desktop navigation links */}
             <ul className="flex grow justify-end flex-wrap items-center">
               {/* Chatrooms link */}
@@ -43,20 +45,20 @@ const Header = () => {
                   Chatrooms
                 </button>
               </li>
+               <li>
+            <button
+                onClick={() => navigate("/tournaments")}
+                className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+            >
+                Tournaments
+            </button>
+        </li>
               <li>
                 <button
                   onClick={() => navigate("/fetchmatchforview")}
                   className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
                 >
                   Matches
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => navigate("/lineup")}
-                  className="font-medium text-gray-600 hover:text-gray-900 px-4 py-2 flex items-center transition duration-150 ease-in-out"
-                >
-                  Lineup
                 </button>
               </li>
 

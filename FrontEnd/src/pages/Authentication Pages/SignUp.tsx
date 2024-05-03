@@ -1,7 +1,7 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Breadcrumb from "../../Dashboard/src/components/Breadcrumbs/Breadcrumb";
 
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Breadcrumb from '../../Dashboard/src/components/Breadcrumbs/Breadcrumb';
 import AuthLayout from "../../Dashboard/src/layout/AuthLayout";
 import { useState } from "react";
 import { useSignupMutation } from "../../../Features/auth/authApiSlice";

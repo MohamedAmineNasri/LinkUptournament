@@ -46,8 +46,7 @@ export default function Testimonials() {
               Trusted by over 20,000 companies all over the world
             </h2>
             <p className="text-xl text-gray-600" data-aos="zoom-y-out">
-              Arcu cursus vitae congue mauris rhoncus viverra nibh cras pulvinar
-              mattis blandit libero cursus mattis.
+              Unlock your potential. Embrace the thrill of the game. Welcome to a world where every goal is a victory and every challenge is an opportunity to shine.
             </p>
           </div>
 
@@ -68,7 +67,7 @@ export default function Testimonials() {
             {/* Item */}
             <div className="flex items-center justify-center py-2 col-span-2 md:col-auto">
             <img
-              src="https://upload.wikimedia.org/wikipedia/fr/thumb/3/33/Logo_Club_africain.svg/810px-Logo_Club_africain.svg.png"
+              src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c7/Logo_Real_Madrid.svg/640px-Logo_Real_Madrid.svg.png"
               className="max-w-full fill-current text-gray-400"
               width="83"
               height="30"
@@ -80,7 +79,7 @@ export default function Testimonials() {
             {/* Item */}
             <div className="flex items-center justify-center py-2 col-span-2 md:col-auto">
               <img
-                src="https://upload.wikimedia.org/wikipedia/fr/thumb/3/33/Logo_Club_africain.svg/810px-Logo_Club_africain.svg.png"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/%D8%AC%D9%86%D8%AF%D9%88%D8%A8%D8%A9_%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A9.svg/1200px-%D8%AC%D9%86%D8%AF%D9%88%D8%A8%D8%A9_%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D8%A9.svg.png"
                 className="max-w-full fill-current text-gray-400"
                 width="83"
                 height="30"
@@ -92,7 +91,7 @@ export default function Testimonials() {
             {/* Item */}
             <div className="flex items-center justify-center py-2 col-span-2 md:col-auto">
               <img
-                src="https://upload.wikimedia.org/wikipedia/fr/thumb/3/33/Logo_Club_africain.svg/810px-Logo_Club_africain.svg.png"
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/640px-FC_Barcelona_%28crest%29.svg.png"
                 className="max-w-full fill-current text-gray-400"
                 width="83"
                 height="30"
@@ -104,7 +103,7 @@ export default function Testimonials() {
             {/* Item */}
             <div className="flex items-center justify-center py-2 col-span-2 md:col-auto col-start-2 col-end-4">
               <img
-                src="https://upload.wikimedia.org/wikipedia/fr/thumb/3/33/Logo_Club_africain.svg/810px-Logo_Club_africain.svg.png"
+                src="https://upload.wikimedia.org/wikipedia/fr/6/6b/EST_New_Logo_2012.png"
                 className="max-w-full fill-current text-gray-400"
                 width="83"
                 height="30"
@@ -130,7 +129,7 @@ export default function Testimonials() {
                   </svg>
                   <img
                     className="relative rounded-full"
-                    src="https://scontent.ftun14-1.fna.fbcdn.net/v/t1.15752-9/260661486_291736219628166_2022704157349701522_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=BzTS97ZfL5MQ7kNvgGO9LRP&_nc_ht=scontent.ftun14-1.fna&oh=03_Q7cD1QGuzTK39mNNkMFiWjzPUpXQzYAi3FETarOcKo1L3p2vEg&oe=665249BE"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Florentino_perez.jpg/618px-Florentino_perez.jpg"
                     width={96}
                     height={96}
                     alt="Testimonial 01"
@@ -145,7 +144,7 @@ export default function Testimonials() {
                 <div className="text-gray-600">
                   <span>CEO & Co-Founder</span>{" "}
                   <a className="text-green-600 hover:underline" href="#0">
-                    @Dropbox
+                    @Real Madrid
                   </a>
                 </div>
               </div>

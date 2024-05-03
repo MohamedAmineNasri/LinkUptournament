@@ -8,9 +8,9 @@ export default function NotFoundView() {
           <section className="home grid h-screen pt-32 pb-16">
             <div className="home__container container grid content-center gap-12 lg:max-w-5xl lg:grid-cols-2 lg:items-center">
               <div className="home__data justify-self-center text-center lg:text-left">
-                <p className="pb-2 font-semibold text-black dark:text-white">Error 404</p>
-                <h1 className="pb-4 text-5xl font-bold lg:text-6xl text-black dark:text-white">Hey Buddy</h1>
-                <p className="pb-8 font-semibold text-black dark:text-white">
+                <p className="pb-2 font-semibold text-black ">Error 404</p>
+                <h1 className="pb-4 text-5xl font-bold lg:text-6xl text-black  ">Hey Buddy</h1>
+                <p className="pb-8 font-semibold text-black">
                   We can't seem to find the page <br />
                   you are looking for.
                 </p>

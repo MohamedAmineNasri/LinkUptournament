@@ -86,7 +86,11 @@ import HomeLandingPage from "./landingPage/HomeLandingPage";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+import Tournaments from "./components/landingpage/Tournaments";
+
 import NotFound from "./landingPage/notfound";
+
 
 function App() {
   // animeaa
@@ -96,7 +100,7 @@ function App() {
     AOS.init({
       duration: 1000, // Change the animation duration as per your preference
     });
-    const timeout = setTimeout(() => setLoading(false), 3000);
+    const timeout = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -154,6 +158,7 @@ function App() {
             <Route index element={<HomeLandingPage />} />
 
             <Route path="/ChatFront" element={<FrontUserChat />} />
+            <Route path="/tournaments" element={<Tournaments />} />
             {/**YASSINE_ROUTES*/}
             {/* <Route path="/page" element={<LandingPage />} /> */}
             <Route path="/manage" element={<TournamentLayout />}>
@@ -172,6 +177,7 @@ function App() {
                 <Route path="referee" element={<ManageReferees />} />
                 <Route path="referee/consult" element={<ConsultReferee />} />
               </Route>
+
             </Route>
 
             {/**YASSINE_ROUTES*/}

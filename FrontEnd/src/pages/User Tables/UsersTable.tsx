@@ -189,10 +189,11 @@ const changePage = ({ selected }) => {
             <MuiDialog
                 open={openConfirmationDialog}
                 onClose={handleCloseConfirmationDialog}
+                PaperProps={{ style: { backgroundColor: '#262a42' } }}
             >
                 <DialogTitle>Confirmation</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText style={{ color: 'white' }}>
                         Are you sure you want to delete this user?
                     </DialogContentText>
                 </DialogContent>
@@ -208,8 +209,9 @@ const changePage = ({ selected }) => {
             <MuiDialog
                 open={openUpdateDialog}
                 onClose={handleCloseUpdateDialog}
+                PaperProps={{ style: { backgroundColor: '#262a42' } }}
             >
-                <DialogTitle>Update User</DialogTitle>
+                <DialogTitle style={{ color: 'white' }}>Update User</DialogTitle>
                 <DialogContent>
                     {/* Form for updating user details */}
                     <form
@@ -219,18 +221,20 @@ const changePage = ({ selected }) => {
                         }}
                     >
                         <TextField
-                            autoFocus
-                            required
-                            margin="dense"
-                            id="firstName"
-                            name="firstName"
-                            label="First Name"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            value={updatedUserData.firstName}
-                            onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
+                        autoFocus
+                        required
+                        margin="dense"
+                        id="firstName"
+                        name="firstName"
+                        label="First Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={updatedUserData.firstName}
+                        onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
+                        InputProps={{ style: { color: 'white' } }}
                         />
+
                         <TextField
                             required
                             margin="dense"
@@ -242,6 +246,7 @@ const changePage = ({ selected }) => {
                             variant="standard"
                             value={updatedUserData.lastName}
                             onChange={(e) => setUpdatedUserData({ ...updatedUserData, lastName: e.target.value })}
+                            InputProps={{ style: { color: 'white' } }}
                         />
                         <TextField
                             required
@@ -254,11 +259,12 @@ const changePage = ({ selected }) => {
                             variant="standard"
                             value={updatedUserData.email}
                             onChange={(e) => setUpdatedUserData({ ...updatedUserData, email: e.target.value })}
+                            InputProps={{ style: { color: 'white' } }}
                         />
 
 
                         {/* Dialog Actions */}
-                        <DialogActions>
+                        <DialogActions >
                             <MuiButton onClick={handleCloseUpdateDialog}>Cancel</MuiButton>
                             <MuiButton type="submit">Update</MuiButton>
                         </DialogActions>
@@ -266,49 +272,42 @@ const changePage = ({ selected }) => {
                 </DialogContent>
             </MuiDialog>
             <ReactPaginate
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                pageCount={pageCount}
-                containerClassName={"pagination"}
-                disabledClassName={"pagination__link--disabled"}
-                
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "1rem",
-                    marginBottom: "1rem",
-                    padding: "1rem"
-                }}
-                previousClassName={"page-item"}
-                previousLinkClassName={"page-link"}
-                nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
-                breakLabel={"..."}
-                breakClassName={"page-item"}
-                breakLinkClassName={"page-link"}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                forcePage={pageNumber}
-                onPageChange={changePage}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                activeClassName={"active"}
-                pageStyle={{
-                    margin: "0 0.5rem",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    backgroundColor: "#f0f0f0",
-                    color: "#333",
-                    transition: "background-color 0.3s ease",
-                }}
-                activeLinkStyle={{
-                    backgroundColor: "#007bff",
-                    color: "#fff",
-                }}
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            pageCount={pageCount}
+            containerClassName={"pagination flex flex-row justify-center space-x-4"} // Added flex classes here
+            disabledClassName={"pagination__link--disabled"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakLabel={"..."}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            forcePage={pageNumber}
+            onPageChange={changePage}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            activeClassName={"active"}
+            pageStyle={{
+                margin: "0 0.5rem",
+                padding: "0.5rem",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                cursor: "pointer",
+                backgroundColor: "#f0f0f0",
+                color: "#333",
+                transition: "background-color 0.3s ease",
+            }}
+            activeLinkStyle={{
+                backgroundColor: "#007bff",
+                color: "#fff",
+            }}
             />
+
+
 
 
         </div>

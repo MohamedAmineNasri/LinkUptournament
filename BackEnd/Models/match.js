@@ -29,6 +29,7 @@ var match = new Schema({
     ticketNumber:Number,
     ticketId:[Number],
     w:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
+    l:{ type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
     group: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Group',

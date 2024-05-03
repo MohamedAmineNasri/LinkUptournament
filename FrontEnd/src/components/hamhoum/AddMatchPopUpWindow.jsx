@@ -21,7 +21,7 @@ import { number } from "prop-types";
 
 
 export const AddMatchPopUpWindow = ({ tournamentId }) => {
-  console.log("Matchpopup ",tournamentId)
+  // console.log("Matchpopup ",tournamentId)
   const [show, setShow] = useState(false);
   
   const handleClose = () => setShow(false);
@@ -51,6 +51,9 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
    const [isValidteam1, setIsValidteam1] = useState(true);
    const [isValidticketnumber, setIsValidticketnumber] = useState(true);
    const [isValidticketprice, setIsValidticketprice] = useState(true);
+   const [matchgroupe, setgroup] = useState();
+   const [matchgroupe1, setgroup1] = useState();
+   const [teambygroup, setteambygroup] = useState([]);
    const [price, setprice] = useState();
    const [ticketNumber, setticketNumber] = useState();
    const [showModal, setShowModal] = useState(false);
@@ -79,7 +82,8 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
           team1Gols:Team1Gols,
           team2Gols:Team2Gols,
           ticketNumber:ticketNumber,
-          price:price
+          price:price,
+          group:matchgroupe1
        
       }),
        fetchAllTour(),
@@ -132,7 +136,7 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
     setDate(e.target.value)
     const dd =  tournament.date_debut
     const df = tournament.date_fin
-  console.log(dd,df,)
+  // console.log(dd,df,)
     // console.log(currentDate.getDay > today.getDay)
      setIsValid3(newDate > dd && newDate<df) 
     // console.log( setIsValid3(currentDate > today))
@@ -160,9 +164,9 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
 };
   const handleLogoUpload = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
+    // console.log(file);
     const base64 = await convertToBase64(file);
-    console.log(base64);
+    // console.log(base64);
     setLogo({ ...Logo, myLogo: base64 });
   };
   
@@ -172,11 +176,18 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
     const fetchTournaments = async () => {
       try {
         
+        
         setTeam1Gols(0)
         setTeam2Gols(0)
         setTournementId(tournamentId)
         setMatchstatus("Starting Soon")
         const response = await axios.get('http://localhost:8000/tournament/' + tournamentId);
+         if(response.data.tournament.type =="Group Stage"){
+        //   groupresponse =await axios.get("http://localhost:8000/group/tournament"+tournamentId)
+          
+        //   console.log("test",groupresponse.data.map(a=>a.name))
+          // setteambygroup(groupresponse.data.map(a=>a.name))
+         }
         const tournament = response.data.tournament;
         // console.log("Successfully retrieved the tournament:", response.data.tournament.type);
         settournament(tournament)
@@ -185,7 +196,9 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
           const teamResponse = await axios.get(`http://localhost:8000/team/getTeam/${teamId}`);
           return teamResponse.data.TeamName;
         }));
-        
+        const responseforgroup = await axios.get('http://localhost:8000/group/tournament/' + tournamentId)
+        const groupData = response.data;
+        setgroup(responseforgroup.data)
         // console.log("Teams with names:", teamsWithNames);
         
         // Optionally, you can update the tournament object with team names
@@ -272,9 +285,55 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
   <option value="Semi Final">Semi Final</option>
   <option value="Final">Final</option>
 </Form.Control>
+{Matchtype === 'Group Stage' && (
+  <>
+    <Form.Label>Group 1:</Form.Label>
+    <br />
+    <select onChange={(e) => setgroup1(e.target.value)} className="border text-black">
+      <option value="null">Select group 1</option>
+      {matchgroupe.map((teamName, index) => (
+        <option key={index} value={teamName._id}>
+          {teamName.name}
+        </option>
+      ))}
+    </select>
+    <Form.Label>Team 1:</Form.Label>
+          <br />
+         
+          <select onChange={handleteam1} className="border text-black">
+            <option value="null">Select Team 1</option>
+            {matchgroupe.filter((team) => team._id == matchgroupe1).map((teamName, index) => (teamName.teams.map(e=><option value={e.team}>{e.TeamName}</option>)
+              
+                
+             
+            ))}
+          </select>
+          
+          {!isValidteam1 && <p className="text-red-500">Please select a different Team 1.</p>}
+          <br />
+          <Form.Label>Team 2:</Form.Label>
+          <br />
+         
+          <select onChange={handleteam2} className="border text-black">
+            <option value="null">Select Team 2</option>
+            {matchgroupe.filter((team) => team._id == matchgroupe1).map((teamName, index) => (teamName.teams.map(e=><option value={e.team}>{e.TeamName}</option>)
+              
+                
+             
+            ))}
+          </select>
+          
+          {!isValidteam2 && <p className="text-red-500">Please select a different Team 2.</p>}
+      
+  </>
+)}
 {!isValid && <p className="text-red-500">Please select a valid Match Type.</p>}
+          
+{Matchtype !== 'Group Stage' && (
+          <>
           <Form.Label>Team 1:</Form.Label>
           <br />
+         
           <select onChange={handleteam1} className="border text-black">
             <option value="null">Select Team 1</option>
             {teamsWithNames.map((teamName, index) => (
@@ -297,6 +356,12 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
             ))}
           </select>
           {!isValidteam2 && <p className="text-red-500">Please select a different Team 2.</p>}
+         
+      </>
+        )}
+          
+          
+          
           <Form.Label>Referee:</Form.Label>
           <Form.Control
             type="text"

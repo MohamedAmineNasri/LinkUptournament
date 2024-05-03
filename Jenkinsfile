@@ -15,6 +15,13 @@ pipeline {
             }
         }
         
+        stage('Node Clean') {  
+            steps {
+                echo 'Cleaning node_modules...'
+                sh 'rm -rf node_modules || true'
+            }
+        }
+        
         stage('Install dependencies') {
             steps {
                 script {
@@ -22,34 +29,49 @@ pipeline {
                 }
             }
         }
-
         
-
- stage('SonarQube Analysis') {
+          stage('Build application') {
             steps {
-                script {
-                    def scannerHome = tool 'scanner'
-                    withSonarQubeEnv {
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=sqa_5444804b2043f69829ce7f929dd7578cbf0e8ed5"
+                dir('../FrontEnd') {
+                    script {
+                        sh 'npm install' 
+                        sh 'npm run build'
                     }
                 }
             }
         }
 
-        // stage('Building images') {
+
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'scanner'
+                    withSonarQubeEnv {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=sqa_5444804b2043f69829ce7f929dd7578cbf0e8ed5 -Dsonar.projectName=LinkUptournament"
+                    }
+                }
+            }
+        }
+
+        stage('Building image') {
+           steps {
+               script {
+                   sh('docker-compose build')
+               }
+           }
+        }
+
+        // Additional stages can be added here...
+
+        // stage('Docker compose') {
         //     steps {
         //         script {
-        //             sh 'docker-compose build'
+        //             sh 'docker-compose up -d'
         //         }
         //     }
         // }
-// stage('Docker compose') {
-//             steps {
-//                 script {
-//                     sh 'docker-compose up -d'
-//                 }
-//             }
-//         }
+        
         // stage('Deploy to Nexus') {
         //     steps {
         //         script {

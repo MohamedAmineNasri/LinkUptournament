@@ -2,49 +2,72 @@ pipeline {
     agent any
 
     // environment {
-    //     // Define environment variables if needed
+    //     registryCredentials = "nexus"
+    //     registry = "192.168.1.197:8083"
     // }
-
+    
     stages {
-        stage('Build') {
+        stage('git pull') {
             steps {
-                // Install dependencies and build React app
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
-        stage('Test') {
-            steps {
-                // Run tests
-                sh 'npm test'
-            }
-        }
-        stage('Code Analysis') {
-            steps {
-                // Run SonarQube analysis
-                withSonarQubeEnv('SonarQube_Server') {
-                    sh 'npm install -g sonarqube-scanner'
-                    sh 'sonar-scanner'
+                script {
+                    sh 'git pull origin main'
                 }
             }
         }
-        stage('Deploy') {
+        
+        stage('Install dependencies') {
             steps {
-                // Add your deployment script here
-                // For example, deploying to a web server
-                // sh 'scp -r build/* user@server:/var/www/html'
+                script {
+                    sh 'npm install'
+                }
             }
         }
-    }
 
-    post {
-        success {
-            echo 'Pipeline succeeded! Ready for deployment.'
-            // You can trigger deployment here if needed
+        
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'scanner'
+                    withSonarQubeEnv {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
         }
-        failure {
-            echo 'Pipeline failed! Please check the build logs.'
-            // You can send notifications or take other actions on failure
-        }
+
+        // stage('Building images') {
+        //     steps {
+        //         script {
+        //             sh 'docker-compose build'
+        //         }
+        //     }
+        // }
+// stage('Docker compose') {
+//             steps {
+//                 script {
+//                     sh 'docker-compose up -d'
+//                 }
+//             }
+//         }
+        // stage('Deploy to Nexus') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry("http://${registry}", registryCredentials) {
+        //                 sh "docker push $registry/reactapp:1.0.0"
+        //             }
+        //         }
+        //     }
+        // }
+
+        // stage('Run application') {
+        //     steps {  
+        //         script {
+        //             docker.withRegistry("http://${registry}", registryCredentials) {
+        //                 sh 'docker run -d -p 5173:5173 $registry/reactapp:1.0.0'
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

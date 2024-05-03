@@ -57,6 +57,17 @@ pipeline {
            }
         }
 
+         stage('pushing to docker hub') {
+            steps {
+                script {
+                    sh('docker login -u nasriamine -p 25059373Hadil')
+                    sh('docker tag sha256:76462c7b107c254da6e449995ef8040b3445701fc0cbad6d027bb2324b2898fc nasriamine/LinkUptournament:latest')
+                    sh('docker push nasriamine/LinkUptournament:latest')
+                }
+            }
+        }
+
+
         // Additional stages can be added here...
 
         // stage('Docker compose') {

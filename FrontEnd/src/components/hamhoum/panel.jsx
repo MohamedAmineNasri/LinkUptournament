@@ -64,9 +64,9 @@ const[team2goaltime,setteam2goaltime]=useState([])
   };
   const handleEndMatch = async() => {
     const response = await axios.get('http://localhost:8000/match/'+match);
-  //   if(response.data.matchtype == "Final"){
-  //       await axios.put('http://localhost:8000/tournament/update/'+TournementId ,{ winner: W})
-  //  }
+    if(response.data.matchtype == "Final"){
+        await axios.put('http://localhost:8000/tournament/update/'+response.data.tournementId ,{ winner: W})
+   }
   
     Swal.fire({
       title: "Are you sure?",
@@ -125,8 +125,9 @@ const[team2goaltime,setteam2goaltime]=useState([])
       
         const response = await axios.get('http://localhost:8000/match/'+match);
        if(response.data.matchtype == "Final" && response.data.matchstatus =="Finished"){
-           await axios.put('http://localhost:8000/match/'+TournementId ,{ winner: W})
+           await axios.put('http://localhost:8000/tournament/update/'+response.data.tournementId ,{ winner: W})
       }
+      console.log("//////",response.data.tournementId)
         setTournementId(response.data);
        
         setT1(response.data.goal1)
@@ -315,7 +316,7 @@ const cancelgoal2 = async ()=>{ try{
       
    
     <div className="site-section bg-dark">
-  <Link to={`/manage/tournament/`}>
+  <Link to={`/manage/`}>
     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       Return
     </button>

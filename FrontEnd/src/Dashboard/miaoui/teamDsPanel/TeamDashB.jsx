@@ -309,9 +309,6 @@ const TeamDashB = () => {
                   </td>
                   <td className="border-b border-[#eee] py-2 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-success">
-                        <FontAwesomeIcon icon={faCheck} />
-                      </button>
                       <button className="hover:text-danger">
                         <FontAwesomeIcon icon={faTrash} />
                       </button>

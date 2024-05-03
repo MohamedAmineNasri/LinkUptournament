@@ -85,7 +85,7 @@ const hasAdminOrManagerRole = () => {
   return userRole.includes("Agent") || userRole.includes("Manager");
 };
 const ForAcademiesRole = () => {
-  return userRole.includes("Agent") || userRole.includes("Manager") ||  userRole.includes("Admin");
+  return userRole.includes("Agent") ||   userRole.includes("Admin");
 };
 
 

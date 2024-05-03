@@ -26,7 +26,6 @@ import Pagination from "./Pagination";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AssignPlayer from "./AssignPlayer";
 import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
-import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
 
 const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
@@ -53,7 +52,7 @@ const ManagePlayer = () => {
   const teams =
     useSelector((state) => state.root.academy.academyData.teams) || [];
   const academy = useSelector((state) => state.root.academy.academyData);
-  console.log("academy___________", academy);
+  
 
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -116,7 +115,7 @@ const ManagePlayer = () => {
   const handleUpload = async (uploadedPhoto) => {
     try {
       const imageData = new FormData();
-      console.log("UPPPPPPPPpPPPPPP",uploadedPhoto)
+
       imageData.append("avatar", uploadedPhoto);
 
       const response = await axios.post(
@@ -190,7 +189,7 @@ const ManagePlayer = () => {
       }
     } else {
       if (imageUrl != ImagePlaceholder) {
-        console.log(img);
+        
         handleUpload(img);
       } else {
         dispatch(updatePlayer(playerId, formData, teamFilter));
@@ -200,10 +199,10 @@ const ManagePlayer = () => {
     }
     setOpenAddForm(false);
   };
-  console.log(academy.length == 0 && teams.length == 0);
+  
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {academy.length != 0 && teams.length == 0 || !players ? (
+      {(academy.length != 0 && teams.length == 0) || !players ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">
@@ -242,16 +241,18 @@ const ManagePlayer = () => {
             <span className="md:text-base text-xs font-semibold mt-2 mb-5">
               Ready to get started? Add your first player now.
             </span>
-            <button
-              class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
-              type="submit"
-              onClick={() => {
-                setOpenAddForm((prev) => !prev);
-                setCreate(true);
-              }}
-            >
-              Add Player
-            </button>
+            {user?.roles[0] != "Manager" && (
+              <button
+                class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
+                type="submit"
+                onClick={() => {
+                  setOpenAddForm((prev) => !prev);
+                  setCreate(true);
+                }}
+              >
+                Add Player
+              </button>
+            )}
           </div>
         </>
       ) : (
@@ -260,16 +261,18 @@ const ManagePlayer = () => {
             <h4 className="text-xl font-semibold text-black dark:text-white">
               All Players
             </h4>
-            <button
-              class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
-              type="submit"
-              onClick={() => {
-                setOpenAddForm((prev) => !prev);
-                setCreate(true);
-              }}
-            >
-              Add Player
-            </button>
+            {user?.roles[0] != "Manager" && (
+              <button
+                class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
+                type="submit"
+                onClick={() => {
+                  setOpenAddForm((prev) => !prev);
+                  setCreate(true);
+                }}
+              >
+                Add Player
+              </button>
+            )}
           </div>
 
           <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

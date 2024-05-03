@@ -23,6 +23,7 @@ const Header = (props: {
   const positionQuery = useSelector(
     (state) => state.root.searchPlayers.position
   );
+  const user = useSelector((state) => state.auth.user);
   const teamQuery = useSelector((state) => state.root.searchPlayers.team);
   const refereeQuery = useSelector(
     (state) => state.root.searchReferee.queryReferee
@@ -31,12 +32,30 @@ const Header = (props: {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [name, setName] = useState("");
+  console.log(user?.roles[0] == "Manager");
+  console.log(!teamQuery);
 
   useEffect(() => {
     if (playerLocation) {
-      dispatch(
-        searchPlayers({ name: name, position: positionQuery, team: teamQuery })
-      );
+      if (user?.roles[0] == "Manager" && !!teamQuery) {
+        dispatch(
+          searchPlayers({
+            name: name,
+            position: positionQuery,
+            team: teamQuery,
+          })
+        );
+      } else if (user?.roles[0] == undefined) {
+        dispatch(
+          searchPlayers({
+            name: name,
+            position: positionQuery,
+            team: teamQuery,
+          })
+        );
+      } else {
+        return;
+      }
     }
     if (refereeLocation) {
       dispatch(
@@ -47,7 +66,7 @@ const Header = (props: {
         })
       );
     }
-  }, [positionQuery, refereeQuery,teamQuery]);
+  }, [positionQuery, refereeQuery, teamQuery]);
 
   const handleChange = (event: Event) => {
     const { value } = event.target;

@@ -58,7 +58,7 @@ const Hero = () => {
               speed={50}
               style={{ fontSize: "1.5em" }}
               repeat={Infinity}
-              className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-200"
+              className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-[#BBF7D0]"
             />
           </div>
           {/* <ModalVideo

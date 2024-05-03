@@ -49,10 +49,12 @@ const ManagePlayer = () => {
   let { players, currentPage, totalPages, type } = useSelector(
     (state) => state.root.fetchPlayers.players
   );
+
+  console.log(players);
+
   const teams =
     useSelector((state) => state.root.academy.academyData.teams) || [];
   const academy = useSelector((state) => state.root.academy.academyData);
-  
 
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -189,7 +191,6 @@ const ManagePlayer = () => {
       }
     } else {
       if (imageUrl != ImagePlaceholder) {
-        
         handleUpload(img);
       } else {
         dispatch(updatePlayer(playerId, formData, teamFilter));
@@ -199,10 +200,10 @@ const ManagePlayer = () => {
     }
     setOpenAddForm(false);
   };
-  
+  console.log("______________", academy.length != 0 && !teams.length);
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {(academy.length != 0 && teams.length == 0) || !players ? (
+      {academy.length != 0 && !teams.length && !players ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">
@@ -374,7 +375,7 @@ const ManagePlayer = () => {
                           </h5>
                         </div>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark font-normal">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white font-normal">
                         {player.position}
                       </td>
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -391,7 +392,7 @@ const ManagePlayer = () => {
                           </button>
                         ) : (
                           <p
-                            className="pl-5 hover:text-primary hover:font-medium cursor-pointer"
+                            className="pl-5 hover:text-primary hover:font-medium cursor-pointer text-black dark:text-white"
                             onClick={() => {
                               setPlayerId(player._id);
                               setOpenAssignField(true);
@@ -401,10 +402,10 @@ const ManagePlayer = () => {
                           </p>
                         )}
                       </td>
-                      <td className=" border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className=" border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <section className="pl-1">{player.age}</section>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <div className="flex items-center space-x-3.5">
                           <button
                             className="hover:text-primary"

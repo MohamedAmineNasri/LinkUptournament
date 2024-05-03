@@ -374,7 +374,7 @@ const ManageReferees = () => {
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <button>{referee.role}</button>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <div className="flex items-center space-x-3.5">
                           <button
                             className="hover:text-primary"

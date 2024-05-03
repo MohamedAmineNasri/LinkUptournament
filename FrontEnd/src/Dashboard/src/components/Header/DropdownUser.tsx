@@ -1,22 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import UserOne from '../../images/user/user-01.png';
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from "../../../../../Features/auth/authSlice.js"; 
+import UserOne from "../../images/user/user-01.png";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../../../../Features/auth/authSlice.js";
 import useLogout from "../../../../hooks/useLogout.jsx";
 
 const DropdownUser = () => {
+  const navigate = useNavigate();
 
   const user = useSelector(selectCurrentUser);
-  const userFullName = user ? `${user.firstName} ${user.lastName}` : 'Thomas Anree';
-  const userRole = user ? `${user.roles}` : 'Role';
-  const userProfile = user && user.accountImage ? user.accountImage : 'UserOne';
-  const logout = useLogout()
+
+  const userFullName = user
+    ? `${user.firstName} ${user.lastName}`
+    : "Thomas Anree";
+  const userRole = user ? `${user.roles}` : "Role";
+  const logout = useLogout();
   const signout = async () => {
-      await logout()
-      Navigate('/signin');
-  }
+    await logout();
+    navigate("/signin");
+  };
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -34,8 +37,8 @@ const DropdownUser = () => {
         return;
       setDropdownOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -44,8 +47,8 @@ const DropdownUser = () => {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
@@ -94,7 +97,7 @@ const DropdownUser = () => {
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
         className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
-          dropdownOpen === true ? 'block' : 'hidden'
+          dropdownOpen === true ? "block" : "hidden"
         }`}
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
@@ -170,7 +173,10 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={signout}>
+        <button
+          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          onClick={() => signout()}
+        >
           <svg
             className="fill-current"
             width="22"

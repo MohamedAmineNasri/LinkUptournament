@@ -32,8 +32,7 @@ const Header = (props: {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [name, setName] = useState("");
-  console.log(user?.roles[0] == "Manager");
-  console.log(!teamQuery);
+  console.log(user?.roles[0]);
 
   useEffect(() => {
     if (playerLocation) {
@@ -45,12 +44,12 @@ const Header = (props: {
             team: teamQuery,
           })
         );
-      } else if (user?.roles[0] == undefined) {
+      } else if (user?.roles[0] == "Admin" || user?.roles[0] == undefined) {
         dispatch(
           searchPlayers({
             name: name,
             position: positionQuery,
-            team: teamQuery,
+         
           })
         );
       } else {

@@ -10,8 +10,10 @@ const PdfGenerator = ({ id }) => {
   const [ticket, setTicket] = useState(null);
   const createPdf = async (id) => {
     
+    // 
     try {
-      
+      // const mail = await axios.get(`http://localhost:8000/match/paymentmail/omriyasser12@gmail.com/omri/yasser`)
+      const mail = await axios.get(`http://localhost:8000/match/paymentmail/`+JSON.parse(localStorage.getItem('user')).email+"/"+JSON.parse(localStorage.getItem('user')).firstName+"/"+JSON.parse(localStorage.getItem('user')).lastName)
       // Fetch match data from the server
       const response = await axios.get(`http://localhost:8000/match/${id}`);
       const matchData = response.data;

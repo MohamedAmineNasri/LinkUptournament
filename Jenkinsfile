@@ -32,11 +32,15 @@ pipeline {
         
         stage('Build application') {
             steps {
-                script {
-                    sh 'npm run build'
+                dir('/FrontEnd') {
+                    script {
+                        sh 'npm install' 
+                        sh 'npm run build'
+                    }
                 }
             }
         }
+
 
         stage('SonarQube Analysis') {
             steps {

@@ -258,7 +258,7 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
             onChange={handleDateChange}
             className={`border ${isValid3 ? 'border-green-500' : 'border-red-500'}`}
           />
-          {!isValid3 && <p className="text-red-500">Date must be greater than today.</p>}
+          {!isValid3 && <p className="text-red-500">Date must be in tournament Date .</p>}
           <Form.Label>Starting Time:</Form.Label>
           <Form.Control
             type="time"

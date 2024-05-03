@@ -6,7 +6,7 @@ pipeline {
     //     registry = "192.168.1.197:8083"
     // }
     
-    stages {
+     stages {
         stage('git pull') {
             steps {
                 script {
@@ -18,33 +18,25 @@ pipeline {
         stage('Node Clean') {  
             steps {
                 echo 'Cleaning node_modules...'
-                sh 'rm -rf node_modules || true'
+                sh 'rm -rf FrontEnd/node_modules || true'
             }
         }
         
-       stage('Install dependencies') {
+        stage('Install dependencies') {
             steps {
-                dir('./FrontEnd') { 
-                    script {
-                        sh 'npm install --force'
-                    }
+                script {
+                    sh 'cd FrontEnd && npm install --force'
                 }
             }
         }
 
-        
-          stage('Build application') {
+        stage('Build application') {
             steps {
-                dir('./FrontEnd/package.json') {
-                    script {
-                        sh 'npm install --force' 
-                        sh 'npm run build'
-                    }
+                script {
+                    sh 'cd FrontEnd && npm install --force && npm run build'
                 }
             }
         }
-
-
 
         stage('SonarQube Analysis') {
             steps {

@@ -30,9 +30,9 @@ pipeline {
             }
         }
         
-        stage('Build application') {
+          stage('Build application') {
             steps {
-                dir('/FrontEnd') {
+                dir('../FrontEnd') {
                     script {
                         sh 'npm install' 
                         sh 'npm run build'
@@ -40,6 +40,7 @@ pipeline {
                 }
             }
         }
+
 
 
         stage('SonarQube Analysis') {

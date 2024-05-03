@@ -19,6 +19,9 @@ const ChatroomPage = () => {
     const user = useSelector(selectCurrentUser);
     const [rightSideVisible, setRightSideVisible] = useState(false);
     const userFullName = user ? `${user.firstName} ${user.lastName}!` : 'Welcome';
+    const defaultImageURL = 'https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80';
+    const userProfile = user && user.accountImage ? user.accountImage : defaultImageURL;
+
     const { id } = useParams();
     const [socket, setSocket] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -185,10 +188,11 @@ const ChatroomPage = () => {
                         className={userId === message.userId ? "message-wrapper reverse" : "message-wrapper"}
                     >
                         <div className="profile-picture">
-                            <img
-                                src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                                alt=""
-                            />
+                        <img
+                          src={userProfile}
+                          alt="profile"
+                          style={{ borderRadius: '50%' }}
+                        />
                         </div>
                         <div className="message-content">
                             <p className="name">{message.name}</p>

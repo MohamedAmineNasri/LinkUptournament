@@ -10,6 +10,7 @@ const DropdownUser = () => {
   const navigate = useNavigate();
 
   const user = useSelector(selectCurrentUser);
+
   const userFullName = user
     ? `${user.firstName} ${user.lastName}`
     : "Thomas Anree";
@@ -66,7 +67,11 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+              <img
+                    src={userProfile === 'UserOne' ? UserOne : userProfile}
+                    alt="profile"
+                    style={{ borderRadius: '50%' }}
+                />
         </span>
 
         <svg

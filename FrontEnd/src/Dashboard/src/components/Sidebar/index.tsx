@@ -459,6 +459,7 @@ const ForAcademiesRole = () => {
                   Video Chat
                 </NavLink>
               </li>
+              {userRole.includes("Admin") && (
               <li>
                 <NavLink
                   to="/videolivestreamui"
@@ -498,7 +499,7 @@ const ForAcademiesRole = () => {
                   </svg>
                   Streame Operations
                 </NavLink>
-              </li>
+              </li>)}
               <li>
                 <NavLink
                   to="/viewerlivestreamui"

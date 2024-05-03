@@ -236,6 +236,7 @@ function App() {
                       "Agent",
                       "Manager",
                       "TournamentCoordinator",
+                      "Recruiter"
                     ]}
                   />
                 }

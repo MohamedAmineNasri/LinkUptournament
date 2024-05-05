@@ -57,7 +57,6 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
    const [price, setprice] = useState();
    const [ticketNumber, setticketNumber] = useState();
    const [showModal, setShowModal] = useState(false);
-   const [ma, setma] = useState([]);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -182,10 +181,7 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
         setTeam2Gols(0)
         setTournementId(tournamentId)
         setMatchstatus("Starting Soon")
-        const matchees = await axios.get('http://localhost:8000/tournament/' + tournamentId);
-
-        const response = await axios.get('http://localhost:8000/match/tournament/' + tournamentId);
-        setma(response.data)
+        const response = await axios.get('http://localhost:8000/tournament/' + tournamentId);
          if(response.data.tournament.type =="Group Stage"){
         //   groupresponse =await axios.get("http://localhost:8000/group/tournament"+tournamentId)
           
@@ -262,7 +258,7 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
             onChange={handleDateChange}
             className={`border ${isValid3 ? 'border-green-500' : 'border-red-500'}`}
           />
-          {!isValid3 && <p className="text-red-500">Date must be in tournament Date .</p>}
+          {!isValid3 && <p className="text-red-500">Date must be greater than today.</p>}
           <Form.Label>Starting Time:</Form.Label>
           <Form.Control
             type="time"
@@ -331,41 +327,7 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
       
   </>
 )}
-{Matchtype === 'Round 2' && (
-  <>
-    <Form.Label>Group 1:</Form.Label>
-    <br />
-    
-    <Form.Label>Team 1:</Form.Label>
-          <br />
-         
-          <select onChange={handleteam1} className="border text-black">
-            <option value="null">Select Team 1</option>
-            {matchgroupe.filter((team) => team._id == matchgroupe1).map((teamName, index) => (teamName.teams.map(e=><option value={e.team}>{e.TeamName}</option>)
-              
-                
-             
-            ))}
-          </select>
-          
-          {!isValidteam1 && <p className="text-red-500">Please select a different Team 1.</p>}
-          <br />
-          <Form.Label>Team 2:</Form.Label>
-          <br />
-         
-          <select onChange={handleteam2} className="border text-black">
-            <option value="null">Select Team 2</option>
-            {matchgroupe.filter((team) => team._id == matchgroupe1).map((teamName, index) => (teamName.teams.map(e=><option value={e.team}>{e.TeamName}</option>)
-              
-                
-             
-            ))}
-          </select>
-          
-          {!isValidteam2 && <p className="text-red-500">Please select a different Team 2.</p>}
-      
-  </>
-)}
+{!isValid && <p className="text-red-500">Please select a valid Match Type.</p>}
           
 {Matchtype !== 'Group Stage' && (
           <>

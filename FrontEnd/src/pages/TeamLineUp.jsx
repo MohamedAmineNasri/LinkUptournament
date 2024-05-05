@@ -111,7 +111,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["GK"].avatar
+                            ? selectedPlayers["GK"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -138,7 +142,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["LB"].avatar
+                            ? selectedPlayers["LB"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -165,7 +173,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["CB1"].avatar
+                            ? selectedPlayers["CB1"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -192,7 +204,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["CB2"].avatar
+                            ? selectedPlayers["CB2"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -219,7 +235,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["RB"].avatar
+                            ? selectedPlayers["RB"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -246,7 +266,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["CM1"].avatar
+                            ? selectedPlayers["CM1"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -273,7 +297,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["CM2"].avatar
+                            ? selectedPlayers["CM2"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -300,7 +328,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["CM3"].avatar
+                            ? selectedPlayers["CM3"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -328,7 +360,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["LW"].avatar
+                            ? selectedPlayers["LW"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -355,7 +391,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["ST"].avatar
+                            ? selectedPlayers["ST"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />
@@ -382,7 +422,11 @@ const TeamLineUp = () => {
                   <div>
                     <div className="flex flex-col items-center ">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          selectedPlayers["RW"].avatar
+                            ? selectedPlayers["RW"].avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={70}
                       />

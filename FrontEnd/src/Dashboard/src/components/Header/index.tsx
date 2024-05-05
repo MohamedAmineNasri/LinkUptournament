@@ -45,6 +45,7 @@ const Header = (props: {
           })
         );
       } else if (user?.roles[0] == "Admin" || user?.roles[0] == undefined) {
+
         dispatch(
           searchPlayers({
             name: name,
@@ -65,7 +66,7 @@ const Header = (props: {
         })
       );
     }
-  }, [positionQuery, refereeQuery, teamQuery]);
+  }, [user.roles, positionQuery, refereeQuery, teamQuery]);
 
   const handleChange = (event: Event) => {
     const { value } = event.target;

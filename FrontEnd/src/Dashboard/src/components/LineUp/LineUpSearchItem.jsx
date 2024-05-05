@@ -12,9 +12,9 @@ const LineUpSearchItem = ({
   position,
 }) => {
   return (
-    <tr class="hover:bg-gray-100 dark:hover:bg-neutral-700">
-      <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-        <p className="pl-4">{position }</p>
+    <tr class="hover:bg-blue-gray-200 dark:hover:bg-neutral-700">
+      <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-white">
+        <p className="pl-4">{position}</p>
       </td>
       <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
         <div className="">
@@ -50,7 +50,11 @@ const LineUpSearchItem = ({
                   >
                     <div className="flex items-center gap-3">
                       <img
-                        src={"/assets/images/avatar_placeholder.jpg"}
+                        src={
+                          player?.avatar
+                            ? player?.avatar
+                            : "/assets/images/avatar_placeholder.jpg"
+                        }
                         alt="Product"
                         width={40}
                       />
@@ -74,7 +78,11 @@ const LineUpSearchItem = ({
         {selectedPlayers && selectedPlayers[position] && (
           <div className="flex items-center gap-3">
             <img
-              src={"/assets/images/avatar_placeholder.jpg"}
+              src={
+                selectedPlayers[position]?.avatar
+                  ? selectedPlayers[position]?.avatar
+                  : "/assets/images/avatar_placeholder.jpg"
+              }
               alt="Product"
               width={40}
             />
@@ -87,7 +95,7 @@ const LineUpSearchItem = ({
       <td class="px-6 py-1 whitespace-nowrap text-end text-sm font-medium">
         <button
           type="button"
-          className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-500 hover:text-red-500 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400"
+          className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-500 hover:text-red-500 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400"
           onClick={() => {
             let obj = { ...selectedPlayers };
             delete obj[position];

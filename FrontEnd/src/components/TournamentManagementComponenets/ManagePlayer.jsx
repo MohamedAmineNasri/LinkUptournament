@@ -128,15 +128,36 @@ const ManagePlayer = () => {
         }
       );
       if (create) {
-        console.log(formData);
-        dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
+        if (teamFilter != "") {
+          dispatch(
+            addPlayer(
+              { ...formData, avatar: response.data.imageUrl },
+              teamFilter
+            )
+          );
+        } else {
+          dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
+        }
       } else {
-        dispatch(
-          updatePlayer(playerId, {
-            ...formData,
-            avatar: response.data.imageUrl,
-          })
-        );
+        if (teamFilter != "") {
+          dispatch(
+            updatePlayer(
+              playerId,
+              {
+                ...formData,
+                avatar: response.data.imageUrl,
+              },
+              teamFilter
+            )
+          );
+        } else {
+          dispatch(
+            updatePlayer(playerId, {
+              ...formData,
+              avatar: response.data.imageUrl,
+            })
+          );
+        }
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -200,10 +221,14 @@ const ManagePlayer = () => {
     }
     setOpenAddForm(false);
   };
-
+  console.log(players?.length);
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {academy.length != 0 && !teams.length && !players ? (
+      {(academy.length != 0 &&
+        !teams.length &&
+        !players &&
+        user.roles[0] == "Manager") ||
+      (user.roles[0] == "Admin" && players?.length == 0) ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">

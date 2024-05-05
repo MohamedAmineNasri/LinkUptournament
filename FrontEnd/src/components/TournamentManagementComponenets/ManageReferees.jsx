@@ -110,27 +110,24 @@ const ManageReferees = () => {
     e.preventDefault();
 
     // Validation
-    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
-      toast.error("Name is required and must contain only letters");
-      return;
-    }
+  
 
-    if (!formData.country.trim()) {
+    if (!formData.country) {
       toast.error("Country is required");
       return;
     }
 
-    if (!formData.location.trim()) {
+    if (!formData.location) {
       toast.error("Location is required");
       return;
     }
 
-    if (!formData.availability.trim()) {
+    if (!formData.availability) {
       toast.error("Availability is required");
       return;
     }
 
-    if (!formData.role.trim()) {
+    if (!formData.role) {
       toast.error("Role is required");
       return;
     }

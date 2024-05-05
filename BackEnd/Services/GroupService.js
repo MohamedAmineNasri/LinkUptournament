@@ -132,9 +132,9 @@ const createGroups = async (req, res, next) => {
 
 
 const updateGrouptri = async (id , req, res , next) => {
-  console.log('updateGrouptri called');
+  
   const group = await Group.findById(id);
-  console.log('Group found:', group);
+  
   group.teams.sort((a, b) => {
       if (b.PTS - a.PTS !== 0) {
           return b.PTS - a.PTS;
@@ -146,21 +146,21 @@ const updateGrouptri = async (id , req, res , next) => {
   });
   await group.save();
   res.json(group);
-  console.log('Group updated and saved');
+  
 };
 
 
 
 const updateGroupAfterMatch = async (req, res, next) => {
   try {
-      console.log('updateGroupAfterMatch called');
+  
       const match = await Match.findById(req.params.matchId);
       if (!match) {
           throw new Error('Match not found');
       }
 
       const group = await Group.findById(match.group);
-      console.log('Group found:', group);
+  
 
       const team1 = group.teams.find(team => team.team.toString() === match.team1.toString());
       const team2 = group.teams.find(team => team.team.toString() === match.team2.toString());
@@ -212,7 +212,7 @@ const updateGroupAfterMatch = async (req, res, next) => {
 
       await group.save();
       res.json(group);
-      console.log('Group updated and saved');
+      
   } catch (error) {
       console.error(error);
       next(error);
@@ -224,15 +224,15 @@ const updateGroupAfterMatch = async (req, res, next) => {
 
 
 const updateMG = async (groupId, teamId, newpts, req, res, next) => {
-  console.log('updateMG called with groupId, teamId, newMG:', groupId, teamId, newpts);
+  
   const group = await Group.findById(groupId);
-  console.log('Group found:', group);
+  
   const team = group.teams.find(t => t.team.toString() === teamId);
-  console.log('Team found:', team);
+  
   team.PTS = req.body.newpts;
-  console.log(team.PTS) ; 
+   
   await group.save();
-  console.log('Group with updated MG saved');
+  
   await updateGrouptri(groupId , req, res, next);
   res.json(group)
 };

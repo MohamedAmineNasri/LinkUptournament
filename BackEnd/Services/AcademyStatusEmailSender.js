@@ -83,7 +83,6 @@ const sendinblueApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
     try {
         await sendinblueApi.sendTransacEmail(sendSmtpEmail);
-        console.log("Welcome email sent to:", email);
     } catch (error) {
         console.error("Error sending welcome email to", email, ":", error);
     }

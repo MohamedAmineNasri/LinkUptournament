@@ -11,7 +11,7 @@ const sendSMS = async (to, message) => {
       from: '+12512740154',
       to: to
     });
-    console.log('SMS sent successfully');
+    
   } catch (error) {
     console.error('Failed to send SMS: ', error);
   }

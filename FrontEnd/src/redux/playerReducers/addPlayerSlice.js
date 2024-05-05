@@ -11,6 +11,7 @@ const initialState = {
 export const addPlayer = (payload, teamFilter) => async (dispatch) => {
   dispatch(postDataPending());
   try {
+    console.log("from slice", payload);
     await axios.post("http://localhost:8000/player", payload);
     dispatch(postDataFulfilled());
     dispatch(searchPlayers({ team: teamFilter }));

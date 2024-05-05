@@ -9,7 +9,6 @@ const Tachievement = require("../Models/Tachievement");
 const getAllTeams = async (req, res, next) => {
   const teams = await Team.find().populate("Players");
   res.json(teams);
-  console.log(teams);
 };
 
 const searchTeams = async (req, res, next) => {
@@ -54,7 +53,6 @@ const addTeam = async (req, res, next) => {
     message: "Team sucessfully added ! ",
   });
 };
-
 
 //By Yassine
 async function updateTeamById(req, res) {
@@ -158,15 +156,13 @@ const getTeamByAcademyId = async (req, res, next) => {
         if (team) {
           // Check if team is found
           teamData.push(team);
-        } else {
-          console.log(`Team with ID ${teamId} not found`);
         }
       }
     } else {
       console.log("No teams found for the academy");
     }
 
-    console.log("Team Data:", teamData);
+    
     res.json(teamData);
   } catch (error) {
     console.error("Error adding team and assigning to academy:", error);
@@ -388,7 +384,7 @@ const resetGroupStageData = async (req, res, next) => {
 const getPlayersByTeamId = async (req, res, next) => {
   try {
     const targetTeam = await getTeamById2(req.params.idTeam);
-    console.log("Target team:", targetTeam);
+    
 
     const playerData = [];
 
@@ -399,15 +395,13 @@ const getPlayersByTeamId = async (req, res, next) => {
         if (player) {
           // Check if team is found
           playerData.push(player);
-        } else {
-          console.log(`player with ID ${playerId} not found`);
-        }
+        } 
       }
     } else {
       console.log("No teams found for the academy");
     }
 
-    console.log("player Data:", playerData);
+    
     res.json(playerData);
   } catch (error) {
     console.error("Error", error);
@@ -461,67 +455,68 @@ const getTeamsByName = async (req, res, next) => {
     res.status(500).json("Internal server error");
   }
 };
-const removePlayerFromTeam = async (req,res) => {
-    const team = await Team.findOneAndUpdate(
-      { _id: req.params.idt },
-      { $pull: { Players: req.params.idp } }, 
-      { new: true }
-    );
-    console.log(team ,"removed---------------------------------------")
-    res.json("deleted sucessfully" + team);
-  };
-  const UpdateTeamsStatsFromFinishedMatches = async (req, res, next) => {
-    const matches = await Match.find({matchstatus : "Finished"})
+const removePlayerFromTeam = async (req, res) => {
+  const team = await Team.findOneAndUpdate(
+    { _id: req.params.idt },
+    { $pull: { Players: req.params.idp } },
+    { new: true }
+  );
 
-    // Reset data for all teams involved in the matches
-    const teamsToReset = new Set();
-    matches.forEach((match) => {
-        teamsToReset.add(match.team1);
-        teamsToReset.add(match.team2);
-    });
+  res.json("deleted sucessfully" + team);
+};
+const UpdateTeamsStatsFromFinishedMatches = async (req, res, next) => {
+  const matches = await Match.find({ matchstatus: "Finished" });
 
-    // Reset all teams before starting the loop
-    for (const teamId of teamsToReset) {
-       await resetData(teamId);
+  // Reset data for all teams involved in the matches
+  const teamsToReset = new Set();
+  matches.forEach((match) => {
+    teamsToReset.add(match.team1);
+    teamsToReset.add(match.team2);
+  });
+
+  // Reset all teams before starting the loop
+  for (const teamId of teamsToReset) {
+    await resetData(teamId);
+  }
+
+  for (const match of matches) {
+    // resetData(match.team1)
+    // resetData(match.team2)
+    const team1 = await Team.findById(match.team1);
+    const team2 = await Team.findById(match.team2);
+
+    const goalTeam1 = match.goal1.length;
+    const goalTeam2 = match.goal2.length;
+    if (goalTeam1 > goalTeam2) {
+      //team 1 win
+      updateTeamMatchesWon_P(match.team1);
+      updateGoals_scored_P(match.team1, goalTeam1);
+      updateGoals_received_P(match.team1, goalTeam2);
+      updateTeamMatchesLost_P(match.team2);
+      updateGoals_scored_P(match.team2, goalTeam2);
+      updateGoals_received_P(match.team2, goalTeam1);
+    } else if (goalTeam1 < goalTeam2) {
+      //team 2 win
+      updateTeamMatchesWon_P(match.team2);
+      updateGoals_scored_P(match.team2, goalTeam2);
+      updateGoals_received_P(match.team2, goalTeam1);
+      updateTeamMatchesLost_P(match.team1);
+      updateGoals_scored_P(match.team1, goalTeam1);
+      updateGoals_received_P(match.team1, goalTeam2);
+    } else {
+      //draw
+      updateTeamMatchesDrawn_P(match.team1);
+      updateGoals_scored_P(match.team1, goalTeam1);
+      updateGoals_received_P(match.team1, goalTeam2);
+      updateTeamMatchesDrawn_P(match.team2);
+      updateGoals_scored_P(match.team2, goalTeam2);
+      updateGoals_received_P(match.team2, goalTeam1);
     }
-
-    for (const match of matches) {
-        // resetData(match.team1)
-        // resetData(match.team2)
-        const team1 = await Team.findById(match.team1)
-        const team2 = await Team.findById(match.team2)
-
-        const goalTeam1 = match.goal1.length
-        const goalTeam2 = match.goal2.length
-        if(goalTeam1 > goalTeam2){ //team 1 win
-            updateTeamMatchesWon_P(match.team1)
-            updateGoals_scored_P(match.team1,goalTeam1)
-            updateGoals_received_P(match.team1,goalTeam2)
-            updateTeamMatchesLost_P(match.team2)
-            updateGoals_scored_P(match.team2,goalTeam2)
-            updateGoals_received_P(match.team2,goalTeam1)
-            
-        }
-        else if(goalTeam1 < goalTeam2){ //team 2 win
-            updateTeamMatchesWon_P(match.team2)
-            updateGoals_scored_P(match.team2,goalTeam2)
-            updateGoals_received_P(match.team2,goalTeam1)
-            updateTeamMatchesLost_P(match.team1)
-            updateGoals_scored_P(match.team1,goalTeam1)
-            updateGoals_received_P(match.team1,goalTeam2)
-        }else{//draw
-            updateTeamMatchesDrawn_P(match.team1)
-            updateGoals_scored_P(match.team1,goalTeam1)
-            updateGoals_received_P(match.team1,goalTeam2)
-            updateTeamMatchesDrawn_P(match.team2)
-            updateGoals_scored_P(match.team2,goalTeam2)
-            updateGoals_received_P(match.team2,goalTeam1)
-        }
-        await team1.save()
-        await team2.save()
-    }
-    return res.json("done")
-}
+    await team1.save();
+    await team2.save();
+  }
+  return res.json("done");
+};
 
 module.exports = {
   UpdateTeamsStatsFromFinishedMatches,
@@ -551,5 +546,5 @@ module.exports = {
   updateTeam,
   assignPlayerToTeam,
   updateTeamSameName,
-  updateTeamById
+  updateTeamById,
 };

@@ -81,7 +81,7 @@ const DefaultAchivement = await Achievement.findById(tachievement.Achievement)
         await tachievement.save();
     }
 }
-console.log("executed from REDUX ")
+
 return res.json("executed with no probleme")
 
 }

@@ -50,8 +50,6 @@ const ManagePlayer = () => {
     (state) => state.root.fetchPlayers.players
   );
 
-  console.log(players);
-
   const teams =
     useSelector((state) => state.root.academy.academyData.teams) || [];
   const academy = useSelector((state) => state.root.academy.academyData);
@@ -130,6 +128,7 @@ const ManagePlayer = () => {
         }
       );
       if (create) {
+        console.log(formData);
         dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
       } else {
         dispatch(
@@ -150,7 +149,7 @@ const ManagePlayer = () => {
 
     /** Validator */
 
-    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
+    /*    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
       toast.error("Name is required and must contain only letters");
       return;
     }
@@ -173,7 +172,7 @@ const ManagePlayer = () => {
     /* if (!formData.current_team || formData.current_team.trim() === "") {
       toast.error("Current team is required");
       return;
-    } */
+    } 
 
     if (!formData.number || isNaN(formData.number) || formData.number <= 0) {
       toast.error("Number is required and must be a positive number");
@@ -185,6 +184,7 @@ const ManagePlayer = () => {
       if (imageUrl != ImagePlaceholder) {
         handleUpload(img);
       } else {
+        if (formData.team == "") delete formData.team;
         dispatch(addPlayer(formData, teamFilter));
         toast.success("Player added successfully 👌");
         setFormData({});
@@ -200,7 +200,7 @@ const ManagePlayer = () => {
     }
     setOpenAddForm(false);
   };
-  console.log("______________", academy.length != 0 && !teams.length);
+
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       {academy.length != 0 && !teams.length && !players ? (

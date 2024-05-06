@@ -26,6 +26,7 @@ import Pagination from "./Pagination";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AssignPlayer from "./AssignPlayer";
 import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
+import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
 
 const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
@@ -46,9 +47,12 @@ const ManagePlayer = () => {
     }
   };
 
-  let { players, currentPage, totalPages, type } = useSelector(
-    (state) => state.root.fetchPlayers.players
-  );
+  let {
+    players = [],
+    currentPage,
+    totalPages,
+    type,
+  } = useSelector((state) => state.root.fetchPlayers.players);
 
   const teams =
     useSelector((state) => state.root.academy.academyData.teams) || [];
@@ -76,6 +80,14 @@ const ManagePlayer = () => {
   const [position, setPosition] = useState("");
 
   useEffect(() => {
+    console.log(
+      "mount__________________________________________________________"
+    );
+    console.log(user?.roles[0] == "Admin" && players.length == 0);
+    if (user?.roles[0] == "Admin" && players.length == 0) {
+      dispatch(fetchPlayers());
+    }
+
     if (user?.roles[0] == "Manager" && teams.length != 0) {
       dispatch(getPlayersTeam(teams[0]?._id));
       setTeamFilter(teams[0]?._id);
@@ -226,7 +238,7 @@ const ManagePlayer = () => {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       {(academy.length != 0 &&
         !teams.length &&
-        !players &&
+        players?.length == 0 &&
         user.roles[0] == "Manager") ||
       (user.roles[0] == "Admin" && players?.length == 0) ? (
         <>

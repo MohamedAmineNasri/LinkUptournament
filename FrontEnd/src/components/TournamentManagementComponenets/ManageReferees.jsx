@@ -38,9 +38,11 @@ const ManageReferees = () => {
     }
   };
 
-  const { referees, currentPage, totalPages } = useSelector(
-    (state) => state.root.fetchReferees.referees
-  );
+  const {
+    referees = [],
+    currentPage,
+    totalPages,
+  } = useSelector((state) => state.root.fetchReferees.referees);
   const navigate = useNavigate();
 
   const [openAddForm, setOpenAddForm] = useState(false);
@@ -110,7 +112,6 @@ const ManageReferees = () => {
     e.preventDefault();
 
     // Validation
-  
 
     if (!formData.country) {
       toast.error("Country is required");
@@ -154,7 +155,7 @@ const ManageReferees = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {!referees ? (
+      {referees.length == 0 ? (
         <>
           <div className="p-3 flex items-center mt-2 justify-between gap-10">
             <h3 className="text-base font-bold flex-1 text-black dark:text-white ">

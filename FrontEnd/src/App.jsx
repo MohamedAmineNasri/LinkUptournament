@@ -90,6 +90,10 @@ import "aos/dist/aos.css";
 import Tournaments from "./components/landingpage/Tournaments";
 
 import NotFound from "./landingPage/notfound";
+import Tourn from "./components/Tourn/Tourn";
+import AddTourn from "./components/Tourn/AddTourn";
+import BracketGenerator from "./components/Tourn/BracketGenerator";
+import TournamentGroup from "./components/Tourn/TournamentGroup";
 
 function App() {
   // animeaa
@@ -176,6 +180,12 @@ function App() {
                   <Route path="group" element={<ManageTournamentGroup />} />
                 </Route>
                 <Route path="lineup" element={<TeamLineUp />} />
+                {"Updated Part"}
+                <Route path="tourn" element={<Tourn />} />
+                <Route path="addtourn" element={<AddTourn />} />
+                <Route path="bracket" element={<BracketGenerator />} />
+                <Route path="group/:id" element={<TournamentGroup />} />
+                {"Updated Part"}
                 <Route path="participant" element={<ManageParticipant />}>
                   <Route path="player" element={<ManagePlayer />} />
                   <Route path="player/consult" element={<ConsultPlayer />} />

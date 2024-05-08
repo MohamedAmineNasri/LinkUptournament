@@ -52,7 +52,7 @@ pipeline {
             steps {
                 script {
                     // Adjust this command based on your Backend build process
-                    sh 'cd BackEnd && npm run build'
+                    sh 'cd BackEnd && YOUR_BUILD_COMMAND_HERE'
                 }
             }
         }

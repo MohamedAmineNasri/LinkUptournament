@@ -58,7 +58,7 @@ pipeline {
                 }
             }
         }
-          stage('Node Clean Backend') {  
+           stage('Node Clean Backend') {  
             steps {
                 echo 'Cleaning Backend node_modules...'
                 sh 'rm -rf BackEnd/node_modules || true'

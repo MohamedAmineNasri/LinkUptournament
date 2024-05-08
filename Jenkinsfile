@@ -15,14 +15,28 @@ pipeline {
             }
         }
         
-        stage('Node Clean') {  
+        // stage('Node Clean') {  
+        //     steps {
+        //         echo 'Cleaning node_modules...'
+        //         sh 'rm -rf FrontEnd/node_modules || true'
+        //     }
+        // }
+          stage('Node Clean Frontend') {  
             steps {
-                echo 'Cleaning node_modules...'
+                echo 'Cleaning Frontend node_modules...'
                 sh 'rm -rf FrontEnd/node_modules || true'
             }
         }
         
-        stage('Install dependencies') {
+        
+        // stage('Install dependencies') {
+        //     steps {
+        //         script {
+        //             sh 'cd FrontEnd && npm install --force'
+        //         }
+        //     }
+        // }
+           stage('Install Frontend dependencies') {
             steps {
                 script {
                     sh 'cd FrontEnd && npm install --force'
@@ -30,13 +44,43 @@ pipeline {
             }
         }
 
-        stage('Build application') {
+        // stage('Build application') {
+        //     steps {
+        //         script {
+        //             sh 'cd FrontEnd && npm install --force && npm run build'
+        //         }
+        //     }
+        // }
+           stage('Build Frontend application') {
             steps {
                 script {
                     sh 'cd FrontEnd && npm install --force && npm run build'
                 }
             }
         }
+          stage('Node Clean Backend') {  
+            steps {
+                echo 'Cleaning Backend node_modules...'
+                sh 'rm -rf BackEnd/node_modules || true'
+            }
+        }
+        
+        stage('Install Backend dependencies') {
+            steps {
+                script {
+                    sh 'cd BackEnd && npm install --force'
+                }
+            }
+        }
+
+        stage('Build Backend application') {
+            steps {
+                script {
+                    sh 'cd BackEnd && npm install --force && npm run build'
+                }
+            }
+        }
+         
 
         stage('SonarQube Analysis') {
             steps {

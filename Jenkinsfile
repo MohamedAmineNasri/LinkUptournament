@@ -52,7 +52,7 @@ pipeline {
             steps {
                 script {
                     // Use the "build-dev" script to build your Backend application
-                    sh 'cd BackEnd && npm run build-dev'
+                    sh 'cd BackEnd && npm install --force && npm ru build-dev'
                 }
             }
         }

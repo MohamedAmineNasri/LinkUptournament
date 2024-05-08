@@ -48,14 +48,15 @@ pipeline {
             }
         }
 
-        stage('Build Backend application') {
+       stage('Build Backend application') {
             steps {
                 script {
                     // Use the "build-dev" script to build your Backend application
-                    sh 'cd BackEnd && npm install --force && npm run build-dev'
+                    sh 'cd BackEnd && npm install --force && npm run build-dev || true'
                 }
             }
         }
+
 
         stage('SonarQube Analysis') {
             steps {

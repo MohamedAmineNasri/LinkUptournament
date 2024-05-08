@@ -52,7 +52,7 @@ pipeline {
             steps {
                 script {
                     // Adjust this command based on your Backend build process
-                    sh 'cd BackEnd && YOUR_BUILD_COMMAND_HERE'
+                    sh 'cd BackEnd && npm run build'
                 }
             }
         }
@@ -76,7 +76,7 @@ pipeline {
            }
         }
 
-         stage('pushing to docker hub') {
+        stage('pushing to docker hub') {
             steps {
                 script {
                     sh('docker login -u nasriamine -p 25059373Hadil')

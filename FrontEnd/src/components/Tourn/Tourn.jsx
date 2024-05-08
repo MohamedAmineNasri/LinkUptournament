@@ -50,7 +50,7 @@ const Tourn = () => {
                       if (tournament.type == "group") {
                         navigate(`/manage/group/${tournament._id}`);
                       } else {
-                        navigate("/manage/bracket", {
+                        navigate(`/manage/bracket/${tournament._id}`, {
                           state: tournament.teams,
                         });
                       }

@@ -8,6 +8,36 @@ import Typography from "@mui/material/Typography";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 
+let matchData = {
+  matchTime: 0,
+  date: "",
+  referee: "Empty",
+  //"tournamentName": "International Cup",
+  startingtime: "",
+  logo: "",
+  extratime: 0,
+  matchstatus: "",
+  location: "",
+  matchtype: "unknown",
+  weathercondition: "",
+  team1: "",
+  team2: "",
+  team1Gols: 0,
+  team2Gols: 0,
+  goal1: [],
+  team1goaltime: [],
+  team2goaltime: [],
+  goal2: [],
+  tournementId: "",
+  card: [],
+  price: 0,
+  ticketNumber: 0,
+  ticketId: [],
+  w: null,
+  l: null,
+  group: null,
+};
+
 const AddTourn = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -70,13 +100,28 @@ const AddTourn = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
     try {
-      await axios.post("http://localhost:8000/tourn", {
+      const response = await axios.post("http://localhost:8000/tourn", {
         ...formData,
         teams: activeTeamId,
       });
-      navigate("/manage/tourn");
+      const tournId = response.data._id;
+      console.log(tournId);
+      await axios.post("http://localhost:8000/bracketStage", {
+        round: 1,
+        teams: activeTeamId,
+        tournament: tournId,
+      });
+      for (let i = 0; i < activeTeamId.length; i += 2) {
+        console.log(activeTeamId[i], activeTeamId[i + 1]);
+        await axios.post("http://localhost:8000/match/", {
+          ...matchData,
+          team1: activeTeamId[i],
+          team2: activeTeamId[i + 1],
+          tournementId: tournId,
+        });
+      }
+      navigate("/manage");
     } catch (e) {
       console.log("post Tournament err axios");
     }

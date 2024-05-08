@@ -147,7 +147,7 @@ function App() {
           />
           <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
           <Route
-            path="/fetchmatchbytour/:tournamentId"
+            path="/fetchmatchbytour/:id"
             element={<Fetchmatchbytour />}
           />
           <Route path="/testtt" element={<AddMatchPopUpWindow />} />
@@ -168,7 +168,8 @@ function App() {
               element={<RequireAuth allowedRoles={["Manager", "Admin"]} />}
             >
               <Route path="/manage" element={<TournamentLayout />}>
-                <Route index element={<ManageTournament />} />
+                <Route index element={<Tourn />} />
+                <Route path="shame"  element={<ManageTournament />} />
                 <Route path="editt/:tournamentId" element={<Edit />} />
                 <Route
                   path="tournament/:tournamentId"
@@ -181,9 +182,8 @@ function App() {
                 </Route>
                 <Route path="lineup" element={<TeamLineUp />} />
                 {"Updated Part"}
-                <Route path="tourn" element={<Tourn />} />
                 <Route path="addtourn" element={<AddTourn />} />
-                <Route path="bracket" element={<BracketGenerator />} />
+                <Route path="bracket/:id" element={<BracketGenerator />} />
                 <Route path="group/:id" element={<TournamentGroup />} />
                 {"Updated Part"}
                 <Route path="participant" element={<ManageParticipant />}>

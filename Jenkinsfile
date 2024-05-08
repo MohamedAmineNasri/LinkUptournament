@@ -51,8 +51,8 @@ pipeline {
         stage('Build Backend application') {
             steps {
                 script {
-                    // Adjust this command based on your Backend build process
-                    sh 'cd BackEnd && npm run build'
+                    // Use the "build-dev" script to build your Backend application
+                    sh 'cd BackEnd && npm run build-dev'
                 }
             }
         }

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var match = new Schema({
   matchTime: Number,
+  round: Number,
+  matchOrder: Number,
   date: String,
   referee: String,
   tournamentName: String,
@@ -24,6 +26,7 @@ var match = new Schema({
   team2goaltime: [Number],
   goal2: [{ type: mongoose.Schema.Types.ObjectId, ref: "Player" }],
   tournementId: { type: mongoose.Schema.Types.ObjectId, ref: "Tournement" },
+  tournId: { type: mongoose.Schema.Types.ObjectId, ref: "Tourn" },
   card: [
     {
       player: { type: mongoose.Schema.Types.ObjectId, ref: "Player" },

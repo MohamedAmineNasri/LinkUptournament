@@ -68,6 +68,7 @@ export const editMatch = createAsyncThunk(
     logo,
     matchstatus,
     tournementId,
+    tournId,
     weathercondition,
     team1,
     team2,
@@ -96,11 +97,12 @@ export const editMatch = createAsyncThunk(
           team1: team1,
           team2: team2,
           tournementId: tournementId,
+          tournId : tournId,
           w: w,
           l: l,
         }
       );
-      window.location.reload();
+     // window.location.reload();
       return response.data;
     } catch (error) {
       throw error;
@@ -181,7 +183,7 @@ export const addnewMatch = createAsyncThunk(
         price: price,
         ticketId: [0],
       });
-      window.location.reload();
+    //  window.location.reload();
       return response.data;
     } catch (error) {
       throw error;

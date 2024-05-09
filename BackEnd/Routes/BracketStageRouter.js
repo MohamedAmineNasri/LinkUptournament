@@ -17,6 +17,13 @@ router.put("/:id", bracketStageController.updateBracketStageById);
 // Route to delete a bracket stage by ID
 router.delete("/:id", bracketStageController.deleteBracketStageById);
 
-router.get("/tournament/:tournamentId", bracketStageController.getAllBracketStagesByTournamentId);
+router.get(
+  "/tournament/:tournamentId",
+  bracketStageController.getAllBracketStagesByTournamentId
+);
+router.get(
+  "/tournament/:tournamentId/:round",
+  bracketStageController.getAllBracketStagesByTournamentIdAndRound
+);
 
 module.exports = router;

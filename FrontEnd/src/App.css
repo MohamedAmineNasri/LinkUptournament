@@ -43,3 +43,9 @@ th {
 .css-1hv8oq8-MuiStepLabel-label.Mui-active {
   color: white !important;
 }
+.brackets-viewer{
+  background-color: transparent;
+}
+.name{
+  color: black !important;
+}

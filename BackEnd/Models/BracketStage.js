@@ -10,6 +10,10 @@ const bracketStageSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  scores: {
+    type: [Number], // Define scores as an array of numbers
+    default: [], // Default value is an empty array
+  },
   teams: [
     {
       type: mongoose.Schema.Types.ObjectId,

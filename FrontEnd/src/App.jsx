@@ -94,6 +94,8 @@ import Tourn from "./components/Tourn/Tourn";
 import AddTourn from "./components/Tourn/AddTourn";
 import BracketGenerator from "./components/Tourn/BracketGenerator";
 import TournamentGroup from "./components/Tourn/TournamentGroup";
+import TournamentFrontOffice from "./components/Tourn/TournamentFrontOffice";
+import TournamentBracketFrontOffice from "./components/Tourn/TournamentBracketFrontOffice";
 
 function App() {
   // animeaa
@@ -146,10 +148,7 @@ function App() {
             element={<Fetchalltour />}
           />
           <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
-          <Route
-            path="/fetchmatchbytour/:id"
-            element={<Fetchmatchbytour />}
-          />
+          <Route path="/fetchmatchbytour/:id" element={<Fetchmatchbytour />} />
           <Route path="/testtt" element={<AddMatchPopUpWindow />} />
           <Route
             path="/fetchonematch/:tournamentId"
@@ -161,7 +160,11 @@ function App() {
             <Route index element={<HomeLandingPage />} />
 
             <Route path="/ChatFront" element={<FrontUserChat />} />
-            <Route path="/tournaments" element={<Tournaments />} />
+            <Route path="/tournaments" element={<TournamentFrontOffice />} />
+            <Route
+              path="/tournament/bracket/:id"
+              element={<TournamentBracketFrontOffice />}
+            />
             {/**YASSINE_ROUTES*/}
             {/* <Route path="/page" element={<LandingPage />} /> */}
             <Route
@@ -169,7 +172,7 @@ function App() {
             >
               <Route path="/manage" element={<TournamentLayout />}>
                 <Route index element={<Tourn />} />
-                <Route path="shame"  element={<ManageTournament />} />
+                <Route path="shame" element={<ManageTournament />} />
                 <Route path="editt/:tournamentId" element={<Edit />} />
                 <Route
                   path="tournament/:tournamentId"

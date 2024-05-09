@@ -32,6 +32,21 @@ async function getmatchBygroup(req, res) {
   const matchet = await match.find({ group: id });
   res.json(matchet);
 }
+const findMatchesByTournId = async (req, res) => {
+  const { id } = req.params; // Assuming tournId is passed as a parameter in the URL
+  try {
+    const matches = await match.find({ tournId: id });
+    res.status(200).send(matches);
+  } catch (error) {
+    console.error("Error finding matches by tournId:", error);
+    res.status(500).send("Error finding matches by tournId");
+  }
+};
+async function getmatchBygroup(req, res) {
+  const { id } = req.params;
+  const matchet = await match.find({ group: id });
+  res.json(matchet);
+}
 //get ticket id
 
 async function verifyTicket(req, res) {
@@ -46,10 +61,9 @@ async function verifyTicket(req, res) {
 
     // Check if the ticket ID is already in the ticketID array
     if (matchh.ticketId.includes(req.params.ticket)) {
-      console.log(matchh.ticketId.includes(req.params.ticket));
+
       return res.json("Ticket already used");
     }
-    console.log(matchh.ticketId.includes(req.params.ticket));
 
     // Add the ticket ID to the ticketID array
     matchh.ticketId.push(req.params.ticket);
@@ -90,13 +104,9 @@ async function creatematch(req, res) {
     matche.referee = filter.clean(matche.referee);
 
     // Populate tournamentName if tournamentId exists
-    if (req.body.tournementId) {
-      const tourn = await Tourn.findById(req.body.tournementId);
-      if (tourn) {
-        matche.tournamentName = tourn.name;
-      } else {
-        matche.tournamentName = null; // Tournament not found
-      }
+    if (req.body.tournId) {
+      const tourn = await Tourn.findById(req.body.tournId);
+      matche.tournamentName = tourn.name;
     } else {
       matche.tournamentName = null; // tournementId not provided
     }
@@ -124,7 +134,6 @@ async function creatematch(req, res) {
       // No card data provided
       matche.card = []; // or any other default behavior you desire
     }
-
     await matche.save();
 
     res.json(matche);
@@ -190,7 +199,7 @@ module.exports = {
   updatescore_ById,
   getmatchByTouernement,
   verifyTicket,
-
+  findMatchesByTournId,
   getmatchBygroup,
 
   getAllematchByNameTeam,

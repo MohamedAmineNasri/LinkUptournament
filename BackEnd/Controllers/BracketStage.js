@@ -9,8 +9,23 @@ const getAllBracketStagesByTournamentId = async (req, res) => {
       tournament: tournamentId,
     }).populate({
       path: "teams",
-      select: "TeamName", // Select only the TeamName field
+      select: "TeamName TeamLogo", // Select only the TeamName field
       model: "team",
+    });
+
+    res.json(bracketStages);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getAllBracketStagesByTournamentIdAndRound = async (req, res) => {
+  const { tournamentId, round } = req.params;
+
+  try {
+    const bracketStages = await BracketStage.findOne({
+      tournament: tournamentId,
+      round: round,
     });
 
     res.json(bracketStages);
@@ -21,13 +36,14 @@ const getAllBracketStagesByTournamentId = async (req, res) => {
 
 // Create a new bracket stage
 const createBracketStage = async (req, res) => {
-  const { tournament, round, teams } = req.body;
+  const { tournament, round, teams, scores } = req.body;
 
   try {
     const bracketStage = new BracketStage({
       tournament,
       round,
       teams,
+      scores,
     });
 
     const savedBracketStage = await bracketStage.save();
@@ -59,7 +75,7 @@ const getBracketStageById = async (req, res) => {
   try {
     const bracketStage = await BracketStage.findById(id).populate({
       path: "teams",
-      select: "TeamName", // Select only the TeamName field
+      select: "TeamName TeamLogo", // Select only the TeamName field
       model: "team",
     });
 
@@ -76,12 +92,12 @@ const getBracketStageById = async (req, res) => {
 // Update bracket stage by ID
 const updateBracketStageById = async (req, res) => {
   const { id } = req.params;
-  const { tournament, round, teams } = req.body;
+  const { tournament, round, teams, scores } = req.body;
 
   try {
     const updatedBracketStage = await BracketStage.findByIdAndUpdate(
       id,
-      { tournament, round, teams },
+      { tournament, round, teams, scores },
       { new: true }
     );
 
@@ -112,6 +128,8 @@ const deleteBracketStageById = async (req, res) => {
   }
 };
 
+// Controller function to find a bracket stage by tournament ID and round
+
 module.exports = {
   createBracketStage,
   getAllBracketStages,
@@ -119,4 +137,5 @@ module.exports = {
   updateBracketStageById,
   deleteBracketStageById,
   getAllBracketStagesByTournamentId,
+  getAllBracketStagesByTournamentIdAndRound,
 };

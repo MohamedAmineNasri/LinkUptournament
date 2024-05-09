@@ -28,6 +28,7 @@ const credentials = require("./middlewares/credentials");
 const playerRouter = require("./Routes/playerRouter");
 const refereeRouter = require("./Routes/refereeRouter");
 const chatroomRouter = require("./Routes/chatroom");
+const bracketStageRouter = require("./routes/BracketStageRouter");
 const webrtc = require("wrtc");
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -254,7 +255,7 @@ app.post("/create-payment-intent/:id", async (req, res) => {
 //YASSINE
 app.use("/player", playerRouter);
 app.use("/referee", refereeRouter);
-
+app.use("/bracketStage", bracketStageRouter);
 app.use("/group", groupRoutes);
 app.use("/staduim", staduimRoutes);
 app.use("/tournament", tournamentRoutes);

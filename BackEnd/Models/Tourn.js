@@ -19,6 +19,12 @@ const tournSchema = new mongoose.Schema({
       ref: "team",
     },
   ],
+  bracketStages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BracketStage",
+    },
+  ],
   numGroups: {
     type: Number,
     default: 1,

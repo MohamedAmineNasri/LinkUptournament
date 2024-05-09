@@ -8,6 +8,30 @@ import Typography from "@mui/material/Typography";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 
+let matchData = {
+  date: "",
+  referee: "null",
+  logo: "",
+  startingtime: "",
+  matchstatus: "Starting Soon",
+  location: "",
+  matchtype: "knockout",
+  weathercondition: "",
+  team1: null,
+  team2: null,
+  team1Gols: 0,
+  team2Gols: 0,
+  tournementId: null,
+  card: [],
+  tournamentName: "",
+  goal1: [],
+  goal2: [],
+  w: null,
+  price: 0,
+  ticketNumber: 0,
+  tournId: "",
+};
+
 const AddTourn = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -69,14 +93,64 @@ const AddTourn = () => {
     });
   };
 
+  const [round, setRound] = useState(1);
+
   const handleSubmit = async () => {
-    console.log(formData);
     try {
-      await axios.post("http://localhost:8000/tourn", {
+      const response = await axios.post("http://localhost:8000/tourn", {
         ...formData,
         teams: activeTeamId,
       });
-      navigate("/manage/tourn");
+      const tournId = response.data._id;
+      console.log(tournId);
+
+      let teamLength = activeTeamId.length;
+      let roundCounter = 1;
+      for (let i = teamLength; i >= 1; i /= 2) {
+        if (i == teamLength) {
+          const arrayFilledWithEmptyScore = Array.from(
+            { length: i },
+            () => "0"
+          );
+          await axios.post("http://localhost:8000/bracketStage", {
+            round: 1,
+            teams: activeTeamId,
+            tournament: tournId,
+            scores: arrayFilledWithEmptyScore,
+          });
+          console.log(arrayFilledWithEmptyScore)
+        } else {
+          const arrayFilledWithEmptyStrings = Array.from(
+            { length: i },
+            () => "000000000000000000000000"
+          );
+          const arrayFilledWithEmptyScore = Array.from(
+            { length: i },
+            () => "0"
+          );
+          await axios.post("http://localhost:8000/bracketStage", {
+            round: roundCounter + 1,
+            teams: arrayFilledWithEmptyStrings,
+            tournament: tournId,
+            scores: arrayFilledWithEmptyScore,
+          });
+          console.log(arrayFilledWithEmptyScore)
+          roundCounter++;
+        }
+      }
+      let orderCounter = 0;
+      for (let i = 0; i < activeTeamId.length; i += 2) {
+        await axios.post("http://localhost:8000/match/", {
+          ...matchData,
+          team1: activeTeamId[i],
+          team2: activeTeamId[i + 1],
+          tournId: tournId,
+          round: 1,
+          matchOrder: orderCounter,
+        });
+        orderCounter++;
+      }
+      navigate("/manage");
     } catch (e) {
       console.log("post Tournament err axios");
     }
@@ -92,7 +166,7 @@ const AddTourn = () => {
       setActiveTeamId(newActiveTeamId);
     } else {
       // Add team._id to activeTeamId
-      setActiveTeamId([...activeTeamId, teamId]);
+      setActiveTeamId((prev) => [...prev, teamId]);
     }
   };
 

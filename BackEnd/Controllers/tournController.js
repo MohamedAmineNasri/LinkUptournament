@@ -27,11 +27,13 @@ exports.getAllTournaments = async (req, res) => {
 // Get a tournament by ID
 exports.getTournamentById = async (req, res) => {
   try {
-    const tourn = await Tourn.findById(req.params.id).populate({
-      path: "teams",
-      select: "TeamName", // Select only the TeamName field
-      model: "team",
-    });
+    const tourn = await Tourn.findById(req.params.id)
+      .populate({
+        path: "teams",
+        select: "TeamName", // Select only the TeamName field
+        model: "team",
+      });
+
     if (tourn === null) {
       return res.status(404).json({ message: "Tournament not found" });
     }

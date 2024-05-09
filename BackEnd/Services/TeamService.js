@@ -147,7 +147,7 @@ const getTeamByAcademyId = async (req, res, next) => {
     const targetAcademy = await academyService.getAcademyByIdParam(
       req.params.id
     );
-    console.log("Target Academy:", targetAcademy);
+    
 
     const teamData = [];
 

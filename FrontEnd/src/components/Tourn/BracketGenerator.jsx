@@ -81,7 +81,12 @@ function BracketGenerator() {
 
   return (
     <div>
-      <TournHeader setNav={setNav} nav={nav} />
+      <TournHeader
+        setNav={setNav}
+        nav={nav}
+        nameOne={"Bracket"}
+        nameTwo={"Matchs"}
+      />
       {nav && (
         <div className="text-end">
           <button

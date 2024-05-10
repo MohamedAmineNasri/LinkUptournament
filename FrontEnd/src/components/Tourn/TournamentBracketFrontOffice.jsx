@@ -24,12 +24,19 @@ const TournamentBracketFrontOffice = () => {
       );
       const bracketStageData = response.data;
 
-      const transformedData = bracketStageData.map((stage) => ({
-        title: `Round ${stage.round}`,
+      let transformedData = bracketStageData.map((stage, index) => ({
+        title:
+          index === bracketStageData.length - 1
+            ? "Winner"
+            : `Round ${stage.round}`,
         seeds: pairTeams(stage.teams, stage.scores),
       }));
 
-      console.log(transformedData);
+      transformedData = transformedData
+        .map((item) => ({ ...item })) // Create a shallow copy of each item
+        .filter((item) => item.seeds.length > 0);
+
+      console.log("transformedData", transformedData);
       setBracketStagess(transformedData);
     } catch (error) {
       console.error("Error fetching bracket stage data:", error);
@@ -50,18 +57,33 @@ const TournamentBracketFrontOffice = () => {
     return pairedTeams;
   };
 
-    const CustomSeed = ({ seed }) => {
-      return (
-        <Seed>
-          <SeedItem>
-            <div>
-              <SeedTeam>{seed.teams[0].name} - Score: {seed.teams[0].score}</SeedTeam>
-              <SeedTeam>{seed.teams[1].name} - Score: {seed.teams[1].score}</SeedTeam>
-            </div>
-          </SeedItem>
-        </Seed>
-      );
-    };
+  const CustomSeed = ({ seed }) => {
+    console.log("CustomSeed ", seed);
+    return (
+      <Seed>
+        <SeedItem>
+          <div>
+            {seed.teams[0].name !== "" && (
+              <SeedTeam>
+                <div>{seed.teams[0].name}</div>
+                {seed.teams[1].name === "" ? null : (
+                  <div>{seed.teams[0].score}</div>
+                )}
+              </SeedTeam>
+            )}
+            {seed.teams[1].name !== "" && (
+              <SeedTeam>
+                <div>{seed.teams[1].name}</div>
+                {seed.teams[0].name === "" ? null : (
+                  <div>{seed.teams[1].score}</div>
+                )}
+              </SeedTeam>
+            )}
+          </div>
+        </SeedItem>
+      </Seed>
+    );
+  };
 
   return (
     <>
@@ -72,11 +94,16 @@ const TournamentBracketFrontOffice = () => {
           <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
             <Header />
             <section className="relative ">
-              <div className=" px-4 sm:px-6 bg-red-200">
-                <div className="pt-32 pb-12 md:pt-40 md:pb-20 bg-blue-200">
-                  <div color="text-black">
-                    <Bracket rounds={bracketStagess} renderSeedComponent={CustomSeed} />
-                  </div>
+              <div className="max-w-6xl mx-auto px-4 sm:px-6  h-[95vh]">
+                <div className="pt-32 pb-12 md:pt-40 md:pb-20 ">
+                  <h4 className="text-black text-center uppercase text-2xl font-semibold mb-30">
+                    Stages
+                  </h4>
+
+                  <Bracket
+                    rounds={bracketStagess}
+                    renderSeedComponent={CustomSeed}
+                  />
                 </div>
               </div>
             </section>

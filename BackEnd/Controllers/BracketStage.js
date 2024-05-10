@@ -9,7 +9,7 @@ const getAllBracketStagesByTournamentId = async (req, res) => {
       tournament: tournamentId,
     }).populate({
       path: "teams",
-      select: "TeamName", // Select only the TeamName field
+      select: "TeamName TeamLogo", // Select only the TeamName field
       model: "team",
     });
 

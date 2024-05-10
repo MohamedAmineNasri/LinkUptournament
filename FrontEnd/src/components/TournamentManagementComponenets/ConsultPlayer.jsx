@@ -105,20 +105,6 @@ const ConsultPlayer = () => {
               <span className="flex-1 text-white font-bold">Skills</span>
               <span className="flex-1 text-bodygray">{player.skills}</span>
             </div>
-            <div className="flex py-5">
-              <span className="flex-1 text-white font-bold">
-                Academic Membership
-              </span>
-              <span className="flex-1 text-bodygray">
-                {player.academic_membership}
-              </span>
-            </div>
-            <div className="flex py-5">
-              <span className="flex-1 text-white font-bold">Status</span>
-              <span className="flex-1 font-bold ">
-                <Chip label="verified" color="success" variant="outlined" />
-              </span>
-            </div>
           </div>
         </div>
       </div>

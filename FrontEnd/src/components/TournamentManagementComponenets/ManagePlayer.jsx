@@ -89,8 +89,8 @@ const ManagePlayer = () => {
     }
 
     if (user?.roles[0] == "Manager" && teams.length != 0) {
-      dispatch(getPlayersTeam(teams[0]?._id));
-      setTeamFilter(teams[0]?._id);
+      dispatch(getPlayersTeam(teams[22]?._id));
+      setTeamFilter(teams[22]?._id);
     }
 
     if (location.state) {

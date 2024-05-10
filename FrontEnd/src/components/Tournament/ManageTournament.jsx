@@ -80,7 +80,7 @@ const ManageTournament = () => {
   };
   
   const handleVerifySMS = async (tournamentId) => {
-    const playerId = '660f8ef4a33977f666471722';
+    const playerId = '660e413aa3c478b801ebb62b';
     try {
       // Dispatch the sendSMSToPlayer action with the tournamentId and playerId
       await dispatch(sendSMSToPlayer({ tournamentId, playerId }));

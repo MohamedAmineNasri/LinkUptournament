@@ -430,6 +430,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Video Chat
                 </NavLink>
               </li>
+              {userRole.includes("Admin") && (
               <li>
                 <NavLink
                   to="/videolivestreamui"
@@ -469,7 +470,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Stream Operations
                 </NavLink>
-              </li>
+              </li>)}
               <li>
                 <NavLink
                   to="/viewerlivestreamui"

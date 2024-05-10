@@ -7,20 +7,19 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 });
 //-
 
-
-
 var AcademyRouter = require("./Routes/Academy");
 var TeamRouter = require("./Routes/Team");
 const groupRoutes = require("./Routes/Group");
 const staduimRoutes = require("./Routes/Staduim");
 const tournamentRoutes = require("./Routes/Tournament");
+const tournRouter = require("./Routes/tournRouter");
 const match = require("./Routes/match");
 
-var AchievementRouter = require('./Routes/Achievement');
-var TachievementRouter = require('./Routes/tachievement');
+var AchievementRouter = require("./Routes/Achievement");
+var TachievementRouter = require("./Routes/tachievement");
 
 const m = require("./Models/match");
-const u = require("./Controllers/registerController")
+const u = require("./Controllers/registerController");
 const app = express();
 
 const corsOptions = require("./config/corsOptions");
@@ -29,6 +28,7 @@ const credentials = require("./middlewares/credentials");
 const playerRouter = require("./Routes/playerRouter");
 const refereeRouter = require("./Routes/refereeRouter");
 const chatroomRouter = require("./Routes/chatroom");
+const bracketStageRouter = require("./routes/BracketStageRouter");
 const webrtc = require("wrtc");
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -252,20 +252,19 @@ app.post("/create-payment-intent/:id", async (req, res) => {
   }
 });
 
-
-
 //YASSINE
 app.use("/player", playerRouter);
 app.use("/referee", refereeRouter);
-
+app.use("/bracketStage", bracketStageRouter);
 app.use("/group", groupRoutes);
 app.use("/staduim", staduimRoutes);
 app.use("/tournament", tournamentRoutes);
+app.use("/tourn", tournRouter);
 app.use("/team", TeamRouter);
 app.use("/match", match);
 app.use("/academy", AcademyRouter);
-app.use('/achievement', AchievementRouter);
-app.use('/tachievement', TachievementRouter);
+app.use("/achievement", AchievementRouter);
+app.use("/tachievement", TachievementRouter);
 
 app.use("/uploads", express.static("uploads"));
 
@@ -274,18 +273,20 @@ let senderStream; // Define senderStream outside of the routes
 
 app.post("/consumer", async (req, res) => {
   const peer = new webrtc.RTCPeerConnection({
-      iceServers: [
-          {
-              urls: "stun:stun.stunprotocol.org"
-          }
-      ]
+    iceServers: [
+      {
+        urls: "stun:stun.stunprotocol.org",
+      },
+    ],
   });
   const desc = new webrtc.RTCSessionDescription(req.body.sdp);
   await peer.setRemoteDescription(desc);
 
   // Check if senderStream is defined before using it
   if (senderStream) {
-    senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
+    senderStream
+      .getTracks()
+      .forEach((track) => peer.addTrack(track, senderStream));
   } else {
     console.error("senderStream is not defined.");
     // Handle the case when senderStream is not defined
@@ -295,19 +296,19 @@ app.post("/consumer", async (req, res) => {
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
   const payload = {
-      sdp: peer.localDescription
-  } 
+    sdp: peer.localDescription,
+  };
 
   res.json(payload);
 });
 
-app.post('/broadcast', async (req, res) => { 
+app.post("/broadcast", async (req, res) => {
   const peer = new webrtc.RTCPeerConnection({
-      iceServers: [
-          {
-              urls: "stun:stun.stunprotocol.org"
-          }
-      ]
+    iceServers: [
+      {
+        urls: "stun:stun.stunprotocol.org",
+      },
+    ],
   });
   peer.ontrack = (e) => handleTrackEvent(e, peer);
   const desc = new webrtc.RTCSessionDescription(req.body.sdp);
@@ -315,8 +316,8 @@ app.post('/broadcast', async (req, res) => {
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
   const payload = {
-      sdp: peer.localDescription
-  }
+    sdp: peer.localDescription,
+  };
 
   res.json(payload);
 });
@@ -324,6 +325,5 @@ app.post('/broadcast', async (req, res) => {
 function handleTrackEvent(e, peer) {
   senderStream = e.streams[0];
 }
-
 
 module.exports = app;

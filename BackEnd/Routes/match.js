@@ -10,6 +10,7 @@ router.get("/", matchController.getAllematch);
 router.get("/getAllematchByNameTeam", matchController.getAllematchByNameTeam);
 router.get("/:id", matchController.getmatchById);
 router.get("/tournement/:id", matchController.getmatchByTouernement)
+router.get("/tourn/:id", matchController.findMatchesByTournId)
 router.get("/group/:id", matchController.getmatchBygroup);
 router.put("/:id", matchController.updatematchById);
 router.delete("/:id", matchController.deletematchById);

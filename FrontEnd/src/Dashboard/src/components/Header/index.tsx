@@ -37,6 +37,7 @@ const Header = (props: {
   useEffect(() => {
     if (playerLocation) {
       if (user?.roles[0] == "Manager" && !!teamQuery) {
+        console.log("Manager");
         dispatch(
           searchPlayers({
             name: name,
@@ -45,14 +46,15 @@ const Header = (props: {
           })
         );
       } else if (user?.roles[0] == "Admin" || user?.roles[0] == undefined) {
+        console.log("admin");
         dispatch(
           searchPlayers({
             name: name,
             position: positionQuery,
-         
           })
         );
       } else {
+        console.log("nothing");
         return;
       }
     }
@@ -65,7 +67,7 @@ const Header = (props: {
         })
       );
     }
-  }, [positionQuery, refereeQuery, teamQuery]);
+  }, [user.roles, positionQuery, refereeQuery, teamQuery]);
 
   const handleChange = (event: Event) => {
     const { value } = event.target;

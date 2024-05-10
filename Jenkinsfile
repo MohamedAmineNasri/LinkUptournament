@@ -1,12 +1,7 @@
 pipeline {
     agent any
 
-    // environment {
-    //     registryCredentials = "nexus"
-    //     registry = "192.168.1.197:8083"
-    // }
-    
-     stages {
+    stages {
         stage('git pull') {
             steps {
                 script {
@@ -14,15 +9,15 @@ pipeline {
                 }
             }
         }
-        
-        stage('Node Clean') {  
+
+        stage('Node Clean Frontend') {  
             steps {
-                echo 'Cleaning node_modules...'
+                echo 'Cleaning Frontend node_modules...'
                 sh 'rm -rf FrontEnd/node_modules || true'
             }
         }
         
-        stage('Install dependencies') {
+        stage('Install Frontend dependencies') {
             steps {
                 script {
                     sh 'cd FrontEnd && npm install --force'
@@ -30,13 +25,38 @@ pipeline {
             }
         }
 
-        stage('Build application') {
+        stage('Build Frontend application') {
             steps {
                 script {
                     sh 'cd FrontEnd && npm install --force && npm run build'
                 }
             }
         }
+
+        stage('Node Clean Backend') {  
+            steps {
+                echo 'Cleaning Backend node_modules...'
+                sh 'rm -rf BackEnd/node_modules || true'
+            }
+        }
+        
+        stage('Install Backend dependencies') {
+            steps {
+                script {
+                    sh 'cd BackEnd && npm install --force'
+                }
+            }
+        }
+
+       stage('Build Backend application') {
+            steps {
+                script {
+                    // Use the "build-dev" script to build your Backend application
+                    sh 'cd BackEnd && npm install --force && npm run build-dev || true'
+                }
+            }
+        }
+
 
         stage('SonarQube Analysis') {
             steps {
@@ -57,7 +77,7 @@ pipeline {
            }
         }
 
-         stage('pushing to docker hub') {
+        stage('pushing to docker hub') {
             steps {
                 script {
                     sh('docker login -u nasriamine -p 25059373Hadil')
@@ -66,36 +86,5 @@ pipeline {
                 }
             }
         }
-
-
-        // Additional stages can be added here...
-
-        // stage('Docker compose') {
-        //     steps {
-        //         script {
-        //             sh 'docker-compose up -d'
-        //         }
-        //     }
-        // }
-        
-        // stage('Deploy to Nexus') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry("http://${registry}", registryCredentials) {
-        //                 sh "docker push $registry/reactapp:1.0.0"
-        //             }
-        //         }
-        //     }
-        // }
-
-        // stage('Run application') {
-        //     steps {  
-        //         script {
-        //             docker.withRegistry("http://${registry}", registryCredentials) {
-        //                 sh 'docker run -d -p 5173:5173 $registry/reactapp:1.0.0'
-        //             }
-        //         }
-        //     }
-        // }
     }
 }

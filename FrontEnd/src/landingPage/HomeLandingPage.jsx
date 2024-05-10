@@ -14,9 +14,11 @@ import MessageParser from "../components/ChatBotComponents/chatbot/MessageParser
 import "react-chatbot-kit/build/main.css";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
-
+import gif from "./gif.gif";
+import './cha.css'; 
 const alanKey =
   "ab3cc3178aa07174cc29ea85da96ef962e956eca572e1d8b807a3e2338fdd0dc/stage";
+import ChatbotContainer from "./ChatbotContainer ";
 
 const HomeLandingPage = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -79,53 +81,7 @@ const HomeLandingPage = () => {
             <Testimonials />
             <Newsletter />
             {/* Toggleable chatbot */}
-            <div style={chatbotStyle}>
-              <Chatbot
-                config={config}
-                actionProvider={ActionProvider}
-                messageParser={MessageParser}
-              />
-            </div>
-            {/* Chat icon */}
-            <div
-              style={{
-                position: "fixed",
-                bottom: "20px",
-                left: "20px",
-                cursor: "pointer",
-                zIndex: "1001",
-              }}
-              onClick={toggleChat}
-            >
-              {isChatOpen ? (
-                <img
-                  src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/200e8d139737079.6234b0487404d.gif"
-                  alt="Close Chat"
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    position: "fixed",
-                    bottom: "490px",
-                    left: "260px",
-                    transition: "all 0.3s ease-in-out",
-                  }}
-                />
-              ) : (
-                <img
-                  src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/200e8d139737079.6234b0487404d.gif"
-                  alt="Open Chat"
-                  style={{
-                    width: "200px",
-                    height: "150px",
-                    // Define smaller dimensions for mobile devices
-                    "@media (max-width: 768px)": {
-                      width: "150px",
-                      height: "100px",
-                    },
-                  }}
-                />
-              )}
-            </div>
+            <ChatbotContainer />
           </div>
         </div>
       </main>

@@ -26,6 +26,7 @@ import Pagination from "./Pagination";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AssignPlayer from "./AssignPlayer";
 import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
+import { fetchPlayers } from "../../redux/playerReducers/fetchPlayerSlice";
 
 const ManagePlayer = () => {
   const [imageUrl, setImageUrl] = useState(ImagePlaceholder);
@@ -46,11 +47,12 @@ const ManagePlayer = () => {
     }
   };
 
-  let { players, currentPage, totalPages, type } = useSelector(
-    (state) => state.root.fetchPlayers.players
-  );
-
-  console.log(players);
+  let {
+    players = [],
+    currentPage,
+    totalPages,
+    type,
+  } = useSelector((state) => state.root.fetchPlayers.players);
 
   const teams =
     useSelector((state) => state.root.academy.academyData.teams) || [];
@@ -78,6 +80,14 @@ const ManagePlayer = () => {
   const [position, setPosition] = useState("");
 
   useEffect(() => {
+    console.log(
+      "mount__________________________________________________________"
+    );
+    console.log(user?.roles[0] == "Admin" && players.length == 0);
+    if (user?.roles[0] == "Admin" && players.length == 0) {
+      dispatch(fetchPlayers());
+    }
+
     if (user?.roles[0] == "Manager" && teams.length != 0) {
       dispatch(getPlayersTeam(teams[22]?._id));
       setTeamFilter(teams[22]?._id);
@@ -130,14 +140,36 @@ const ManagePlayer = () => {
         }
       );
       if (create) {
-        dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
+        if (teamFilter != "") {
+          dispatch(
+            addPlayer(
+              { ...formData, avatar: response.data.imageUrl },
+              teamFilter
+            )
+          );
+        } else {
+          dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
+        }
       } else {
-        dispatch(
-          updatePlayer(playerId, {
-            ...formData,
-            avatar: response.data.imageUrl,
-          })
-        );
+        if (teamFilter != "") {
+          dispatch(
+            updatePlayer(
+              playerId,
+              {
+                ...formData,
+                avatar: response.data.imageUrl,
+              },
+              teamFilter
+            )
+          );
+        } else {
+          dispatch(
+            updatePlayer(playerId, {
+              ...formData,
+              avatar: response.data.imageUrl,
+            })
+          );
+        }
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -150,7 +182,7 @@ const ManagePlayer = () => {
 
     /** Validator */
 
-    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
+    /*    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
       toast.error("Name is required and must contain only letters");
       return;
     }
@@ -173,7 +205,7 @@ const ManagePlayer = () => {
     /* if (!formData.current_team || formData.current_team.trim() === "") {
       toast.error("Current team is required");
       return;
-    } */
+    } 
 
     if (!formData.number || isNaN(formData.number) || formData.number <= 0) {
       toast.error("Number is required and must be a positive number");
@@ -185,6 +217,7 @@ const ManagePlayer = () => {
       if (imageUrl != ImagePlaceholder) {
         handleUpload(img);
       } else {
+        if (formData.team == "") delete formData.team;
         dispatch(addPlayer(formData, teamFilter));
         toast.success("Player added successfully 👌");
         setFormData({});
@@ -200,10 +233,14 @@ const ManagePlayer = () => {
     }
     setOpenAddForm(false);
   };
-  console.log("______________", academy.length != 0 && !teams.length);
+  console.log(players?.length);
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {academy.length != 0 && !teams.length && !players ? (
+      {(academy.length != 0 &&
+        !teams.length &&
+        players?.length == 0 &&
+        user.roles[0] == "Manager") ||
+      (user.roles[0] == "Admin" && players?.length == 0) ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">

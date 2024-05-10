@@ -1,14 +1,18 @@
+import React from "react";
+import { createChatBotMessage } from "react-chatbot-kit";
+import * as GoogleGenerativeAI from "@google/generative-ai";
+
 class ActionProvider {
   constructor(createChatBotMessage, setStateFunc) {
     this.createChatBotMessage = createChatBotMessage;
     this.setState = setStateFunc;
+    this.API_KEY = "AIzaSyA9jCrgVSaprlJh491KsjbfXH39_9biJ9A"; // Your GEMINI API key
   }
 
   greet = () => {
     const message = this.createChatBotMessage("Hello friend.");
     this.addMessageToState(message);
   };
-
 
   handleFunFactQuiz = () => {
     const message = this.createChatBotMessage(
@@ -54,6 +58,54 @@ class ActionProvider {
       "Join our community and foster engaging conversations in the heart of your chatroom experience. Connect with fellow football enthusiasts and share your passion for the game!"
     );
     this.addMessageToState(message);
+  };
+
+  handleUserInput = async (inputText) => {
+    // Update UI to show loading animation immediately
+    this.addMessageToState({
+      type: 'loading',
+      loading: true
+    });
+
+    const genAI = new GoogleGenerativeAI.GoogleGenerativeAI(this.API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const prompt = inputText;
+
+    try {
+      const result = await model.generateContent(prompt);
+      const response = result.response;
+      const text = response.text();
+
+      // Check if the response is not empty
+      if (text && text.trim().length > 0) {
+        // Create a chatbot message with the response
+        const message = this.createChatBotMessage(text);
+        // Add the message to state
+        this.addMessageToState(message);
+      } else {
+        this.defaultResponse();
+      }
+    } catch (error) {
+      console.error("Error occurred while generating content:", error);
+
+      // Check if the error is due to RECITATION
+      if (error.message.includes("RECITATION")) {
+        // Provide a response indicating the issue
+        const message = this.createChatBotMessage(
+          "I'm sorry, I'm unable to provide a response to that question due to content policies. Can you ask something else?"
+        );
+        this.addMessageToState(message);
+      } else {
+        // For other errors, provide a default response
+        this.defaultResponse();
+      }
+    } finally {
+      // Always set loading state to false after handling user input
+      this.addMessageToState({
+        type: 'loading',
+        loading: false
+      });
+    }
   };
 
   defaultResponse = () => {

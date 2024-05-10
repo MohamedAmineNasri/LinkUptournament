@@ -90,6 +90,12 @@ import "aos/dist/aos.css";
 import Tournaments from "./components/landingpage/Tournaments";
 
 import NotFound from "./landingPage/notfound";
+import Tourn from "./components/Tourn/Tourn";
+import AddTourn from "./components/Tourn/AddTourn";
+import BracketGenerator from "./components/Tourn/BracketGenerator";
+import TournamentGroup from "./components/Tourn/TournamentGroup";
+import TournamentFrontOffice from "./components/Tourn/TournamentFrontOffice";
+import TournamentBracketFrontOffice from "./components/Tourn/TournamentBracketFrontOffice";
 
 function App() {
   // animeaa
@@ -142,10 +148,7 @@ function App() {
             element={<Fetchalltour />}
           />
           <Route path="/fetchmatchforview" element={<Fetchmatchforview />} />
-          <Route
-            path="/fetchmatchbytour/:tournamentId"
-            element={<Fetchmatchbytour />}
-          />
+          <Route path="/fetchmatchbytour/:id" element={<Fetchmatchbytour />} />
           <Route path="/testtt" element={<AddMatchPopUpWindow />} />
           <Route
             path="/fetchonematch/:tournamentId"
@@ -157,14 +160,19 @@ function App() {
             <Route index element={<HomeLandingPage />} />
 
             <Route path="/ChatFront" element={<FrontUserChat />} />
-            <Route path="/tournaments" element={<Tournaments />} />
+            <Route path="/tournaments" element={<TournamentFrontOffice />} />
+            <Route
+              path="/tournament/bracket/:id"
+              element={<TournamentBracketFrontOffice />}
+            />
             {/**YASSINE_ROUTES*/}
             {/* <Route path="/page" element={<LandingPage />} /> */}
             <Route
               element={<RequireAuth allowedRoles={["Manager", "Admin"]} />}
             >
               <Route path="/manage" element={<TournamentLayout />}>
-                <Route index element={<ManageTournament />} />
+                <Route index element={<Tourn />} />
+                <Route path="shame" element={<ManageTournament />} />
                 <Route path="editt/:tournamentId" element={<Edit />} />
                 <Route
                   path="tournament/:tournamentId"
@@ -176,6 +184,11 @@ function App() {
                   <Route path="group" element={<ManageTournamentGroup />} />
                 </Route>
                 <Route path="lineup" element={<TeamLineUp />} />
+                {"Updated Part"}
+                <Route path="addtourn" element={<AddTourn />} />
+                <Route path="bracket/:id" element={<BracketGenerator />} />
+                <Route path="group/:id" element={<TournamentGroup />} />
+                {"Updated Part"}
                 <Route path="participant" element={<ManageParticipant />}>
                   <Route path="player" element={<ManagePlayer />} />
                   <Route path="player/consult" element={<ConsultPlayer />} />

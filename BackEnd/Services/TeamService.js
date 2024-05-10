@@ -1,5 +1,5 @@
 const Player = require("../Models/Player");
-
+const Match = require("../Models/match");
 const Team = require("../Models/Team");
 const Academy = require("../Models/Academy");
 const academyService = require("../Services/AcademyService");
@@ -147,7 +147,7 @@ const getTeamByAcademyId = async (req, res, next) => {
     const targetAcademy = await academyService.getAcademyByIdParam(
       req.params.id
     );
-    console.log("Target Academy:", targetAcademy);
+    
 
     const teamData = [];
 
@@ -349,6 +349,85 @@ const updateGoals_received = async (req, res, next) => {
   await TeamData.save();
   res.json(TeamData);
 };
+
+//-----------------------------------------------------------------------------------------
+
+const updateTeamMatchesWon_P = async (idTeam)=>{
+    
+    const TeamMWData = await Team.findById(idTeam);
+    //stats
+    TeamMWData.Total_MatchesWon +=  1;
+    TeamMWData.Total_MatchesPlayed +=  1;
+    //Group stage
+    // TeamMWData.GS_MatchesWon += 1 
+    // TeamMWData.GS_MatchesPlayed +=1 
+    // TeamMWData.GS_Points += 3
+    await TeamMWData.save()
+}
+const updateTeamMatchesLost_P = async (idTeam)=>{
+   
+    const TeamMLData = await Team.findById(idTeam);
+    //stats
+    TeamMLData.Total_MatchesLost +=  1;
+    TeamMLData.Total_MatchesPlayed += 1;
+    //Group stage
+    // TeamMLData.GS_MatchesLost +=  1;
+    // TeamMLData.GS_MatchesPlayed += 1;
+    // TeamMLData.GS_Points += 0
+
+    await TeamMLData.save()
+}
+
+const updateTeamMatchesDrawn_P = async (idTeam)=>{
+
+    const TeamMDData = await Team.findById(idTeam);
+    //stats
+    TeamMDData.Total_MatchesDrawn += 1;
+    TeamMDData.Total_MatchesPlayed += 1;
+    //Group stage
+    // TeamMDData.GS_MatchesDrawn+= 1;
+    // TeamMDData.GS_MatchesPlayed += 1;
+    // TeamMDData.GS_Points += 1
+    await TeamMDData.save()
+}
+
+const updateGoals_scored_P = async (idTeam,TotalGoals) => {
+    
+    const TeamData = await Team.findById(idTeam);
+    //stats
+    TeamData.Total_Goals_scored += TotalGoals; 
+    //Group Stage
+    // TeamData.GS_Goals_scored += 1; 
+    // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received; 
+    await TeamData.save();
+
+};
+
+const updateGoals_received_P = async (idTeam,TotalGRecieved) => {
+    
+    const TeamData = await Team.findById(idTeam);
+    //stats
+    TeamData.Total_Goals_received += TotalGRecieved; 
+    //Group stage
+    // TeamData.GS_Goals_received += 1; 
+    // TeamData.GS_Goals_difference = TeamData.GS_Goals_scored - TeamData.GS_Goals_received;
+    await TeamData.save();
+
+};
+
+const resetData = async (idTeam) => {
+    
+    const TeamData = await Team.findById(idTeam);
+    TeamData.Total_MatchesWon = 0;
+    TeamData.Total_MatchesLost = 0;
+    TeamData.Total_MatchesDrawn = 0;
+    TeamData.Total_MatchesPlayed = 0;
+    TeamData.Total_Goals_received = 0;
+    TeamData.Total_Goals_scored = 0;
+    await TeamData.save();
+    
+    
+  };
 
 const deleteTeamById = async (req, res, next) => {
   const teamData = await Team.findByIdAndDelete(req.params.id);

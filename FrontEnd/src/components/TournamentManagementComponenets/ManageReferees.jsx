@@ -38,9 +38,11 @@ const ManageReferees = () => {
     }
   };
 
-  const { referees, currentPage, totalPages } = useSelector(
-    (state) => state.root.fetchReferees.referees
-  );
+  const {
+    referees = [],
+    currentPage,
+    totalPages,
+  } = useSelector((state) => state.root.fetchReferees.referees);
   const navigate = useNavigate();
 
   const [openAddForm, setOpenAddForm] = useState(false);
@@ -110,27 +112,23 @@ const ManageReferees = () => {
     e.preventDefault();
 
     // Validation
-    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
-      toast.error("Name is required and must contain only letters");
-      return;
-    }
 
-    if (!formData.country.trim()) {
+    if (!formData.country) {
       toast.error("Country is required");
       return;
     }
 
-    if (!formData.location.trim()) {
+    if (!formData.location) {
       toast.error("Location is required");
       return;
     }
 
-    if (!formData.availability.trim()) {
+    if (!formData.availability) {
       toast.error("Availability is required");
       return;
     }
 
-    if (!formData.role.trim()) {
+    if (!formData.role) {
       toast.error("Role is required");
       return;
     }
@@ -157,7 +155,7 @@ const ManageReferees = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {!referees ? (
+      {referees.length == 0 ? (
         <>
           <div className="p-3 flex items-center mt-2 justify-between gap-10">
             <h3 className="text-base font-bold flex-1 text-black dark:text-white ">

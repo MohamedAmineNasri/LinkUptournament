@@ -47,13 +47,16 @@ const ManagePlayer = () => {
     }
   };
 
-  let { players, currentPage, totalPages, type } = useSelector(
-    (state) => state.root.fetchPlayers.players
-  );
+  let {
+    players = [],
+    currentPage,
+    totalPages,
+    type,
+  } = useSelector((state) => state.root.fetchPlayers.players);
+
   const teams =
     useSelector((state) => state.root.academy.academyData.teams) || [];
   const academy = useSelector((state) => state.root.academy.academyData);
-  console.log("academy___________", academy);
 
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -61,8 +64,7 @@ const ManagePlayer = () => {
   const [openAddForm, setOpenAddForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    legal_guardian: "",
-    academic_membership: "",
+
     position: "",
     skills: [""],
     age: undefined,
@@ -77,9 +79,17 @@ const ManagePlayer = () => {
   const [position, setPosition] = useState("");
 
   useEffect(() => {
+    console.log(
+      "mount__________________________________________________________"
+    );
+    console.log(user?.roles[0] == "Admin" && players.length == 0);
+    if (user?.roles[0] == "Admin" && players.length == 0) {
+      dispatch(fetchPlayers());
+    }
+
     if (user?.roles[0] == "Manager" && teams.length != 0) {
-      dispatch(getPlayersTeam(teams[0]?._id));
-      setTeamFilter(teams[0]?._id);
+      dispatch(getPlayersTeam(teams[22]?._id));
+      setTeamFilter(teams[22]?._id);
     }
 
     if (location.state) {
@@ -116,7 +126,7 @@ const ManagePlayer = () => {
   const handleUpload = async (uploadedPhoto) => {
     try {
       const imageData = new FormData();
-      console.log("UPPPPPPPPpPPPPPP",uploadedPhoto)
+
       imageData.append("avatar", uploadedPhoto);
 
       const response = await axios.post(
@@ -129,14 +139,36 @@ const ManagePlayer = () => {
         }
       );
       if (create) {
-        dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
+        if (teamFilter != "") {
+          dispatch(
+            addPlayer(
+              { ...formData, avatar: response.data.imageUrl },
+              teamFilter
+            )
+          );
+        } else {
+          dispatch(addPlayer({ ...formData, avatar: response.data.imageUrl }));
+        }
       } else {
-        dispatch(
-          updatePlayer(playerId, {
-            ...formData,
-            avatar: response.data.imageUrl,
-          })
-        );
+        if (teamFilter != "") {
+          dispatch(
+            updatePlayer(
+              playerId,
+              {
+                ...formData,
+                avatar: response.data.imageUrl,
+              },
+              teamFilter
+            )
+          );
+        } else {
+          dispatch(
+            updatePlayer(playerId, {
+              ...formData,
+              avatar: response.data.imageUrl,
+            })
+          );
+        }
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -149,18 +181,13 @@ const ManagePlayer = () => {
 
     /** Validator */
 
-    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
+    /*    if (!formData.name || !/^[a-zA-Z ]+$/.test(formData.name.trim())) {
       toast.error("Name is required and must contain only letters");
       return;
     }
 
     if (!formData.age || isNaN(formData.age) || formData.age <= 0) {
       toast.error("Age is required and must be a positive number");
-      return;
-    }
-
-    if (!formData.legal_guardian || formData.legal_guardian.trim() === "") {
-      toast.error("Legal guardian is required");
       return;
     }
 
@@ -172,7 +199,7 @@ const ManagePlayer = () => {
     /* if (!formData.current_team || formData.current_team.trim() === "") {
       toast.error("Current team is required");
       return;
-    } */
+    } 
 
     if (!formData.number || isNaN(formData.number) || formData.number <= 0) {
       toast.error("Number is required and must be a positive number");
@@ -184,13 +211,13 @@ const ManagePlayer = () => {
       if (imageUrl != ImagePlaceholder) {
         handleUpload(img);
       } else {
+        if (formData.team == "") delete formData.team;
         dispatch(addPlayer(formData, teamFilter));
         toast.success("Player added successfully 👌");
         setFormData({});
       }
     } else {
       if (imageUrl != ImagePlaceholder) {
-        console.log(img);
         handleUpload(img);
       } else {
         dispatch(updatePlayer(playerId, formData, teamFilter));
@@ -200,10 +227,14 @@ const ManagePlayer = () => {
     }
     setOpenAddForm(false);
   };
-  console.log(academy.length == 0 && teams.length == 0);
+  console.log(players?.length);
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      {academy.length != 0 && teams.length == 0 || !players ? (
+      {(academy.length != 0 &&
+        !teams.length &&
+        players?.length == 0 &&
+        user.roles[0] == "Manager") ||
+      (user.roles[0] == "Admin" && players?.length == 0) ? (
         <>
           <div className="p-4 flex items-center justify-between gap-10">
             <h3 className="text-base font-bold text-black dark:text-white ">
@@ -242,16 +273,18 @@ const ManagePlayer = () => {
             <span className="md:text-base text-xs font-semibold mt-2 mb-5">
               Ready to get started? Add your first player now.
             </span>
-            <button
-              class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
-              type="submit"
-              onClick={() => {
-                setOpenAddForm((prev) => !prev);
-                setCreate(true);
-              }}
-            >
-              Add Player
-            </button>
+            {user?.roles[0] != "Manager" && (
+              <button
+                class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
+                type="submit"
+                onClick={() => {
+                  setOpenAddForm((prev) => !prev);
+                  setCreate(true);
+                }}
+              >
+                Add Player
+              </button>
+            )}
           </div>
         </>
       ) : (
@@ -260,16 +293,18 @@ const ManagePlayer = () => {
             <h4 className="text-xl font-semibold text-black dark:text-white">
               All Players
             </h4>
-            <button
-              class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
-              type="submit"
-              onClick={() => {
-                setOpenAddForm((prev) => !prev);
-                setCreate(true);
-              }}
-            >
-              Add Player
-            </button>
+            {user?.roles[0] != "Manager" && (
+              <button
+                class="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
+                type="submit"
+                onClick={() => {
+                  setOpenAddForm((prev) => !prev);
+                  setCreate(true);
+                }}
+              >
+                Add Player
+              </button>
+            )}
           </div>
 
           <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -371,7 +406,7 @@ const ManagePlayer = () => {
                           </h5>
                         </div>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark font-normal">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white font-normal">
                         {player.position}
                       </td>
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -388,7 +423,7 @@ const ManagePlayer = () => {
                           </button>
                         ) : (
                           <p
-                            className="pl-5 hover:text-primary hover:font-medium cursor-pointer"
+                            className="pl-5 hover:text-primary hover:font-medium cursor-pointer text-black dark:text-white"
                             onClick={() => {
                               setPlayerId(player._id);
                               setOpenAssignField(true);
@@ -398,10 +433,10 @@ const ManagePlayer = () => {
                           </p>
                         )}
                       </td>
-                      <td className=" border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className=" border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <section className="pl-1">{player.age}</section>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark text-black dark:text-white">
                         <div className="flex items-center space-x-3.5">
                           <button
                             className="hover:text-primary"
@@ -594,36 +629,6 @@ const ManagePlayer = () => {
               onChange={handleInputChange}
             />
 
-            <TextField
-              autoFocus
-              margin="dense"
-              id="LegalGuardian"
-              name="legal_guardian"
-              label="Legal Guardian"
-              type="text"
-              fullWidth
-              variant="standard"
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              value={formData.legal_guardian}
-              onChange={handleInputChange}
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="AcademicMembership"
-              name="academic_membership"
-              label="Academic Membership"
-              type="text"
-              fullWidth
-              variant="standard"
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              value={formData.academic_membership}
-              onChange={handleInputChange}
-            />
             {/**ggggggg */}
             <div>
               {formData?.skills?.map((skill, index) => (

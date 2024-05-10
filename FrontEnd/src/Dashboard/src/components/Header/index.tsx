@@ -23,6 +23,7 @@ const Header = (props: {
   const positionQuery = useSelector(
     (state) => state.root.searchPlayers.position
   );
+  const user = useSelector((state) => state.auth.user);
   const teamQuery = useSelector((state) => state.root.searchPlayers.team);
   const refereeQuery = useSelector(
     (state) => state.root.searchReferee.queryReferee
@@ -31,12 +32,31 @@ const Header = (props: {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [name, setName] = useState("");
+  console.log(user?.roles[0]);
 
   useEffect(() => {
     if (playerLocation) {
-      dispatch(
-        searchPlayers({ name: name, position: positionQuery, team: teamQuery })
-      );
+      if (user?.roles[0] == "Manager" && !!teamQuery) {
+        console.log("Manager");
+        dispatch(
+          searchPlayers({
+            name: name,
+            position: positionQuery,
+            team: teamQuery,
+          })
+        );
+      } else if (user?.roles[0] == "Admin" || user?.roles[0] == undefined) {
+        console.log("admin");
+        dispatch(
+          searchPlayers({
+            name: name,
+            position: positionQuery,
+          })
+        );
+      } else {
+        console.log("nothing");
+        return;
+      }
     }
     if (refereeLocation) {
       dispatch(
@@ -47,7 +67,7 @@ const Header = (props: {
         })
       );
     }
-  }, [positionQuery, refereeQuery,teamQuery]);
+  }, [user.roles, positionQuery, refereeQuery, teamQuery]);
 
   const handleChange = (event: Event) => {
     const { value } = event.target;
@@ -196,11 +216,11 @@ const Header = (props: {
             {/* <!-- Dark Mode Toggler --> */}
 
             {/* <!-- Notification Menu Area --> */}
-            <DropdownNotification />
+            {/* <DropdownNotification /> */}
             {/* <!-- Notification Menu Area --> */}
 
             {/* <!-- Chat Notification Area --> */}
-            <DropdownMessage />
+            {/* <DropdownMessage /> */}
             {/* <!-- Chat Notification Area --> */}
           </ul>
 

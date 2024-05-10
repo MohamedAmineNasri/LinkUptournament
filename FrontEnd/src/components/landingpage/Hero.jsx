@@ -39,49 +39,7 @@ const Hero = () => {
         {/* Hero content */}
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Section header */}
-          {/* <div className="text-center pb-12 md:pb-16">
-            <h1
-              className="text-black-2 text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4 z-50"
-              data-aos="zoom-y-out"
-            >
-              Make your website{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-200">
-                wonderful
-              </span>
-            </h1>
-            <div className="max-w-3xl mx-auto">
-              <p
-                className="text-xl text-gray-600 mb-8"
-                data-aos="zoom-y-out"
-                data-aos-delay="150"
-              >
-                Our landing page template works on all devices, so you only have
-                to set it up once, and get beautiful results forever.
-              </p>
-              <div
-                className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
-                data-aos="zoom-y-out"
-                data-aos-delay="300"
-              >
-                <div>
-                  <a
-                    className="btn text-white bg-green-600 w-full mb-4 sm:w-auto sm:mb-0"
-                    href="#0"
-                  >
-                    Start free trial
-                  </a>
-                </div>
-                <div>
-                  <a
-                    className="btn text-white bg-gray-900 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                    href="#0"
-                  >
-                    Learn more
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div> */}
+
           <div className="flex justify-center items-center uppercase font-semibold gap-x-2 text-[32px] sm:text-[64px] lg:text-[72px]">
             <span style={{ fontSize: "1.5em" }} className="pr-4">
               For
@@ -94,11 +52,13 @@ const Hero = () => {
                 2000,
                 "Footballer",
                 2000,
+                "Youth",
+                2000,
               ]}
               speed={50}
               style={{ fontSize: "1.5em" }}
               repeat={Infinity}
-              className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-200"
+              className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-[#BBF7D0]"
             />
           </div>
           {/* <ModalVideo

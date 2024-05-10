@@ -53,7 +53,7 @@ const Pagination = ({ currentPage, totalPages, type }) => {
         {/* Previous page button */}
         <li>
           <button
-            className="text-black font-bold pointer-events-none relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface/50 transition duration-300 dark:text-neutral-400"
+            className="text-black dark:text-white font-bold pointer-events-none relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface/50 transition duration-300 dark:text-neutral-400"
             onClick={() => handlePageChange(currentPage - 1)}
           >
             Previous

@@ -34,10 +34,24 @@ const Edit = () => {
         setTournament(tournamentData);
         setName(tournamentData.name);
         setLogo(tournamentData.logo);
+        const currentDate = new Date();
+      // Convert tournament start date to Date object
+      const startDate = new Date(tournamentData.date_debut);
+      // Convert tournament end date to Date object
+      const endDate = new Date(tournamentData.date_fin);
+
+      // Check if tournament has started or ended
+      if (currentDate < startDate) {
+        tournamentData.status = 'Coming Soon';
+      } else if (currentDate > endDate) {
+        tournamentData.status = 'Ended';
+      } else {
+        tournamentData.status = 'Started';
+      }
         setStatus(tournamentData.status);
         setRules(tournamentData.rules);
-        setDateDebut(tournamentData.dateDebut);
-        setDateFin(tournamentData.dateFin);
+        setDateDebut(tournamentData.date_debut);
+        setDateFin(tournamentData.date_fin);
         setWinner(tournamentData.winner); 
         // Set winner from tournament data
       } catch (error) {
@@ -132,15 +146,15 @@ const Edit = () => {
   return (
     <>
       <form
-        className="shadow-2xl p-6 bg-green-50 dark:bg-slate-700 rounded-lg"
+        className="shadow-2xl p-6 bg-green-50 dark:border-strokedark dark:bg-boxdark rounded-lg"
         onSubmit={handleSaveChanges}
       >
         <div className="space-y-12">
           <div className="border-b border-slate-500 dark:border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-slate-900 dark:text-slate-50">
+            <h2 className="text-base font-semibold leading-7 text-black dark:text-white">
               Updating Tournament Information
             </h2>
-            <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
+            <p className="mt-1 text-sm leading-6 text-black dark:text-white">
               Please provide the tournament new information
             </p>
 
@@ -173,7 +187,7 @@ const Edit = () => {
               <div className="col-span-4">
                 <label
                   htmlFor="tournament-name"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   Tournament Name
                 </label>
@@ -199,7 +213,7 @@ const Edit = () => {
               <div className="col-span-3">
                 <label
                   htmlFor="datedebut"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   Start Date
                 </label>
@@ -225,7 +239,7 @@ const Edit = () => {
               <div className="col-span-3">
                 <label
                   htmlFor="datefin"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   End Date
                 </label>
@@ -251,7 +265,7 @@ const Edit = () => {
               <div className="col-span-5">
                 <label
                   htmlFor="rules"
-                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-50"
+                  className="block text-sm font-medium leading-6 text-black dark:text-white"
                 >
                   Rules
                 </label>

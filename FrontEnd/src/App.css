@@ -36,4 +36,16 @@ th {
   font-size: 16px;
 }
 
+.css-a1sg1c-MuiButtonBase-root-MuiButton-root.Mui-disabled {
+  color: gray !important;
+}
 
+.css-1hv8oq8-MuiStepLabel-label.Mui-active {
+  color: white !important;
+}
+.brackets-viewer{
+  background-color: transparent;
+}
+.name{
+  color: black !important;
+}

@@ -80,7 +80,7 @@ const ManageTournament = () => {
   };
   
   const handleVerifySMS = async (tournamentId) => {
-    const playerId = '66189125707dae4211475b9c';
+    const playerId = '660e413aa3c478b801ebb62b';
     try {
       // Dispatch the sendSMSToPlayer action with the tournamentId and playerId
       await dispatch(sendSMSToPlayer({ tournamentId, playerId }));
@@ -199,8 +199,6 @@ const ManageTournament = () => {
                     >
                       <MenuItem onClick={() => navigate(`/manage/tournament/${tournament._id}`)}>Select tournament</MenuItem>
                       <MenuItem onClick={() => navigate(`/manage/editt/${tournament._id}`)}>Edit tournament</MenuItem>
-                      <MenuItem onClick={() => navigate(`/fetchmatchbytour/${tournament._id}`)}>get matches </MenuItem>
-                      <MenuItem onClick={() => navigate(`/fetchallgroup/${tournament._id}`)}>get group </MenuItem>
                       <MenuItem onClick={() => handleVerifySMS(tournament._id)}>send SMS to players</MenuItem>
                       <MenuItem onClick={() => handleDeleteClick(tournament._id)}>Delete tournament</MenuItem>
                     </Menu>

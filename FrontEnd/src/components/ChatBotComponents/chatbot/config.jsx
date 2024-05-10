@@ -7,7 +7,7 @@ import Quiz from "../components/Quiz/Quiz";
 const config = {
   botName: "LinkUptournament",
   initialMessages: [
-    createChatBotMessage(`Hello. What do you want to know about LinkUptournament`, {
+    createChatBotMessage(`Hello,How can I assist you?`, {
       widget: "options",
     }),
   ],

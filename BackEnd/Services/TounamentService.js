@@ -4,7 +4,7 @@ const Tournament = require('../Models/Tournament') ;
 const addTournament = async (req, res, next) => {
   const { name, logo ,  type, rules, status, winner, date_debut, date_fin, teams } = req.body;
   const td = new Tournament({ name,logo , type, rules, status, winner, date_debut, date_fin, teams });
-  console.log(td);
+
   const savedTournament = await td.save();
   res.json({
       message : "Tournament successfully added!",
@@ -16,7 +16,7 @@ const addTournament = async (req, res, next) => {
 const updateTournament = async (req, res, next) => {
     const { id } = req.params;
     const updatedTournament = await Tournament.findByIdAndUpdate(id, req.body, { new: true });
-    console.log(updatedTournament);
+
     res.json({
       message: "Tournament successfully updated!",
       tournament: updatedTournament

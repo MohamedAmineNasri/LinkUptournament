@@ -16,7 +16,8 @@ const GroupSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team'
       },
-      TeamName: String, // Add this line
+      TeamName: String,
+      TeamLogo : String, // Add this line
       MJ: Number,
       G: Number,
       N: Number,

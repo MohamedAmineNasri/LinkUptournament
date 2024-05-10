@@ -45,9 +45,9 @@ const FormatSelect = () => {
       html: `
       <div>
       <p>How many groups do you want to create?</p>
-          <input type="number" class="swal2-input" value="4" id="groups"/>
+          <input type="number" class="swal2-input" value="2" id="groups"/>
               <p>How many teams are there in each group?</p>
-              <input type="number" class="swal2-input" value="4" id="teams"/>
+              <input type="number" class="swal2-input" value="3" id="teams"/>
       <p>How many teams do you want to start the elimination phase with?</p>
       <select id="tournamentSelect" class="swal2-select">
                 <option value="2">2</option>
@@ -82,13 +82,16 @@ const FormatSelect = () => {
       html: `
           <div>
           <p>How many groups do you want to create?</p>
-          <input type="number" class="swal2-input" value="4" id="groups"/>
+          <input type="number" class="swal2-input" value="2" id="groups"/>
               <p>How many teams are there in each group?</p>
-              <input type="number" class="swal2-input" value="4" id="teams"/>
+              <input type="number" class="swal2-input" value="3" id="teams"/>
           </div>  `,
       confirmButtonText: "Submit",
       showCancelButton: true,
       focusConfirm: false,
+      customClass: {
+        confirmButton: "bg-green-500",
+      },
       preConfirm: () => {
         const groupsValue = document.getElementById("groups").value;
         const teamsValue = document.getElementById("teams").value;

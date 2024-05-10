@@ -10,7 +10,6 @@ import { CardActionArea, Chip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 
-
 const Root = styled("div")(({ theme }) => ({
   width: "100%",
   ...theme.typography.body2,
@@ -36,13 +35,12 @@ const ConsultPlayer = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const player = location.state;
-
-  
+  console.log(player);
   return (
     <div className="rounded-sm border p-4 border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="py-6 px-2 md:px-2 xl:px-3.5 flex  items-center justify-center relative">
+      <div className="py-6 px-2 md:px-2 xl:px-3.5 flex  items-center justify-center relative ">
         <h4
-          className="text-base font-semibold text-black dark:text-bodygray absolute left-6 *:hover:text-primary cursor-pointer"
+          className="text-base font-semibold text-black dark:text-white absolute left-6 *:hover:text-primary cursor-pointer"
           onClick={() => {
             navigate("/manage/participant/player");
           }}
@@ -57,7 +55,7 @@ const ConsultPlayer = () => {
       </div>
       <div className="flex justify-center items-center gap-5 flex-col md:flex-row md:items-stretch">
         <div className="">
-          <Card sx={{ maxWidth: 340, background: "transparent" }}>
+          <Card sx={{ maxWidth: 340, background: "#2d3b4c", height: "100%" }}>
             <CardActionArea>
               {!player?.avatar ? (
                 <CardMedia
@@ -74,7 +72,7 @@ const ConsultPlayer = () => {
                   alt="green iguana"
                 />
               )}
-              <CardContent className="bg-white dark:bg-[#2d3b4c]">
+              <CardContent className="bg-white dark:bg-[#2d3b4c] ">
                 <Typography
                   gutterBottom
                   variant="h5"
@@ -82,53 +80,6 @@ const ConsultPlayer = () => {
                   className="text-black dark:text-white"
                 >
                   Eduardo Camavinga
-                </Typography>
-                <Typography
-                  variant="body2"
-                  className="text-black dark:text-bodygray"
-                >
-                  <span className="text-center block uppercase mb-1">
-                    shots on goal
-                  </span>
-                  <div className="flex justify-center items-center gap-2">
-                    <p className="w-[8%]">0</p>
-                    <div class="h-3 relative w-[90%] bg-white rounded-full overflow-hidden ">
-                      <div class=" w-full h-full bg-gray-200 absolute "></div>
-                      <div
-                        class=" h-full bg-[#258046] absolute"
-                        style={{ width: "70%" }}
-                      ></div>
-                    </div>
-                    <p className="w-[8%]">0</p>
-                  </div>
-                  <span className="text-center block uppercase my-1">
-                    corners
-                  </span>
-                  <div className="flex justify-center items-center gap-2">
-                    <p className="w-[8%]">0</p>
-                    <div class="h-3 relative w-[90%] bg-white rounded-full overflow-hidden ">
-                      <div class=" w-full h-full bg-gray-200 absolute "></div>
-                      <div
-                        class=" h-full bg-[#31a85c] absolute"
-                        style={{ width: "70%" }}
-                      ></div>
-                    </div>
-                    <p className="w-[8%]">0</p>
-                  </div>
-                  <span className="text-center block uppercase my-1">
-                    penalties
-                  </span>
-                  <div className="flex justify-center items-center gap-2">
-                    <p className="w-[8%]">0</p>
-                    <div class="h-3 relative w-[90%] bg-white rounded-full overflow-hidden ">
-                      <div class=" w-full h-full bg-gray-200 absolute "></div>
-                      <div
-                        class=" h-full bg-[#43c873] absolute"
-                        style={{ width: "70%" }}
-                      ></div>
-                    </div>
-                    <p className="w-[8%]">0</p>
-                  </div>
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -138,8 +89,8 @@ const ConsultPlayer = () => {
           <div class="divide-y divide-dashed">
             <div className="flex py-5 ">
               <span className="flex-1 text-white font-bold">Team</span>
-              <span className="flex-1 text-bodygray">
-                {player.current_team == "" ? "-" : player.current_team}
+              <span className="flex-1 text-bodygray uppercase font-medium">
+                {player.current_team == "" ? "-" : player.team.TeamName}
               </span>
             </div>
             <div className="flex py-5">
@@ -153,20 +104,6 @@ const ConsultPlayer = () => {
             <div className="flex py-5">
               <span className="flex-1 text-white font-bold">Skills</span>
               <span className="flex-1 text-bodygray">{player.skills}</span>
-            </div>
-            <div className="flex py-5">
-              <span className="flex-1 text-white font-bold">
-                Academic Membership
-              </span>
-              <span className="flex-1 text-bodygray">
-                {player.academic_membership}
-              </span>
-            </div>
-            <div className="flex py-5">
-              <span className="flex-1 text-white font-bold">Status</span>
-              <span className="flex-1 font-bold ">
-                <Chip label="verified" color="success" variant="outlined" />
-              </span>
             </div>
           </div>
         </div>

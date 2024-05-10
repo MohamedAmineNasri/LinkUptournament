@@ -27,15 +27,15 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  width: 42%;
+  width: 40%;
   -webkit-flex-direction: row;
   -moz-flex-direction: row;
   flex-direction: row;
 }
-*/ .champion {
+ .champion {
   float: left;
   display: block;
-  width: 16%;
+  width: 30%;
   -webkit-flex-direction: row;
   flex-direction: row;
   -webkit-align-self: center;
@@ -109,8 +109,8 @@
 .champion li,
 .round li {
   background-color: #fff;
-  box-shadow: none;
-  opacity: 0.45;
+ 
+  opacity: 0.80;
 }
 .current li {
   opacity: 1;
@@ -200,10 +200,10 @@
     margin: 0 1%;
   }
   .champion {
-    width: 14%;
+    width: 30%;
   }
   .split {
-    width: 43%;
+    width: 40%;
   }
   .split-one .vote-box {
     margin-left: 138px;

@@ -21,7 +21,6 @@ import MatchByID from "./getAllGroup";
 import Panel from "./panel";
 
 export const EditPopUpSelectedMatch = (props) => {
-
   // pop up logic --------------
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
@@ -29,6 +28,7 @@ export const EditPopUpSelectedMatch = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [referees, setReferees] = useState([]);
   const [Matchtype, setMatchtype] = useState(null);
   const [Location, setLocation] = useState(null);
   const [Referee, setReferee] = useState(null);
@@ -73,8 +73,11 @@ export const EditPopUpSelectedMatch = (props) => {
     setIsChanged(true);
   };
   const handleRefereeChange = (e) => {
-    setReferee(e.target.value);
-    setIsChanged(true);
+    const selectedRefereeName = e.target.value;
+    const selectedReferee = referees.find(
+      (referee) => referee.name === selectedRefereeName
+    );
+    setReferee(selectedReferee);
   };
   const handleDateChange = (e) => {
     setDate(e.target.value);
@@ -126,9 +129,9 @@ export const EditPopUpSelectedMatch = (props) => {
   };
   const handleLogoUpload = async (e) => {
     const file = e.target.files[0];
-    
+
     const base64 = await convertToBase64(file);
-    
+
     setLogo({ ...Logo, myLogo: base64 });
   };
 
@@ -174,6 +177,16 @@ export const EditPopUpSelectedMatch = (props) => {
     handleClose();
   };
   useEffect(() => {
+    // fetch referee
+    const fetchReferees = async () => {
+      const response = await axios.get(
+        `http://localhost:8000/referee/available`
+      );
+      setReferees(response.data);
+      console.log(response.data);
+    };
+    fetchReferees();
+    // fetch referee
     const fetchTournaments = async () => {
       try {
         setTeam1Gols(0);
@@ -347,16 +360,21 @@ export const EditPopUpSelectedMatch = (props) => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="locationInput">
-                    <Form.Label style={{ color: "white" }}>
-                      Referee :
-                    </Form.Label>
+                    <Form.Label>Referee:</Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="Referee"
+                      as="select"
                       autoFocus
-                      value={Referee || props.referee}
-                      onChange={(e) => handleRefereeChange(e)}
-                    />
+                      value={Referee ? Referee.name : ""}
+                      onChange={(e) => setReferee(e.target.value)}
+                      className={`border ${isValid ? "border-green-500" : "border-red-500"}`}
+                    >
+                      <option value="">Select Referee</option>
+                      {referees.map((referee) => (
+                        <option key={referee._id} value={referee.name}>
+                          {referee.name}
+                        </option>
+                      ))}
+                    </Form.Control>
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="locationInput">

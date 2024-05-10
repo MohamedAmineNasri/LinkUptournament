@@ -21,6 +21,7 @@ router.get(
   "/tournament/:tournamentId",
   bracketStageController.getAllBracketStagesByTournamentId
 );
+router.delete("/tournament/:tournamentId", bracketStageController.deleteBracketByTournamentId);
 router.get(
   "/tournament/:tournamentId/:round",
   bracketStageController.getAllBracketStagesByTournamentIdAndRound

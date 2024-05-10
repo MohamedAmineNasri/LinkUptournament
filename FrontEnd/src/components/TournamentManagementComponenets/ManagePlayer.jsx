@@ -64,8 +64,7 @@ const ManagePlayer = () => {
   const [openAddForm, setOpenAddForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    legal_guardian: "",
-    academic_membership: "",
+
     position: "",
     skills: [""],
     age: undefined,
@@ -189,11 +188,6 @@ const ManagePlayer = () => {
 
     if (!formData.age || isNaN(formData.age) || formData.age <= 0) {
       toast.error("Age is required and must be a positive number");
-      return;
-    }
-
-    if (!formData.legal_guardian || formData.legal_guardian.trim() === "") {
-      toast.error("Legal guardian is required");
       return;
     }
 
@@ -635,36 +629,6 @@ const ManagePlayer = () => {
               onChange={handleInputChange}
             />
 
-            <TextField
-              autoFocus
-              margin="dense"
-              id="LegalGuardian"
-              name="legal_guardian"
-              label="Legal Guardian"
-              type="text"
-              fullWidth
-              variant="standard"
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              value={formData.legal_guardian}
-              onChange={handleInputChange}
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="AcademicMembership"
-              name="academic_membership"
-              label="Academic Membership"
-              type="text"
-              fullWidth
-              variant="standard"
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              value={formData.academic_membership}
-              onChange={handleInputChange}
-            />
             {/**ggggggg */}
             <div>
               {formData?.skills?.map((skill, index) => (

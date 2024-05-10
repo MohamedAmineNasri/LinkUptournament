@@ -118,7 +118,7 @@ const AddTourn = () => {
             tournament: tournId,
             scores: arrayFilledWithEmptyScore,
           });
-          console.log(arrayFilledWithEmptyScore)
+          console.log(arrayFilledWithEmptyScore);
         } else {
           const arrayFilledWithEmptyStrings = Array.from(
             { length: i },
@@ -134,7 +134,7 @@ const AddTourn = () => {
             tournament: tournId,
             scores: arrayFilledWithEmptyScore,
           });
-          console.log(arrayFilledWithEmptyScore)
+          console.log(arrayFilledWithEmptyScore);
           roundCounter++;
         }
       }
@@ -403,15 +403,20 @@ const AddTourn = () => {
                         >
                           How many teams in tournament?
                         </label>
-                        <input
-                          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        <select
+                          className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="numTeams"
-                          type="number"
-                          placeholder="Enter number of teams"
                           name="numTeams"
                           value={formData.numTeams}
                           onChange={handleChange}
-                        />
+                        >
+                          <option value="">Select number of teams</option>
+                          <option value="2">2</option>
+                          <option value="4">4</option>
+                          <option value="8">8</option>
+                          <option value="16">16</option>
+                          <option value="32">32</option>
+                        </select>
                       </div>
                     </div>
                   )}

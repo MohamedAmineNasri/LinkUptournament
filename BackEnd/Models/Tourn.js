@@ -40,6 +40,19 @@ const tournSchema = new mongoose.Schema({
   // Add more fields as needed
 });
 
+// Middleware to cascade delete associated BracketStage documents
+tournSchema.pre("deleteOne", { document: true }, async function (next) {
+  const tourn = this;
+  const bracketStagesToDelete = tourn.bracketStages;
+
+  // Delete associated BracketStage documents
+  await mongoose
+    .model("BracketStage")
+    .deleteMany({ _id: { $in: bracketStagesToDelete } });
+
+  next();
+});
+
 const Tourn = mongoose.model("Tourn", tournSchema);
 
 module.exports = Tourn;

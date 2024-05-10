@@ -113,6 +113,11 @@ const ManageReferees = () => {
 
     // Validation
 
+    if (!formData.name || !/^[A-Za-z\s]+$/.test(formData.name)) {
+      toast.error("Name is required and must contain only letters");
+      return;
+    }
+    
     if (!formData.country) {
       toast.error("Country is required");
       return;

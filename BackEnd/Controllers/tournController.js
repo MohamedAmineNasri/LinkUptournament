@@ -27,12 +27,11 @@ exports.getAllTournaments = async (req, res) => {
 // Get a tournament by ID
 exports.getTournamentById = async (req, res) => {
   try {
-    const tourn = await Tourn.findById(req.params.id)
-      .populate({
-        path: "teams",
-        select: "TeamName", // Select only the TeamName field
-        model: "team",
-      });
+    const tourn = await Tourn.findById(req.params.id).populate({
+      path: "teams",
+      select: "TeamName", // Select only the TeamName field
+      model: "team",
+    });
 
     if (tourn === null) {
       return res.status(404).json({ message: "Tournament not found" });
@@ -57,12 +56,15 @@ exports.updateTournament = async (req, res) => {
   }
 };
 
-// Delete a tournament
 exports.deleteTournament = async (req, res) => {
   try {
-    await Tourn.findByIdAndDelete(req.params.id);
+    const tourn = await Tourn.findById(req.params.id);
+    if (!tourn) {
+      return res.status(404).json({ message: "Tournament not found" });
+    }
+    await Tourn.deleteOne({ _id: tourn._id }); // Use deleteOne directly on the model
     res.json({ message: "Tournament deleted" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "Error deleting tournament" });
   }
 };

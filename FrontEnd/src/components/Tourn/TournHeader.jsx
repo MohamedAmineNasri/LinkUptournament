@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom/dist/umd/react-router-dom.development";
 
-const TournHeader = ({ setNav, nav }) => {
+const TournHeader = ({ setNav, nav , nameOne , nameTwo }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark mb-4">
       <div className="py-4 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
@@ -21,7 +21,7 @@ const TournHeader = ({ setNav, nav }) => {
             color: nav ? "#2B9451" : "",
           }}
         >
-          Bracket
+          {nameOne}
         </button>
         <button
           className="text-lg font-semibold text-black dark:text-white mx-auto"
@@ -33,7 +33,7 @@ const TournHeader = ({ setNav, nav }) => {
             color: !nav ? "#2B9451" : "",
           }}
         >
-          Matchs
+          {nameTwo}
         </button>
       </div>
     </div>

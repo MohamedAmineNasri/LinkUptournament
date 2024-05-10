@@ -4,6 +4,7 @@ const refereeController = require("../Controllers/refereeController");
 
 router.post("/", refereeController.createReferee);
 router.get("/", refereeController.getAllReferees);
+router.get('/available',refereeController.getRefereesForMatch)
 router.get('/search',refereeController.searchReferees)
 router.get("/:id", refereeController.getRefereeById);
 router.patch("/:id", refereeController.updateRefereeById);

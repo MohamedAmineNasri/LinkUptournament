@@ -11,6 +11,20 @@ async function createReferee(req, res) {
   }
 }
 
+const getRefereesForMatch = async (req, res) => {
+  try {
+    // Find the first 10 referees with availability set to "All day"
+    const referees = await Referee.find({ availability: "All day" }).limit(10);
+
+    // Return the referees
+    res.json(referees);
+  } catch (error) {
+    // If an error occurs, return an error response
+    console.error("Error fetching referees:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 // Controller function for getting all referees with pagination
 async function getAllReferees(req, res) {
   try {
@@ -123,4 +137,5 @@ module.exports = {
   updateRefereeById,
   deleteRefereeById,
   searchReferees,
+  getRefereesForMatch,
 };

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/landingpage/Header";
 import Footer from "../../components/landingpage/Footer";
-import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom/dist/umd/react-router-dom.development";
 import axios from "../../api/axios";
 
 const TournamentFrontOffice = () => {
   const navigate = useNavigate();
   const [tournaments, setTournaments] = useState([]);
+  let location = useLocation();
   useEffect(() => {
     const fetchtournaments = async () => {
       const response = await axios.get("http://localhost:8000/tourn");
@@ -28,18 +32,17 @@ const TournamentFrontOffice = () => {
                 <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                   {/* tournament content */}
                   <div className="pt-4 pb-24">
-                    <h4 className="text-4xl text-center  font-semibold text-black pb-8">
-                      All Tournaments
-                    </h4>
-
                     {tournaments?.length == 0 ? (
                       <div className="py-6 px-4 md:px-6 xl:px-7.5 h-100 flex flex-col items-center justify-center">
-                        <h4 className="md:text-xl text-lg font-semibold text-black dark:text-white">
+                        <h4 className="md:text-xl text-lg font-semibold text-black ">
                           Looks like there are no tournaments to display.
                         </h4>
                       </div>
                     ) : (
                       <div>
+                        <h4 className="text-4xl text-center  font-semibold text-black pb-8">
+                          All Tournaments
+                        </h4>
                         <div className="py-4 px-2 md:px-2 xl:px-3.5">
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
                             {tournaments.map((tournament, index) => (

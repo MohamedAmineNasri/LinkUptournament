@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom/dist/umd/react-router-dom.development";
 import TournHeader from "./TournHeader";
@@ -31,6 +31,7 @@ let matchData = {
 
 function BracketGenerator() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
   const [bracketStages, setBracketStages] = useState([]);
   const [nav, setNav] = useState(true);
@@ -73,9 +74,24 @@ function BracketGenerator() {
     }
   };
 
+  const deleteTournament = async () => {
+    await axios.delete(`http://localhost:8000/tourn/${id}`);
+    navigate("/manage");
+  };
+
   return (
     <div>
       <TournHeader setNav={setNav} nav={nav} />
+      {nav && (
+        <div className="text-end">
+          <button
+            className="bg-red-500 btn flex"
+            onClick={() => deleteTournament()}
+          >
+            Delete tournament
+          </button>
+        </div>
+      )}
       {!nav && id && <FetchTour key={id} tournamentId={id} />}
       {nav && (
         <div className="max-w-2xl mx-auto mt-12">
@@ -118,7 +134,7 @@ function BracketGenerator() {
                                   </span>
                                   {scores[teamIndex + 1]}
                                 </div>
-                                <div className="flex items-center gap-4"> 
+                                <div className="flex items-center gap-4">
                                   <span>{teams[teamIndex + 1].TeamName}</span>
                                   <img
                                     src={teams[teamIndex + 1].TeamLogo}

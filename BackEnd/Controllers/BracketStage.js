@@ -128,6 +128,44 @@ const deleteBracketStageById = async (req, res) => {
   }
 };
 
+const deleteBracketByTournamentId = async (req, res) => {
+  try {
+    const tournamentId = req.params.tournamentId;
+
+    // Find the bracket stages with the specified tournament ID
+    const bracketStages = await BracketStage.find({ tournament: tournamentId });
+
+    // Check if any bracket stages were found
+    if (bracketStages.length === 0) {
+      return res
+        .status(404)
+        .json({
+          success: false,
+          message: "No bracket stages found for the specified tournament ID.",
+        });
+    }
+
+    // Delete each bracket stage found
+    await Promise.all(
+      bracketStages.map(async (bracketStage) => {
+        await bracketStage.remove();
+      })
+    );
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Bracket stages deleted successfully." });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error deleting bracket stages.",
+        error,
+      });
+  }
+};
+
 // Controller function to find a bracket stage by tournament ID and round
 
 module.exports = {
@@ -138,4 +176,5 @@ module.exports = {
   deleteBracketStageById,
   getAllBracketStagesByTournamentId,
   getAllBracketStagesByTournamentIdAndRound,
+  deleteBracketByTournamentId,
 };

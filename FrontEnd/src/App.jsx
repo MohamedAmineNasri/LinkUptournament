@@ -158,6 +158,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* Public Routes  */}
             <Route index element={<HomeLandingPage />} />
+            
 
             <Route path="/ChatFront" element={<FrontUserChat />} />
             <Route path="/tournaments" element={<TournamentFrontOffice />} />

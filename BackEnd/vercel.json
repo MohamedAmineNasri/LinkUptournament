@@ -1,15 +1,20 @@
 {
-    "version":2,
+    "version": 2,
     "builds": [
       {
-        "src": "./app.js",
+        "src": "./BackEnd/app.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
+        "src": "/api/(.*)",
+        "dest": "./BackEnd/app.js"
+      },
+      {
         "src": "/(.*)",
-        "dest": "/"
+        "dest": "./BackEnd/app.js"
       }
     ]
   }
+  

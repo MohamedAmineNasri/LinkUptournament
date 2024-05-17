@@ -47,7 +47,9 @@ const storage = new GridFsStorage({
   url,
   file: (req, file) => {
     //If it is an image, save to photos bucket
-    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|svg)$/i; // Add more extensions as needed
+
+    if (imageExtensions.test(file.originalname)) {
       return {
         bucketName: "photos",
         filename: `${Date.now()}_${file.originalname}`,
@@ -79,7 +81,7 @@ app.use(express.urlencoded({ limit: "50mb" }));
 
 // app.use("/tournement", tournementRouter);
 
-// Handle options credentials check - before CORS!
+// Handle options credentials check - before CORS!  
 // and fetch cookies credentials requirement
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement

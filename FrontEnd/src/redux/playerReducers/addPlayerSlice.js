@@ -10,14 +10,17 @@ const initialState = {
 
 export const addPlayer = (payload, teamFilter) => async (dispatch) => {
   dispatch(postDataPending());
-  try {
-    console.log("from slice", payload);
-    await axios.post("http://localhost:8000/player", payload);
-    dispatch(postDataFulfilled());
-    dispatch(searchPlayers({ team: teamFilter }));
-  } catch (error) {
-    dispatch(postDataRejected(error.message));
+  // try {
+  if (payload.team === "") {
+    delete payload.team;
   }
+  console.log("from slice", payload);
+  await axios.post("http://localhost:8000/player", payload);
+  dispatch(postDataFulfilled());
+  dispatch(searchPlayers({ team: teamFilter }));
+  // } catch (error) {
+  //   dispatch(postDataRejected(error.message));
+  // }
 };
 
 const addPlayerSlice = createSlice({

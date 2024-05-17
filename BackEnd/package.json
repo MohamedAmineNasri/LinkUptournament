@@ -31,7 +31,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": " mocha --exit",
-    "build-dev": "webpack --config webpack.dev.js --mode development"
+    "build": "webpack --config webpack.prod.js --mode production"
   },
   "name": "backend",
   "version": "1.0.0",

@@ -1,15 +1,3 @@
 {
-    "version":2,
-    "builds": [
-      {
-        "src": "./aoo.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/"
-      }
-    ]
+    "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
   }

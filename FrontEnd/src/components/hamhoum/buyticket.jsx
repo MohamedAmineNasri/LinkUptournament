@@ -34,7 +34,7 @@ export const fetchtour = () => {
           (match) => match.matchstatus === "Starting Soon" && match.ticketNumber > 0
         ))
         setTournementId(response.data.filter(
-    (match) => match.matchstatus === "Starting Soon" && match.ticketNumber > 0
+    (match) => match.matchstatus === "Starting Soon" 
   ));
        
       } catch (error) {

@@ -134,7 +134,7 @@ export const fetchtour = () => {
           const weather = await axios.get(
             "http://api.openweathermap.org/data/2.5/forecast?id=" +
               matchesResponse.data.location +
-              "&dt=1712750400&appid=f30fae93770f8d10eec128c5c8627b54"
+              "&dt=1712750400&appid=0e088cf8c2fd97a9ce5bf0f052fcc7c8"
           );
           setweather(weather.data);
           // console.log(matchesResponse.data.date)

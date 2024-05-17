@@ -27,9 +27,10 @@ let matchData = {
   goal1: [],
   goal2: [],
   w: null,
-  price: 0,
-  ticketNumber: 0,
+  price: 1000,
+  ticketNumber: 5,
   tournId: "",
+  ticketId:[0],
 };
 
 const AddTourn = () => {

@@ -75,7 +75,7 @@ const cookieParser = require("cookie-parser");
 
 // i added the {limit: '50mb'} so i can upolad files larger than 100kb
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true , limit: "50mb" }));
 
 app.use(credentials);
 

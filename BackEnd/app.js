@@ -91,7 +91,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 //Middlleware for cookies
 app.use(cookieParser());
 

@@ -1,6 +1,6 @@
 const match = require("../Models/match");
 const player = require("../Models/Player");
-const Tourn = require("../models/Tourn");
+const Tourn = require("../Models/Tourn");
 const tournament = require("../Models/Tournament");
 
 const Filter = require("bad-words");

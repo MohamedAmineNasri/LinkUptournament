@@ -1,4 +1,4 @@
-const Tourn = require("../models/Tourn");
+const Tourn = require("../Models/Tourn");
 
 // Create tournament
 exports.createTournament = async (req, res) => {

@@ -6,7 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const Player = require('../Models/Player');
 
-const { sendSMS } = require('../Controllers/SmsController');
+const { sendSMS } = require('../Controllers/smsController');
 const Tournament = require('../Models/Tournament');
 
 

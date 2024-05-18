@@ -6,7 +6,7 @@ const {
     getNewsById,
     updateNewsById,
     deleteNewsById,
-} = require("../Controllers/NewsController");
+} = require("../Controllers/newsController");
 
 // Create a new news
 router.post("/", createNews);

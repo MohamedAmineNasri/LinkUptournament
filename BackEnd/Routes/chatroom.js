@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { catchErrors } = require("../Handlers/ErrorHandlers");
+const { catchErrors } = require("../Handlers/errorHandlers");
 const { createChatroom, getAllChatroom } = require("../Controllers/ChatroomController"); // Ensure correct import path
 
 router.post("/", catchErrors(createChatroom));

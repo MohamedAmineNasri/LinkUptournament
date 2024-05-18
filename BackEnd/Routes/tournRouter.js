@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tournamentController = require('../controllers/tournController');
+const tournamentController = require('../Controllers/tournController');
 
 // Create tournament
 router.post('/', tournamentController.createTournament);

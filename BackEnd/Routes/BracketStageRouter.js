@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const bracketStageController = require("../controllers/bracketStage");
+const bracketStageController = require("../Controllers/bracketStage");
 
 // Route to create a new bracket stage
 router.post("/", bracketStageController.createBracketStage);

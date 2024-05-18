@@ -1,4 +1,4 @@
-const News = require("../models/News");
+const News = require("../Models/News");
 
 // Create a new news
 const createNews = async (req, res) => {

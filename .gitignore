@@ -3,3 +3,4 @@ FrontEnd/node_modules/
 node_modules/
 mydata
 .env
+.vercel

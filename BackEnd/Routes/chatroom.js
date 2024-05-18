@@ -6,5 +6,3 @@ router.post("/", catchErrors(createChatroom));
 router.get("/", catchErrors(getAllChatroom));
 
 module.exports = router;
-
-

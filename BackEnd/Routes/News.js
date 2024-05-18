@@ -8,10 +8,11 @@ const {
     deleteNewsById,
 } = require("../Controllers/newsController");
 
+
 // Create a new news
 router.post("/", createNews);
 
-// Get all news
+// Get all newss
 router.get("/", getAllNews);
 
 // Get a single news by ID

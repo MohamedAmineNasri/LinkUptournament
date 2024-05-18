@@ -7,6 +7,7 @@ const allowedOrigins = [
     'exp://192.168.30.100:19000',
     '192.168.1.17',
     'https://link-uptournament-1hsj.vercel.app/',
+    'link-uptournament.vercel.app',
 ];
 
 module.exports = allowedOrigins;

@@ -1,4 +1,4 @@
-const BracketStage = require("../models/BracketStage");
+const BracketStage = require("../Models/BracketStage");
 
 // Get all bracket stages by tournament ID
 const getAllBracketStagesByTournamentId = async (req, res) => {

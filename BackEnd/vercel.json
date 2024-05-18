@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "BackEnd/app.js",
+      "src": "app.js",
       "use": "@vercel/node"
     }
   ],
@@ -10,11 +10,11 @@
     { "handle": "filesystem" },
     {
       "src": "/api/(.*)",
-      "dest": "/BackEnd/app.js"
+      "dest": "/app.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/BackEnd/app.js"
+      "dest": "/app.js"
     }
   ]
 }

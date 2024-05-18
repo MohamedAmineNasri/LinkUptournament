@@ -1,16 +1,13 @@
 const router = require("express").Router();
 
-const { catchErrors } = require("../handlers/errorHandlers");
 const  registerController  = require("../Controllers/registerController");
 const  authController  = require("../Controllers/authController");
 const { getAllUsers } = require('../Controllers/getAllUsers');
 const { getUserById } = require('../Controllers/getUserById');
 const { deleteUserById } = require('../Controllers/deleteUserById ');
 const { updateUserById } = require('../Controllers/updateUserById ');
-const verifyJWT = require('../middlewares/verifyJWT')
 const  refreshTokenController  = require("../Controllers/refreshTokenController");
 const  handleLogout  = require("../Controllers/LogoutController");
-const verifyRoles = require("../middlewares/verifyRoles");
 
 
 router.post("/register", registerController.handleNewUser);

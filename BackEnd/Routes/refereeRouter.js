@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const refereeController = require("../Controllers/refereeController");
+const refereeController = require("../Controllers/RefereeController");
 
 router.post("/", refereeController.createReferee);
 router.get("/", refereeController.getAllReferees);

@@ -169,7 +169,7 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
         setTournementId(tournamentId);
         setMatchstatus("Starting Soon");
         const response = await axios.get(
-          "http://localhost:8000/tournament/" + tournamentId
+          "https://linkuptournament.onrender.com/tournament/" + tournamentId
         );
         if (response.data.tournament.type == "Group Stage") {
           //   groupresponse =await axios.get("http://localhost:8000/group/tournament"+tournamentId)
@@ -183,13 +183,13 @@ export const AddMatchPopUpWindow = ({ tournamentId }) => {
         const teamsWithNames = await Promise.all(
           tournament.teams.map(async (teamId) => {
             const teamResponse = await axios.get(
-              `http://localhost:8000/team/getTeam/${teamId}`
+              `https://linkuptournament.onrender.com/team/getTeam/${teamId}`
             );
             return teamResponse.data.TeamName;
           })
         );
         const responseforgroup = await axios.get(
-          "http://localhost:8000/group/tournament/" + tournamentId
+          "https://linkuptournament.onrender.com/group/tournament/" + tournamentId
         );
         const groupData = response.data;
         setgroup(responseforgroup.data);

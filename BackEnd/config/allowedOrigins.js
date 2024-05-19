@@ -8,6 +8,7 @@ const allowedOrigins = [
     '192.168.1.17',
     'https://link-uptournament-1hsj.vercel.app/',
     'https://link-uptournament.vercel.app/',
+    'https://linkuptournament.onrender.com/',
 ];
 
 module.exports = allowedOrigins;

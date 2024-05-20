@@ -209,7 +209,7 @@ const SignIn: React.FC = () => {
           </div>
 
           <ReCAPTCHA
-            sitekey="6LdeXpQpAAAAAJAmPdKOpxjaoYoearOopW0IHhLH"
+            sitekey="6LfPoeIpAAAAAMlNXi1eOIeVRjNP1x8c16c3nTiz"
             onChange={onChange}
           />
 

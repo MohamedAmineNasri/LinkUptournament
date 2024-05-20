@@ -180,7 +180,7 @@ export const EditPopUpSelectedMatch = (props) => {
     // fetch referee
     const fetchReferees = async () => {
       const response = await axios.get(
-        `http://localhost:8000/referee/available`
+        `https://linkuptournament.onrender.com/referee/available`
       );
       setReferees(response.data);
       console.log(response.data);
@@ -194,24 +194,24 @@ export const EditPopUpSelectedMatch = (props) => {
         setTournementId(tournamentId);
         setMatchstatus("Starting Soon");
         const response = await axios.get(
-          `http://localhost:8000/tourn/${props.tournementId}`
+          `https://linkuptournament.onrender.com/tourn/${props.tournementId}`
         );
         const tournament = response.data.tournament;
         // console.log("Successfully retrieved the tournament:", tournament);
         settournament(tournament);
         const t2 = await axios.get(
-          `http://localhost:8000/team/getTeam/${props.team2}`
+          `https://linkuptournament.onrender.com/team/getTeam/${props.team2}`
         );
         setT2(t2.data.TeamName);
         const t1 = await axios.get(
-          `http://localhost:8000/team/getTeam/${props.team1}`
+          `https://linkuptournament.onrender.com/team/getTeam/${props.team1}`
         );
         setT1(t1.data.TeamName);
         // Fetch team names for each team ID
         const teamsWithNames = await Promise.all(
           tournament.teams.map(async (teamId) => {
             const teamResponse = await axios.get(
-              `http://localhost:8000/team/getTeam/${teamId}`
+              `https://linkuptournament.onrender.com/team/getTeam/${teamId}`
             );
             return teamResponse.data.TeamName;
           })

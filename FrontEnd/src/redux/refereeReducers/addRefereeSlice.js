@@ -10,7 +10,7 @@ const initialState = {
 export const addReferee = (payload) => async (dispatch) => {
   dispatch(postDataPending());
   try {
-    await axios.post("http://localhost:8000/referee", payload);
+    await axios.post("https://linkuptournament.onrender.com/referee", payload);
     dispatch(postDataFulfilled());
     dispatch(fetchReferees());
   } catch (error) {

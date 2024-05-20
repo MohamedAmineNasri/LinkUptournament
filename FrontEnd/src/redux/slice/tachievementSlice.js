@@ -16,7 +16,7 @@ export const fetchTAchievementByTeamId = createAsyncThunk(
   'tachievement/fetchtAchievementsTeamId', 
   async ({idTeam}) => {
     try {
-      const response = await axios.get('http://localhost:8000/tachievement/teamAchievs/'+idTeam);
+      const response = await axios.get('https://linkuptournament.onrender.com/tachievement/teamAchievs/'+idTeam);
       return response.data;
     } catch (error) {
       throw Error('Error fetching achievement: ' + error.message);
@@ -27,7 +27,7 @@ export const fetchDefaultAchievementOfTeamByTeamId = createAsyncThunk(
   'tachievement/fetchDefaultAchievementOfTeamByTeamId', 
   async ({idTeam}) => {
     try {
-      const response = await axios.get('http://localhost:8000/tachievement/DefaultteamAchievs/'+idTeam);
+      const response = await axios.get('https://linkuptournament.onrender.com/tachievement/DefaultteamAchievs/'+idTeam);
       //we have 2 data list types
       return {
         Active: response.data.Active,
@@ -86,7 +86,7 @@ export const updatetachievementStatus = createAsyncThunk(
   async ({idTeam}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/tachievement/updateTeamAchievementStatus/'+idTeam,
+        'https://linkuptournament.onrender.com/tachievement/updateTeamAchievementStatus/'+idTeam,
       );
       //we refresh only when team is created sucessfully
       if (response.data === true){

@@ -18,7 +18,7 @@ export const Tournament = () => {
   useEffect(() => {
     const fetchTournament = async () => {
       const response = await axios.get(
-        `http://localhost:8000/tournament/${tournamentId}`
+        `https://linkuptournament.onrender.com/tournament/${tournamentId}`
       );
       const tournamentData = response.data.tournament;
 

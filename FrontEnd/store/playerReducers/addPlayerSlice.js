@@ -9,7 +9,7 @@ const initialState = {
 export const addPlayer = (payload) => async (dispatch) => {
   dispatch(postDataPending());
   try {
-    await axios.post("http://localhost:8000/player/", payload);
+    await axios.post("https://linkuptournament.onrender.com/player/", payload);
     dispatch(postDataFulfilled());
   } catch (error) {
     dispatch(postDataRejected(error.message));
@@ -18,7 +18,7 @@ export const addPlayer = (payload) => async (dispatch) => {
 export const addPlayerMi = (payload) => async (dispatch) => {
   dispatch(postDataPending());
   try {
-    await axios.post("http://localhost:8000/player/addPlayer/", payload);
+    await axios.post("https://linkuptournament.onrender.com/player/addPlayer/", payload);
     dispatch(postDataFulfilled());
   } catch (error) {
     dispatch(postDataRejected(error.message));

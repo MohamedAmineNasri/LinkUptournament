@@ -10,7 +10,7 @@ const initialState = {
 export const deletePlayer = (id, teamFilter) => async (dispatch) => {
   dispatch(deletePlayerPending());
   try {
-    await axios.delete(`http://localhost:8000/player/${id}`);
+    await axios.delete(`https://linkuptournament.onrender.com/player/${id}`);
     dispatch(deletePlayerFulfilled());
     dispatch(searchPlayers({ team: teamFilter }));
   } catch (error) {

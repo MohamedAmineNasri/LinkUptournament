@@ -5,7 +5,7 @@ export const fetchteams = createAsyncThunk(
   'team/fetchTeams', // Corrected action name
   async () => {
     try {
-      const response = await axios.get('http://localhost:8000/Team/');
+      const response = await axios.get('https://linkuptournament.onrender.com/Team/');
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);
@@ -16,7 +16,7 @@ export const fetchTeamsByName = createAsyncThunk(
   'team/fetchTeamsByName',
   async (searchString) => {
     try {
-      const response = await axios.get(`http://localhost:8000/team/teams/search/${searchString}`);
+      const response = await axios.get(`https://linkuptournament.onrender.com/team/teams/search/${searchString}`);
       return response.data;
     } catch (error) {
       throw new Error('Error fetching teams by name: ' + error.message);
@@ -28,7 +28,7 @@ export const fetchteamById = createAsyncThunk(
   'team/fetchTeamById', 
   async ({teamId}) => {
     try {
-      const response = await axios.get('http://localhost:8000/Team/getTeam/'+teamId);
+      const response = await axios.get('https://linkuptournament.onrender.com/Team/getTeam/'+teamId);
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);
@@ -40,7 +40,7 @@ export const fetchTeamOfAcademy = createAsyncThunk(
   'team/fetchTeam',
   async (idAcademy) => {
     try {
-      const response = await axios.get('http://localhost:8000/Team/getTeambyAcademyId/'+idAcademy);
+      const response = await axios.get('https://linkuptournament.onrender.com/Team/getTeambyAcademyId/'+idAcademy);
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);
@@ -54,7 +54,7 @@ export const deleteTeam = createAsyncThunk(
   async (teamid) => {
     try {
       console.log(teamid)
-      const response = await axios.delete('http://localhost:8000/team/deleteTeamByIdandFromAcademy/'+teamid);
+      const response = await axios.delete('https://linkuptournament.onrender.com/team/deleteTeamByIdandFromAcademy/'+teamid);
       return response.data;
     } catch (error) {
       throw Error('Error delete teams: ' + error.message);
@@ -66,7 +66,7 @@ export const deletePlayerFromTeam  = createAsyncThunk(
   async ({it,ip}) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/team/removePlayerFromTeam/${it}/${ip}`
+        `https://linkuptournament.onrender.com/team/removePlayerFromTeam/${it}/${ip}`
       );
       console.log(it,ip)
       return response.data;
@@ -83,7 +83,7 @@ export const addTeamAndAssaignToAcademy = createAsyncThunk(
   async ({idAcademy, name, logo }) => {
     try {
       const response = await axios.post(
-        'http://localhost:8000/team/addTeamAndAssaignAcademy',
+        'https://linkuptournament.onrender.com/team/addTeamAndAssaignAcademy',
         {
           TeamName: name, 
           TeamLogo: logo,
@@ -106,7 +106,7 @@ export const editTeam = createAsyncThunk(
   async ({ teamid, name, logo}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/team/updateTeam/'+teamid,
+        'https://linkuptournament.onrender.com/team/updateTeam/'+teamid,
         {
           TeamName: name, 
           TeamLogo: logo,
@@ -127,7 +127,7 @@ export const editTeamSameName = createAsyncThunk(
   async ({ teamid, name, logo}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/team/updateTeamSameName/'+teamid,
+        'https://linkuptournament.onrender.com/team/updateTeamSameName/'+teamid,
         {
           TeamName: name, 
           TeamLogo: logo,
@@ -145,7 +145,7 @@ export const UpdateTeamsStatsFromFinishedMatches =  createAsyncThunk(
   'team/UpdateTeamsStatsFromFinishedMatches', 
   async () => {
     try {
-      const response = await axios.post('http://localhost:8000/Team/UpdateTeamsStatsFromFinishedMatches');
+      const response = await axios.post('https://linkuptournament.onrender.com/Team/UpdateTeamsStatsFromFinishedMatches');
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);
@@ -158,7 +158,7 @@ export const fetchplayerByTeamId =  createAsyncThunk(
   'team/fetchplayerByTeamId', 
   async ({teamId}) => {
     try {
-      const response = await axios.get('http://localhost:8000/team/ofTeam/'+teamId);
+      const response = await axios.get('https://linkuptournament.onrender.com/team/ofTeam/'+teamId);
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);

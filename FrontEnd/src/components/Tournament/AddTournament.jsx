@@ -99,7 +99,7 @@ const AddTour = () => {
         formData.append("logo", logo);
 
         const response = await axios.post(
-          "http://localhost:8000/tournament/upload",
+          "https://linkuptournament.onrender.com/tournament/upload",
           formData
         );
 
@@ -410,7 +410,7 @@ const AddTour = () => {
               </td>
               <td className="px-6 py-4 text-slate-900 ">
                 <img
-                  src={`http://localhost:8000/${team.TeamLogo}`}
+                  src={`https://linkuptournament.onrender.com/${team.TeamLogo}`}
                   alt={team.TeamName}
                   className="h-15 w-auto"
                 />
@@ -456,7 +456,7 @@ const AddTour = () => {
             </td>
             <td className="px-6 py-4 text-slate-900 ">
               <img
-                src={`http://localhost:8000/${team.TeamLogo}`}
+                src={`https://linkuptournament.onrender.com/${team.TeamLogo}`}
                 alt={team.TeamName}
                 className="h-15 w-auto"
               />

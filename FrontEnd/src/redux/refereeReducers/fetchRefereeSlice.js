@@ -13,7 +13,7 @@ export const fetchReferees =
     dispatch(fetchRefereesPending());
     try {
       const response = await fetch(
-        `http://localhost:8000/referee?page=${page}&limit=${limit}`
+        `https://linkuptournament.onrender.com/referee?page=${page}&limit=${limit}`
       );
       const data = await response.json();
       dispatch(fetchRefereesFulfilled(data));

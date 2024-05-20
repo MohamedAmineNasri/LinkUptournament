@@ -15,7 +15,7 @@ export const addPlayer = (payload, teamFilter) => async (dispatch) => {
     delete payload.team;
   }
   console.log("from slice", payload);
-  await axios.post("http://localhost:8000/player", payload);
+  await axios.post("https://linkuptournament.onrender.com/player", payload);
   dispatch(postDataFulfilled());
   dispatch(searchPlayers({ team: teamFilter }));
   // } catch (error) {

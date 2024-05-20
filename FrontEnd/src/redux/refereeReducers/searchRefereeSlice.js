@@ -17,7 +17,7 @@ export const searchReferees =
   async (dispatch) => {
     dispatch(searchRefereesPending());
     try {
-      let url = "http://localhost:8000/referee/search?";
+      let url = "https://linkuptournament.onrender.comreferee/search?";
       if (name) url += `name=${name}&`;
       if (role) url += `role=${role}&`;
       if (availability) url += `availability=${availability}&`;

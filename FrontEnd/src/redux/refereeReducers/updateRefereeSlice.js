@@ -10,7 +10,7 @@ const initialState = {
 export const updateReferee = (id, newData) => async (dispatch) => {
   dispatch(updateRefereePending());
   try {
-    const response = await axios.patch(`http://localhost:8000/referee/${id}`, newData);
+    const response = await axios.patch(`https://linkuptournament.onrender.com/referee/${id}`, newData);
     dispatch(updateRefereeFulfilled(response.data));
     dispatch(fetchReferees());
   } catch (error) {

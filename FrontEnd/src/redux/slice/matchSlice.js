@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const fetchMatch = createAsyncThunk("match/fetchMatch", async () => {
   try {
-    const response = await axios.get("http://localhost:8000/match");
+    const response = await axios.get("https://linkuptournament.onrender.com/match");
     return response.data;
   } catch (error) {
     throw error;
@@ -14,7 +14,7 @@ export const fetchMatchByTournementId = createAsyncThunk(
   async (matchid) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/match/tournement/${matchid}`
+        `https://linkuptournament.onrender.com/match/tournement/${matchid}`
       );
       return response.data;
     } catch (error) {
@@ -26,7 +26,7 @@ export const fetchAllTour = createAsyncThunk(
   "match/fetchallTournementId",
   async () => {
     try {
-      const response = await axios.get("http://localhost:8000/match/");
+      const response = await axios.get("https://linkuptournament.onrender.com/match/");
       return response.data;
     } catch (error) {
       throw error;
@@ -38,7 +38,7 @@ export const fetchMatchById = createAsyncThunk(
   async (matchid) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/match/${matchid}`
+        `https://linkuptournament.onrender.com/match/${matchid}`
       );
       return response.data;
     } catch (error) {
@@ -75,7 +75,7 @@ export const editMatch = createAsyncThunk(
   }) => {
     try {
       const response = await axios.put(
-        "http://localhost:8000/match/" + matchid,
+        "https://linkuptournament.onrender.com/match/" + matchid,
         {
           team1goaltime: team1goaltime,
           team2goaltime: team2goaltime,
@@ -116,7 +116,7 @@ export const deleteMatch = createAsyncThunk(
     try {
       console.log(matchid);
       const response = await axios.delete(
-        "http://localhost:8000/match/" + matchid
+        "https://linkuptournament.onrender.com/match/" + matchid
       );
       return response.data;
     } catch (error) {
@@ -130,7 +130,7 @@ export const deletetour = createAsyncThunk(
     try {
       console.log(matchid);
       const response = await axios.delete(
-        "http://localhost:8000/tournament/" + matchid
+        "https://linkuptournament.onrender.com/tournament/" + matchid
       );
       return response.data;
     } catch (error) {
@@ -162,7 +162,7 @@ export const addnewMatch = createAsyncThunk(
     team2,
   }) => {
     try {
-      const response = await axios.post("http://localhost:8000/match/", {
+      const response = await axios.post("https://linkuptournament.onrender.com/match/", {
         group: null || group,
         matchTime: matchTime,
         referee: referee,

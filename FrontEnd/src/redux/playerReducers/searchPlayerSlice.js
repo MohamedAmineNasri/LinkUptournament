@@ -15,7 +15,7 @@ export const searchPlayers =
   async (dispatch) => {
     dispatch(searchPlayersPending());
     try {
-      let url = "http://localhost:8000/player/search?";
+      let url = "https://linkuptournament.onrender.com/player/search?";
       if (name) url += `name=${name}&`;
       if (position) url += `position=${position}&`;
       if (page) url += `page=${page}&`;

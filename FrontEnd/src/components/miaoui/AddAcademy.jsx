@@ -414,7 +414,7 @@ export const AddAcademy = () => {
           setSubmitSuccess(true);
           setTimeout(() => {
             setSubmitSuccess(false);
-            window.location.href = "http://127.0.0.1:5173/Academy"; //i will send the id of acdemy created to this url so i can displayed in it
+            window.location.href = "https://linkuptournament.onrender.com/Academy"; //i will send the id of acdemy created to this url so i can displayed in it
           }, 3000);
         }
       });

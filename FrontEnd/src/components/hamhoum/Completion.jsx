@@ -16,7 +16,7 @@ function Completion() {
   useEffect(() => { // Use useEffect for asynchronous operations
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/match/${id}`);
+        const response = await axios.get(`https://linkuptournament.onrender.com/match/${id}`);
         console.log(response.data.ticketId.length)
         console.log(response.data)
         setTicket(response.data.ticketId.length); // Set the ticket data when the request is successful
@@ -47,7 +47,7 @@ function Completion() {
       {ticket && (
         <><div style={{ display: "none" }}>
         {/* Generate the QR code as a data URI */}
-        {ticket && <QRCode value={`http://localhost:8000/match/verif/${id}/8`} />}
+        {ticket && <QRCode value={`https://linkuptournament.onrender.com/match/verif/${id}/8`} />}
       </div>
       <Pdf ticketId={id} ticketData={ticket} />
         </>

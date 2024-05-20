@@ -5,7 +5,7 @@ export const fetchteams = createAsyncThunk(
   'team/fetchTeams', // Corrected action name
   async () => {
     try {
-      const response = await axios.get('http://localhost:8000/team/');
+      const response = await axios.get('https://linkuptournament.onrender.com/team/');
       return response.data;
     } catch (error) {
       throw Error('Error fetching teams: ' + error.message);
@@ -14,7 +14,7 @@ export const fetchteams = createAsyncThunk(
 );
 
 export const fetchTeamById = async (id) => {
-  const response = await axios.get(`http://localhost:8000/team/getTeam/${id}`);
+  const response = await axios.get(`https://linkuptournament.onrender.com/team/getTeam/${id}`);
   return response.data;
 };
 

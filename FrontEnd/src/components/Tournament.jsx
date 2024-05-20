@@ -17,13 +17,13 @@ export const Tournament = () => {
 
     useEffect(() => {
         const fetchTournament = async () => {
-            const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
+            const response = await axios.get(`https://linkuptournament.onrender.com/tournament/${tournamentId}`);
             console.log("tournamnt", response.data.tournament)
             setTournament(response.data.tournament);
 
         };
         const fetchGroups = async () => {
-            const response = await axios.get(`http://localhost:8000/group/tournament/${tournamentId}`);
+            const response = await axios.get(`https://linkuptournament.onrender.com/group/tournament/${tournamentId}`);
             console.log("groups", response.data)
             setGroups(response.data);
 

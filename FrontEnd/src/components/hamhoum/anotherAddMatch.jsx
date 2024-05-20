@@ -46,7 +46,7 @@ export const AddMatch = () => {
       setSubmitSuccess(true);
       setTimeout(() => {
         setSubmitSuccess(false);
-        window.location.href = "http://127.0.0.1:5173/match";
+        window.location.href = "https://linkuptournament.onrender.com/match";
       }, 3000);
     }
   };

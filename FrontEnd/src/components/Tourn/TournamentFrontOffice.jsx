@@ -13,7 +13,7 @@ const TournamentFrontOffice = () => {
   let location = useLocation();
   useEffect(() => {
     const fetchtournaments = async () => {
-      const response = await axios.get("http://localhost:8000/tourn");
+      const response = await axios.get("https://linkuptournament.onrender.com/tourn");
       setTournaments(response.data);
     };
     fetchtournaments();

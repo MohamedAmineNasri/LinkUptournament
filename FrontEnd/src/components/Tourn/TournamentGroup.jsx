@@ -9,7 +9,7 @@ function TournamentGroup() {
   useEffect(() => {
     const fetchTournament = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/tourn/${id}`);
+        const response = await axios.get(`https://linkuptournament.onrender.com/tourn/${id}`);
         setTournament(response.data);
       } catch (error) {
         console.error("Error fetching tournament:", error);

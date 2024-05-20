@@ -10,7 +10,7 @@ const initialState = {
 export const updatePlayer = (id, newData,teamFilter) => async (dispatch) => {
   dispatch(updatePlayerPending());
   try {
-    const response = await axios.patch(`http://localhost:8000/player/${id}`, newData);
+    const response = await axios.patch(`https://linkuptournament.onrender.com/player/${id}`, newData);
     dispatch(updatePlayerFulfilled(response.data));
     dispatch(searchPlayers({ team: teamFilter }));
   } catch (error) {

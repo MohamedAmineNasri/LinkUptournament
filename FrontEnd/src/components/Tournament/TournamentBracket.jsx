@@ -14,7 +14,7 @@ const TournamentBracket = ({tournamentId}) => {
     const fetchMatches = async () => {
       try {
         // Fetch matches by tournament ID
-        const response = await axios.get(`http://localhost:8000/match/tournement/${tournamentId}`);
+        const response = await axios.get(`https://linkuptournament.onrender.com/match/tournement/${tournamentId}`);
         setMatches(response.data);
       } catch (error) {
         console.error("Error fetching matches:", error);

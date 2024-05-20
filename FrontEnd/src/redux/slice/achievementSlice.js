@@ -5,7 +5,7 @@ export const fetchAchievements = createAsyncThunk(
   'achievement/fetchAchievements', 
   async () => {
     try {
-      const response = await axios.get('http://localhost:8000/achievement/');
+      const response = await axios.get('https://linkuptournament.onrender.com/achievement/');
       return response.data;
     } catch (error) {
       throw Error('Error fetching achievements: ' + error.message);
@@ -18,7 +18,7 @@ export const fetchAchievementById = createAsyncThunk(
   'achievement/fetchAchievementsId', 
   async ({Id}) => {
     try {
-      const response = await axios.get('http://localhost:8000/achievement/getAchievementByID/'+Id);
+      const response = await axios.get('https://linkuptournament.onrender.com/achievement/getAchievementByID/'+Id);
       return response.data;
     } catch (error) {
       throw Error('Error fetching achievement: ' + error.message);
@@ -31,7 +31,7 @@ export const deleteAchievement = createAsyncThunk(
   'achievement/deleteachievement',
   async ({id}) => {
     try {
-      const response = await axios.delete('http://localhost:8000/achievement/deleteAchievement/'+id);
+      const response = await axios.delete('https://linkuptournament.onrender.com/achievement/deleteAchievement/'+id);
       return response.data;
     } catch (error) {
       throw Error('Error delete teams: ' + error.message);
@@ -45,7 +45,7 @@ export const addAchivementAndAssaignToAllTeams = createAsyncThunk(
   async ({name, desc,icon,type,ms,reward }) => {
     try {
       const response = await axios.post(
-        'http://localhost:8000/achievement/addAchievement',
+        'https://linkuptournament.onrender.com/achievement/addAchievement',
         {
           Name: name, 
           Description: desc,
@@ -71,7 +71,7 @@ export const updateAchievement = createAsyncThunk(
   async ({id,name, desc,icon,type,ms,reward,status }) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/achievement/updateAchievement/'+id,
+        'https://linkuptournament.onrender.com/achievement/updateAchievement/'+id,
         {
             Name: name, 
             Description: desc,

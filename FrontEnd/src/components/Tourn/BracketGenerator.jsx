@@ -45,7 +45,7 @@ function BracketGenerator() {
   const generateMatch = async (round, teams) => {
     let orderCounter = 0;
     for (let i = 0; i < teams.length; i += 2) {
-      await axios.post("http://localhost:8000/match/", {
+      await axios.post("https://linkuptournament.onrender.com/match/", {
         ...matchData,
         team1: teams[i]._id,
         team2: teams[i + 1]._id,
@@ -61,7 +61,7 @@ function BracketGenerator() {
     try {
       // Simulate fetching bracket stage data for the tournament
       let response = await axios.get(
-        `http://localhost:8000/bracketStage/tournament/${id}`
+        `https://linkuptournament.onrender.com/bracketStage/tournament/${id}`
       );
 
       const bracketStageData = response.data;
@@ -75,7 +75,7 @@ function BracketGenerator() {
   };
 
   const deleteTournament = async () => {
-    await axios.delete(`http://localhost:8000/tourn/${id}`);
+    await axios.delete(`https://linkuptournament.onrender.com/tourn/${id}`);
     navigate("/manage");
   };
 

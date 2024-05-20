@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from  '@reduxjs/toolkit/query/react'
 import { setCredentials, logOut } from '../../Features/auth/authSlice' 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:8000',
+    baseUrl: 'https://linkuptournament.onrender.com',
     credentials: 'include',
     //to ensures that cookies are sent with each request
     prepareHeaders: (headers, { getState }) => {

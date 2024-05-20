@@ -35,7 +35,7 @@ const EditTournament = () => {
   useEffect(() => {
     const fetchTournament = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
+        const response = await axios.get(`https://linkuptournament.onrender.com/tournament/${tournamentId}`);
         const tournamentData = response.data.tournament;
         setTournament(tournamentData);
         setName(tournamentData.name);

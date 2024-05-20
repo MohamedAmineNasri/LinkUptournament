@@ -20,7 +20,7 @@ const TournamentBracketFrontOffice = () => {
   const fetchBracketStages = async (tournamentId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/bracketStage/tournament/${id}`
+        `https://linkuptournament.onrender.com/bracketStage/tournament/${id}`
       );
       const bracketStageData = response.data;
 

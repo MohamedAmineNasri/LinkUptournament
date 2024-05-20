@@ -58,16 +58,16 @@ export const fetchtour = (props) => {
     // window.location.reload();
   };
   const handleEndMatch = async () => {
-    const response = await axios.get("http://localhost:8000/match/" + match);
+    const response = await axios.get("https://linkuptournament.onrender.com/match/" + match);
     console.log("end__________________", response.data.goal1.length);
     let order = response.data.matchOrder;
     console.log("TeamOne_________", response.data.team1);
 
     const res = await axios.get(
-      `http://localhost:8000/bracketStage/tournament/${response.data.tournId}/${response.data.round + 1}`
+      `https://linkuptournament.onrender.com/bracketStage/tournament/${response.data.tournId}/${response.data.round + 1}`
     );
     const resForUpdatingScore = await axios.get(
-      `http://localhost:8000/bracketStage/tournament/${response.data.tournId}/${response.data.round}`
+      `https://linkuptournament.onrender.com/bracketStage/tournament/${response.data.tournId}/${response.data.round}`
     );
     console.log("resForUpdatingScore___________", resForUpdatingScore.data);
     const teamsArray = resForUpdatingScore.data.teams;
@@ -85,7 +85,7 @@ export const fetchtour = (props) => {
     scores[indexTeamTwo] = response.data.goal2.length || 0;
     console.log(scores);
     await axios.put(
-      `http://localhost:8000/bracketStage/${resForUpdatingScore.data._id}`,
+      `https://linkuptournament.onrender.com/bracketStage/${resForUpdatingScore.data._id}`,
       { scores }
     );
     //updateScore
@@ -93,19 +93,19 @@ export const fetchtour = (props) => {
     let fetchedTeams = res.data.teams;
     if (response.data.goal2.length > response.data.goal1.length) {
       fetchedTeams[order] = response.data.team2;
-      await axios.put(`http://localhost:8000/bracketStage/${res.data._id}`, {
+      await axios.put(`https://linkuptournament.onrender.com/bracketStage/${res.data._id}`, {
         teams: fetchedTeams,
       });
     } else {
       fetchedTeams[order] = response.data.team1;
-      await axios.put(`http://localhost:8000/bracketStage/${res.data._id}`, {
+      await axios.put(`https://linkuptournament.onrender.com/bracketStage/${res.data._id}`, {
         teams: fetchedTeams,
       });
     }
 
     if (response.data.matchtype == "Final") {
       await axios.put(
-        "http://localhost:8000/tournament/update/" + response.data.tournementId,
+        "https://linkuptournament.onrender.com/tournament/update/" + response.data.tournementId,
         { winner: W }
       );
     }

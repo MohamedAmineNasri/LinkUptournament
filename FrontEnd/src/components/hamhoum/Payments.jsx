@@ -13,14 +13,14 @@ function Payment() {
   const [errorMessage, setErrorMessage] = useState("");
   const { id } = useParams();
   useEffect(() => {
-    fetch("http://localhost:8000/config").then(async (r) => {
+    fetch("https://linkuptournament.onrender.com/config").then(async (r) => {
       const { publishableKey } = await r.json();
       setStripePromise(loadStripe(publishableKey));
     });
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8000/create-payment-intent/"+id, {
+    fetch("https://linkuptournament.onrender.com/create-payment-intent/"+id, {
       method: "POST",
       body: JSON.stringify({}),
     })

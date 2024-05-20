@@ -15,11 +15,11 @@ export const Tournament = ({tournamentId}) => {
 
   useEffect(() => {
     const fetchTournament = async () => {
-      const response = await axios.get(`http://localhost:8000/tournament/${tournamentId}`);
+      const response = await axios.get(`https://linkuptournament.onrender.com/tournament/${tournamentId}`);
       const tournamentData = response.data.tournament;
       let winnerName = "Unknown"; 
       if (tournamentData.winner) {
-        const winnerResponse = await axios.get(`http://localhost:8000/Team/getTeam/${tournamentData.winner}`);
+        const winnerResponse = await axios.get(`https://linkuptournament.onrender.com/Team/getTeam/${tournamentData.winner}`);
         winnerName = winnerResponse.data.TeamName; 
         console.log("winenr" ,winnerName)// Assuming there's a field called 'name' for the winner
       }
@@ -48,7 +48,7 @@ export const Tournament = ({tournamentId}) => {
     };
 
     const fetchGroups = async () => {
-      const response = await axios.get(`http://localhost:8000/group/tournament/${tournamentId}`);
+      const response = await axios.get(`https://linkuptournament.onrender.com/group/tournament/${tournamentId}`);
       setGroups(response.data);
     };
 
@@ -90,7 +90,7 @@ export const Tournament = ({tournamentId}) => {
         {/* Header */}
         <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
                <img 
-                    src={`http://localhost:8000/${tournament.logo}`} 
+                    src={`https://linkuptournament.onrender.com/${tournament.logo}`} 
                     alt={tournament.name} 
                     className="w-20 h-20 p-1 -mt-1 mb-2 rounded-full "
                     
@@ -103,7 +103,7 @@ export const Tournament = ({tournamentId}) => {
               {tournament.type}              </p>
               <div className="flex items-center justify-center"> {/* Flex container */}
   <img 
-    src={`http://localhost:8000/uploads/trophe.png`} 
+    src={`https://linkuptournament.onrender.com/uploads/trophe.png`} 
     alt={tournament.name} 
     className="w-14 h-14 p-1 -mt-1 mb-2 rounded-full"
   />

@@ -8,7 +8,7 @@ export const Group = ({ groupId }) => {
 
   useEffect(() => {
     const fetchGroup = async () => {
-      const response = await axios.get(`http://localhost:8000/group/${groupId}`);
+      const response = await axios.get(`https://linkuptournament.onrender.com/group/${groupId}`);
       
       setGroup(response.data);
     };

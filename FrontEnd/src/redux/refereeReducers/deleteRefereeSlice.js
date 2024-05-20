@@ -10,7 +10,7 @@ const initialState = {
 export const deleteReferee = (id) => async (dispatch) => {
   dispatch(deleteRefereePending());
   try {
-    await axios.delete(`http://localhost:8000/referee/${id}`);
+    await axios.delete(`https://linkuptournament.onrender.com/referee/${id}`);
     dispatch(deleteRefereeFulfilled());
     dispatch(fetchReferees());
   } catch (error) {

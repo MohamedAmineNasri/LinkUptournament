@@ -43,7 +43,7 @@ const ChatroomPage = () => {
 };
   const [darkMode, setDarkMode] = useState(false);
     const setupSocket = () => {
-      const newSocket = io("http://localhost:8000", {
+      const newSocket = io("https://linkuptournament.onrender.com", {
         query: {
           token: localStorage.getItem("token"),
           userId: user.id,

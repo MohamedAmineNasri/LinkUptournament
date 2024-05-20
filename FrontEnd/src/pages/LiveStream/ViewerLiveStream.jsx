@@ -49,7 +49,7 @@ const ViewerLiveStream = () => {
       };
 
       const { data } = await axios.post(
-        "http://localhost:8000/consumer",
+        "https://linkuptournament.onrender.com/consumer",
         payload
       );
       const desc = new RTCSessionDescription(data.sdp);
@@ -88,7 +88,7 @@ const ViewerLiveStream = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
   const setupSocket = () => {
-    const newSocket = io("http://localhost:8000", {
+    const newSocket = io("https://linkuptournament.onrender.com", {
       query: {
         token: localStorage.getItem("token"),
         userId: user.id,

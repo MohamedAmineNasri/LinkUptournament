@@ -24,10 +24,10 @@ const ManageTournament = () => {
         let response;
         if (searchInput.trim() === "") {
           // If search input is empty, fetch all tournaments
-          response = await axios.get('http://localhost:8000/tournament/all');
+          response = await axios.get('https://linkuptournament.onrender.com/tournament/all');
         } else {
           // If search input is not empty, fetch tournaments by name
-          response = await axios.get(`http://localhost:8000/tournament/search/${searchInput}`);
+          response = await axios.get(`https://linkuptournament.onrender.com/tournament/search/${searchInput}`);
         }
         setFilteredTournaments(response.data);
       } catch (error) {
@@ -155,7 +155,7 @@ const ManageTournament = () => {
             {filteredTournaments.map((tournament, index) => (
                 <div key={index} className="bg-black-2 h-65 relative  hover:scale-105 transition-all duration-300 cursor-default">
                   <img 
-                    src={`http://localhost:8000/${tournament.logo}`} 
+                    src={`https://linkuptournament.onrender.com/${tournament.logo}`} 
                     alt={tournament.name} 
                     style={{ 
                       position: 'absolute',

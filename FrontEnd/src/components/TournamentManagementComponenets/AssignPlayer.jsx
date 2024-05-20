@@ -11,14 +11,14 @@ const AssignPlayer = ({ openAssignField, setOpenAssignField, playerId }) => {
   const handleClick = async () => {
     setOpenAssignField(false);
     await axios.post(
-      `http://localhost:8000/team/assignPlayerToTeam/${activeTeamId}/${playerId}`
+      `https://linkuptournament.onrender.com/team/assignPlayerToTeam/${activeTeamId}/${playerId}`
     );
     window.location.reload();
   };
 
   useEffect(() => {
     const fetchTeams = async (name) => {
-      let url = "http://localhost:8000/team/search?";
+      let url = "https://linkuptournament.onrender.com/team/search?";
       if (name) url += `name=${name}`;
       const response = await axios.get(url);
       setTeamsData([...response.data.teams]);

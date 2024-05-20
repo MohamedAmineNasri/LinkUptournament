@@ -11,7 +11,7 @@ export const createGroupsThunk = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       console.log("in groupslice")
-      const response = await axios.post(`http://localhost:8000/group/addGroupsStage/${id}/${nbG}/${nbT}`);
+      const response = await axios.post(`https://linkuptournament.onrender.com/group/addGroupsStage/${id}/${nbG}/${nbT}`);
       return response.data;
     } catch (error) {
       if (error && error.response) {
@@ -30,7 +30,7 @@ export const fetchGroupsByTournamentIdThunk = createAsyncThunk(
     'groups/fetchByTournamentId',
     async (id, { rejectWithValue }) => {
       try {
-        const response = await axios.get(`http://localhost:8000/group/tournament/${id}`);
+        const response = await axios.get(`https://linkuptournament.onrender.com/group/tournament/${id}`);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data);
@@ -43,7 +43,7 @@ export const fetchGroupByIdThunk = createAsyncThunk(
   'groups/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:8000/group/${id}`);
+      const response = await axios.get(`https://linkuptournament.onrender.com/group/${id}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

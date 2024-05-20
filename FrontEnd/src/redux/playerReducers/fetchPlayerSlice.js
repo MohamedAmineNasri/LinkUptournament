@@ -13,7 +13,7 @@ export const fetchPlayers =
     dispatch(fetchPlayersPending());
     try {
       const response = await axios.get(
-        `http://localhost:8000/player?page=${page}&limit=${limit}`
+        `https://linkuptournament.onrender.com/player?page=${page}&limit=${limit}`
       );
       dispatch(fetchPlayersFulfilled({ ...response.data, type: "fetch" }));
     } catch (error) {

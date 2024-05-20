@@ -7,7 +7,7 @@ export const fetchAllAcademy = createAsyncThunk(
   'academy/fetchAllAcademy',
   async () => {
     try {
-      const response = await axios.get('http://localhost:8000/academy');
+      const response = await axios.get('https://linkuptournament.onrender.com/academy');
       return response.data;
     } catch (error) {
       throw error;
@@ -19,7 +19,7 @@ export const fetchAcademybyManagerId = createAsyncThunk(
   'academy/fetchAcademy',
   async ({idmanger}) => {
     try {
-      const response = await axios.get('http://localhost:8000/academy/getAcademyByMangerId/'+ idmanger);
+      const response = await axios.get('https://linkuptournament.onrender.com/academy/getAcademyByMangerId/'+ idmanger);
       return response.data;
     } catch (error) {
       throw error;
@@ -31,7 +31,7 @@ export const fetchAcademyById = createAsyncThunk(
   'academy/fetchAcademyByid',
   async (Academyid) => {
     try {
-      const response = await axios.get('http://localhost:8000/academy/getAcademy/'+Academyid);
+      const response = await axios.get('https://linkuptournament.onrender.com/academy/getAcademy/'+Academyid);
       return response.data;
     } catch (error) {
       throw error;
@@ -46,7 +46,7 @@ export const editAcademy = createAsyncThunk(
   async ({ id, name, location, date ,logo,doc,status}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/academy/editAcademy/'+id,
+        'https://linkuptournament.onrender.com/academy/editAcademy/'+id,
         {
           AcademyName: name, 
           Location: location,
@@ -69,7 +69,7 @@ export const editAcademysameName = createAsyncThunk(
   async ({ id, name, location, date ,logo,doc,status}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/academy/updateAcademyforduplicateName/'+id,
+        'https://linkuptournament.onrender.com/academy/updateAcademyforduplicateName/'+id,
         {
           AcademyName: name, 
           Location: location,
@@ -93,7 +93,7 @@ export const editAcademyStatusToApproved = createAsyncThunk(
   async ({ id}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/academy/updateStatustoApproved/'+id,
+        'https://linkuptournament.onrender.com/academy/updateStatustoApproved/'+id,
        
       );
       
@@ -109,7 +109,7 @@ export const editAcademyStatusToRejected = createAsyncThunk(
   async ({id}) => {
     try {
       const response = await axios.put(
-        'http://localhost:8000/academy/updateStatustoRejected/'+id,
+        'https://linkuptournament.onrender.com/academy/updateStatustoRejected/'+id,
       );
       
       // window.location.reload();
@@ -124,7 +124,7 @@ export const deleteAcademy = createAsyncThunk(
   async ({id}) => {
     try {
       const response = await axios.delete(
-        'http://localhost:8000/academy/deleteAcademy/'+id,
+        'https://linkuptournament.onrender.com8000/academy/deleteAcademy/'+id,
       );
       // window.location.reload();
       return response.data;
@@ -142,7 +142,7 @@ export const addAcademyAndAssaignToManager = createAsyncThunk(
   async ({ name, location,logo,foundedYear,doc ,mangerid}) => {
     try {
       const response = await axios.post(
-        'http://localhost:8000/academy/addAcademy',
+        'https://linkuptournament.onrender.com/academy/addAcademy',
         {
           AcademyName: name, 
           Location: location,

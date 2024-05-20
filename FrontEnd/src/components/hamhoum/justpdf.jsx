@@ -13,17 +13,17 @@ const PdfGenerator = ({ id }) => {
     // 
     try {
       // const mail = await axios.get(`http://localhost:8000/match/paymentmail/omriyasser12@gmail.com/omri/yasser`)
-      const mail = await axios.get(`http://localhost:8000/match/paymentmail/`+JSON.parse(localStorage.getItem('user')).email+"/"+JSON.parse(localStorage.getItem('user')).firstName+"/"+JSON.parse(localStorage.getItem('user')).lastName)
+      const mail = await axios.get(`https://linkuptournament.onrender.com/match/paymentmail/`+JSON.parse(localStorage.getItem('user')).email+"/"+JSON.parse(localStorage.getItem('user')).firstName+"/"+JSON.parse(localStorage.getItem('user')).lastName)
       // Fetch match data from the server
-      const response = await axios.get(`http://localhost:8000/match/${id}`);
+      const response = await axios.get(`https://linkuptournament.onrender.com/match/${id}`);
       const matchData = response.data;
       setTicket(response.data.ticketId.length)
       console.log(response.data);
       console.log(response.data.ticketId.length);
 
       // Fetch team data from the server
-      const teamPromises1 = await axios.get(`http://localhost:8000/team/getTeam/${matchData.team1}`);
-      const teamPromises2 = await axios.get(`http://localhost:8000/team/getTeam/${matchData.team2}`);
+      const teamPromises1 = await axios.get(`https://linkuptournament.onrender.com/team/getTeam/${matchData.team1}`);
+      const teamPromises2 = await axios.get(`https://linkuptournament.onrender.com/team/getTeam/${matchData.team2}`);
       const team1name = teamPromises1.data.TeamName;
       const team1logo = teamPromises1.data.TeamLogo;
       const team2name = teamPromises2.data.TeamName;
@@ -115,7 +115,7 @@ const PdfGenerator = ({ id }) => {
           width: 100,
           height: 150,
         });
-        const qrCodeDataUrl = await QRCode.toDataURL(`http://localhost:8000/match/verif/${id}/${ticket}`);
+        const qrCodeDataUrl = await QRCode.toDataURL(`https://linkuptournament.onrender.com/match/verif/${id}/${ticket}`);
 
       // Embed the QR code image into the PDF document
       const qrCodeImage = await pdfDoc.embedPng(qrCodeDataUrl);

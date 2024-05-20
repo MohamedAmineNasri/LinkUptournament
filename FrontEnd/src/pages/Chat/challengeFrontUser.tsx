@@ -74,7 +74,7 @@
         };
         const getChatrooms = () => {
             axios
-                .get("http://localhost:8000/chatroom", {
+                .get("https://linkuptournament.onrender.com/chatroom", {
                     headers: {
                         Authorization: "Bearer " + localStorage.getItem("token"),
                     },
@@ -92,7 +92,7 @@
             if (validateChatroomName()) {
                 axios
                     .post(
-                        "http://localhost:8000/chatroom",
+                        "https://linkuptournament.onrender.com/chatroom",
                         { name: chatroomName }, 
                         {
                             headers: {

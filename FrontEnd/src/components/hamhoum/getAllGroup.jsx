@@ -25,7 +25,7 @@ export const fetchtour = () => {
     const fetchTournaments = async () => {
       try {
         console.log(tournamentId,"fffffff")
-        const response = await axios.get('http://localhost:8000/group/tournament/'+tournamentId);
+        const response = await axios.get('https://linkuptournament.onrender.com/group/tournament/'+tournamentId);
         console.log( "test",response.data)
         setTournementId(response.data);
       

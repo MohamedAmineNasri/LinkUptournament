@@ -22,7 +22,7 @@ const TeamLineUp = () => {
       imageData.append("avatar", uploadedPhoto);
 
       const response = await axios.post(
-        "http://localhost:8000/upload/image",
+        "https://linkuptournament.onrender.com/upload/image",
         imageData,
         {
           headers: {
@@ -30,7 +30,7 @@ const TeamLineUp = () => {
           },
         }
       );
-      await axios.put(`http://localhost:8000/team/${location.state}`, {
+      await axios.put(`https://linkuptournament.onrender.com/team/${location.state}`, {
         avatar: response.data.imageUrl,
       });
     } catch (error) {

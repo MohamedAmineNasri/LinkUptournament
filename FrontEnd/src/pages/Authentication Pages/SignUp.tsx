@@ -140,7 +140,7 @@ const SignUp: React.FC = () => {
       imageData.append("avatar", uploadedPhoto);
 
       const response = await axios.post(
-        "http://localhost:8000/upload/image",
+        "https://linkuptournament.onrender.com/upload/image",
         imageData,
         {
           headers: {

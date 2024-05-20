@@ -29,7 +29,7 @@ export const fetchtour = () => {
       try {
         
       
-        const response = await axios.get('http://localhost:8000/match/tournement/'+tournamentId);
+        const response = await axios.get('https://linkuptournament.onrender.com/match/tournement/'+tournamentId);
         setTournementId(response.data);
       } catch (error) {
         console.error('Error fetching tournaments:', error);
@@ -37,11 +37,11 @@ export const fetchtour = () => {
     };
     const fetchMatchesWithTeamDetails = async () => {
       try {
-        const matchesResponse = await axios.get('http://localhost:8000/match/tournement/'+tournamentId);
+        const matchesResponse = await axios.get('https://linkuptournament.onrender.com/match/tournement/'+tournamentId);
         
         const team2 = matchesResponse.data.map((e)=>e.team2);
         const teamPromises2 = team2.map(teamId =>
-          axios.get(`http://localhost:8000/team/getTeam/${teamId}`)
+          axios.get(`https://linkuptournament.onrender.com/team/getTeam/${teamId}`)
         );
         
         try {
@@ -60,7 +60,7 @@ export const fetchtour = () => {
         }
         const team1 = matchesResponse.data.map((e)=>e.team1);
         const teamPromises1 = team1.map(teamId =>
-          axios.get(`http://localhost:8000/team/getTeam/${teamId}`)
+          axios.get(`https://linkuptournament.onrender.com/team/getTeam/${teamId}`)
         );
         
         try {

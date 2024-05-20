@@ -7,7 +7,7 @@ export const addTournament = createAsyncThunk(
   'tournament/addTournament',
   async (tournamentData) => {
     try {
-      const response = await axios.post('http://localhost:8000/tournament/add', tournamentData);
+      const response = await axios.post('https://linkuptournament.onrender.com/tournament/add', tournamentData);
       console.log("Server Response:", response); // Log the server response
       return response.data.tournament // Return the entire data from the response
     } catch (error) {
@@ -20,7 +20,7 @@ export const fetchtournamentByIdThunk = createAsyncThunk(
   'tournament/',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:8000/tournament/${id}`);
+      const response = await axios.get(`https://linkuptournament.onrender.com/tournament/${id}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -33,7 +33,7 @@ export const fetchtournamentByIdThunk = createAsyncThunk(
 export const deleteTournament = createAsyncThunk(
     'tournament/deleteTournament',
     async (id) => {
-      await axios.delete(`http://localhost:8000/tournament/delete/${id}`);
+      await axios.delete(`https://linkuptournament.onrender.com/tournament/delete/${id}`);
       return id;
     }
   );
@@ -42,7 +42,7 @@ export const updateTournament = createAsyncThunk(
     'tournament/updateTournament',
     async ({ id, ...tournamentData }) => {
       console.log(tournamentData)
-      const response = await axios.put(`http://localhost:8000/tournament/update/${id}`, tournamentData);
+      const response = await axios.put(`https://linkuptournament.onrender.com/tournament/update/${id}`, tournamentData);
       return response.data;
     }
   );
@@ -51,7 +51,7 @@ export const updateTournament = createAsyncThunk(
 export const fetchTournaments = createAsyncThunk(
     'tournament/fetchTournaments',
     async () => {
-      const response = await axios.get('http://localhost:8000/tournament/all');
+      const response = await axios.get('https://linkuptournament.onrender.com/tournament/all');
       return response.data;
     }
   );
@@ -60,7 +60,7 @@ export const fetchTournaments = createAsyncThunk(
     'tournament/sendSMSToPlayer',
     async ({ tournamentId, playerId }) => {
       try {
-        const response = await axios.post(`http://localhost:8000/tournament/sendSMS/${tournamentId}/${playerId}`);
+        const response = await axios.post(`https://linkuptournament.onrender.com/tournament/sendSMS/${tournamentId}/${playerId}`);
         return response.data;
       } catch (error) {
         throw Error(error.response.data);
@@ -71,7 +71,7 @@ export const fetchTournaments = createAsyncThunk(
     'tournament/fetchTournamentsByName',
     async (searchString) => {
       try {
-        const response = await axios.get(`http://localhost:8000/tournament/search/${searchString}`);
+        const response = await axios.get(`https://linkuptournament.onrender.com/tournament/search/${searchString}`);
         return response.data;
       } catch (error) {
         throw new Error('Error fetching tournaments by name: ' + error.message);

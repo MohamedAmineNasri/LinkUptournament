@@ -114,7 +114,7 @@ const VideoLiveStreamUi = () => {
             const payload = {
                 sdp: peer.localDescription
             };
-            const { data } = await axios.post('http://localhost:8000/broadcast', payload); 
+            const { data } = await axios.post('https://linkuptournament.onrender.com/broadcast', payload); 
             const desc = new RTCSessionDescription(data.sdp);
             peer.setRemoteDescription(desc);
         } catch (error) {
@@ -135,7 +135,7 @@ const VideoLiveStreamUi = () => {
         setShowEmojiPicker(!showEmojiPicker);
     };
         const setupSocket = () => {
-        const newSocket = io("http://localhost:8000", {
+        const newSocket = io("https://linkuptournament.onrender.com", {
             query: {
             token: localStorage.getItem("token"),
             userId: user.id,

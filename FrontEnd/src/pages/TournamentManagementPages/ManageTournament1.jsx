@@ -87,7 +87,7 @@ const AddTournament = () => {
         const formData = new FormData();
         formData.append("logo", logo);
   
-        const response = await axios.post("http://localhost:8000/tournament/upload", formData);
+        const response = await axios.post("https://linkuptournament.onrender.com/tournament/upload", formData);
   
         const selectedTeamIds = selectedTeams.map((teamName) => {
           const selectedTeam = teams.find((team) => team.TeamName === teamName);

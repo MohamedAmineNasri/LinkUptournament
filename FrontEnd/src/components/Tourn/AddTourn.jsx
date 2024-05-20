@@ -98,7 +98,7 @@ const AddTourn = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/tourn", {
+      const response = await axios.post("https://linkuptournament.onrender.com/tourn", {
         ...formData,
         teams: activeTeamId,
       });
@@ -113,7 +113,7 @@ const AddTourn = () => {
             { length: i },
             () => "0"
           );
-          await axios.post("http://localhost:8000/bracketStage", {
+          await axios.post("https://linkuptournament.onrender.com/bracketStage", {
             round: 1,
             teams: activeTeamId,
             tournament: tournId,
@@ -129,7 +129,7 @@ const AddTourn = () => {
             { length: i },
             () => "0"
           );
-          await axios.post("http://localhost:8000/bracketStage", {
+          await axios.post("https://linkuptournament.onrender.com/bracketStage", {
             round: roundCounter + 1,
             teams: arrayFilledWithEmptyStrings,
             tournament: tournId,
@@ -141,7 +141,7 @@ const AddTourn = () => {
       }
       let orderCounter = 0;
       for (let i = 0; i < activeTeamId.length; i += 2) {
-        await axios.post("http://localhost:8000/match/", {
+        await axios.post("https://linkuptournament.onrender.com/match/", {
           ...matchData,
           team1: activeTeamId[i],
           team2: activeTeamId[i + 1],
@@ -177,7 +177,7 @@ const AddTourn = () => {
 
   useEffect(() => {
     const fetchTeams = async (name) => {
-      let url = "http://localhost:8000/team/search?";
+      let url = "https://linkuptournament.onrender.com/team/search?";
       if (name) url += `name=${name}`;
       const response = await axios.get(url);
       setTeamsData([...response.data.teams]);

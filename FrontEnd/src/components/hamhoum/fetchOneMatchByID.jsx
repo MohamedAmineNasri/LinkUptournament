@@ -118,7 +118,7 @@ export const fetchtour = () => {
         }
         const team1 = matchesResponse.data.team1;
         const teamPromises1 = axios.get(
-          `http://localhost:8000/team/getTeam/${team1}`
+          `https://linkuptournament.onrender.com/team/getTeam/${team1}`
         );
 
         try {
@@ -158,7 +158,7 @@ export const fetchtour = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        `http://localhost:8000/match/${tournamentId}`
+        `https://linkuptournament.onrender.com/match/${tournamentId}`
       );
 
       sett1(response.data.goal1);

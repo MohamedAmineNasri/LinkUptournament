@@ -16,7 +16,7 @@ const Tournaments = () => {
       try {
         
           // If search input is empty, fetch all tournaments
-         const response = await axios.get('http://localhost:8000/tournament/all');
+         const response = await axios.get('https://linkuptournament.onrender.com/tournament/all');
         
         setTournaments(response.data);
       } catch (error) {
@@ -55,7 +55,7 @@ const Tournaments = () => {
             <div key={index}
             onClick={() => setSelectedTournament(tournament)}  className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
                <img 
-                    src={`http://localhost:8000/${tournament.logo}`} 
+                    src={`https://linkuptournament.onrender.com/${tournament.logo}`} 
                     alt={tournament.name} 
                     className="w-20 h-20 p-1 -mt-1 mb-2 rounded-full "
                     

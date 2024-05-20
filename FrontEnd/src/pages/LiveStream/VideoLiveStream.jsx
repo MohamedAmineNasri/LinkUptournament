@@ -75,7 +75,7 @@ const VideoLiveStream = () => {
             const payload = {
                 sdp: peer.localDescription
             };
-            const { data } = await axios.post('http://localhost:8000/broadcast', payload); 
+            const { data } = await axios.post('https://linkuptournament.onrender.com/broadcast', payload); 
             const desc = new RTCSessionDescription(data.sdp);
             peer.setRemoteDescription(desc);
         } catch (error) {

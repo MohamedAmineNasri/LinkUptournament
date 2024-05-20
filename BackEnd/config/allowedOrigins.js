@@ -9,6 +9,7 @@ const allowedOrigins = [
     'https://link-uptournament-1hsj.vercel.app',
     'https://link-uptournament.vercel.app',
     'https://linkuptournament.onrender.com',
+    'https://link-uptournament-1hsj.vercel.app/',
 ];
 
 module.exports = allowedOrigins;
